@@ -1,0 +1,9 @@
+[submodule "SimpleImpersonation"]
+	path = SimpleImpersonation
+	url = https://github.com/mj1856/SimpleImpersonation
+[submodule "EncryptDecrypt"]
+	path = EncryptDecrypt
+	url = https://github.com/paulpiotr/EncryptDecrypt.git
+[submodule "Log4netLogger"]
+	path = Log4netLogger
+	url = https://github.com/paulpiotr/Log4netLogger

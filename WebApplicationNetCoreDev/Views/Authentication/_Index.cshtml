@@ -1,0 +1,61 @@
+﻿@using WebApplicationNetCoreDev.Helpers
+@model AuthenticationModel
+
+@{
+    ViewData["Title"] = "Wymagana autoryzacja.";
+}
+
+<div class="preloader">
+    <div class="loader">
+        <div class="loader__figure"></div>
+        <p class="loader__label">@System.Reflection.Assembly.GetEntryAssembly().GetName().Name</p>
+    </div>
+</div>
+
+<div class="container h-75">
+    <div class="row justify-content-lg-center align-self-center align-items-center h-100">
+        <div class="col-sm-12 col-lg-6">
+            <div class="card m-10">
+                <div class="card-body">
+                    @if (null != Model && !string.IsNullOrWhiteSpace(Model.Message))
+                    {
+                    <div class="alert alert-danger" role="alert">
+                        @Html.Raw(Model.Message);
+                    </div>
+                    }
+                    <form class="form-horizontal form-material" asp-controller="Authentication" asp-action="Index">
+                        <h4 class="box-title m-10 text-info">
+                            <i class="fa fa-2x fa-users text-info"></i>
+                            Zaloguj się do<br /><small>@System.Reflection.Assembly.GetEntryAssembly().GetName().Name</small>
+                        </h4>
+                        <div class="form-group ">
+                            <div class="col-xs-12">
+                                @Html.TextBoxFor(m => m.Username, null, new { Class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-xs-12">
+                                @Html.PasswordFor(m => m.Password, new { Class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-md-12">
+                                <div @*class="custom-control custom-checkbox"*@>
+                                    @Html.CheckBoxFor(m => m.RememberMe, new { Class = "custom-control-input" })
+                                    @*<input type="checkbox" class="custom-control-input" id="RememberMeCheck">
+                        <label class="custom-control-label" for="RememberMeCheck">Remember me</label>*@
+                                    @*<a href="javascript:void(0)" id="to-recover" class="text-dark float-right"><i class="fa fa-lock m-r-5"></i> Forgot pwd?</a>*@
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group text-center">
+                            <div class="col-xs-12">
+                                <button class="btn btn-block btn-lg btn-info btn-rounded" type="submit">Zaloguj się</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
