@@ -7,6 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
+using System.IO;
 using System.Reflection;
 
 namespace WebApplicationNetCoreDev
@@ -29,8 +30,43 @@ namespace WebApplicationNetCoreDev
             //services.AddAuthentication(options => {
             //    options.DefaultChallengeScheme = IISDefaults.AuthenticationScheme;
             //});
+            //string dataDirectory = Path.Combine(AppDomain.CurrentDomain.BaseDirectory);
+            //%AppDomain.CurrentDomain.BaseDirectory%
 
-            services.AddDbContext<AdvertisingCampaign.Models.AdvertisingCampaignContext>(options => options.UseSqlServer(Configuration.GetConnectionString("AdvertisingCampaignContext")));
+            if (null != Configuration.GetConnectionString("AdvertisingCampaignContext") && Configuration.GetConnectionString("AdvertisingCampaignContext").Contains("%AppDomain.CurrentDomain.BaseDirectory%"))
+            {
+
+                //string dataDirectory = Path.Combine(AppDomain.CurrentDomain.BaseDirectory);
+                //string baseDirectoryDatabaseMdf = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Data\\AdvertisingCampaignContext.mdf");
+                //string baseDirectoryDatabaseLogLdf = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Data\\AdvertisingCampaignContext_log.ldf");
+                //string applicationDataDatabaseMdf = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), Assembly.GetExecutingAssembly().GetName().Name, "AdvertisingCampaignContext.mdf");
+                //string applicationDataDatabaseLogLdf = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), Assembly.GetExecutingAssembly().GetName().Name, "AdvertisingCampaignContext.ldf");
+                //if (
+                //    File.Exists(baseDirectoryDatabaseMdf) &&
+                //    File.Exists(baseDirectoryDatabaseLogLdf) &&
+                //    !File.Exists(applicationDataDatabaseMdf) &&
+                //    !File.Exists(applicationDataDatabaseLogLdf)
+                //    )
+                //{
+                //    dataDirectory = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), Assembly.GetExecutingAssembly().GetName().Name);
+                //    Directory.CreateDirectory(dataDirectory);
+                //    File.Copy(baseDirectoryDatabaseMdf, applicationDataDatabaseMdf);
+                //    File.Copy(baseDirectoryDatabaseLogLdf, applicationDataDatabaseLogLdf);
+                //}
+                //else if (File.Exists(applicationDataDatabaseMdf) && File.Exists(applicationDataDatabaseLogLdf))
+                //{
+                //    dataDirectory = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), Assembly.GetExecutingAssembly().GetName().Name);
+                //}
+                //AppDomain.CurrentDomain.SetData("DataDirectory", dataDirectory);
+
+                AppDomain.CurrentDomain.SetData("DataDirectory", AppDomain.CurrentDomain.BaseDirectory);
+                services.AddDbContext<AdvertisingCampaign.Models.AdvertisingCampaignContext>(options => options.UseSqlServer(Configuration.GetConnectionString("AdvertisingCampaignContext").Replace("%AppDomain.CurrentDomain.BaseDirectory%", AppDomain.CurrentDomain.BaseDirectory)));
+            }
+            else if (null != Configuration.GetConnectionString("AdvertisingCampaignContext"))
+            {
+                //AppDomain.CurrentDomain.SetData("DataDirectory", AppDomain.CurrentDomain.BaseDirectory);
+                services.AddDbContext<AdvertisingCampaign.Models.AdvertisingCampaignContext>(options => options.UseSqlServer(Configuration.GetConnectionString("AdvertisingCampaignContext")));
+            }
 
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(
                     options =>
