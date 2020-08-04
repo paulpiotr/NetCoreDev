@@ -15,7 +15,7 @@
     "@progress/kendo-theme-bootstrap": "^4.17.0",
     "@progress/kendo-theme-default": "^4.19.0",
     "@progress/kendo-theme-material": "^3.16.0",
-    "@progress/kendo-ui": "^2020.2.513",
+    "@progress/kendo-ui": "^2020.2.617",
     "bootstrap": "^4.5.0",
     "c3": "^0.7.15",
     "chunks-webpack-plugin": "^6.1.0",

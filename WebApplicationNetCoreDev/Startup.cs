@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -28,6 +29,9 @@ namespace WebApplicationNetCoreDev
             //services.AddAuthentication(options => {
             //    options.DefaultChallengeScheme = IISDefaults.AuthenticationScheme;
             //});
+
+            services.AddDbContext<AdvertisingCampaign.Models.AdvertisingCampaignContext>(options => options.UseSqlServer(Configuration.GetConnectionString("AdvertisingCampaignContext")));
+
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(
                     options =>
                     {
@@ -47,6 +51,7 @@ namespace WebApplicationNetCoreDev
                 options.AddPolicy("Administrator", policy => policy.RequireClaim("Administrator"));
                 options.AddPolicy("User", policy => policy.RequireClaim("User"));
             });
+
             //services.AddAuthentication(IdentityServerConstants.ExternalCookieAuthenticationScheme).AddCookie();
             //services.AddAuthentication().AddOpenIdConnect("idsrv.external", "IdentityServer", options =>
             // {
