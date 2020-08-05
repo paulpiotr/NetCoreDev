@@ -4,7 +4,7 @@
    "DefaultDacpacSchema": null,
    "DoNotCombineNamespace": false,
    "IdReplace": false,
-   "IncludeConnectionString": true,
+   "IncludeConnectionString": false,
    "ModelNamespace": null,
    "OutputContextPath": "",
    "OutputPath": "Models",
@@ -15,6 +15,10 @@
       {
          "HasPrimaryKey": true,
          "Name": "[dbo].[AdvertisingCampaign]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[AdvertisingCampaignAudit]"
       }
    ],
    "UseDatabaseNames": false,

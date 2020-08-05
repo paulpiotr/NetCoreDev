@@ -1,16 +1,5 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
-}
-
+﻿@{ ViewData["Title"] = "Home Page"; }
 <div class="text-center">
     <h1 class="display-4">Welcome @System.Reflection.Assembly.GetEntryAssembly().GetName().Name</h1>
     <p>Learn Building Web apps with ASP.NET Core.</p>
 </div>
-@if (User.Identity.IsAuthenticated)
-{
-    foreach (var claim in User.Claims)
-    {
-        <p><p>@Html.Raw(claim.Type)</p> <p>@Html.Raw(claim.Value)</p></p>
-        <hr />
-    }
-}

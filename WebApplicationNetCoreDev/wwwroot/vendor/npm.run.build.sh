@@ -1,5 +1,5 @@
 #!/bin/bash
-rm -rf /c/Praca/Inergis/XLServiceRest/XLServiceWeb/wwwroot/vendor/dist/*
+rm -rf dist/*
 npm install --no-optional
 npm audit fix
 #npm-upgrade

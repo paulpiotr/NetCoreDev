@@ -22,5 +22,7 @@ namespace AdvertisingCampaign.Models
         public decimal? TotalCost { get; set; }
         [Column(TypeName = "datetime")]
         public DateTime? Created { get; set; }
+        [Column(TypeName = "datetime")]
+        public DateTime? Modified { get; set; }
     }
 }

@@ -19,9 +19,11 @@ namespace WebApplicationNetCoreDev.Controllers
         }
 
         // GET: AdvertisingCampaign
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
-            return View(await _context.AdvertisingCampaign.ToListAsync());
+            //AdvertisingCampaign.AdvertisingCampaign.Index();
+            //return View(await _context.AdvertisingCampaign.ToListAsync());
+            return View(AdvertisingCampaign.AdvertisingCampaign.Index());
         }
 
         // GET: AdvertisingCampaign/Details/5

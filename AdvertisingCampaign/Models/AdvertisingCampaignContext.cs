@@ -8,22 +8,19 @@ namespace AdvertisingCampaign.Models
     public partial class AdvertisingCampaignContext : DbContext
     {
         public virtual DbSet<AdvertisingCampaign> AdvertisingCampaign { get; set; }
+        public virtual DbSet<AdvertisingCampaignAudit> AdvertisingCampaignAudit { get; set; }
 
         public AdvertisingCampaignContext(DbContextOptions<AdvertisingCampaignContext> options) : base(options)
         {
         }
 
-//        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-//        {
-//            if (!optionsBuilder.IsConfigured)
-//            {
-//#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-//                optionsBuilder.UseSqlServer("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=%AppDomain.CurrentDomain.BaseDirectory%AdvertisingCampaignDatabase.mdf;Integrated Security=True");
-//            }
-//        }
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<AdvertisingCampaign>(entity =>
+            {
+                entity.Property(e => e.Created).HasDefaultValueSql("(getdate())");
+            });
+
             OnModelCreatingPartial(modelBuilder);
         }
 
