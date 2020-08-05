@@ -5,10 +5,13 @@
     [PricePerClick]  MONEY          NULL,
     [NumberOfClicks] INT            NULL,
     [TotalCost]      MONEY          NULL,
-    [Created]        DATETIME       CONSTRAINT [DF_AdvertisingCampaign_Created] DEFAULT (getdate()) NULL,
+    [Created]        DATETIME       NULL,
     [Modified]       DATETIME       NULL,
     CONSTRAINT [PK_dbo.AdvertisingCampaign] PRIMARY KEY CLUSTERED ([Id] ASC)
 );
+GO
+
+ALTER TABLE [dbo].[AdvertisingCampaign] ADD CONSTRAINT [DF_AdvertisingCampaign_Created]  DEFAULT (getdate()) FOR [Created]
 GO
 
 CREATE TRIGGER [dbo].[Trigger_AdvertisingCampaign]
@@ -62,4 +65,3 @@ BEGIN
 		FROM deleted AS d)
 	END
 END
-GO

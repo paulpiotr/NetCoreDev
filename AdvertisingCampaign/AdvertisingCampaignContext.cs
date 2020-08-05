@@ -2,13 +2,10 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
 
 namespace AdvertisingCampaign
 {
-    class AdvertisingCampaignContext
+    internal class AdvertisingCampaignContext
     {
         /// <summary>
         /// Stała - nazwa połączenia do bazy danych

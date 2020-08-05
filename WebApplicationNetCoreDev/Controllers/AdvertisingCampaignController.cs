@@ -1,22 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using AdvertisingCampaign.Models;
+using System;
+using System.Threading.Tasks;
 
 namespace WebApplicationNetCoreDev.Controllers
 {
     public class AdvertisingCampaignController : Controller
     {
-        private readonly AdvertisingCampaignContext _context;
+        //private readonly AdvertisingCampaignContext _context;
+        /// <summary>
+        /// Log4netLogger Instance
+        /// </summary>
         private static readonly log4net.ILog _log4net = Log4netLogger.Log4netLogger.GetLog4netInstance(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
-        public AdvertisingCampaignController(AdvertisingCampaignContext context)
-        {
-            _context = context;
-        }
+        //public AdvertisingCampaignController(AdvertisingCampaignContext context)
+        //{
+        //    _context = context;
+        //}
+        /// <summary>
+        /// // GET: AdvertisingCampaign Advertising Campaign List
+        /// </summary>
+        /// <returns></returns>
         // GET: AdvertisingCampaign
         public IActionResult Index()
         {
@@ -30,6 +33,11 @@ namespace WebApplicationNetCoreDev.Controllers
                 return RedirectToAction("Index", "Error", new { Exception = e });
             }
         }
+        /// <summary>
+        /// GET: AdvertisingCampaign/Details/5 Advertising Campaign Details
+        /// </summary>
+        /// <param name="id">Advertising Campaign Id</param>
+        /// <returns></returns>
         // GET: AdvertisingCampaign/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -52,6 +60,10 @@ namespace WebApplicationNetCoreDev.Controllers
                 return RedirectToAction("Index", "Error", new { Exception = e });
             }
         }
+        /// <summary>
+        /// GET: AdvertisingCampaign/Create  Advertising Campaign Create Form
+        /// </summary>
+        /// <returns></returns>
         // GET: AdvertisingCampaign/Create
         public IActionResult Create()
         {
@@ -65,6 +77,11 @@ namespace WebApplicationNetCoreDev.Controllers
                 return RedirectToAction("Index", "Error", new { Exception = e });
             }
         }
+        /// <summary>
+        /// POST: AdvertisingCampaign/Create Advertising Campaign Create Save
+        /// </summary>
+        /// <param name="advertisingCampaign">Advertising Campaign Model</param>
+        /// <returns></returns>
         // POST: AdvertisingCampaign/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
@@ -95,7 +112,7 @@ namespace WebApplicationNetCoreDev.Controllers
             }
         }
         /// <summary>
-        /// GET: AdvertisingCampaign/Edit/5 Advertising Campaign Edit
+        /// GET: AdvertisingCampaign/Edit/5 Advertising Campaign Edit Form
         /// </summary>
         /// <param name="id">Advertising Campaign Id</param>
         /// <returns></returns>
@@ -122,7 +139,7 @@ namespace WebApplicationNetCoreDev.Controllers
             }
         }
         /// <summary>
-        /// POST: AdvertisingCampaign/Edit/5 Advertising Campaign Edit
+        /// POST: AdvertisingCampaign/Edit/5 Advertising Campaign Edit Save
         /// </summary>
         /// <param name="id">Advertising Campaig Id</param>
         /// <param name="advertisingCampaign">Advertising Campaig Model</param>
@@ -161,7 +178,7 @@ namespace WebApplicationNetCoreDev.Controllers
             }
         }
         /// <summary>
-        /// GET: AdvertisingCampaign/Delete/5 Delete Advertising Campaign
+        /// GET: AdvertisingCampaign/Delete/5 Delete Advertising Campaign Form
         /// </summary>
         /// <param name="id">Advertising Campaign Id</param>
         /// <returns></returns>
@@ -188,7 +205,7 @@ namespace WebApplicationNetCoreDev.Controllers
             }
         }
         /// <summary>
-        /// POST: AdvertisingCampaign/Delete/5 Advertising Campaign Delete
+        /// POST: AdvertisingCampaign/Delete/5 Advertising Campaign Delete Save
         /// </summary>
         /// <param name="id">Advertising Campaign Id</param>
         /// <returns></returns>
