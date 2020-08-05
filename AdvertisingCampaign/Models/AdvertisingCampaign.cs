@@ -6,6 +6,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace AdvertisingCampaign.Models
 {
+    [Table("dbo.AdvertisingCampaign")]
     public partial class AdvertisingCampaign
     {
         [Key]

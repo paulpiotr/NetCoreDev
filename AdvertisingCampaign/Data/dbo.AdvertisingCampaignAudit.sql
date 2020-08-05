@@ -8,4 +8,4 @@
     [AuditIP]     NVARCHAR (32)  NOT NULL,
     CONSTRAINT [PK_dbo.AdvertisingCampaignAudit] PRIMARY KEY CLUSTERED ([Id] ASC)
 );
-
+GO
