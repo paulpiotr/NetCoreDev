@@ -21,13 +21,13 @@ namespace WebApplicationNetCoreDev.Controllers
             return View();
         }
         //[Authorize(Roles = "Administrator")]
-        [Authorize(Policy = "Administrator")]
+        //[Authorize(Policy = "Administrator")]
         public IActionResult Privacy()
         {
             return View();
         }
         //[Authorize(Roles = "Administrator")]
-        [Authorize(Policy = "Administrator")]
+        //[Authorize(Policy = "Administrator")]
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

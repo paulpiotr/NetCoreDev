@@ -42,12 +42,6 @@ module.exports = {
                     priority: -20,
                     reuseExistingChunk: true
                 },
-                //styles: {
-                //    name: 'styles',
-                //    test: /\.css$/,
-                //    chunks: 'all',
-                //    enforce: true,
-                //}
             }
         },
     },
@@ -68,9 +62,6 @@ module.exports = {
                     },
                     {
                         loader: "css-loader",
-                        //options: {
-                        //    modules: true
-                        //}
                     },
                 ],
             },

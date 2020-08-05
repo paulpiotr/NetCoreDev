@@ -7,8 +7,8 @@
     <title>@ViewData["Title"] - WebApplicationNetCoreDev</title>
     @if (System.IO.File.Exists("wwwroot/vendor/dist/default-styles.html"))
     {
-        @Html.Raw(System.IO.File.ReadAllText("wwwroot/vendor/dist/default-styles.html"));
-    }
+@Html.Raw(System.IO.File.ReadAllText("wwwroot/vendor/dist/default-styles.html"));
+}
     @RenderSection("Css", required: false)
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -23,50 +23,49 @@
         IgnoreBody();
         @await Html.PartialAsync("~/Views/Authentication/_Index.cshtml")
     }
-    else
-    {
-        <!--Preloader-->
-        @await Html.PartialAsync("Elegant/_Preloader.cshtml")
-        <!--Preloader-->
-        <!--Main wrapper - style you can find in pages.scss-->
-        <div id="main-wrapper">
-            <!--Topbar header - style you can find in pages.scss-->
-            <header class="topbar">
-                <nav class="navbar top-navbar navbar-expand-md navbar-dark">
-                    <!--Logo-->
-                    @await Html.PartialAsync("Elegant/_Logo.cshtml")
-                    <!--/Logo-->
-                    <!--Navbar Collapse-->
-                    @await Html.PartialAsync("Elegant/_NavbarCollapse.cshtml")
-                    <!--End Navbar Collapse-->
-                </nav>
-            </header>
-            <!--End Topbar header-->
-            <!--Left Sidebar - style you can find in sidebar.scss-->
-            @await Html.PartialAsync("Elegant/_LeftSidebar.cshtml")
-            <!--End Left Sidebar - style you can find in sidebar.scs-->s
-            <!--Page wrapper-->
-            <div class="page-wrapper bg-light">
-                <!--Container fluid-->
-                <div class="container-fluid p-4 bg-light">
-                    @RenderBody()
-                    <!--Right sidebar-->
-                    @await Html.PartialAsync("Elegant/_RightSidebar.cshtml")
-                    <!--End Right sidebar-->
-                </div>
-                <!--End Container fluid-->
-            </div>
-            <!--End Page wrapper-->
-            <!--Footer-->
-            @await Html.PartialAsync("Elegant/_Footer.cshtml")
-            <!--End Footer-->
-        </div>
+else
+{ 
+<!--Preloader-->
+@await Html.PartialAsync("Elegant/_Preloader.cshtml") <!--Preloader--> <!--Main wrapper - style you can find in pages.scss-->
+<div id="main-wrapper">
+<!--Topbar header - style you can find in pages.scss-->
+<header class="topbar">
+    <nav class="navbar top-navbar navbar-expand-md navbar-dark">
+        <!--Logo-->
+        @await Html.PartialAsync("Elegant/_Logo.cshtml")
+        <!--/Logo-->
+        <!--Navbar Collapse-->
+        @await Html.PartialAsync("Elegant/_NavbarCollapse.cshtml")
+        <!--End Navbar Collapse-->
+    </nav>
+</header>
+<!--End Topbar header-->
+<!--Left Sidebar - style you can find in sidebar.scss-->
+@await Html.PartialAsync("Elegant/_LeftSidebar.cshtml")
+<!--End Left Sidebar - style you can find in sidebar.scs-->s
+<!--Page wrapper-->
+<div class="page-wrapper bg-light">
+    <!--Container fluid-->
+    <div class="container-fluid p-4 bg-light">
+        @RenderBody()
+        <!--Right sidebar-->
+        @await Html.PartialAsync("Elegant/_RightSidebar.cshtml")
+        <!--End Right sidebar-->
+    </div>
+    <!--End Container fluid-->
+</div>
+<!--End Page wrapper-->
+<!--Footer-->
+@await Html.PartialAsync("Elegant/_Footer.cshtml")
+<!--End Footer-->
+</div>
     }
     @if (System.IO.File.Exists("wwwroot/vendor/dist/default-scripts.html"))
     {
         @Html.Raw(System.IO.File.ReadAllText("wwwroot/vendor/dist/default-scripts.html"));
     }
     @RenderSection("Scripts", required: false)
+    <script type="text/javascript" src="/js/site.js"></script>
     @Html.RenderScripts()
 </body>
 </html>

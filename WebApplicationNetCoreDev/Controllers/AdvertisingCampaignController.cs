@@ -12,143 +12,213 @@ namespace WebApplicationNetCoreDev.Controllers
     public class AdvertisingCampaignController : Controller
     {
         private readonly AdvertisingCampaignContext _context;
-
+        private static readonly log4net.ILog _log4net = Log4netLogger.Log4netLogger.GetLog4netInstance(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         public AdvertisingCampaignController(AdvertisingCampaignContext context)
         {
             _context = context;
         }
-
         // GET: AdvertisingCampaign
         public IActionResult Index()
         {
-            //AdvertisingCampaign.AdvertisingCampaign.Index();
-            //return View(await _context.AdvertisingCampaign.ToListAsync());
-            return View(AdvertisingCampaign.AdvertisingCampaign.Index());
+            try
+            {
+                return View(AdvertisingCampaign.AdvertisingCampaign.Index());
+            }
+            catch (Exception e)
+            {
+                _log4net.Error(string.Format("{0}, {1}", e.Message, e.StackTrace), e);
+                return RedirectToAction("Index", "Error", new { Exception = e });
+            }
         }
-
         // GET: AdvertisingCampaign/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null)
+            try
             {
-                return NotFound();
+                if (id == null)
+                {
+                    return NotFound();
+                }
+                AdvertisingCampaign.Models.AdvertisingCampaign advertisingCampaign = await AdvertisingCampaign.AdvertisingCampaign.FindAsync(id);
+                if (advertisingCampaign == null)
+                {
+                    return RedirectToAction("Index", "Error");
+                }
+                return View(advertisingCampaign);
             }
-
-            var advertisingCampaign = await _context.AdvertisingCampaign
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (advertisingCampaign == null)
+            catch (Exception e)
             {
-                return NotFound();
+                _log4net.Error(string.Format("{0}, {1}", e.Message, e.StackTrace), e);
+                return RedirectToAction("Index", "Error", new { Exception = e });
             }
-
-            return View(advertisingCampaign);
         }
-
         // GET: AdvertisingCampaign/Create
         public IActionResult Create()
         {
-            return View();
+            try
+            {
+                return View();
+            }
+            catch (Exception e)
+            {
+                _log4net.Error(string.Format("{0}, {1}", e.Message, e.StackTrace), e);
+                return RedirectToAction("Index", "Error", new { Exception = e });
+            }
         }
-
         // POST: AdvertisingCampaign/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Description,PricePerClick,NumberOfClicks,TotalCost,Created")] AdvertisingCampaign.Models.AdvertisingCampaign advertisingCampaign)
+        public async Task<IActionResult> Create([Bind("Name,Description,PricePerClick,NumberOfClicks")] AdvertisingCampaign.Models.AdvertisingCampaign advertisingCampaign)
         {
-            if (ModelState.IsValid)
+            try
             {
-                _context.Add(advertisingCampaign);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                if (ModelState.IsValid)
+                {
+                    advertisingCampaign = await AdvertisingCampaign.AdvertisingCampaign.CreateAsync(advertisingCampaign);
+                    if (null != advertisingCampaign)
+                    {
+                        return RedirectToAction(nameof(Index));
+                    }
+                    else
+                    {
+                        return RedirectToAction("Index", "Error");
+                    }
+                }
+                return View(advertisingCampaign);
             }
-            return View(advertisingCampaign);
+            catch (Exception e)
+            {
+                _log4net.Error(string.Format("{0}, {1}", e.Message, e.StackTrace), e);
+                return RedirectToAction("Index", "Error", new { Exception = e });
+            }
         }
-
+        /// <summary>
+        /// GET: AdvertisingCampaign/Edit/5 Advertising Campaign Edit
+        /// </summary>
+        /// <param name="id">Advertising Campaign Id</param>
+        /// <returns></returns>
         // GET: AdvertisingCampaign/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null)
+            try
             {
-                return NotFound();
+                if (id == null)
+                {
+                    return NotFound();
+                }
+                AdvertisingCampaign.Models.AdvertisingCampaign advertisingCampaign = await AdvertisingCampaign.AdvertisingCampaign.FindAsync(id);
+                if (advertisingCampaign == null)
+                {
+                    return NotFound();
+                }
+                return View(advertisingCampaign);
             }
-
-            var advertisingCampaign = await _context.AdvertisingCampaign.FindAsync(id);
-            if (advertisingCampaign == null)
+            catch (Exception e)
             {
-                return NotFound();
+                _log4net.Error(string.Format("{0}, {1}", e.Message, e.StackTrace), e);
+                return RedirectToAction("Index", "Error", new { Exception = e });
             }
-            return View(advertisingCampaign);
         }
-
+        /// <summary>
+        /// POST: AdvertisingCampaign/Edit/5 Advertising Campaign Edit
+        /// </summary>
+        /// <param name="id">Advertising Campaig Id</param>
+        /// <param name="advertisingCampaign">Advertising Campaig Model</param>
+        /// <returns></returns>
         // POST: AdvertisingCampaign/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description,PricePerClick,NumberOfClicks,TotalCost,Created")] AdvertisingCampaign.Models.AdvertisingCampaign advertisingCampaign)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description,PricePerClick,NumberOfClicks")] AdvertisingCampaign.Models.AdvertisingCampaign advertisingCampaign)
         {
-            if (id != advertisingCampaign.Id)
+            try
             {
-                return NotFound();
-            }
-
-            if (ModelState.IsValid)
-            {
-                try
+                if (id != advertisingCampaign.Id)
                 {
-                    _context.Update(advertisingCampaign);
-                    await _context.SaveChangesAsync();
+                    return NotFound();
                 }
-                catch (DbUpdateConcurrencyException)
+                if (ModelState.IsValid)
                 {
-                    if (!AdvertisingCampaignExists(advertisingCampaign.Id))
+                    advertisingCampaign = await AdvertisingCampaign.AdvertisingCampaign.UpdateAsync(id, advertisingCampaign);
+                    if (null != advertisingCampaign)
                     {
-                        return NotFound();
+                        return RedirectToAction(nameof(Index));
                     }
                     else
                     {
-                        throw;
+                        return RedirectToAction("Index", "Error");
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return View(advertisingCampaign);
             }
-            return View(advertisingCampaign);
+            catch (Exception e)
+            {
+                _log4net.Error(string.Format("{0}, {1}", e.Message, e.StackTrace), e);
+                return RedirectToAction("Index", "Error", new { Exception = e });
+            }
         }
-
+        /// <summary>
+        /// GET: AdvertisingCampaign/Delete/5 Delete Advertising Campaign
+        /// </summary>
+        /// <param name="id">Advertising Campaign Id</param>
+        /// <returns></returns>
         // GET: AdvertisingCampaign/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null)
+            try
             {
-                return NotFound();
+                if (id == null)
+                {
+                    return NotFound();
+                }
+                AdvertisingCampaign.Models.AdvertisingCampaign advertisingCampaign = await AdvertisingCampaign.AdvertisingCampaign.FindAsync(id);
+                if (advertisingCampaign == null)
+                {
+                    return NotFound();
+                }
+                return View(advertisingCampaign);
             }
-
-            var advertisingCampaign = await _context.AdvertisingCampaign
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (advertisingCampaign == null)
+            catch (Exception e)
             {
-                return NotFound();
+                _log4net.Error(string.Format("{0}, {1}", e.Message, e.StackTrace), e);
+                return RedirectToAction("Index", "Error", new { Exception = e });
             }
-
-            return View(advertisingCampaign);
         }
-
+        /// <summary>
+        /// POST: AdvertisingCampaign/Delete/5 Advertising Campaign Delete
+        /// </summary>
+        /// <param name="id">Advertising Campaign Id</param>
+        /// <returns></returns>
         // POST: AdvertisingCampaign/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(int? id)
         {
-            var advertisingCampaign = await _context.AdvertisingCampaign.FindAsync(id);
-            _context.AdvertisingCampaign.Remove(advertisingCampaign);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
-
-        private bool AdvertisingCampaignExists(int id)
-        {
-            return _context.AdvertisingCampaign.Any(e => e.Id == id);
+            try
+            {
+                if (id == null)
+                {
+                    return NotFound();
+                }
+                AdvertisingCampaign.Models.AdvertisingCampaign advertisingCampaign = await AdvertisingCampaign.AdvertisingCampaign.FindAsync(id);
+                if (null != advertisingCampaign)
+                {
+                    advertisingCampaign = await AdvertisingCampaign.AdvertisingCampaign.DeleteAsync(id, advertisingCampaign);
+                    if (null != advertisingCampaign)
+                    {
+                        return RedirectToAction(nameof(Index));
+                    }
+                }
+                return RedirectToAction("Index", "Error");
+            }
+            catch (Exception e)
+            {
+                _log4net.Error(string.Format("{0}, {1}", e.Message, e.StackTrace), e);
+                return RedirectToAction("Index", "Error", new { Exception = e });
+            }
         }
     }
 }
