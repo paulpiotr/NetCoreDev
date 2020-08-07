@@ -14,7 +14,7 @@
  
  - 4) Po uruchomieniu projektu (ustawiamy WebApplicationNetCoreDev jako startowy) trzeba się zalogować używając danych do logowania z systemu Windows - logowanie takie jak do konta windows.
  
- # Używanie
+ # Używanie
  
  - 5) w celu operacji na kampaniach reklamowych wybieramy z menu po lewej stronie Advertising / Advertising Campaign List - lista lub Advertising / Advertising Campaign Add - dodawanie. Uwaga dane zapisują się w bazie która dołącza się do kompilacji. Każdorazowa kompilacja aplikacji powoduje skopiowanie bazy do katalogu z binarkami projektu i nie będzie już tam danych. Aby tego uniknąć trzeba skopiować bazę do innej lokalizacji i zmienić ConnectionStrings - opis powyżej.
  
