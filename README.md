@@ -4,7 +4,7 @@
 
  - 1) Pobieranie repozytorium - należy sklonować repozytorium
  
- - Komenda: git clone https://piotrpaul@dev.azure.com/piotrpaul/NetCoreDev/_git/NetCoreDev
+ - Komenda: git clone https://piotrpaul@dev.azure.com/piotrpaul/NetCoreDev/_git/NetCoreDev
  - Lub komenda git clone https://github.com/paulpiotr/NetCoreDev.git
  
  - 2) Należy zaciągnąć sub-moduły
