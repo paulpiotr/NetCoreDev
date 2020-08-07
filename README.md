@@ -5,10 +5,11 @@
  - 1) Pobieranie repozytorium - należy sklonować repozytorium
  
  - Komenda: git clone https://piotrpaul@dev.azure.com/piotrpaul/NetCoreDev/_git/NetCoreDev
+ - Lub komenda git clone https://github.com/paulpiotr/NetCoreDev.git
  
  - 2) Należy zaciągnąć sub-moduły
  
- - Komenda: git submodule init && git submodule update && git submodule foreach git pull origin master
+ - Komenda: git submodule init && git submodule update && git submodule foreach git checkout master && git submodule foreach git pull origin master
  
  - 3) Baza danych: Założyłem bazę danych MSSQL używając pliku MDF. Plik z strukturą znajduje się w lokalizacji NetCoreDev\AdvertisingCampaign\Data. Plik dołączyłem do repozytorium i załączam przy kompilacji do katalogu z projektem. Można skopiować pliki AdvertisingCampaignDatabase.mdf i AdvertisingCampaignDatabase_log.ldf do innej lokalizacji i zmienić ConnectionStrings w NetCoreDev\WebApplicationNetCoreDev\appsettings.json - ustawiamy wartość dla parametru AdvertisingCampaignContext lub stworzyć bazę danych w MsSQL - skrypty tabel NetCoreDev\AdvertisingCampaign\Data\dbo.AdvertisingCampaign.sql NetCoreDev\AdvertisingCampaign\Data\dbo.AdvertisingCampaignAudit.sql
  
