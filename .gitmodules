@@ -7,3 +7,6 @@
 [submodule "Log4netLogger"]
 	path = Log4netLogger
 	url = https://github.com/paulpiotr/Log4netLogger
+[submodule "PortalApiGus"]
+	path = PortalApiGus
+	url = https://github.com/paulpiotr/PortalApiGus.git
