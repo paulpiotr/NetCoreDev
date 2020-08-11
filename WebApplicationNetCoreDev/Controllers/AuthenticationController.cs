@@ -28,11 +28,15 @@ namespace WebApplicationNetCoreDev.Controllers
         /// </summary>
         /// <returns></returns>
         [AllowAnonymous]
-        public IActionResult Index()
+        public IActionResult Index(string returnUrl)
         {
             if (User.Identity.IsAuthenticated)
             {
-                return RedirectToAction(nameof(Index), "Home", new { Username = User.Identity.Name });
+                if (Url.IsLocalUrl(returnUrl))
+                {
+                    return Redirect(returnUrl);
+                }
+                return RedirectToAction(nameof(Index), "Home", new { Username = User.Identity.Name, ReturnUrl = returnUrl });
             }
             return View();
         }
@@ -47,7 +51,7 @@ namespace WebApplicationNetCoreDev.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [AllowAnonymous]
-        public async Task<IActionResult> IndexAsync([Bind("Username, Password, RememberMe")] WebApplicationNetCoreDev.Models.AuthenticationModel model)
+        public async Task<IActionResult> IndexAsync([Bind("Username, Password, RememberMe")] WebApplicationNetCoreDev.Models.AuthenticationModel model, string returnUrl)
         {
             if (ModelState.IsValid)
             {
@@ -58,11 +62,19 @@ namespace WebApplicationNetCoreDev.Controllers
                     result = await WindowsIdentityCookieAuthenticationAsync(model);
                     if (true == result)
                     {
+                        if (Url.IsLocalUrl(returnUrl))
+                        {
+                            return Redirect(returnUrl);
+                        }
                         return RedirectToAction(nameof(Index), "Home", new { model.Username });
                     }
                     result = await HttpContextAuthenticateWindowsCookieAuthenticationAsync(model);
                     if (true == result)
                     {
+                        if (Url.IsLocalUrl(returnUrl))
+                        {
+                            return Redirect(returnUrl);
+                        }
                         return RedirectToAction(nameof(Index), "Home", new { model.Username });
                     }
                     //return Challenge("Windows");
@@ -148,7 +160,7 @@ namespace WebApplicationNetCoreDev.Controllers
                         // lifetime of the authentication ticket) or session-based.
                         //IssuedUtc = <DateTimeOffset>,
                         // The time at which the authentication ticket was issued.
-                        RedirectUri = "/"
+                        RedirectUri = "/",
                         // The full path or absolute URI to be used as an http 
                         // redirect response value.
                     };
@@ -192,7 +204,9 @@ namespace WebApplicationNetCoreDev.Controllers
                     WindowsIdentity windowsIdentity = windowsPrincipal.Identity as WindowsIdentity;
                     AppDomain appDomain = Thread.GetDomain();
                     appDomain.SetPrincipalPolicy(PrincipalPolicy.WindowsPrincipal);
+
                     //WindowsPrincipal windowsPrincipal = (WindowsPrincipal)Thread.CurrentPrincipal;
+
                     List<Claim> claims = new List<Claim>() {
                             new Claim(ClaimTypes.Name, windowsIdentity.Name),
                             new Claim("FullName", windowsIdentity.Name)
@@ -228,6 +242,7 @@ namespace WebApplicationNetCoreDev.Controllers
                         // The full path or absolute URI to be used as an http 
                         // redirect response value.
                     };
+
                     await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity), authenticationProperties);
 
                     //await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity), authenticationProperties);

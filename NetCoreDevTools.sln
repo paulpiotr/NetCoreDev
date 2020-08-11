@@ -21,6 +21,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleImpersonation", "Simp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AdvertisingCampaign", "AdvertisingCampaign\AdvertisingCampaign.csproj", "{56F44524-037B-4D52-A50A-E6DF9C2EE08A}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PortalApiGus", "PortalApiGus", "{942239AD-6F36-4DAD-93D0-44B83F8E4F6D}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PortalApiGusApiRegonData", "PortalApiGus\ApiRegon\PortalApiGusApiRegonData\PortalApiGusApiRegonData.csproj", "{1C618623-E5BF-485F-A7BB-3A895DF6F4E3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -64,9 +68,18 @@ Global
 		{56F44524-037B-4D52-A50A-E6DF9C2EE08A}.DefaultBuild|Any CPU.Build.0 = Debug|Any CPU
 		{56F44524-037B-4D52-A50A-E6DF9C2EE08A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{56F44524-037B-4D52-A50A-E6DF9C2EE08A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1C618623-E5BF-485F-A7BB-3A895DF6F4E3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1C618623-E5BF-485F-A7BB-3A895DF6F4E3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1C618623-E5BF-485F-A7BB-3A895DF6F4E3}.DefaultBuild|Any CPU.ActiveCfg = Debug|Any CPU
+		{1C618623-E5BF-485F-A7BB-3A895DF6F4E3}.DefaultBuild|Any CPU.Build.0 = Debug|Any CPU
+		{1C618623-E5BF-485F-A7BB-3A895DF6F4E3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1C618623-E5BF-485F-A7BB-3A895DF6F4E3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{1C618623-E5BF-485F-A7BB-3A895DF6F4E3} = {942239AD-6F36-4DAD-93D0-44B83F8E4F6D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {76F1B00C-2A40-4B88-82DC-8A1D00A17DBD}

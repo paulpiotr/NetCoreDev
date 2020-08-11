@@ -9,7 +9,8 @@
     {
 @Html.Raw(System.IO.File.ReadAllText("wwwroot/vendor/dist/default-styles.html"));
 }
-    @RenderSection("Css", required: false)
+    @RenderSection("css", required: false)
+    @RenderSection("jstop", required: false)
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -17,54 +18,26 @@
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 </head>
-<body class="skin-blue fixed-layout lock-nav">
-    @if (!User.Identity.IsAuthenticated)
-    {
-        IgnoreBody();
-        @await Html.PartialAsync("~/Views/Authentication/_Index.cshtml")
-    }
-else
-{ 
-<!--Preloader-->
-@await Html.PartialAsync("Elegant/_Preloader.cshtml") <!--Preloader--> <!--Main wrapper - style you can find in pages.scss-->
-<div id="main-wrapper">
-<!--Topbar header - style you can find in pages.scss-->
-<header class="topbar">
-    <nav class="navbar top-navbar navbar-expand-md navbar-dark">
-        <!--Logo-->
-        @await Html.PartialAsync("Elegant/_Logo.cshtml")
-        <!--/Logo-->
-        <!--Navbar Collapse-->
-        @await Html.PartialAsync("Elegant/_NavbarCollapse.cshtml")
-        <!--End Navbar Collapse-->
-    </nav>
-</header>
-<!--End Topbar header-->
-<!--Left Sidebar - style you can find in sidebar.scss-->
-@await Html.PartialAsync("Elegant/_LeftSidebar.cshtml")
-<!--End Left Sidebar - style you can find in sidebar.scs-->s
-<!--Page wrapper-->
-<div class="page-wrapper bg-light">
-    <!--Container fluid-->
-    <div class="container-fluid p-4 bg-light">
-        @RenderBody()
-        <!--Right sidebar-->
-        @await Html.PartialAsync("Elegant/_RightSidebar.cshtml")
-        <!--End Right sidebar-->
+<body class="m-0 p-0">
+    <div class="preloader">
+        <div class="loader">
+            <div class="loader__figure"></div>
+            <p class="loader__label">@System.Reflection.Assembly.GetEntryAssembly().GetName().Name</p>
+        </div>
     </div>
-    <!--End Container fluid-->
-</div>
-<!--End Page wrapper-->
-<!--Footer-->
-@await Html.PartialAsync("Elegant/_Footer.cshtml")
-<!--End Footer-->
-</div>
-    }
+    <div class="container-fluid m-0 p-0">
+        @await Html.PartialAsync("Elegant/LandingPage/_TopNavbarFixed.cshtml")
+        <div class="min-vh-100">
+            @RenderBody()
+        </div>
+        @*@await Html.PartialAsync("Elegant/LandingPage/_BeforeFooter.cshtml")*@
+        @await Html.PartialAsync("Elegant/LandingPage/_Footer.cshtml")
+    </div>
     @if (System.IO.File.Exists("wwwroot/vendor/dist/default-scripts.html"))
     {
-        @Html.Raw(System.IO.File.ReadAllText("wwwroot/vendor/dist/default-scripts.html"));
-    }
-    @RenderSection("Scripts", required: false)
+@Html.Raw(System.IO.File.ReadAllText("wwwroot/vendor/dist/default-scripts.html"));
+}
+    @RenderSection("jsbottom", required: false)
     <script type="text/javascript" src="/js/site.js"></script>
     @Html.RenderScripts()
 </body>

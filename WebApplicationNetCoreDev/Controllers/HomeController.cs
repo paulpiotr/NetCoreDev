@@ -15,13 +15,15 @@ namespace WebApplicationNetCoreDev.Controllers
         {
             _logger = logger;
         }
-        [AllowAnonymous]
+        //[AllowAnonymous]
+        [Authorize]
         public IActionResult Index()
         {
             return View();
         }
         //[Authorize(Roles = "Administrator")]
         //[Authorize(Policy = "Administrator")]
+        [Authorize]
         public IActionResult Privacy()
         {
             return View();

@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 
 namespace WebApplicationNetCoreDev.Controllers
 {
+    [AllowAnonymous]
     public class AdvertisingCampaignController : Controller
     {
         //private readonly AdvertisingCampaignContext _context;
@@ -21,6 +22,7 @@ namespace WebApplicationNetCoreDev.Controllers
         /// </summary>
         /// <returns></returns>
         // GET: AdvertisingCampaign
+        [Authorize]
         public IActionResult Index()
         {
             try
@@ -39,6 +41,7 @@ namespace WebApplicationNetCoreDev.Controllers
         /// <param name="id">Advertising Campaign Id</param>
         /// <returns></returns>
         // GET: AdvertisingCampaign/Details/5
+        [Authorize]
         public async Task<IActionResult> Details(int? id)
         {
             try
