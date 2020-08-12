@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -32,6 +33,7 @@ namespace WebApplicationNetCoreDev
             //{
             //    services.AddDbContext<AdvertisingCampaign.Models.AdvertisingCampaignContext>(options => options.UseSqlServer(Configuration.GetConnectionString("AdvertisingCampaignContext")));
             //}
+            services.AddDbContext<PortalApiGusApiRegonData.Data.PortalApiGusApiRegonDataDbContext>(options => options.UseSqlServer(PortalApiGusApiRegonData.PortalApiGusApiRegonDataContext.GetConnectionString()));
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(
                     options =>
                     {

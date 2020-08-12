@@ -17,13 +17,4 @@
     <ProjectReference Include="..\EncryptDecrypt\EncryptDecrypt\EncryptDecrypt.csproj" />
     <ProjectReference Include="..\Log4netLogger\Log4netLogger.csproj" />
   </ItemGroup>
-
-  <ItemGroup>
-    <None Update="Data\AdvertisingCampaignDatabase.mdf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Data\AdvertisingCampaignDatabase_log.ldf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
 </Project>

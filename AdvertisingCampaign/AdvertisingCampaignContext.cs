@@ -42,6 +42,10 @@ namespace AdvertisingCampaign
                 {
                     return connectionString.Replace("%AppDomain.CurrentDomain.BaseDirectory%", AppDomain.CurrentDomain.BaseDirectory);
                 }
+                else if(!string.IsNullOrWhiteSpace(connectionString) && connectionString.Contains("%Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData%"))
+                {
+                    return connectionString.Replace("%Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)%", Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)).Replace("%System.Reflection.Assembly.GetExecutingAssembly().GetName().Name%", System.Reflection.Assembly.GetExecutingAssembly().GetName().Name);
+                }
                 else if (!string.IsNullOrWhiteSpace(connectionString))
                 {
                     return connectionString;
@@ -85,6 +89,10 @@ namespace AdvertisingCampaign
                 if (!string.IsNullOrWhiteSpace(connectionString) && connectionString.Contains("%AppDomain.CurrentDomain.BaseDirectory%"))
                 {
                     return connectionString.Replace("%AppDomain.CurrentDomain.BaseDirectory%", AppDomain.CurrentDomain.BaseDirectory);
+                }
+                else if (!string.IsNullOrWhiteSpace(connectionString) && connectionString.Contains("%Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData%"))
+                {
+                    return connectionString.Replace("%Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)%", Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)).Replace("%System.Reflection.Assembly.GetExecutingAssembly().GetName().Name%", System.Reflection.Assembly.GetExecutingAssembly().GetName().Name);
                 }
                 else if (!string.IsNullOrWhiteSpace(connectionString))
                 {

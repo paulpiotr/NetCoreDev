@@ -22,6 +22,7 @@
     <ProjectReference Include="..\AdvertisingCampaign\AdvertisingCampaign.csproj" />
     <ProjectReference Include="..\EncryptDecrypt\EncryptDecrypt\EncryptDecrypt.csproj" />
     <ProjectReference Include="..\Log4netLogger\Log4netLogger.csproj" />
+    <ProjectReference Include="..\PortalApiGus\ApiRegon\PortalApiGusApiRegonData\PortalApiGusApiRegonData.csproj" />
     <ProjectReference Include="..\SimpleImpersonation\src\SimpleImpersonation.csproj" />
   </ItemGroup>
   <Target Name="SetEnvConfig" BeforeTargets="Compile">
