@@ -25,7 +25,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PortalApiGus", "PortalApiGu
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PortalApiGusApiRegonData", "PortalApiGus\ApiRegon\PortalApiGusApiRegonData\PortalApiGusApiRegonData.csproj", "{1C618623-E5BF-485F-A7BB-3A895DF6F4E3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestConsoleApp", "TestConsoleApp\TestConsoleApp.csproj", "{55722A81-81B0-4F3D-BE76-40FC315B8AAA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestConsoleApp", "TestConsoleApp\TestConsoleApp.csproj", "{55722A81-81B0-4F3D-BE76-40FC315B8AAA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
