@@ -1,5 +1,6 @@
 ﻿<!-- Footer -->
 <footer class="footer">
-    &copy; 2020 - XLServiceWeb - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+    <span class="p-3">Copyright &copy; @DateTime.Now.Year All Rights Reserved by <a class="text-black-50" href="@Url.Action("Index", "Home")" target="_blank">@System.Reflection.Assembly.GetEntryAssembly().GetName().Name</a></span>
+    <span class="p-3">Design & Developed by <a class="text-black-50" href="@Url.Action("Index", "Home")" target="_blank">@System.Reflection.Assembly.GetEntryAssembly().GetName().Name</a></span>
 </footer>
 <!-- End Footer -->

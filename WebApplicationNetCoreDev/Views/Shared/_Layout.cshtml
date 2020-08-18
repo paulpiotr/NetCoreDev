@@ -17,6 +17,10 @@
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
+    @if (System.IO.File.Exists("wwwroot/vendor/dist/default-scripts.html"))
+    {
+        @Html.Raw(System.IO.File.ReadAllText("wwwroot/vendor/dist/default-scripts.html"));
+    }
 </head>
 <body class="m-0 p-0">
     <div class="preloader">
@@ -33,10 +37,6 @@
         @*@await Html.PartialAsync("Elegant/LandingPage/_BeforeFooter.cshtml")*@
         @await Html.PartialAsync("Elegant/LandingPage/_Footer.cshtml")
     </div>
-    @if (System.IO.File.Exists("wwwroot/vendor/dist/default-scripts.html"))
-    {
-@Html.Raw(System.IO.File.ReadAllText("wwwroot/vendor/dist/default-scripts.html"));
-}
     @RenderSection("jsbottom", required: false)
     <script type="text/javascript" src="/js/site.js"></script>
     @Html.RenderScripts()

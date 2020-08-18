@@ -34,6 +34,8 @@ namespace WebApplicationNetCoreDev
             //    services.AddDbContext<AdvertisingCampaign.Models.AdvertisingCampaignContext>(options => options.UseSqlServer(Configuration.GetConnectionString("AdvertisingCampaignContext")));
             //}
             services.AddDbContext<PortalApiGusApiRegonData.Data.PortalApiGusApiRegonDataDbContext>(options => options.UseSqlServer(PortalApiGusApiRegonData.PortalApiGusApiRegonDataContext.GetConnectionString()));
+            //To do
+            //services.AddDbContextPool<PortalApiGusApiRegonData.Data.PortalApiGusApiRegonDataDbContext>(options => options.UseSqlServer(PortalApiGusApiRegonData.PortalApiGusApiRegonDataContext.GetConnectionString()));
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(
                     options =>
                     {
@@ -46,10 +48,12 @@ namespace WebApplicationNetCoreDev
                         options.SlidingExpiration = true;
                     }
                 );
+            services.AddKendo();
+            services.AddControllersWithViews().AddJsonOptions(opts => opts.JsonSerializerOptions.PropertyNamingPolicy = null);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public async void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {
@@ -76,6 +80,8 @@ namespace WebApplicationNetCoreDev
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
+
+            await PortalApiGusApiRegonData.Helper.EntityContextHelper.RunMigrationAsync(app.ApplicationServices).ConfigureAwait(false);
         }
     }
 }
