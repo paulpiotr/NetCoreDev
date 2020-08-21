@@ -1,0 +1,94 @@
+﻿@using Kendo.Mvc.UI;
+@using WebApplicationNetCoreDev.Helpers;
+
+@model IEnumerable<WebApplicationNetCoreDev.Models.Route>
+
+@{
+    string gridName = string.Format("{0}{1}", @System.Reflection.Assembly.GetEntryAssembly().GetName().Name, @System.Reflection.Assembly.GetAssembly(typeof(PortalApiGusApiRegonData.Models.DaneSzukajPodmioty.DaneSzukajPodmioty)).GetName().Name);
+    string gridActions = string.Format("{0}Actions", gridName);
+    string gridDataSource = string.Format("{0}DataSource", gridName);
+    string gridActionApiUrl = string.Format("{0}", "/api/PortalApiGus/DaneSzukajPodmiotyApi/RouteKendoGird");
+}
+
+@{
+    ViewData["Title"] = "Portal Api Gus - Dane Szukaj Podmioty";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="container-fluid k-content">
+
+    <div class="row">
+
+        @(Html.Kendo().Breadcrumb()
+            .Name("breadcrumb")
+            .Items(items =>
+            {
+                items.Add()
+                .Type(BreadcrumbItemType.RootItem)
+                .Href(Url.Action("Index", "DaneSzukajPodmioty"))
+                .Text("Portal Api Gus - Dane Szukaj Podmioty")
+                .ShowText(true)
+                .Icon("home")
+                .ShowIcon(true);
+                items.Add()
+                .Type(BreadcrumbItemType.Item)
+                .Href("javascript:void(0)")
+                .Text("Portal Api Gus - Dane Szukaj Podmioty Dostępne Akcje")
+                .ShowText(true)
+                .Icon("link-horizontal")
+                .ShowIcon(true);
+            })
+        )
+
+    </div>
+
+    <div class="row overflow-auto">
+
+        @(Html.Kendo().DataSource<WebApplicationNetCoreDev.Models.Route>()
+            .Name(gridDataSource)
+            .Ajax(
+                dataSource => dataSource
+                .Batch(true)
+                .PageSize(100)
+                .AutoSync(true)
+                .ServerOperation(true)
+                .Read(read => read.Url(gridActionApiUrl).Type(HttpVerbs.Get)
+            ))
+        )
+
+        @(Html.Kendo().Grid<WebApplicationNetCoreDev.Models.Route>()
+            .Name(gridName)
+            .Columns(
+            columns =>
+            {
+                columns.Bound(c => c.RouteId).Title("Route Id").Filterable(false);
+                columns.Bound(c => c.RouteController).Title("Route Controller").Filterable(false);
+                columns.Bound(c => c.RouteAction).Title("Route Action").Filterable(false);
+                columns.Bound(c => c.RouteUrlAction).Title("Route Url Action").Filterable(false);
+                columns.Bound(c => c.RouteUrlAbsoluteAction).Title("Route Url Absolute Action").Filterable(false);
+            })
+            .Sortable()
+            .Scrollable()
+            .DataSource(gridDataSource)
+        )
+
+        @Html.Script(
+            @<script type="text/javascript">
+                $(function () {
+                    try {
+                        var grid = $("#@gridName");
+                        var gridDataSource = @gridDataSource;
+                        var gridWidget = grid.data("kendoGrid");
+                        gridWidget.wrapper.height($(".page-wrapper").first().height() * 0.9);
+                        gridWidget.resize();
+                        gridWidget.resize(true);
+                    }
+                    catch (e) {
+                        console.log(e);
+                    }
+                });
+            </script>
+        )
+
+    </div>
+</div>

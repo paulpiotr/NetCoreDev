@@ -6,7 +6,7 @@ using WebApplicationNetCoreDev.Models;
 
 namespace WebApplicationNetCoreDev.Controllers
 {
-    [AllowAnonymous]
+    [Authorize(AuthenticationSchemes = "Cookies")]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
@@ -15,15 +15,14 @@ namespace WebApplicationNetCoreDev.Controllers
         {
             _logger = logger;
         }
-        //[AllowAnonymous]
-        [Authorize]
-        public IActionResult Index()
+        [AllowAnonymous]
+        public IActionResult Index([FromQuery] string UserName, [FromQuery] string ReturnUrl)
         {
             return View();
         }
         //[Authorize(Roles = "Administrator")]
         //[Authorize(Policy = "Administrator")]
-        [Authorize]
+        [Authorize(AuthenticationSchemes = "Cookies", Policy = null, Roles = "User")]
         public IActionResult Privacy()
         {
             return View();

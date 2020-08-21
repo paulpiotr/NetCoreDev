@@ -1,0 +1,6 @@
+﻿@{ 
+    ViewData["Title"] = "Pobierz lub generuj klucz (token) API";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+@await Html.PartialAsync("~/Views/Authentication/_GenerateJwtToken.cshtml")

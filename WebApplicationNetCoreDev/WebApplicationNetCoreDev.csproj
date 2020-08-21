@@ -18,6 +18,7 @@
     <PackageReference Include="IdentityServer4" Version="4.0.4" />
     <PackageReference Include="log4net" Version="2.0.8" />
     <PackageReference Include="log4net-loggly" Version="9.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="3.1.7" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.7" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="3.1.7" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.7">
@@ -35,7 +36,8 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Kendo.Mvc">
-      <HintPath>..\..\..\Users\piotr.paul.ISK\.nuget\packages\Telerik.UI.for.AspNet.Core.Trial\2020.2.617\lib\netcoreapp3.1\Kendo.Mvc.dll</HintPath>
+      <HintPath>..\..\..\Users\piotr.paul.ISK\.nuget\packages\telerik.ui.for.aspnet.core\2020.2.617\lib\netcoreapp3.1\Kendo.Mvc.dll</HintPath>
+      <Private>true</Private>
     </Reference>
   </ItemGroup>
   <ItemGroup>

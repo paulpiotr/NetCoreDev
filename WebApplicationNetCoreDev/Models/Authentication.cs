@@ -15,7 +15,7 @@ namespace WebApplicationNetCoreDev.Models
         /// </summary>
         [Required]
         [Display(Name = "Nazwa użytkownika", Prompt = "Wpisz nazwę użytkownika", Description = "Nazwa użytkownika zarejestrowanego w systemie lub nazwa konta windows.")]
-        public string Username { get; set; }
+        public string UserName { get; set; }
         /// <summary>
         /// Hasło
         /// </summary>

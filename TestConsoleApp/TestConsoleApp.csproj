@@ -6,6 +6,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="System.Runtime.Extensions" Version="4.3.1" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\EncryptDecrypt\EncryptDecrypt\EncryptDecrypt.csproj" />
     <ProjectReference Include="..\Log4netLogger\Log4netLogger.csproj" />
     <ProjectReference Include="..\PortalApiGus\ApiRegon\PortalApiGusApiRegonData\PortalApiGusApiRegonData.csproj" />

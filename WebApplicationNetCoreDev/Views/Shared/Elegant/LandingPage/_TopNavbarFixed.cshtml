@@ -8,26 +8,51 @@
                 </button>
                 <div class="collapse navbar-collapse" id="NavbarMain">
                     <ul class="navbar-nav ml-auto">
+
                         <li class="nav-item">
                             <a class="nav-link" href="@Url.Action("Index", "Home")">
                                 <span class="p-1"><i class="fa fa-home"></i></span>
                                 <span class="p-1">Home</span>
                             </a>
                         </li>
+
+                        @*<li class="nav-item">
+                            <a class="nav-link" href="@Url.Action("Privacy", "Home")">
+                                <span class="p-1"><i class="fa fa-home"></i></span>
+                                <span class="p-1">Privacy</span>
+                            </a>
+                        </li>*@
+
                         <li class="nav-item">
                             <a class="nav-link" href="@Url.Action("Index", "DaneSzukajPodmioty")">
                                 <span class="p-1"><i class="ti-search"></i></span>
                                 <span class="p-1">Wyszukiwanie podmiotów gospodarczych</span>
                             </a>
                         </li>
+
                         @if (!User.Identity.IsAuthenticated)
                         {
                             <li class="nav-item">
-                            <a class="nav-link" href="@Url.Action("Index", "Authentication")">
-                                <span class="p-1"><i class="fa fa-users"></i></span>
-                                <span class="p-1">Authentication</span>
-                            </a>
+                                <a class="nav-link" href="@Url.Action("Index", "Authentication")">
+                                    <span class="p-1"><i class="fa fa-users"></i></span>
+                                    <span class="p-1">Zaloguj się</span>
+                                </a>
                             </li>
+                        }
+                        else if (User.Identity.IsAuthenticated)
+                        {
+                        <li class="nav-item">
+                            <a class="nav-link" href="@Url.Action("Logout", "Authentication")">
+                                <span class="p-1"><i class="fa fa-power-off"></i></span>
+                                <span class="p-1">Wyluguj się</span>
+                            </a>
+                        </li>
+                        @*<li class="nav-item">
+                            <a class="nav-link" href="@Url.Action("UserProfile", "Authentication")">
+                                <span class="p-1"><i class="fa fa-user"></i></span>
+                                <span class="p-1">Profil użytkownika</span>
+                            </a>
+                        </li>*@
                         }
 
                     </ul>

@@ -356,3 +356,5 @@ MigrationBackup/
 node_modules/
 Release/
 log4net.config
+id_rsa.ppk.pub
+id_rsa.ppk

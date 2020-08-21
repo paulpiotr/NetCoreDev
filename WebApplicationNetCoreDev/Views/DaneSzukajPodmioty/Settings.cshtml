@@ -1,0 +1,82 @@
+﻿@using Kendo.Mvc.UI;
+@using WebApplicationNetCoreDev.Helpers;
+
+@{
+    string gridName = string.Format("{0}{1}", @System.Reflection.Assembly.GetEntryAssembly().GetName().Name, @System.Reflection.Assembly.GetAssembly(typeof(PortalApiGusApiRegonData.Models.DaneSzukajPodmioty.DaneSzukajPodmioty)).GetName().Name);
+    string gridActions = string.Format("{0}Actions", gridName);
+    string gridDataSource = string.Format("{0}DataSource", gridName);
+    string gridToolbarTemplate = string.Format("{0}GridToolbarTemplate", gridName);
+    string gridActionApiUrl = string.Format("{0}", "api/DaneSzukajPodmiotyApi/KendoGrid");
+}
+
+@{
+    ViewData["Title"] = "Portal Api Gus - Dane Szukaj Podmioty Ustawienia";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="container-fluid k-content wide">
+    <div class="row">
+
+        @(Html.Kendo().Breadcrumb()
+            .Name("breadcrumb")
+            .Items(items =>
+            {
+                items.Add()
+                .Type(BreadcrumbItemType.RootItem)
+                .Href(Url.Action("Index", "DaneSzukajPodmioty"))
+                .Text("Portal Api Gus - Dane Szukaj Podmioty")
+                .ShowText(true)
+                .Icon("home")
+                .ShowIcon(true);
+                items.Add()
+                .Type(BreadcrumbItemType.Item)
+                .Href("javascript:void(0)")
+                .Text("Portal Api Gus - Dane Szukaj Podmioty Ustawienia")
+                .ShowText(true)
+                .Icon("settings")
+                .ShowIcon(true);
+            })
+        )
+
+    </div>
+    <div class="row overflow-auto">
+        <div class="col-sm-4 p-2">
+            Klucz Api [JwtStringToken]:
+        </div>
+        <div class="col-sm-8 p-2">
+            @((string)PortalApiGusApiRegonData.PortalApiGusApiRegonDataConfiguration.GetValue<string>("JwtStringToken"))
+        </div>
+        <div class="col-sm-4 p-2">
+            Użytkownik klucz Api [JwtTokenUserName]:
+        </div>
+        <div class="col-sm-8 p-2">
+            @((string)PortalApiGusApiRegonData.PortalApiGusApiRegonDataConfiguration.GetValue<string>("JwtTokenUserName"))
+        </div>
+        <hr />
+        <div class="col-sm-4 p-2">
+            Klucz Api [PortalApiGusKey]:
+        </div>
+        <div class="col-sm-8 p-2">
+            @((string)PortalApiGusApiRegonData.PortalApiGusApiRegonDataConfiguration.GetValue<string>("PortalApiGusKey"))
+        </div>
+        <div class="col-sm-4 p-2">
+            Czas utrzymywania danych w cache [PortalApiGusSearchCacheLifetime]:
+        </div>
+        <div class="col-sm-8 p-2">
+            @((int)PortalApiGusApiRegonData.PortalApiGusApiRegonDataConfiguration.GetValue<int>("PortalApiGusSearchCacheLifetime"))
+        </div>
+        <hr />
+        <div class="col-sm-4 p-2">
+            Połączenie do bazy danych:
+        </div>
+        <div class="col-sm-8 p-2">
+            @(PortalApiGusApiRegonData.PortalApiGusApiRegonDataContext.GetConnectionString())
+        </div>
+        <div class="col-sm-4 p-2">
+            Możliwe połączenie z bazą danych:
+        </div>
+        <div class="col-sm-8 p-2">
+            @(PortalApiGusApiRegonData.PortalApiGusApiRegonDataContext.IsServerConnected(PortalApiGusApiRegonData.PortalApiGusApiRegonDataContext.GetConnectionString()))
+        </div>
+    </div>
+</div>

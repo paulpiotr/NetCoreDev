@@ -22,21 +22,19 @@
         @Html.Raw(System.IO.File.ReadAllText("wwwroot/vendor/dist/default-scripts.html"));
     }
 </head>
-<body class="m-0 p-0">
+<body class="m-0 p-0 min-vh-100">
     <div class="preloader">
         <div class="loader">
             <div class="loader__figure"></div>
             <p class="loader__label">@System.Reflection.Assembly.GetEntryAssembly().GetName().Name</p>
         </div>
     </div>
-    <div class="container-fluid m-0 p-0">
-        @await Html.PartialAsync("Elegant/LandingPage/_TopNavbarFixed.cshtml")
-        <div class="min-vh-100">
-            @RenderBody()
-        </div>
-        @*@await Html.PartialAsync("Elegant/LandingPage/_BeforeFooter.cshtml")*@
-        @await Html.PartialAsync("Elegant/LandingPage/_Footer.cshtml")
+    @await Html.PartialAsync("Elegant/LandingPage/_TopNavbarFixed.cshtml")
+    <div class="container-fluid m-0 p-0 min-vh-100">
+        @RenderBody()
     </div>
+    @*@await Html.PartialAsync("Elegant/LandingPage/_BeforeFooter.cshtml")*@
+    @await Html.PartialAsync("Elegant/LandingPage/_Footer.cshtml")
     @RenderSection("jsbottom", required: false)
     <script type="text/javascript" src="/js/site.js"></script>
     @Html.RenderScripts()

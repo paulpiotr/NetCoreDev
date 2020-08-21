@@ -1,53 +1,54 @@
 ﻿@model AuthenticationModel
-@{
-    ViewData["Title"] = "Wymagana autoryzacja.";
-}
-<div class="container h-75">
-    <div class="row justify-content-center align-self-center align-items-center">
-        <div class="col-sm-12 col-lg-8">
-            <div class="card m-10">
-                <div class="card-body">
-                    @if (null != Model && !string.IsNullOrWhiteSpace(Model.Message))
-                    {
-                    <div class="alert alert-danger" role="alert">
-                        @Html.Raw(Model.Message);
-                    </div>
-                    }
-                    <form class="form-horizontal form-material" asp-controller="Authentication" asp-action="Index">
-                        <h4 class="box-title m-10 text-info">
-                            <i class="fa fa-2x fa-users text-info"></i>
-                            Zaloguj się do<br /><small>@System.Reflection.Assembly.GetEntryAssembly().GetName().Name</small>
-                        </h4>
-                        <div class="form-group ">
-                            <div class="col-xs-12">
-                                @Html.TextBoxFor(m => m.Username, null, new { Class = "form-control" })
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="col-xs-12">
-                                @Html.PasswordFor(m => m.Password, new { Class = "form-control" })
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <div class="col-md-12">
-                                <div>
-                                    @Html.CheckBoxFor(m => m.RememberMe, new { Class = "custom-control-input" })
-                                    @*
+@{ ViewData["Title"] = "Wymagana autoryzacja."; }
 
-                                        <input type="checkbox" class="custom-control-input" id="RememberMeCheck">
-                                        <label class="custom-control-label" for="RememberMeCheck">Remember me</label>
-                                        <a href="javascript:void(0)" id="to-recover" class="text-dark float-right"><i class="fa fa-lock m-r-5"></i> Forgot pwd?</a>
-
-                                    *@
+<div class="row justify-content-center">
+    <div class="col-sm-12 col-md-8 col-lg-6 align-items-center">
+        <div class="jumbotron bg-transparent">
+            <div class="container text-center shadow p-0">
+                <div class="card m-0 p-0 align-middle">
+                    <div class="card-body">
+                        @if (null != Model && !string.IsNullOrWhiteSpace(Model.Message))
+                        {
+                            <div class="alert alert-danger" role="alert">
+                                @Html.Raw(Model.Message);
+                            </div>
+                        }
+                        <form class="form-horizontal form-material" asp-controller="Authentication" asp-action="Index"  asp-route-ReturnUrl="@Context.Request.Query["ReturnUrl"]">
+                            <h4 class="box-title m-10 text-info">
+                                <i class="fa fa-2x fa-users text-info"></i>
+                                Zaloguj się do<br /><small>@System.Reflection.Assembly.GetEntryAssembly().GetName().Name</small>
+                            </h4>
+                            <div class="form-group ">
+                                <div class="col-xs-12">
+                                    @Html.TextBoxFor(m => m.UserName, null, new { Class = "form-control" })
                                 </div>
                             </div>
-                        </div>
-                        <div class="form-group text-center">
-                            <div class="col-xs-12">
-                                <button class="btn btn-block btn-lg btn-info btn-rounded" type="submit">Zaloguj się</button>
+                            <div class="form-group">
+                                <div class="col-xs-12">
+                                    @Html.PasswordFor(m => m.Password, new { Class = "form-control" })
+                                </div>
                             </div>
-                        </div>
-                    </form>
+                            <div class="form-group row">
+                                <div class="col-md-12">
+                                    <div>
+                                        @Html.CheckBoxFor(m => m.RememberMe, new { Class = "custom-control-input" })
+                                        @*
+
+                                            <input type="checkbox" class="custom-control-input" id="RememberMeCheck">
+                                            <label class="custom-control-label" for="RememberMeCheck">Remember me</label>
+                                            <a href="javascript:void(0)" id="to-recover" class="text-dark float-right"><i class="fa fa-lock m-r-5"></i> Forgot pwd?</a>
+
+                                        *@
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group text-center">
+                                <div class="col-xs-12">
+                                    <button class="btn btn-block btn-lg btn-info btn-rounded" type="submit">Zaloguj się</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>

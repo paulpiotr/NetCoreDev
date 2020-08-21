@@ -13,18 +13,21 @@
             </div>
         </div>
         @*
-            <a class="dropdown-item" asp-controller="WindowsAuthentication" asp-action="Index"><i class="ti-user m-r-5 m-l-5"></i> @Html.Raw("Mój profil")</a>
-            <a class="btn btn-success float-right" asp-action="Start" asp-route-ServiceName="@item.ServiceName">@Html.Raw("Uruchom")</a>
-            <a class="dropdown-item" href="javascript:void(0)"><i class="ti-wallet m-r-5 m-l-5"></i> My Balance</a>
-            <a class="dropdown-item" href="javascript:void(0)"><i class="ti-email m-r-5 m-l-5"></i> Inbox</a>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="javascript:void(0)"><i class="ti-settings m-r-5 m-l-5"></i> Ustawienia konta</a>
+        <a class="dropdown-item" asp-controller="WindowsAuthentication" asp-action="Index"><i class="ti-user m-r-5 m-l-5"></i> @Html.Raw("Mój profil")</a>
+        <a class="btn btn-success float-right" asp-action="Start" asp-route-ServiceName="@item.ServiceName">@Html.Raw("Uruchom")</a>
+        <a class="dropdown-item" href="javascript:void(0)"><i class="ti-wallet m-r-5 m-l-5"></i> My Balance</a>
+        <a class="dropdown-item" href="javascript:void(0)"><i class="ti-email m-r-5 m-l-5"></i> Inbox</a>
+        <div class="dropdown-divider"></div>
+        <a class="dropdown-item" href="javascript:void(0)"><i class="ti-settings m-r-5 m-l-5"></i> Ustawienia konta</a>
         *@
         <div class="dropdown-divider"></div>
-        <a class="dropdown-item" asp-controller="Authentication" asp-action="Logout"><i class="fa fa-power-off m-r-5 m-l-5"></i> Logout</a>
+        <a class="dropdown-item" asp-controller="Authentication" asp-action="GenerateJwtToken" title="Pobierz lub generuj klucz (token) API"><i class="fa fa-key m-r-5 m-l-5"></i> Klucz (token) API</a>
+        <div class="dropdown-divider"></div>
+        <a class="dropdown-item" asp-controller="Authentication" asp-action="UserProfile"><i class="fa fa-user m-r-5 m-l-5"></i> Profil użytkownika</a>
+        <a class="dropdown-item" asp-controller="Authentication" asp-action="Logout"><i class="fa fa-power-off m-r-5 m-l-5"></i> Wyloguj</a>
         @*
-            <div class="dropdown-divider"></div>
-            <div class="p-l-30 p-10"><a href="javascript:void(0)" class="btn btn-sm btn-success btn-rounded">View Profile</a></div>
+        <div class="dropdown-divider"></div>
+        <div class="p-l-30 p-10"><a href="javascript:void(0)" class="btn btn-sm btn-success btn-rounded">View Profile</a></div>
         *@
     </div>
 </li>

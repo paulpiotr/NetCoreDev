@@ -29,21 +29,38 @@
                     </a>
                     <ul aria-expanded="false" class="collapse">
                         @*
-                            <li><a href="app-calendar.html">Calendar <i class="ti-calendar"></i></a></li>
-                            <li><a href="app-chat.html">Chat app <i class="ti-comment"></i></a></li>
-                            <li><a href="app-ticket.html">Support Ticket <i class="ti-support"></i></a></li>
-                            <li><a href="app-contact.html">Contact / Employee <i class="ti-user"></i></a></li>
+        <li><a href="app-calendar.html">Calendar <i class="ti-calendar"></i></a></li>
+        <li><a href="app-chat.html">Chat app <i class="ti-comment"></i></a></li>
+        <li><a href="app-ticket.html">Support Ticket <i class="ti-support"></i></a></li>
+        <li><a href="app-contact.html">Contact / Employee <i class="ti-user"></i></a></li>
                         *@
                         <li>
                             <a asp-area="" asp-controller="DaneSzukajPodmioty" asp-action="Index" title="Portal Api Gus - Wyszukiwanie podmiotów gospodarczych">
                                 <small>Wyszukiwanie podmiotów gospodarczych</small><i class="ti-search p-t-5"></i>
                             </a>
                         </li>
-                        @*<li>
-                            <a asp-area="" asp-controller="AdvertisingCampaign" asp-action="Create" title="Advertising Campaign Add">
-                                <small>Advertising Campaign Add </small><i class="ti-new-window p-t-5"></i>
+                        <li>
+                            <a asp-area="" asp-controller="DaneSzukajPodmioty" asp-action="Settings" title="Portal Api Gus - Wyszukiwanie podmiotów ustawienia">
+                                <small>Wyszukiwanie podmiotów ustawienia</small><i class="ti-settings p-t-5"></i>
                             </a>
-                        </li>*@
+                        </li>
+                        <li>
+                            <a asp-area="" asp-controller="DaneSzukajPodmioty" asp-action="Route" title="Portal Api Gus - Wyszukiwanie podmiotów dostępne akcje">
+                                <small>Wyszukiwanie podmiotów dostępne akcje</small><i class="ti-link p-t-5"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a asp-area="" asp-controller="Authentication" asp-action="GenerateJwtToken" title="Pobierz lub generuj klucz (token) API">
+                                <small>Pobierz lub generuj klucz (token) API</small><i class="ti-key p-t-5"></i>
+                            </a>
+                        </li>
+                        @*
+        <li>
+            <a asp-area="" asp-controller="AdvertisingCampaign" asp-action="Create" title="Advertising Campaign Add">
+                <small>Advertising Campaign Add </small><i class="ti-new-window p-t-5"></i>
+            </a>
+        </li>
+                        *@
                     </ul>
                 </li>
                 @*<li>

@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -6,8 +7,11 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Reflection;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace WebApplicationNetCoreDev
 {
@@ -24,19 +28,10 @@ namespace WebApplicationNetCoreDev
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
-            //if (null != Configuration.GetConnectionString("AdvertisingCampaignContext") && Configuration.GetConnectionString("AdvertisingCampaignContext").Contains("%AppDomain.CurrentDomain.BaseDirectory%"))
-            //{
-            //    AppDomain.CurrentDomain.SetData("DataDirectory", AppDomain.CurrentDomain.BaseDirectory);
-            //    services.AddDbContext<AdvertisingCampaign.Models.AdvertisingCampaignContext>(options => options.UseSqlServer(Configuration.GetConnectionString("AdvertisingCampaignContext").Replace("%AppDomain.CurrentDomain.BaseDirectory%", AppDomain.CurrentDomain.BaseDirectory)));
-            //}
-            //else if (null != Configuration.GetConnectionString("AdvertisingCampaignContext"))
-            //{
-            //    services.AddDbContext<AdvertisingCampaign.Models.AdvertisingCampaignContext>(options => options.UseSqlServer(Configuration.GetConnectionString("AdvertisingCampaignContext")));
-            //}
             services.AddDbContext<PortalApiGusApiRegonData.Data.PortalApiGusApiRegonDataDbContext>(options => options.UseSqlServer(PortalApiGusApiRegonData.PortalApiGusApiRegonDataContext.GetConnectionString()));
             //To do
             //services.AddDbContextPool<PortalApiGusApiRegonData.Data.PortalApiGusApiRegonDataDbContext>(options => options.UseSqlServer(PortalApiGusApiRegonData.PortalApiGusApiRegonDataContext.GetConnectionString()));
-            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(
+            services.AddAuthentication().AddCookie(
                     options =>
                     {
                         options.AccessDeniedPath = "/Authentication/AccessDenied";
@@ -47,9 +42,48 @@ namespace WebApplicationNetCoreDev
                         options.ReturnUrlParameter = CookieAuthenticationDefaults.ReturnUrlParameter;
                         options.SlidingExpiration = true;
                     }
-                );
+                )
+                .AddJwtBearer("Bearer", CookieAuthenticationDefaults.AuthenticationScheme, options =>
+                {
+                    options.SaveToken = true;
+                    options.RequireHttpsMetadata = false;
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        LifetimeValidator = (before, expires, token, param) =>
+                        {
+                            return expires > DateTime.UtcNow;
+                        },
+                        //ClockSkew = TimeSpan.FromMinutes(5),
+                        RequireSignedTokens = true,
+                        RequireExpirationTime = true,
+                        //ValidateIssuer = true,
+                        ValidateIssuer = false,
+                        //ValidateAudience = true,
+                        ValidateAudience = false,
+                        ValidateLifetime = true,
+                        ValidateIssuerSigningKey = true,
+                        //ValidIssuer = Configuration["TokenProviderOptions:Issuer"],
+                        //ValidAudience = Configuration["TokenProviderOptions:Issuer"],
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(EncryptDecrypt.EncryptDecrypt.GetRsaFileContent("id_rsa.ppk.pub")))
+                    };
+                    options.Events = new JwtBearerEvents
+                    {
+                        OnMessageReceived = context =>
+                        {
+                            if (context.Request.Query.ContainsKey("AccessToken"))
+                            {
+                                context.Token = context.Request.Query["AccessToken"];
+                            }
+                            return Task.CompletedTask;
+                        }
+                    };
+                })
+            ;
+            services.AddAuthorization();
             services.AddKendo();
             services.AddControllersWithViews().AddJsonOptions(opts => opts.JsonSerializerOptions.PropertyNamingPolicy = null);
+            services.AddHttpContextAccessor();
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -67,13 +101,13 @@ namespace WebApplicationNetCoreDev
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseRouting();
-            app.UseAuthorization();
-            app.UseAuthentication();
             CookiePolicyOptions cookiePolicyOptions = new CookiePolicyOptions
             {
                 MinimumSameSitePolicy = SameSiteMode.Strict,
             };
             app.UseCookiePolicy(cookiePolicyOptions);
+            app.UseAuthorization();
+            app.UseAuthentication();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(

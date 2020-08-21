@@ -5,95 +5,119 @@ using Microsoft.AspNetCore.Mvc;
 using SimpleImpersonation;
 using System;
 using System.Collections.Generic;
+using System.Reflection;
 using System.Security.Claims;
 using System.Security.Principal;
 using System.Threading;
 using System.Threading.Tasks;
 using WebApplicationNetCoreDev.Models;
 
-/// <summary>
-/// Kontroler akcji autoryzacji
-/// </summary>
 namespace WebApplicationNetCoreDev.Controllers
 {
     /// <summary>
     /// Kontroler akcji autoryzacji
     /// </summary>
-    [AllowAnonymous]
+    [Authorize(AuthenticationSchemes = "Cookies")]
     public class AuthenticationController : Controller
     {
-        // GET: /Authentication
         /// <summary>
-        /// Index - formularz autoryzacji GET: Authentication
+        /// Log4net Logger
         /// </summary>
-        /// <returns></returns>
+        private static readonly log4net.ILog _log4net = Log4netLogger.Log4netLogger.GetLog4netInstance(MethodBase.GetCurrentMethod().DeclaringType);
+
+        /// <summary>
+        /// Wyświetl formularz autoryzacji.
+        /// GET: /Authentication
+        /// </summary>
+        /// <returns>IActionResult</returns>
         [AllowAnonymous]
-        public IActionResult Index(string returnUrl)
+        // GET: /Authentication
+        public IActionResult Index([FromQuery] string ReturnUrl)
         {
-            if (User.Identity.IsAuthenticated)
+            try
             {
-                if (Url.IsLocalUrl(returnUrl))
+                if (User.Identity.IsAuthenticated)
                 {
-                    return Redirect(returnUrl);
+                    if (Url.IsLocalUrl(ReturnUrl))
+                    {
+                        return Redirect(ReturnUrl);
+                    }
+                    return RedirectToAction(nameof(Index), "Home", new { UserName = User.Identity.Name, ReturnUrl });
                 }
-                return RedirectToAction(nameof(Index), "Home", new { Username = User.Identity.Name, ReturnUrl = returnUrl });
+                return View();
             }
-            return View();
+            catch(Exception e)
+            {
+                _log4net.Error(string.Format("{0}, {1}", e.Message, e.StackTrace), e);
+                return NotFound(e);
+            }
         }
-        // POST: /Authentication
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+
         /// <summary>
-        /// Index - akcje autoryzacji Post :Authentication
+        /// To protect from overposting attacks, enable the specific properties you want to bind to, for more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        /// Wykonaj akcję autoryzacji i przełącz do udanej próbie na stronę lub wyświetl formularz autoryzacji.
+        /// POST: /Authentication
         /// </summary>
-        /// <param name="model"></param>
-        /// <returns></returns>
+        /// <param name="model">object model AS WebApplicationNetCoreDev.Models.AuthenticationModel</param>
+        /// <param name="returnUrl"></param>
+        /// <returns>Task<IActionResult></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         [AllowAnonymous]
-        public async Task<IActionResult> IndexAsync([Bind("Username, Password, RememberMe")] WebApplicationNetCoreDev.Models.AuthenticationModel model, string returnUrl)
+        // POST: /Authentication
+        public async Task<IActionResult> IndexAsync([Bind("UserName, Password, RememberMe")] WebApplicationNetCoreDev.Models.AuthenticationModel model, [FromQuery] string ReturnUrl)
         {
-            if (ModelState.IsValid)
+            try
             {
-
-                try
+                if (ModelState.IsValid)
                 {
-                    bool result = false;
-                    result = await WindowsIdentityCookieAuthenticationAsync(model);
-                    if (true == result)
+                    try
                     {
-                        if (Url.IsLocalUrl(returnUrl))
+                        bool result = false;
+                        result = await WindowsIdentityCookieAuthenticationAsync(model);
+                        if (true == result)
                         {
-                            return Redirect(returnUrl);
+                            if (Url.IsLocalUrl(ReturnUrl))
+                            {
+                                return Redirect(ReturnUrl);
+                            }
+                            return RedirectToAction(nameof(Index), "Home", new { model.UserName, ReturnUrl });
                         }
-                        return RedirectToAction(nameof(Index), "Home", new { model.Username });
+                        result = await HttpContextAuthenticateWindowsCookieAuthenticationAsync(model);
+                        if (true == result)
+                        {
+                            if (Url.IsLocalUrl(ReturnUrl))
+                            {
+                                return Redirect(ReturnUrl);
+                            }
+                            return RedirectToAction(nameof(Index), "Home", new { model.UserName, ReturnUrl });
+                        }
+                        //return Challenge("Windows");
                     }
-                    result = await HttpContextAuthenticateWindowsCookieAuthenticationAsync(model);
-                    if (true == result)
+                    catch (Exception e)
                     {
-                        if (Url.IsLocalUrl(returnUrl))
-                        {
-                            return Redirect(returnUrl);
-                        }
-                        return RedirectToAction(nameof(Index), "Home", new { model.Username });
+                        _log4net.Error(string.Format("{0}, {1}", e.Message, e.StackTrace), e);
+                        model.Message = e.Message;
+                        model.StackTrace = e.StackTrace;
+                        return View(model);
                     }
-                    //return Challenge("Windows");
                 }
-                catch (Exception e)
-                {
-                    model.Message = e.Message;
-                    model.StackTrace = e.StackTrace;
-                    return View(model);
-                }
+                return View(model);
             }
-            return View(model);
+            catch(Exception e)
+            {
+                _log4net.Error(string.Format("{0}, {1}", e.Message, e.StackTrace), e);
+                return NotFound(e);
+            }
         }
-        // GET: /Authentication
+
         /// <summary>
-        /// Index - formularz autoryzacji GET: Authentication
+        /// Wykonaj akcję wylogowania
+        /// GET: Authentication/Logout
         /// </summary>
-        /// <returns></returns>
+        /// <returns>IActionResult</returns>
         [Authorize]
+        // GET: Authentication/Logout
         public async Task<IActionResult> LogoutAsync()
         {
             try
@@ -107,9 +131,103 @@ namespace WebApplicationNetCoreDev.Controllers
             }
             catch (Exception e)
             {
-                return RedirectToAction(nameof(Index), "Home", new { Message = e.Message });
+                _log4net.Error(string.Format("{0}, {1}", e.Message, e.StackTrace), e);
+                return NotFound(e);
             }
         }
+
+        /// <summary>
+        /// Wyświetl stronę brak uprawnień
+        /// GET: Authentication/AccessDenied
+        /// </summary>
+        /// <param name="ReturnUrl"></param>
+        /// <returns></returns>
+        [HttpGet]
+        [AllowAnonymous]
+        // GET: Authentication/AccessDenied
+        public IActionResult AccessDenied([FromQuery] string ReturnUrl)
+        {
+            try
+            {
+                return View();
+            }
+            catch(Exception e)
+            {
+                _log4net.Error(string.Format("{0}, {1}", e.Message, e.StackTrace), e);
+                return NotFound(e);
+            }
+        }
+
+        /// <summary>
+        /// Wyświetl profil użytkownika
+        /// GET: Authentication/UserProfile
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Authorize(AuthenticationSchemes = "Cookies")]
+        // GET: Authentication/UserProfile
+        public IActionResult UserProfile()
+        {
+            try
+            {
+                return View();
+            }
+            catch(Exception e)
+            {
+                _log4net.Error(string.Format("{0}, {1}", e.Message, e.StackTrace), e);
+                return NotFound(e);
+            }
+        }
+
+        /// <summary>
+        /// Generuj token autoryzacji Jwt - wyświetl formularz
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Authorize(AuthenticationSchemes = "Cookies")]
+        // GET: Authentication/GenerateJwtToken
+        public IActionResult GenerateJwtToken()
+        {
+            try
+            {
+                JwtTokenModel jwtTokenModel = new JwtTokenModel(HttpContext);
+                return View(jwtTokenModel);
+            }
+            catch(Exception e)
+            {
+                _log4net.Error(string.Format("{0}, {1}", e.Message, e.StackTrace), e);
+                return NotFound(e);
+            }
+        }
+
+        /// <summary>
+        /// Generuj token autoryzacji Jwt - zapisz formularz
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize(AuthenticationSchemes = "Cookies")]
+        // Post Authentication/GenerateJwtToken
+        public IActionResult GenerateJwtToken([Bind("UserName, Key, Expires")] JwtTokenModel model)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    model = model.GenerateJwtToken();
+                    PortalApiGusApiRegonData.PortalApiGusApiRegonDataConfiguration.SetAppSettingValue<string>("JwtTokenUserName", model.UserName);
+                    PortalApiGusApiRegonData.PortalApiGusApiRegonDataConfiguration.SetAppSettingValue<string>("JwtStringToken", model.JwtStringToken);
+                }
+                return View(model);
+            }
+            catch(Exception e)
+            {
+                _log4net.Error(string.Format("{0}, {1}", e.Message, e.StackTrace), e);
+                return NotFound(e);
+            }
+        }
+
         /// <summary>
         /// Uwierzytelnianie Windows Identity Cookie Authentication - autoryzacja danymi windows, zapis danych do ciasteczka
         /// </summary>
@@ -118,12 +236,12 @@ namespace WebApplicationNetCoreDev.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [AllowAnonymous]
-        public async Task<bool> WindowsIdentityCookieAuthenticationAsync([Bind("Username, Password, RememberMe")] Models.AuthenticationModel model)
+        public async Task<bool> WindowsIdentityCookieAuthenticationAsync([Bind("UserName, Password, RememberMe")] Models.AuthenticationModel model)
         {
             try
             {
-                UserCredentials userCredentials = new UserCredentials(model.Username, model.Password);
-                return await Impersonation.RunAsUser(userCredentials, LogonType.Interactive, async () =>
+                UserCredentials userCredentials = new UserCredentials(model.UserName, model.Password);
+                return await Impersonation.RunAsUser(userCredentials, LogonType.Batch, async () =>
                 {
                     WindowsIdentity windowsIdentity = WindowsIdentity.GetCurrent();
                     AppDomain appDomain = Thread.GetDomain();
@@ -175,6 +293,7 @@ namespace WebApplicationNetCoreDev.Controllers
                 return false;
             }
         }
+
         /// <summary>
         /// Uwierzytelnianie Windows Identity Cookie Authentication - autoryzacja standardowa danymi windows, zapis danych do ciasteczka
         /// </summary>
@@ -183,7 +302,7 @@ namespace WebApplicationNetCoreDev.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [AllowAnonymous]
-        public async Task<bool> HttpContextAuthenticateWindowsCookieAuthenticationAsync([Bind("Username, Password, RememberMe")] Models.AuthenticationModel model)
+        public async Task<bool> HttpContextAuthenticateWindowsCookieAuthenticationAsync([Bind("UserName, Password, RememberMe")] Models.AuthenticationModel model)
         {
             try
             {
@@ -242,9 +361,7 @@ namespace WebApplicationNetCoreDev.Controllers
                         // The full path or absolute URI to be used as an http 
                         // redirect response value.
                     };
-
                     await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity), authenticationProperties);
-
                     //await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity), authenticationProperties);
                     return true;
                 }
