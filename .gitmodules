@@ -10,3 +10,6 @@
 [submodule "PortalApiGus"]
 	path = PortalApiGus
 	url = https://github.com/paulpiotr/PortalApiGus.git
+[submodule "Icasa"]
+	path = Icasa
+	url = https://github.com/paulpiotr/Icasa.git

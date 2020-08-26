@@ -29,6 +29,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestConsoleApp", "TestConso
 EndProject
 Project("{840C416C-B8F3-42BC-B0DD-F6BB14C9F8CB}") = "PortalApiGusInstaller", "PortalApiGusInstaller\PortalApiGusInstaller.aiproj", "{FA2AF9F9-C34D-4AA4-9C5C-31B8F86DC117}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IcasaMutationServiceData", "Icasa\MutationService\IcasaMutationServiceData\IcasaMutationServiceData.csproj", "{0900DF1C-0714-42BA-A974-736D3A24D7EB}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Icasa", "Icasa", "{1AB1E35A-4DBD-4B8D-8B88-9302B7B3BBB8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IcasaReportServiceData", "Icasa\ReportService\IcasaReportServiceData\IcasaReportServiceData.csproj", "{9970A4C1-5C92-43D6-AEC1-260D9E5BC28C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		All|Any CPU = All|Any CPU
@@ -109,12 +115,30 @@ Global
 		{FA2AF9F9-C34D-4AA4-9C5C-31B8F86DC117}.DefaultBuild|Any CPU.Build.0 = DefaultBuild
 		{FA2AF9F9-C34D-4AA4-9C5C-31B8F86DC117}.Release|Any CPU.ActiveCfg = DefaultBuild
 		{FA2AF9F9-C34D-4AA4-9C5C-31B8F86DC117}.Release|Any CPU.Build.0 = DefaultBuild
+		{0900DF1C-0714-42BA-A974-736D3A24D7EB}.All|Any CPU.ActiveCfg = Debug|Any CPU
+		{0900DF1C-0714-42BA-A974-736D3A24D7EB}.All|Any CPU.Build.0 = Debug|Any CPU
+		{0900DF1C-0714-42BA-A974-736D3A24D7EB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0900DF1C-0714-42BA-A974-736D3A24D7EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0900DF1C-0714-42BA-A974-736D3A24D7EB}.DefaultBuild|Any CPU.ActiveCfg = Debug|Any CPU
+		{0900DF1C-0714-42BA-A974-736D3A24D7EB}.DefaultBuild|Any CPU.Build.0 = Debug|Any CPU
+		{0900DF1C-0714-42BA-A974-736D3A24D7EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0900DF1C-0714-42BA-A974-736D3A24D7EB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9970A4C1-5C92-43D6-AEC1-260D9E5BC28C}.All|Any CPU.ActiveCfg = Debug|Any CPU
+		{9970A4C1-5C92-43D6-AEC1-260D9E5BC28C}.All|Any CPU.Build.0 = Debug|Any CPU
+		{9970A4C1-5C92-43D6-AEC1-260D9E5BC28C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9970A4C1-5C92-43D6-AEC1-260D9E5BC28C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9970A4C1-5C92-43D6-AEC1-260D9E5BC28C}.DefaultBuild|Any CPU.ActiveCfg = Debug|Any CPU
+		{9970A4C1-5C92-43D6-AEC1-260D9E5BC28C}.DefaultBuild|Any CPU.Build.0 = Debug|Any CPU
+		{9970A4C1-5C92-43D6-AEC1-260D9E5BC28C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9970A4C1-5C92-43D6-AEC1-260D9E5BC28C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{1C618623-E5BF-485F-A7BB-3A895DF6F4E3} = {942239AD-6F36-4DAD-93D0-44B83F8E4F6D}
+		{0900DF1C-0714-42BA-A974-736D3A24D7EB} = {1AB1E35A-4DBD-4B8D-8B88-9302B7B3BBB8}
+		{9970A4C1-5C92-43D6-AEC1-260D9E5BC28C} = {1AB1E35A-4DBD-4B8D-8B88-9302B7B3BBB8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {76F1B00C-2A40-4B88-82DC-8A1D00A17DBD}
