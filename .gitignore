@@ -358,3 +358,7 @@ Release/
 log4net.config
 id_rsa.ppk.pub
 id_rsa.ppk
+RabbitMQPublisherTest/
+.data/
+RabbitmqDockerCompose/
+WebApplicationTestDocker/

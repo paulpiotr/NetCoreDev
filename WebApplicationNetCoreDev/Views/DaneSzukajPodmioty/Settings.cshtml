@@ -39,7 +39,7 @@
         )
 
     </div>
-    <div class="row overflow-auto">
+    <div class="row @*overflow-auto*@">
         <div class="col-sm-4 p-2">
             Klucz Api [JwtStringToken]:
         </div>
@@ -70,13 +70,15 @@
             Połączenie do bazy danych:
         </div>
         <div class="col-sm-8 p-2">
-            @(PortalApiGusApiRegonData.PortalApiGusApiRegonDataContext.GetConnectionString())
+            @*@(PortalApiGusApiRegonData.PortalApiGusApiRegonDataContext.GetConnectionString())*@
+            @(await NetAppCommon.DataContext.GetConnectionStringAsync("PortalApiGusApiRegonDataDbContext"))
         </div>
         <div class="col-sm-4 p-2">
             Możliwe połączenie z bazą danych:
         </div>
         <div class="col-sm-8 p-2">
-            @(PortalApiGusApiRegonData.PortalApiGusApiRegonDataContext.IsServerConnected(PortalApiGusApiRegonData.PortalApiGusApiRegonDataContext.GetConnectionString()))
+            @*@(PortalApiGusApiRegonData.PortalApiGusApiRegonDataContext.IsServerConnected(PortalApiGusApiRegonData.PortalApiGusApiRegonDataContext.GetConnectionString()))*@
+            @(PortalApiGusApiRegonData.PortalApiGusApiRegonDataContext.IsServerConnected(await NetAppCommon.DataContext.GetConnectionStringAsync("PortalApiGusApiRegonDataDbContext")))
         </div>
     </div>
 </div>

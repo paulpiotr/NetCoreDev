@@ -74,6 +74,7 @@ namespace WebApplicationNetCoreDev.Controllers
                     try
                     {
                         bool result = false;
+
                         result = await WindowsIdentityCookieAuthenticationAsync(model);
                         if (true == result)
                         {
@@ -83,6 +84,7 @@ namespace WebApplicationNetCoreDev.Controllers
                             }
                             return RedirectToAction(nameof(Index), "Home", new { model.UserName, ReturnUrl });
                         }
+
                         result = await HttpContextAuthenticateWindowsCookieAuthenticationAsync(model);
                         if (true == result)
                         {

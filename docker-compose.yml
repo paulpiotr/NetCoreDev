@@ -1,0 +1,74 @@
+version: '3.4'
+
+services:
+  rabbitmq:
+    hostname: rabbitmq
+    image: rabbitmq:management
+    container_name: rabbitmq
+    restart: always
+    ports:
+      - 15672:15672
+      - 5672:5672
+    volumes:
+      - ./.data/rabbitmq:/var/lib/rabbitmq/mnesia/
+    environment: 
+      - RABBITMQ_DEFAULT_USER=guest
+      - RABBITMQ_DEFAULT_PASS=guest
+      - RABBITMQ_NODENAME=rabbitmq@localhost
+      - RABBITMQ_USER=rabbit
+      - RABBITMQ_PASSWORD=rabbit
+    networks:
+      - rabbitmq
+  postgres:
+    hostname: postgres
+    image: postgres
+    container_name: postgres
+    restart: always
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    volumes:
+      - postgres:/var/lib/postgresql/data
+      - ./.data/postgres:/mnt/postgres
+    networks:
+      - postgres
+  mssql:
+    image: mcr.microsoft.com/mssql/server:latest
+    hostname: mssql
+    container_name: mssql
+    restart: always
+    ports:
+      - 11433:1433
+      - 11434:1434
+      - 11431:1431
+    volumes:
+      - ./.data/mssql/data:/var/opt/mssql/data
+      - ./.data/mssql/log:/var/opt/mssql/log
+      - ./.data/mssql/secret:/var/opt/mssql/secrets
+    environment:
+      - TZ=Europe/Warsaw
+      - MSSQL_MEMORY_LIMIT_MB=2048
+      - ACCEPT_EULA=Y
+      - MSSQL_SA_PASSWORD=8TMBny-dwxviDrV5
+      - SA_PASSWORD=8TMBny-dwxviDrV5
+      - MSSQL_AGENT_ENABLED=true
+      - AGENT_ENABLED=true
+  webapplicationtestdocker:
+    image: ${DOCKER_REGISTRY-}webapplicationtestdocker
+    hostname: webapplicationnetcoredev
+    container_name: webapplicationnetcoredev
+    restart: always
+    build:
+      context: .
+      dockerfile: WebApplicationNetCoreDev/Dockerfile
+volumes:
+  postgres:
+    driver: local
+networks:
+  rabbitmq:
+    driver: bridge
+  postgres:
+    driver: bridge

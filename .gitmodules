@@ -13,3 +13,12 @@
 [submodule "Icasa"]
 	path = Icasa
 	url = https://github.com/paulpiotr/Icasa.git
+[submodule "EntropyOfCardShuffling"]
+	path = EntropyOfCardShuffling
+	url = https://github.com/paulpiotr/EntropyOfCardShuffling.git
+[submodule "IUIntegrationSystem"]
+	path = IUIntegrationSystem
+	url = https://piotrpaulisk@dev.azure.com/piotrpaulisk/IUIntegrationSystem/_git/IUIntegrationSystem
+[submodule "NetAppCommon"]
+	path = NetAppCommon
+	url = https://github.com/paulpiotr/NetAppCommon.git
