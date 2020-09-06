@@ -5,6 +5,10 @@
     <DockerComposeProjectPath>..\docker-compose.dcproj</DockerComposeProjectPath>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <DockerfileContext>.</DockerfileContext>
+    <Version>2.0.0</Version>
+    <AssemblyVersion>2.1.1.1</AssemblyVersion>
+    <FileVersion>2.1.1.1</FileVersion>
+    <NeutralLanguage></NeutralLanguage>
   </PropertyGroup>
   <ItemGroup>
     <Compile Remove="wwwroot\vendor\elegant\**" />
@@ -39,6 +43,7 @@
   <ItemGroup>
     <ProjectReference Include="..\EncryptDecrypt\EncryptDecrypt\EncryptDecrypt.csproj" />
     <ProjectReference Include="..\Log4netLogger\Log4netLogger.csproj" />
+    <ProjectReference Include="..\NetAppCommon\NetAppCommon\NetAppCommon.csproj" />
     <ProjectReference Include="..\PortalApiGus\ApiRegon\PortalApiGusApiRegonData\PortalApiGusApiRegonData.csproj" />
     <ProjectReference Include="..\SimpleImpersonation\src\SimpleImpersonation.csproj" />
   </ItemGroup>
@@ -52,6 +57,14 @@
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="id_rsa.ppk">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="id_rsa.ppk.pub">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <Target Name="SetEnvConfig" BeforeTargets="Compile">
     <Copy SourceFiles="..\env\log4net.debug.config" DestinationFiles="log4net.config" OverwriteReadOnlyFiles="true" Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' " />

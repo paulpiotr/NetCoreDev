@@ -44,26 +44,26 @@
             Klucz Api [JwtStringToken]:
         </div>
         <div class="col-sm-8 p-2">
-            @((string)PortalApiGusApiRegonData.PortalApiGusApiRegonDataConfiguration.GetValue<string>("JwtStringToken"))
+            @((string)NetAppCommon.DataConfiguration.GetValue<string>("JwtStringToken"))
         </div>
         <div class="col-sm-4 p-2">
             Użytkownik klucz Api [JwtTokenUserName]:
         </div>
         <div class="col-sm-8 p-2">
-            @((string)PortalApiGusApiRegonData.PortalApiGusApiRegonDataConfiguration.GetValue<string>("JwtTokenUserName"))
+            @((string)NetAppCommon.DataConfiguration.GetValue<string>("JwtTokenUserName"))
         </div>
         <hr />
         <div class="col-sm-4 p-2">
             Klucz Api [PortalApiGusKey]:
         </div>
         <div class="col-sm-8 p-2">
-            @((string)PortalApiGusApiRegonData.PortalApiGusApiRegonDataConfiguration.GetValue<string>("PortalApiGusKey"))
+            @((string)NetAppCommon.DataConfiguration.GetValue<string>("PortalApiGusKey"))
         </div>
         <div class="col-sm-4 p-2">
             Czas utrzymywania danych w cache [PortalApiGusSearchCacheLifetime]:
         </div>
         <div class="col-sm-8 p-2">
-            @((int)PortalApiGusApiRegonData.PortalApiGusApiRegonDataConfiguration.GetValue<int>("PortalApiGusSearchCacheLifetime"))
+            @((int)NetAppCommon.DataConfiguration.GetValue<int>("PortalApiGusSearchCacheLifetime"))
         </div>
         <hr />
         <div class="col-sm-4 p-2">

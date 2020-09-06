@@ -16,10 +16,10 @@
     <ROW Property="ARPURLUPDATEINFO" Value="http://isk.pl"/>
     <ROW Property="IISOPENMMC" Value="1"/>
     <ROW Property="Manufacturer" Value="ISK Sp. z o.o."/>
-    <ROW Property="ProductCode" Value="1045:{D179770A-511C-4639-AB7A-6C7E7EF489F4} " Type="16"/>
+    <ROW Property="ProductCode" Value="1045:{93B0762E-3012-40E7-BB49-285C96BB3FEA} " Type="16"/>
     <ROW Property="ProductLanguage" Value="1045"/>
     <ROW Property="ProductName" Value="ISK Portal Api Gus"/>
-    <ROW Property="ProductVersion" Value="1.0.0" Type="32"/>
+    <ROW Property="ProductVersion" Value="2.0.0" Type="32"/>
     <ROW Property="SecureCustomProperties" Value="OLDPRODUCTS;AI_NEWERPRODUCTFOUND;AI_SETUPEXEPATH;SETUPEXEDIR"/>
     <ROW Property="UpgradeCode" Value="{010A819F-426A-4B91-BE68-3811C9B0EA81}"/>
     <ROW Property="WindowsType9X" MultiBuildValue="DefaultBuild:Windows 9x/ME" ValueLocId="-"/>
@@ -113,7 +113,6 @@
   <COMPONENT cid="caphyon.advinst.msicomp.MsiCompsComponent">
     <ROW Component="AI_ExePath" ComponentId="{607ED024-7735-4BA7-BB81-3AB4774AF417}" Directory_="APPDIR" Attributes="4" KeyPath="AI_ExePath"/>
     <ROW Component="APPDIR" ComponentId="{84B64649-6794-4EAA-92CC-22BA1E407AEA}" Directory_="APPDIR" Attributes="0"/>
-    <ROW Component="AdvertisingCampaign.dll" ComponentId="{F9A52403-1897-4F80-831F-7E219837CF13}" Directory_="APPDIR" Attributes="0" KeyPath="AdvertisingCampaign.dll"/>
     <ROW Component="AuditCreateTableScript.sql" ComponentId="{2A2D7EAB-0AF0-47FF-9BA2-DC83666BFDCD}" Directory_="Migrations_Dir" Attributes="0" KeyPath="AuditCreateTableScript.sql" Type="0"/>
     <ROW Component="AutoMapper.dll" ComponentId="{410C2C8D-38E7-48EC-BC08-ACCD4DD5F606}" Directory_="APPDIR" Attributes="0" KeyPath="AutoMapper.dll"/>
     <ROW Component="ConnectedService.json" ComponentId="{61C06E8D-DCC4-49EA-B009-4A629F799014}" Directory_="UslugaBIRzewnPublVer11Prod_Dir" Attributes="0" KeyPath="ConnectedService.json" Type="0"/>
@@ -146,9 +145,13 @@
     <ROW Component="Kendo.Mvc.resources.dll_79" ComponentId="{1C835014-3840-4FC0-BD69-3939169F682E}" Directory_="ukUA_Dir" Attributes="0" KeyPath="Kendo.Mvc.resources.dll_79"/>
     <ROW Component="Kendo.Mvc.resources.dll_80" ComponentId="{76331CA9-8499-4525-9181-6867BBA545D2}" Directory_="zhCN_Dir" Attributes="0" KeyPath="Kendo.Mvc.resources.dll_80"/>
     <ROW Component="Log4netLogger.dll" ComponentId="{83F12B4A-50BD-4AA5-8624-C267A6307B4B}" Directory_="APPDIR" Attributes="0" KeyPath="Log4netLogger.dll"/>
+    <ROW Component="Microsoft.AspNetCore.Authentication.JwtBearer.dll" ComponentId="{3204B346-243D-4B75-B6F4-53A2704F4AC8}" Directory_="APPDIR" Attributes="0" KeyPath="Microsoft.AspNetCore.Authentication.JwtBearer.dll"/>
+    <ROW Component="Microsoft.AspNetCore.Authentication.Negotiate.dll" ComponentId="{C6FA9612-C0A2-4AC5-B368-EEB5E53014BA}" Directory_="APPDIR" Attributes="0" KeyPath="Microsoft.AspNetCore.Authentication.Negotiate.dll"/>
     <ROW Component="Microsoft.AspNetCore.Authentication.OpenIdConnect.dll" ComponentId="{AB8BB412-C7B0-4DF2-9F89-94E2E07904DF}" Directory_="APPDIR" Attributes="0" KeyPath="Microsoft.AspNetCore.Authentication.OpenIdConnect.dll"/>
+    <ROW Component="Microsoft.AspNetCore.Connections.Abstractions.dll" ComponentId="{2C8E73DA-EE25-4CA6-8E96-9FE3FB147E7D}" Directory_="APPDIR" Attributes="0" KeyPath="Microsoft.AspNetCore.Connections.Abstractions.dll"/>
     <ROW Component="Microsoft.AspNetCore.Cryptography.Internal.dll" ComponentId="{3CEA6DB1-CAD9-46A7-B05D-CF32F4C4D7F0}" Directory_="APPDIR" Attributes="0" KeyPath="Microsoft.AspNetCore.Cryptography.Internal.dll"/>
     <ROW Component="Microsoft.AspNetCore.Cryptography.KeyDerivation.dll" ComponentId="{6EFF599F-CA38-4ABC-9903-1BE1E1128CBF}" Directory_="APPDIR" Attributes="0" KeyPath="Microsoft.AspNetCore.Cryptography.KeyDerivation.dll"/>
+    <ROW Component="Microsoft.AspNetCore.Http.Features.dll" ComponentId="{82578FE3-9261-4548-BDB1-97F9BA4EA85A}" Directory_="APPDIR" Attributes="0" KeyPath="Microsoft.AspNetCore.Http.Features.dll"/>
     <ROW Component="Microsoft.AspNetCore.Razor.Language.dll" ComponentId="{280A9F38-9B4A-4075-859B-5C6D45F74FD1}" Directory_="APPDIR" Attributes="0" KeyPath="Microsoft.AspNetCore.Razor.Language.dll"/>
     <ROW Component="Microsoft.Bcl.AsyncInterfaces.dll" ComponentId="{96FB87AB-BD27-4AA4-98E5-AF9389EE5185}" Directory_="APPDIR" Attributes="0" KeyPath="Microsoft.Bcl.AsyncInterfaces.dll"/>
     <ROW Component="Microsoft.Bcl.HashCode.dll" ComponentId="{8EBCF915-22ED-43B7-86D4-C4BB1315D5D5}" Directory_="APPDIR" Attributes="0" KeyPath="Microsoft.Bcl.HashCode.dll"/>
@@ -249,6 +252,7 @@
     <ROW Component="Microsoft.VisualStudio.Web.CodeGeneration.Utils.dll" ComponentId="{58D2165E-CBF3-435C-9636-D901AF77E4E1}" Directory_="APPDIR" Attributes="0" KeyPath="Microsoft.VisualStudio.Web.CodeGeneration.Utils.dll"/>
     <ROW Component="Microsoft.VisualStudio.Web.CodeGeneration.dll" ComponentId="{C912C165-0704-4C95-8AFE-BDD3D688989F}" Directory_="APPDIR" Attributes="0" KeyPath="Microsoft.VisualStudio.Web.CodeGeneration.dll"/>
     <ROW Component="Microsoft.VisualStudio.Web.CodeGenerators.Mvc.dll" ComponentId="{F5BB9286-C9D6-4F47-96C8-0822F6411A07}" Directory_="APPDIR" Attributes="0" KeyPath="Microsoft.VisualStudio.Web.CodeGenerators.Mvc.dll"/>
+    <ROW Component="NetAppCommon.dll" ComponentId="{22DBF73B-396A-4D84-B9BC-271CC73120A9}" Directory_="APPDIR" Attributes="0" KeyPath="NetAppCommon.dll"/>
     <ROW Component="Newtonsoft.Json.Bson.dll" ComponentId="{E7B1D7A9-7967-4D80-BAB4-01A98E7CA572}" Directory_="APPDIR" Attributes="0" KeyPath="Newtonsoft.Json.Bson.dll"/>
     <ROW Component="Newtonsoft.Json.dll" ComponentId="{29ECAEE8-0D5F-4CF4-AC16-B0B6FA2AFCC7}" Directory_="APPDIR" Attributes="0" KeyPath="Newtonsoft.Json.dll"/>
     <ROW Component="NuGet.Frameworks.dll" ComponentId="{A09038D0-A54F-4CA9-B118-D5D1F767EB23}" Directory_="APPDIR" Attributes="0" KeyPath="NuGet.Frameworks.dll"/>
@@ -267,13 +271,13 @@
     <ROW Component="System.Composition.TypedParts.dll" ComponentId="{D6392058-6ACD-4156-94B8-89FDAE9371A0}" Directory_="APPDIR" Attributes="0" KeyPath="System.Composition.TypedParts.dll"/>
     <ROW Component="System.Configuration.ConfigurationManager.dll" ComponentId="{BC012938-1D67-4C7B-B3A8-F49626933E47}" Directory_="APPDIR" Attributes="0" KeyPath="System.Configuration.ConfigurationManager.dll"/>
     <ROW Component="System.Diagnostics.DiagnosticSource.dll" ComponentId="{44B92400-B18C-4712-8753-899F9344695D}" Directory_="APPDIR" Attributes="0" KeyPath="System.Diagnostics.DiagnosticSource.dll"/>
+    <ROW Component="System.IO.Pipelines.dll" ComponentId="{5C37FCAB-4B22-4CD0-B2F3-21C4D58F04F8}" Directory_="APPDIR" Attributes="0" KeyPath="System.IO.Pipelines.dll"/>
     <ROW Component="System.IdentityModel.Tokens.Jwt.dll" ComponentId="{2FB44092-E2C0-4C25-BABD-10C58E8B0250}" Directory_="APPDIR" Attributes="0" KeyPath="System.IdentityModel.Tokens.Jwt.dll"/>
     <ROW Component="System.Net.Http.Formatting.dll" ComponentId="{F6E48EA7-CC11-44B3-B2AF-E76A2408BB85}" Directory_="APPDIR" Attributes="0" KeyPath="System.Net.Http.Formatting.dll"/>
     <ROW Component="System.Private.ServiceModel.dll" ComponentId="{C67000F2-6477-4A81-80D2-C51FDA51F7ED}" Directory_="APPDIR" Attributes="0" KeyPath="System.Private.ServiceModel.dll"/>
     <ROW Component="System.Runtime.Caching.dll" ComponentId="{DF5B6A43-5F70-4A50-8AB6-7C5C6D21FE0C}" Directory_="APPDIR" Attributes="0" KeyPath="System.Runtime.Caching.dll"/>
     <ROW Component="System.Runtime.Caching.dll_7" ComponentId="{00037E61-C0DA-43A5-A740-7D2DC85174DE}" Directory_="netcoreapp2.0_Dir" Attributes="0" KeyPath="System.Runtime.Caching.dll_7"/>
     <ROW Component="System.Runtime.Caching.dll_8" ComponentId="{9872E860-3D08-47E0-9330-A3C476BF36E3}" Directory_="netcoreapp2.0_5_Dir" Attributes="0" KeyPath="System.Runtime.Caching.dll_8"/>
-    <ROW Component="System.Runtime.CompilerServices.Unsafe.dll" ComponentId="{D76094DD-96AE-42D1-BA1E-B22E53235F86}" Directory_="APPDIR" Attributes="0" KeyPath="System.Runtime.CompilerServices.Unsafe.dll"/>
     <ROW Component="System.Security.Cryptography.ProtectedData.dll" ComponentId="{0B38997A-8F06-4146-8517-502151F6BECD}" Directory_="APPDIR" Attributes="0" KeyPath="System.Security.Cryptography.ProtectedData.dll"/>
     <ROW Component="System.Security.Cryptography.ProtectedData.dll_4" ComponentId="{1BE31918-BF36-4013-9C32-69EA5BA48918}" Directory_="netstandard2.0_Dir" Attributes="0" KeyPath="System.Security.Cryptography.ProtectedData.dll_4"/>
     <ROW Component="System.ServiceModel.Duplex.dll" ComponentId="{5EEC0FA9-A5A9-4EE3-A07D-9D9D9095E76E}" Directory_="APPDIR" Attributes="0" KeyPath="System.ServiceModel.Duplex.dll"/>
@@ -319,8 +323,6 @@
     <ATTRIBUTE name="CurrentFeature" value="MainFeature"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiFilesComponent">
-    <ROW File="AdvertisingCampaign.dll" Component_="AdvertisingCampaign.dll" FileName="ADVERT~1.DLL|AdvertisingCampaign.dll" Attributes="0" SourcePath="..\..\PortalApiGusApiRegonDataRelease\AdvertisingCampaign.dll" SelfReg="false"/>
-    <ROW File="AdvertisingCampaign.pdb" Component_="AdvertisingCampaign.dll" FileName="ADVERT~1.PDB|AdvertisingCampaign.pdb" Attributes="0" SourcePath="..\..\PortalApiGusApiRegonDataRelease\AdvertisingCampaign.pdb" SelfReg="false"/>
     <ROW File="appsettings.Development.json" Component_="appsettings.Development.json" FileName="APPSET~1.JSO|appsettings.Development.json" Attributes="0" SourcePath="..\..\PortalApiGusApiRegonDataRelease\appsettings.Development.json" SelfReg="false"/>
     <ROW File="appsettings.json" Component_="appsettings.Development.json" FileName="APPSET~2.JSO|appsettings.json" Attributes="0" SourcePath="..\..\PortalApiGusApiRegonDataRelease\appsettings.json" SelfReg="false"/>
     <ROW File="appsettings.production.json" Component_="appsettings.Development.json" FileName="APPSET~3.JSO|appsettings.production.json" Attributes="0" SourcePath="..\..\PortalApiGusApiRegonDataRelease\appsettings.production.json" SelfReg="false"/>
@@ -413,7 +415,6 @@
     <ROW File="System.Net.Http.Formatting.dll" Component_="System.Net.Http.Formatting.dll" FileName="SYSTE~10.DLL|System.Net.Http.Formatting.dll" Attributes="0" SourcePath="..\..\PortalApiGusApiRegonDataRelease\System.Net.Http.Formatting.dll" SelfReg="false"/>
     <ROW File="System.Private.ServiceModel.dll" Component_="System.Private.ServiceModel.dll" FileName="SYSTE~11.DLL|System.Private.ServiceModel.dll" Attributes="0" SourcePath="..\..\PortalApiGusApiRegonDataRelease\System.Private.ServiceModel.dll" SelfReg="false"/>
     <ROW File="System.Runtime.Caching.dll" Component_="System.Runtime.Caching.dll" FileName="SYSTE~12.DLL|System.Runtime.Caching.dll" Attributes="0" SourcePath="..\..\PortalApiGusApiRegonDataRelease\System.Runtime.Caching.dll" SelfReg="false"/>
-    <ROW File="System.Runtime.CompilerServices.Unsafe.dll" Component_="System.Runtime.CompilerServices.Unsafe.dll" FileName="SYSTE~13.DLL|System.Runtime.CompilerServices.Unsafe.dll" Attributes="0" SourcePath="..\..\PortalApiGusApiRegonDataRelease\System.Runtime.CompilerServices.Unsafe.dll" SelfReg="false"/>
     <ROW File="System.Security.Cryptography.ProtectedData.dll" Component_="System.Security.Cryptography.ProtectedData.dll" FileName="SYSTE~14.DLL|System.Security.Cryptography.ProtectedData.dll" Attributes="0" SourcePath="..\..\PortalApiGusApiRegonDataRelease\System.Security.Cryptography.ProtectedData.dll" SelfReg="false"/>
     <ROW File="System.ServiceModel.dll" Component_="System.ServiceModel.dll" FileName="SYSTE~15.DLL|System.ServiceModel.dll" Attributes="0" SourcePath="..\..\PortalApiGusApiRegonDataRelease\System.ServiceModel.dll" SelfReg="false"/>
     <ROW File="System.ServiceModel.Duplex.dll" Component_="System.ServiceModel.Duplex.dll" FileName="SYSTE~16.DLL|System.ServiceModel.Duplex.dll" Attributes="0" SourcePath="..\..\PortalApiGusApiRegonDataRelease\System.ServiceModel.Duplex.dll" SelfReg="false"/>
@@ -998,6 +999,14 @@
     <ROW File="Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll_50" Component_="Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll_50" FileName="MICROS~2.DLL|Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll" Attributes="0" SourcePath="..\..\PortalApiGusApiRegonDataRelease\zh-Hant\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll" SelfReg="false"/>
     <ROW File="Microsoft.CodeAnalysis.resources.dll_50" Component_="Microsoft.CodeAnalysis.resources.dll_50" FileName="MICROS~3.DLL|Microsoft.CodeAnalysis.resources.dll" Attributes="0" SourcePath="..\..\PortalApiGusApiRegonDataRelease\zh-Hant\Microsoft.CodeAnalysis.resources.dll" SelfReg="false"/>
     <ROW File="Microsoft.CodeAnalysis.Workspaces.resources.dll_50" Component_="Microsoft.CodeAnalysis.Workspaces.resources.dll_50" FileName="MICROS~4.DLL|Microsoft.CodeAnalysis.Workspaces.resources.dll" Attributes="0" SourcePath="..\..\PortalApiGusApiRegonDataRelease\zh-Hant\Microsoft.CodeAnalysis.Workspaces.resources.dll" SelfReg="false"/>
+    <ROW File="Microsoft.AspNetCore.Authentication.JwtBearer.dll" Component_="Microsoft.AspNetCore.Authentication.JwtBearer.dll" FileName="MICRO~50.DLL|Microsoft.AspNetCore.Authentication.JwtBearer.dll" Attributes="0" SourcePath="..\..\PortalApiGusApiRegonDataRelease\Microsoft.AspNetCore.Authentication.JwtBearer.dll" SelfReg="false"/>
+    <ROW File="Microsoft.AspNetCore.Authentication.Negotiate.dll" Component_="Microsoft.AspNetCore.Authentication.Negotiate.dll" FileName="MICRO~51.DLL|Microsoft.AspNetCore.Authentication.Negotiate.dll" Attributes="0" SourcePath="..\..\PortalApiGusApiRegonDataRelease\Microsoft.AspNetCore.Authentication.Negotiate.dll" SelfReg="false"/>
+    <ROW File="Microsoft.AspNetCore.Connections.Abstractions.dll" Component_="Microsoft.AspNetCore.Connections.Abstractions.dll" FileName="MICRO~52.DLL|Microsoft.AspNetCore.Connections.Abstractions.dll" Attributes="0" SourcePath="..\..\PortalApiGusApiRegonDataRelease\Microsoft.AspNetCore.Connections.Abstractions.dll" SelfReg="false"/>
+    <ROW File="Microsoft.AspNetCore.Http.Features.dll" Component_="Microsoft.AspNetCore.Http.Features.dll" FileName="MICRO~53.DLL|Microsoft.AspNetCore.Http.Features.dll" Attributes="0" SourcePath="..\..\PortalApiGusApiRegonDataRelease\Microsoft.AspNetCore.Http.Features.dll" SelfReg="false"/>
+    <ROW File="NetAppCommon.dll" Component_="NetAppCommon.dll" FileName="NETAPP~1.DLL|NetAppCommon.dll" Attributes="0" SourcePath="..\..\PortalApiGusApiRegonDataRelease\NetAppCommon.dll" SelfReg="false"/>
+    <ROW File="NetAppCommon.pdb" Component_="NetAppCommon.dll" FileName="NETAPP~1.PDB|NetAppCommon.pdb" Attributes="0" SourcePath="..\..\PortalApiGusApiRegonDataRelease\NetAppCommon.pdb" SelfReg="false"/>
+    <ROW File="System.IO.Pipelines.dll" Component_="System.IO.Pipelines.dll" FileName="SYSTE~22.DLL|System.IO.Pipelines.dll" Attributes="0" SourcePath="..\..\PortalApiGusApiRegonDataRelease\System.IO.Pipelines.dll" SelfReg="false"/>
+    <ROW File="id_rsa.ppk.pub" Component_="appsettings.Development.json" FileName="ID_RSA~1.PUB|id_rsa.ppk.pub" Attributes="0" SourcePath="..\..\PortalApiGusApiRegonDataRelease\id_rsa.ppk.pub" SelfReg="false"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.AppPoolComponent">
     <ROW AppPoolId="0" Name="ISK Portal Api Gus" Condition="1" Flags="97" ManagedRuntimeVersion="&lt;default&gt;"/>
@@ -1054,7 +1063,6 @@
     <ROW Property="AI_SETUPEXEPATH" Signature_="AI_EXE_PATH_CU" Builds="DefaultBuild"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiBinaryComponent">
-    <ROW Name="PowerShellScriptLauncher.dll" SourcePath="&lt;AI_CUSTACTS&gt;PowerShellScriptLauncher.dll"/>
     <ROW Name="Prereq.dll" SourcePath="&lt;AI_CUSTACTS&gt;Prereq.dll"/>
     <ROW Name="SoftwareDetector.dll" SourcePath="&lt;AI_CUSTACTS&gt;SoftwareDetector.dll"/>
     <ROW Name="aicustact.dll" SourcePath="&lt;AI_CUSTACTS&gt;aicustact.dll"/>
@@ -1100,7 +1108,6 @@
     <ROW Action="AI_BACKUP_AI_SETUPEXEPATH" Type="51" Source="AI_SETUPEXEPATH_ORIGINAL" Target="[AI_SETUPEXEPATH]"/>
     <ROW Action="AI_CleanPrereq" Type="65" Source="Prereq.dll" Target="CleanPrereq" WithoutSeq="true"/>
     <ROW Action="AI_DATA_SETTER" Type="51" Source="AI_ExtractFiles" Target="[AI_SETUPEXEPATH]"/>
-    <ROW Action="AI_DATA_SETTER_1" Type="51" Source="CustomActionData" Target="AEQAaQBnAGkAdABhAGwAbAB5AFMAaQBnAG4AUwBjAHIAaQBwAHQAAgABAEYAbABhAGcAcwACADAAAQBQAGEAcgBhAG0AcwACAAEAUwBjAHIAaQBwAHQAAgAjACAAQgBsAG8AYwBrACAAZgBvAHIAIABkAGUAYwBsAGEAcgBpAG4AZwAgAHQAaABlACAAcwBjAHIAaQBwAHQAIABwAGEAcgBhAG0AZQB0AGUAcgBzAC4ADQAKAFAAYQByAGEAbQAoACkADQAKAA0ACgAjACAAWQBvAHUAcgAgAGMAbwBkAGUAIABnAG8AZQBzACAAaABlAHIAZQAuAA0ACgBXAHIAaQB0AGUALQBPAHUAdABwAHUAdAAgACIASABlAGwAbABvACAAdwBvAHIAbABkACI="/>
     <ROW Action="AI_DOWNGRADE" Type="19" Target="4010"/>
     <ROW Action="AI_DeleteCadLzma" Type="51" Source="AI_DeleteLzma" Target="[AI_SETUPEXEPATH]"/>
     <ROW Action="AI_DeleteLzma" Type="1025" Source="lzmaextractor.dll" Target="DeleteLZMAFiles"/>
@@ -1132,7 +1139,6 @@
     <ROW Action="AI_STORE_LOCATION" Type="51" Source="ARPINSTALLLOCATION" Target="[APPDIR]"/>
     <ROW Action="AI_VerifyPrereq" Type="1" Source="Prereq.dll" Target="VerifyPrereq"/>
     <ROW Action="OpenUrl" Type="2" Source="viewer.exe" Target="http://localhost:8090" Options="1"/>
-    <ROW Action="PowerShellScriptInline" Type="1" Source="PowerShellScriptLauncher.dll" Target="RunPowerShellScript" Options="1" AdditionalSeq="AI_DATA_SETTER_1"/>
     <ROW Action="SET_APPDIR" Type="307" Source="APPDIR" Target="[ProgramFilesFolder][Manufacturer]\[ProductName]"/>
     <ROW Action="SET_SHORTCUTDIR" Type="307" Source="SHORTCUTDIR" Target="[ProgramMenuFolder][ProductName]"/>
     <ROW Action="SET_TARGETDIR_TO_APPDIR" Type="51" Source="TARGETDIR" Target="[APPDIR]"/>
@@ -1140,7 +1146,6 @@
   <COMPONENT cid="caphyon.advinst.msicomp.MsiFeatCompsComponent">
     <ROW Feature_="MainFeature" Component_="APPDIR"/>
     <ROW Feature_="MainFeature" Component_="ProductInformation"/>
-    <ROW Feature_="MainFeature" Component_="AdvertisingCampaign.dll"/>
     <ROW Feature_="MainFeature" Component_="appsettings.Development.json"/>
     <ROW Feature_="MainFeature" Component_="AutoMapper.dll"/>
     <ROW Feature_="MainFeature" Component_="Dapper.Contrib.dll"/>
@@ -1224,7 +1229,6 @@
     <ROW Feature_="MainFeature" Component_="System.Net.Http.Formatting.dll"/>
     <ROW Feature_="MainFeature" Component_="System.Private.ServiceModel.dll"/>
     <ROW Feature_="MainFeature" Component_="System.Runtime.Caching.dll"/>
-    <ROW Feature_="MainFeature" Component_="System.Runtime.CompilerServices.Unsafe.dll"/>
     <ROW Feature_="MainFeature" Component_="System.Security.Cryptography.ProtectedData.dll"/>
     <ROW Feature_="MainFeature" Component_="System.ServiceModel.dll"/>
     <ROW Feature_="MainFeature" Component_="System.ServiceModel.Duplex.dll"/>
@@ -1339,6 +1343,12 @@
     <ROW Feature_="MainFeature" Component_="Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll_50"/>
     <ROW Feature_="MainFeature" Component_="Microsoft.CodeAnalysis.resources.dll_50"/>
     <ROW Feature_="MainFeature" Component_="Microsoft.CodeAnalysis.Workspaces.resources.dll_50"/>
+    <ROW Feature_="MainFeature" Component_="Microsoft.AspNetCore.Authentication.JwtBearer.dll"/>
+    <ROW Feature_="MainFeature" Component_="Microsoft.AspNetCore.Authentication.Negotiate.dll"/>
+    <ROW Feature_="MainFeature" Component_="Microsoft.AspNetCore.Connections.Abstractions.dll"/>
+    <ROW Feature_="MainFeature" Component_="Microsoft.AspNetCore.Http.Features.dll"/>
+    <ROW Feature_="MainFeature" Component_="NetAppCommon.dll"/>
+    <ROW Feature_="MainFeature" Component_="System.IO.Pipelines.dll"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiInstExSeqComponent">
     <ROW Action="AI_DOWNGRADE" Condition="AI_NEWERPRODUCTFOUND AND (UILevel &lt;&gt; 5)" Sequence="210"/>
@@ -1364,9 +1374,7 @@
     <ROW Action="AI_IIsInstall" Condition="(NOT PATCH AND NOT MSIPATCHREMOVE ) AND (NOT Reinstall AND AI_INSTALL_MODE &lt;&gt; &quot;Repair&quot;) AND ((VersionNT &gt;= 500 AND NOT Installed) OR (Installed AND REMOVE &lt;&gt; &quot;ALL&quot; AND AI_INSTALL_MODE &lt;&gt; &quot;Remove&quot;))" Sequence="6509"/>
     <ROW Action="AI_IIsUninstall" Condition="(VersionNT &gt;= 500) AND (REMOVE = &quot;ALL&quot;)" Sequence="1699"/>
     <ROW Action="AI_VerifyPrereq" Sequence="1101"/>
-    <ROW Action="OpenUrl" Condition="( NOT Installed )" Sequence="6603"/>
-    <ROW Action="PowerShellScriptInline" Condition="(VersionNT &gt; 501) OR (VersionNT = 501 AND ServicePackLevel &gt;= 2)" Sequence="6602"/>
-    <ROW Action="AI_DATA_SETTER_1" Condition="(VersionNT &gt; 501) OR (VersionNT = 501 AND ServicePackLevel &gt;= 2)" Sequence="6601"/>
+    <ROW Action="OpenUrl" Condition="( NOT Installed )" Sequence="6601"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiInstallUISequenceComponent">
     <ROW Action="AI_RESTORE_LOCATION" Condition="APPDIR=&quot;&quot;" Sequence="749"/>

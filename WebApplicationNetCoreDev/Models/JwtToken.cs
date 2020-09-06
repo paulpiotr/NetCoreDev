@@ -68,7 +68,7 @@ namespace WebApplicationNetCoreDev.Models
                 UserName = httpContext.User.Identity.Name;
                 Key = EncryptDecrypt.EncryptDecrypt.GetRsaFileContent("id_rsa.ppk.pub");
                 Expires = 1 * 60 * 60 * 24 * 366;
-                JwtStringToken = PortalApiGusApiRegonData.PortalApiGusApiRegonDataConfiguration.GetValue<string>("JwtStringToken");
+                JwtStringToken = NetAppCommon.DataConfiguration.GetValue<string>("JwtStringToken");
             }
             catch (Exception e)
             {

@@ -100,10 +100,11 @@ namespace AdvertisingCampaign
             }
         }
         /// <summary>
-        /// Update Async Advertising Campaign
+        /// 
         /// </summary>
-        /// <param name="id">Advertising Campaign Id</param>
-        /// <returns>Advertising Campaign Model or null</returns>
+        /// <param name="id"></param>
+        /// <param name="advertisingCampaign"></param>
+        /// <returns></returns>
         public static async System.Threading.Tasks.Task<Models.AdvertisingCampaign> UpdateAsync(int? id, Models.AdvertisingCampaign advertisingCampaign)
         {
             try

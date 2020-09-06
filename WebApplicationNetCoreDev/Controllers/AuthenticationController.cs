@@ -218,8 +218,8 @@ namespace WebApplicationNetCoreDev.Controllers
                 if (ModelState.IsValid)
                 {
                     model = model.GenerateJwtToken();
-                    PortalApiGusApiRegonData.PortalApiGusApiRegonDataConfiguration.SetAppSettingValue<string>("JwtTokenUserName", model.UserName);
-                    PortalApiGusApiRegonData.PortalApiGusApiRegonDataConfiguration.SetAppSettingValue<string>("JwtStringToken", model.JwtStringToken);
+                    NetAppCommon.DataConfiguration.SetAppSettingValue<string>("JwtTokenUserName", model.UserName);
+                    NetAppCommon.DataConfiguration.SetAppSettingValue<string>("JwtStringToken", model.JwtStringToken);
                 }
                 return View(model);
             }
