@@ -22,3 +22,6 @@
 [submodule "NetAppCommon"]
 	path = NetAppCommon
 	url = https://github.com/paulpiotr/NetAppCommon.git
+[submodule "RabbitMQPublisherCommon"]
+	path = RabbitMQPublisherCommon
+	url = https://github.com/paulpiotr/RabbitMQPublisherCommon.git
