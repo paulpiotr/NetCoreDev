@@ -28,3 +28,6 @@
 [submodule "SerwisRzeczypospolitejPolskiej"]
 	path = SerwisRzeczypospolitejPolskiej
 	url = https://github.com/paulpiotr/SerwisRzeczypospolitejPolskiej.git
+[submodule "RabbitMQDockerComposeCommon"]
+	path = RabbitMQDockerComposeCommon
+	url = https://github.com/paulpiotr/RabbitMQDockerComposeCommon.git
