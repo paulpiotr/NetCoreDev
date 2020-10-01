@@ -44,26 +44,26 @@
             Klucz Api [JwtStringToken]:
         </div>
         <div class="col-sm-8 p-2">
-            @((string)NetAppCommon.DataConfiguration.GetValue<string>("JwtStringToken"))
+            @((string)NetAppCommon.Configuration.GetValue<string>("JwtStringToken"))
         </div>
         <div class="col-sm-4 p-2">
             Użytkownik klucz Api [JwtTokenUserName]:
         </div>
         <div class="col-sm-8 p-2">
-            @((string)NetAppCommon.DataConfiguration.GetValue<string>("JwtTokenUserName"))
+            @((string)NetAppCommon.Configuration.GetValue<string>("JwtTokenUserName"))
         </div>
         <hr />
         <div class="col-sm-4 p-2">
             Klucz Api [PortalApiGusKey]:
         </div>
         <div class="col-sm-8 p-2">
-            @((string)NetAppCommon.DataConfiguration.GetValue<string>("PortalApiGusKey"))
+            @((string)NetAppCommon.Configuration.GetValue<string>("PortalApiGusKey"))
         </div>
         <div class="col-sm-4 p-2">
             Czas utrzymywania danych w cache [PortalApiGusSearchCacheLifetime]:
         </div>
         <div class="col-sm-8 p-2">
-            @((int)NetAppCommon.DataConfiguration.GetValue<int>("PortalApiGusSearchCacheLifetime"))
+            @((int)NetAppCommon.Configuration.GetValue<int>("PortalApiGusSearchCacheLifetime"))
         </div>
         <hr />
         <div class="col-sm-4 p-2">
@@ -71,14 +71,14 @@
         </div>
         <div class="col-sm-8 p-2">
             @*@(PortalApiGusApiRegonData.PortalApiGusApiRegonDataContext.GetConnectionString())*@
-            @(await NetAppCommon.DataContext.GetConnectionStringAsync("PortalApiGusApiRegonDataDbContext"))
+            @(await NetAppCommon.DatabaseMssql.GetConnectionStringAsync("PortalApiGusApiRegonDataDbContext"))
         </div>
         <div class="col-sm-4 p-2">
             Możliwe połączenie z bazą danych:
         </div>
         <div class="col-sm-8 p-2">
             @*@(PortalApiGusApiRegonData.PortalApiGusApiRegonDataContext.IsServerConnected(PortalApiGusApiRegonData.PortalApiGusApiRegonDataContext.GetConnectionString()))*@
-            @(PortalApiGusApiRegonData.PortalApiGusApiRegonDataContext.IsServerConnected(await NetAppCommon.DataContext.GetConnectionStringAsync("PortalApiGusApiRegonDataDbContext")))
+            @(PortalApiGusApiRegonData.PortalApiGusApiRegonDataContext.IsServerConnected(await NetAppCommon.DatabaseMssql.GetConnectionStringAsync("PortalApiGusApiRegonDataDbContext")))
         </div>
     </div>
 </div>

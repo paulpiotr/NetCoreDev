@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
@@ -11,13 +11,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\EncryptDecrypt\EncryptDecrypt\EncryptDecrypt.csproj" />
-    <ProjectReference Include="..\Icasa\MutationService\IcasaMutationServiceData\IcasaMutationServiceData.csproj" />
-    <ProjectReference Include="..\Icasa\ReportService\IcasaReportServiceData\IcasaReportServiceData.csproj" />
     <ProjectReference Include="..\Log4netLogger\Log4netLogger.csproj" />
-    <ProjectReference Include="..\NetAppCommon\NetAppCommon\NetAppCommon.csproj" />
-    <ProjectReference Include="..\PortalApiGus\ApiRegon\PortalApiGusApiRegonData\PortalApiGusApiRegonData.csproj" />
-    <ProjectReference Include="..\RabbitMQPublisherTest\RabbitMQPublisherTest.csproj" />
+    <ProjectReference Include="..\SerwisRzeczypospolitejPolskiej\MinisterstwoFinansow\KrajowaAdministracjaSkarbowa\ApiWykazuPodatnikowVatData\ApiWykazuPodatnikowVatData.csproj" />
   </ItemGroup>
 
   <ItemGroup>
@@ -27,6 +22,14 @@
     <None Update="id_rsa.ppk.pub">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="log4net.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
+
+  <Target Name="SetEnvConfig" BeforeTargets="Compile">
+    <Copy SourceFiles="..\env\log4net.debug.config" DestinationFiles="log4net.config" OverwriteReadOnlyFiles="true" Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' " />
+    <Copy SourceFiles="..\env\log4net.release.config" DestinationFiles="log4net.config" OverwriteReadOnlyFiles="true" Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' " />
+  </Target>
 
 </Project>

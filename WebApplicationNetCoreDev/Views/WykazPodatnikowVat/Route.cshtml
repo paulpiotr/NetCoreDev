@@ -5,8 +5,8 @@
 
 @{ string gridName = string.Format("{0}{1}", @System.Reflection.Assembly.GetEntryAssembly().GetName().Name, @System.Reflection.Assembly.GetAssembly(typeof(NetAppCommon.Models.ControllerRoutingActions)).GetName().Name); }
 @{ string gridDataSource = string.Format("{0}DataSource", gridName); }
-@{ string gridActionApiUrl = string.Format("{0}", "/api/PortalApiGus/DaneSzukajPodmiotyApi/RouteKendoGird"); }
-@{ ViewData["Title"] = "Dostępne Akcje w Portal Api Gus - Dane Szukaj Podmioty"; }
+@{ string gridActionApiUrl = string.Format("{0}", "/api/SerwisRzeczypospolitejPolskiej/MinisterstwoFinansow/KrajowaAdministracjaSkarbowa/WykazPodatnikowVatApi/RouteKendoGird"); }
+@{ ViewData["Title"] = "Dostępne akcje w Ministerstwo Finansów - Wykaz podatników VAT"; }
 @{ Layout = "~/Views/Shared/_LayoutAdmin.cshtml"; }
 
 <div class="container-fluid k-content">
@@ -20,14 +20,14 @@
                 items.Add()
                 .Type(BreadcrumbItemType.RootItem)
                 .Href(Url.Action("Index", "DaneSzukajPodmioty"))
-                .Text("Portal Api Gus - Dane Szukaj Podmioty")
+                .Text("Ministerstwo Finansów - Wykaz podatników VAT")
                 .ShowText(true)
                 .Icon("home")
                 .ShowIcon(true);
                 items.Add()
                 .Type(BreadcrumbItemType.Item)
                 .Href("javascript:void(0)")
-                .Text("Dostępne Akcje")
+                .Text("Dostępne akcje")
                 .ShowText(true)
                 .Icon("link-horizontal")
                 .ShowIcon(true);
@@ -60,24 +60,23 @@
             })
             .Sortable()
             .Scrollable()
-            .Filterable()
             .DataSource(gridDataSource))
 
         @Html.Script(
         @<script type="text/javascript">
-                $(function () {
-                    try {
-                        var grid = $("#@gridName");
-                        var gridDataSource = @gridDataSource;
-                        var gridWidget = grid.data("kendoGrid");
-                        gridWidget.wrapper.height($(".page-wrapper").first().height() * 0.9);
-                        gridWidget.resize();
-                        gridWidget.resize(true);
-                    }
-                    catch (e) {
-                        console.log(e);
-                    }
-                });
+            $(function () {
+                try {
+                    var grid = $("#@gridName");
+                    var gridDataSource = @gridDataSource;
+                    var gridWidget = grid.data("kendoGrid");
+                    gridWidget.wrapper.height($(".page-wrapper").first().height() * 0.9);
+                    gridWidget.resize();
+                    gridWidget.resize(true);
+                }
+                catch (e) {
+                    console.log(e);
+                }
+            });
         </script>)
 
     </div>

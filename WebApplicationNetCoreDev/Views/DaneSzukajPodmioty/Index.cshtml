@@ -3,18 +3,14 @@
 
 @model IEnumerable<PortalApiGusApiRegonData.Models.DaneSzukajPodmioty.DaneSzukajPodmioty>
 
-@{
-    string gridName = string.Format("{0}{1}", @System.Reflection.Assembly.GetEntryAssembly().GetName().Name, @System.Reflection.Assembly.GetAssembly(typeof(PortalApiGusApiRegonData.Models.DaneSzukajPodmioty.DaneSzukajPodmioty)).GetName().Name);
-    string gridActions = string.Format("{0}Actions", gridName);
-    string gridDataSource = string.Format("{0}DataSource", gridName);
-    string gridToolbarTemplate = string.Format("{0}GridToolbarTemplate", gridName);
-    string gridActionApiUrl = string.Format("{0}", "/api/PortalApiGus/DaneSzukajPodmiotyApi/KendoGrid");
-}
+@{ string gridName = string.Format("{0}{1}", @System.Reflection.Assembly.GetEntryAssembly().GetName().Name, @System.Reflection.Assembly.GetAssembly(typeof(PortalApiGusApiRegonData.Models.DaneSzukajPodmioty.DaneSzukajPodmioty)).GetName().Name); }
+@{ string gridActions = string.Format("{0}Actions", gridName); }
+@{ string gridDataSource = string.Format("{0}DataSource", gridName); }
+@{ string gridToolbarTemplate = string.Format("{0}GridToolbarTemplate", gridName); }
+@{ string gridActionApiUrl = string.Format("{0}", "/api/PortalApiGus/DaneSzukajPodmiotyApi/KendoGrid"); }
 
-@{
-    ViewData["Title"] = "Portal Api Gus - Dane Szukaj Podmioty";
-    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
-}
+@{ ViewData["Title"] = "Portal Api Gus - Dane Szukaj Podmioty"; }
+@{ Layout = "~/Views/Shared/_LayoutAdmin.cshtml"; }
 
 <div class="container-fluid k-content m-0">
 
@@ -31,8 +27,7 @@
                 .ShowText(true)
                 .Icon("home")
                 .ShowIcon(true);
-            })
-        )
+            }))
 
     </div>
 
@@ -47,9 +42,7 @@
                 .AutoSync(true)
                 .ServerOperation(true)
                 .Read(read => read.Url(gridActionApiUrl).Type(HttpVerbs.Get)
-            ))
-        )
-
+            )))
         @(Html.Kendo().Grid<PortalApiGusApiRegonData.Models.DaneSzukajPodmioty.DaneSzukajPodmioty>()
             .Name(gridName)
             .Columns(
@@ -77,8 +70,7 @@
             .Sortable()
             .Scrollable()
             .Filterable(filterable => filterable.Extra(false).Operators(operators => operators.ForString(str => str.Clear().IsEqualTo("Jest równy").Contains("Zawiera"))))
-            .DataSource(gridDataSource)
-        )
+            .DataSource(gridDataSource))
 
         @Html.Script(
         @<script id="@gridToolbarTemplate" type="text/x-kendo-template">
@@ -96,8 +88,7 @@
                     </div>
                 </div>
             </div>
-        </script>
-        )
+        </script>)
 
         @Html.Script(
         @<script type="text/javascript">
@@ -116,11 +107,11 @@
                     if (parseInt($("#regon").val(), 10) > 0 || parseInt($("#nip").val(), 10) > 0) {
                         e.preventDefault();
                         var url = gridDataSource.transport.options.read.url;
-                        if (parseInt($("#regon").val(), 10) > 0) {
-                            gridDataSource.transport.options.read.url = "/api/PortalApiGus/DaneSzukajPodmiotyApi/GridRegon/" + $("#regon").val();
+                        if (parseInt($("#nip").val(), 10) > 0) {
+                            gridDataSource.transport.options.read.url = "/api/PortalApiGus/DaneSzukajPodmiotyApi/KendoGridNip/" + $("#nip").val();
                         }
-                        else if (parseInt($("#nip").val(), 10) > 0) {
-                            gridDataSource.transport.options.read.url = "/api/PortalApiGus/DaneSzukajPodmiotyApi/GridNip/" + $("#nip").val();
+                        if (parseInt($("#regon").val(), 10) > 0) {
+                            gridDataSource.transport.options.read.url = "/api/PortalApiGus/DaneSzukajPodmiotyApi/KendoGridRegon/" + $("#regon").val();
                         }
                         gridDataSource.read();
                         gridDataSource.transport.options.read.url = url;
@@ -131,8 +122,7 @@
                 console.log(e);
             }
         });
-        </script>
-        )
+        </script>)
 
     </div>
 </div>

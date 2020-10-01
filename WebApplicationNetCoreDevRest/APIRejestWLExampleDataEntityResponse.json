@@ -1,0 +1,67 @@
+{
+  "result": {
+    "subject": {
+      "name": "'ELEKTROMONT' SPÓ£KA AKCYJNA",
+      "nip": "9291675172",
+      "statusVat": "Czynny",
+      "regon": "977912078",
+      "pesel": null,
+      "krs": "0000318822",
+      "residenceAddress": null,
+      "workingAddress": "LUDWIKA WARYÑSKIEGO 18, 58-500 JELENIA GÓRA",
+      "representatives": [
+        {
+          "firstName": "Jan",
+          "lastName": "Nowak",
+          "nip": "1111111111",
+          "companyName": "Nazwa firmy"
+        },
+        {
+          "firstName": "Jan",
+          "lastName": "Nowak",
+          "nip": "1111111111",
+          "companyName": "Nazwa firmy"
+        }
+      ],
+      "authorizedClerks": [
+        {
+          "firstName": "Jan",
+          "lastName": "Nowak",
+          "nip": "1111111111",
+          "companyName": "Nazwa firmy"
+        },
+        {
+          "firstName": "Jan",
+          "lastName": "Nowak",
+          "nip": "1111111111",
+          "companyName": "Nazwa firmy"
+        }
+      ],
+      "partners": [
+        {
+          "firstName": "Jan",
+          "lastName": "Nowak",
+          "nip": "1111111111",
+          "companyName": "Nazwa firmy"
+        },
+        {
+          "firstName": "Jan",
+          "lastName": "Nowak",
+          "nip": "1111111111",
+          "companyName": "Nazwa firmy"
+        }
+      ],
+      "registrationLegalDate": "2004-05-01",
+      "registrationDenialBasis": null,
+      "registrationDenialDate": null,
+      "restorationBasis": null,
+      "restorationDate": null,
+      "removalBasis": null,
+      "removalDate": null,
+      "accountNumbers": [ "35114020910000223917001007", "30105019081000002352315374", "03114020910000223917001001", "73114020910000223917001002", "92105019081000002352315325" ],
+      "hasVirtualAccounts": false
+    },
+    "requestId": "i90ma-8913d3g",
+    "requestDateTime": "23-09-2020 15:37:28"
+  }
+}

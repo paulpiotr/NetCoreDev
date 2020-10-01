@@ -29,6 +29,7 @@ namespace WebApplicationNetCoreDev.Controllers.PortalApiGusApiRegonDataControler
                 return NotFound();
             }
         }
+
         // GET: DaneSzukajPodmioty/Settings
         [Authorize(AuthenticationSchemes = "Cookies", Policy = null, Roles = "User")]
         public IActionResult Settings()
@@ -42,6 +43,7 @@ namespace WebApplicationNetCoreDev.Controllers.PortalApiGusApiRegonDataControler
                 return NotFound();
             }
         }
+
         // GET: DaneSzukajPodmioty/Route
         [Authorize(AuthenticationSchemes = "Cookies", Policy = null, Roles = "User")]
         public IActionResult Route()

@@ -25,44 +25,84 @@
                 <li>
                     <a class="has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false" title="Portal Api Gus">
                         <i class="ti-layout-grid2"></i>
-                        <span class="hide-menu">Portal Api Gus</span>
+                        <span class="hide-menu">
+                            <small>Portal Api Gus</small><br />
+                            <small>Wyszukiwanie podmiotów</small>
+                        </span>
                     </a>
                     <ul aria-expanded="false" class="collapse">
-                        @*
-        <li><a href="app-calendar.html">Calendar <i class="ti-calendar"></i></a></li>
-        <li><a href="app-chat.html">Chat app <i class="ti-comment"></i></a></li>
-        <li><a href="app-ticket.html">Support Ticket <i class="ti-support"></i></a></li>
-        <li><a href="app-contact.html">Contact / Employee <i class="ti-user"></i></a></li>
-                        *@
                         <li>
                             <a asp-area="" asp-controller="DaneSzukajPodmioty" asp-action="Index" title="Portal Api Gus - Wyszukiwanie podmiotów gospodarczych">
-                                <small>Wyszukiwanie podmiotów gospodarczych</small><i class="ti-search p-t-5"></i>
+                                <small class="hide-menu">Wyszukiwanie podmiotów</small><i class="ti-search p-t-5"></i>
                             </a>
                         </li>
                         <li>
-                            <a asp-area="" asp-controller="DaneSzukajPodmioty" asp-action="Settings" title="Portal Api Gus - Wyszukiwanie podmiotów ustawienia">
-                                <small>Wyszukiwanie podmiotów ustawienia</small><i class="ti-settings p-t-5"></i>
+                            <a asp-area="" asp-controller="DaneSzukajPodmioty" asp-action="Settings" title="Portal Api Gus - Wyszukiwanie podmiotów gospodarczych - ustawienia">
+                                <small class="hide-menu">Ustawienia</small><i class="ti-settings p-t-5"></i>
                             </a>
                         </li>
                         <li>
-                            <a asp-area="" asp-controller="DaneSzukajPodmioty" asp-action="Route" title="Portal Api Gus - Wyszukiwanie podmiotów dostępne akcje">
-                                <small>Wyszukiwanie podmiotów dostępne akcje</small><i class="ti-link p-t-5"></i>
+                            <a asp-area="" asp-controller="DaneSzukajPodmioty" asp-action="Route" title="Portal Api Gus - Wyszukiwanie podmiotów gospodarczych -  dostępne akcje">
+                                <small class="hide-menu">Dostępne akcje</small><i class="ti-link p-t-5"></i>
                             </a>
                         </li>
                         <li>
-                            <a asp-area="" asp-controller="Authentication" asp-action="GenerateJwtToken" title="Pobierz lub generuj klucz (token) API">
-                                <small>Pobierz lub generuj klucz (token) API</small><i class="ti-key p-t-5"></i>
+                            <a asp-area="" asp-controller="Authentication" asp-action="GenerateJwtToken" title="Pobierz klucz (token) API">
+                                <small class="hide-menu">Pobierz klucz (token) API</small><i class="ti-key p-t-5"></i>
                             </a>
                         </li>
-                        @*
-        <li>
-            <a asp-area="" asp-controller="AdvertisingCampaign" asp-action="Create" title="Advertising Campaign Add">
-                <small>Advertising Campaign Add </small><i class="ti-new-window p-t-5"></i>
-            </a>
-        </li>
-                        *@
                     </ul>
                 </li>
+                @*<li>
+                    <a class="has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false" title="System integracji Icasa Unimot">
+                        <i class="ti-layout-grid2"></i>
+                        <span class="hide-menu">SI Icasa Unimot</span>
+                    </a>
+                    <ul aria-expanded="false" class="collapse">
+                        <li>
+                            <a asp-area="" asp-controller="DocumentHeader" asp-action="Index" title="System integracji Icasa Unimot - Rejestracja faktur wysłanych do kontrahenta">
+                                <small class="hide-menu">Rejestracja faktur wysłanych do kontrahenta</small><i class="ti-search p-t-5"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </li>*@
+                <li>
+                    <a class="has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false" title="Serwis Rzeczypospolitej Polskiej/Ministerstwo Finansów/Krajowa Administracja Skarbowa/Api Wykazu Podatników Vat">
+                        <i class="ti-layout-grid2"></i>
+                        <span class="hide-menu">
+                            <small>Ministerstwo Finansów</small><br />
+                            <small>Wykaz podatników VAT</small>
+                        </span>
+                    </a>
+                    <ul aria-expanded="false" class="collapse">
+                        <li>
+                            <a asp-area="" asp-controller="WykazPodatnikowVat" asp-action="Index" title="Api Wykazu Podatników Vat - Wyszukiwanie podmiotów">
+                                <small class="hide-menu">Wyszukiwanie podmiotów</small><i class="ti-search p-t-5"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a asp-area="" asp-controller="WykazPodatnikowVat" asp-action="Index" title="Api Wykazu Podatników Vat - Sprawdzanie podmiotów">
+                                <small class="hide-menu">Sprawdzanie podmiotów</small><i class="ti-check p-t-5"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a asp-area="" asp-controller="WykazPodatnikowVat" asp-action="Settings" title="Api Wykazu Podatników Vat - Wyszukiwanie podmiotów ustawienia">
+                                <small class="hide-menu">Ustawienia</small><i class="ti-settings p-t-5"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a asp-area="" asp-controller="WykazPodatnikowVat" asp-action="Route" title="Api Wykazu Podatników Vat - Dostępne akcje">
+                                <small class="hide-menu">Dostępne akcje</small><i class="ti-link p-t-5"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a asp-area="" asp-controller="Authentication" asp-action="GenerateJwtToken" title="Api Wykazu Podatników Vat - Pobierz klucz (token) API">
+                                <small class="hide-menu">Pobierz klucz (token) API</small><i class="ti-key p-t-5"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
                 @*<li>
                         <a class="has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="ti-email"></i><span class="hide-menu">Inbox</span></a>
                         <ul aria-expanded="false" class="collapse">

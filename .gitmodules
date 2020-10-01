@@ -25,3 +25,6 @@
 [submodule "RabbitMQPublisherCommon"]
 	path = RabbitMQPublisherCommon
 	url = https://github.com/paulpiotr/RabbitMQPublisherCommon.git
+[submodule "SerwisRzeczypospolitejPolskiej"]
+	path = SerwisRzeczypospolitejPolskiej
+	url = https://github.com/paulpiotr/SerwisRzeczypospolitejPolskiej.git

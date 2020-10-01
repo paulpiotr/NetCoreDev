@@ -11,40 +11,50 @@
     <NeutralLanguage></NeutralLanguage>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Remove="lib\**" />
     <Compile Remove="wwwroot\vendor\elegant\**" />
+    <Content Remove="lib\**" />
     <Content Remove="wwwroot\vendor\elegant\**" />
+    <EmbeddedResource Remove="lib\**" />
     <EmbeddedResource Remove="wwwroot\vendor\elegant\**" />
+    <None Remove="lib\**" />
     <None Remove="wwwroot\vendor\elegant\**" />
   </ItemGroup>
   <ItemGroup>
     <None Remove="docker-compose.override.yml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="lib\" />
     <Folder Include="wwwroot\lib\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Dapper" Version="2.0.35" />
-    <PackageReference Include="IdentityModel" Version="4.3.1" />
-    <PackageReference Include="IdentityServer4" Version="4.0.4" />
-    <PackageReference Include="log4net" Version="2.0.9" />
+    <PackageReference Include="IdentityModel" Version="4.4.0" />
+    <PackageReference Include="IdentityServer4" Version="4.1.0" />
+    <PackageReference Include="log4net" Version="2.0.11" />
     <PackageReference Include="log4net-loggly" Version="9.0.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="3.1.7" />
-    <PackageReference Include="Microsoft.AspNetCore.Authentication.Negotiate" Version="3.1.7" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.7" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="3.1.7" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.7">
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="3.1.8" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.Negotiate" Version="3.1.8" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.1.8" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.8" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.8">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="3.1.8" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.8">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.10.9" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.4" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\EncryptDecrypt\EncryptDecrypt\EncryptDecrypt.csproj" />
+    <ProjectReference Include="..\IUIntegrationSystem\IUIntegrationSystemData\IUIntegrationSystemData.csproj" />
     <ProjectReference Include="..\Log4netLogger\Log4netLogger.csproj" />
     <ProjectReference Include="..\NetAppCommon\NetAppCommon\NetAppCommon.csproj" />
     <ProjectReference Include="..\PortalApiGus\ApiRegon\PortalApiGusApiRegonData\PortalApiGusApiRegonData.csproj" />
+    <ProjectReference Include="..\SerwisRzeczypospolitejPolskiej\MinisterstwoFinansow\KrajowaAdministracjaSkarbowa\ApiWykazuPodatnikowVatData\ApiWykazuPodatnikowVatData.csproj" />
     <ProjectReference Include="..\SimpleImpersonation\src\SimpleImpersonation.csproj" />
   </ItemGroup>
   <ItemGroup>
@@ -53,6 +63,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Update="appsettings.Development.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Update="appsettings.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Update="Views\DaneSzukajPodmioty\Index.cshtml">
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>

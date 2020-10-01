@@ -67,8 +67,8 @@ namespace WebApplicationNetCoreDev.Models
             {
                 UserName = httpContext.User.Identity.Name;
                 Key = EncryptDecrypt.EncryptDecrypt.GetRsaFileContent("id_rsa.ppk.pub");
-                Expires = 1 * 60 * 60 * 24 * 366;
-                JwtStringToken = NetAppCommon.DataConfiguration.GetValue<string>("JwtStringToken");
+                Expires = 1 * 60 * 60 * 24 * 366 * 10;
+                JwtStringToken = NetAppCommon.Configuration.GetValue<string>("JwtStringToken");
             }
             catch (Exception e)
             {
@@ -96,7 +96,7 @@ namespace WebApplicationNetCoreDev.Models
                 JwtStringToken = jwtSecurityTokenHandler.WriteToken(JwtSecurityToken);
                 return this;
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 _log4net.Error(string.Format("{0}, {1}", e.Message, e.StackTrace), e);
                 return null;

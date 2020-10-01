@@ -46,7 +46,7 @@ namespace WebApplicationNetCoreDev.Controllers
                 }
                 return View();
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 _log4net.Error(string.Format("{0}, {1}", e.Message, e.StackTrace), e);
                 return NotFound(e);
@@ -106,7 +106,7 @@ namespace WebApplicationNetCoreDev.Controllers
                 }
                 return View(model);
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 _log4net.Error(string.Format("{0}, {1}", e.Message, e.StackTrace), e);
                 return NotFound(e);
@@ -153,7 +153,7 @@ namespace WebApplicationNetCoreDev.Controllers
             {
                 return View();
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 _log4net.Error(string.Format("{0}, {1}", e.Message, e.StackTrace), e);
                 return NotFound(e);
@@ -174,7 +174,7 @@ namespace WebApplicationNetCoreDev.Controllers
             {
                 return View();
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 _log4net.Error(string.Format("{0}, {1}", e.Message, e.StackTrace), e);
                 return NotFound(e);
@@ -195,7 +195,7 @@ namespace WebApplicationNetCoreDev.Controllers
                 JwtTokenModel jwtTokenModel = new JwtTokenModel(HttpContext);
                 return View(jwtTokenModel);
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 _log4net.Error(string.Format("{0}, {1}", e.Message, e.StackTrace), e);
                 return NotFound(e);
@@ -218,12 +218,12 @@ namespace WebApplicationNetCoreDev.Controllers
                 if (ModelState.IsValid)
                 {
                     model = model.GenerateJwtToken();
-                    NetAppCommon.DataConfiguration.SetAppSettingValue<string>("JwtTokenUserName", model.UserName);
-                    NetAppCommon.DataConfiguration.SetAppSettingValue<string>("JwtStringToken", model.JwtStringToken);
+                    NetAppCommon.Configuration.SetAppSettingValue<string>("JwtTokenUserName", model.UserName);
+                    NetAppCommon.Configuration.SetAppSettingValue<string>("JwtStringToken", model.JwtStringToken);
                 }
                 return View(model);
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 _log4net.Error(string.Format("{0}, {1}", e.Message, e.StackTrace), e);
                 return NotFound(e);
