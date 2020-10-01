@@ -7,7 +7,6 @@ using Microsoft.EntityFrameworkCore;
 using NetAppCommon.Models;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -279,23 +278,23 @@ namespace WebApplicationNetCoreDev.Controllers.ApiWykazuPodatnikowVatDataControl
         #endregion
 
         #region public async Task<ActionResult<Entity>> GetFindByRegonAsync(string regon)
-       /// <summary>
-       /// [Authorize(AuthenticationSchemes = "Bearer")]
-       /// [HttpGet("FindByRegon/{regon}")]
-       /// GET: api/SerwisRzeczypospolitejPolskiej/MinisterstwoFinansow/KrajowaAdministracjaSkarbowa/WykazPodatnikowVatApi/FindByRegon/{regon}
-       /// Wyszukaj podmioty według numeru REGON
-       /// Search entities by REGON number
-       /// </summary>
-       /// <param name="regon">
-       /// Numer identyfikacyjny REGON przypisany przez Krajowy Rejestr Urzędowy Podmiotów Gospodarki Narodowej jako string [^\d{9}$|^\d{14}$]
-       /// REGON identification number assigned by the National Register of Entities of National Economy as string [^\d{9}$|^\d{14}$]
-       /// </param>
-       /// <returns>
-       /// Podmiot jako obiekt Entity lub status NotFound
-       /// Entity as an Entity object or NotFound status
-       /// </returns>
-       // GET: api/SerwisRzeczypospolitejPolskiej/MinisterstwoFinansow/KrajowaAdministracjaSkarbowa/WykazPodatnikowVatApi/FindByRegon/{regon}
-       [Authorize(AuthenticationSchemes = "Bearer")]
+        /// <summary>
+        /// [Authorize(AuthenticationSchemes = "Bearer")]
+        /// [HttpGet("FindByRegon/{regon}")]
+        /// GET: api/SerwisRzeczypospolitejPolskiej/MinisterstwoFinansow/KrajowaAdministracjaSkarbowa/WykazPodatnikowVatApi/FindByRegon/{regon}
+        /// Wyszukaj podmioty według numeru REGON
+        /// Search entities by REGON number
+        /// </summary>
+        /// <param name="regon">
+        /// Numer identyfikacyjny REGON przypisany przez Krajowy Rejestr Urzędowy Podmiotów Gospodarki Narodowej jako string [^\d{9}$|^\d{14}$]
+        /// REGON identification number assigned by the National Register of Entities of National Economy as string [^\d{9}$|^\d{14}$]
+        /// </param>
+        /// <returns>
+        /// Podmiot jako obiekt Entity lub status NotFound
+        /// Entity as an Entity object or NotFound status
+        /// </returns>
+        // GET: api/SerwisRzeczypospolitejPolskiej/MinisterstwoFinansow/KrajowaAdministracjaSkarbowa/WykazPodatnikowVatApi/FindByRegon/{regon}
+        [Authorize(AuthenticationSchemes = "Bearer")]
         [HttpGet("FindByRegon/{regon}")]
         public async Task<ActionResult<Entity>> GetFindByRegonAsync(string regon)
         {

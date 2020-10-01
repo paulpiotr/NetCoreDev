@@ -31,3 +31,6 @@
 [submodule "RabbitMQDockerComposeCommon"]
 	path = RabbitMQDockerComposeCommon
 	url = https://github.com/paulpiotr/RabbitMQDockerComposeCommon.git
+[submodule "RabbitMQWorkerServiceCommon"]
+	path = RabbitMQWorkerServiceCommon
+	url = https://github.com/paulpiotr/RabbitMQWorkerServiceCommon.git

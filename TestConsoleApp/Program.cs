@@ -1,14 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 
 namespace TestConsoleApp
 {
-    class Program
+    internal class Program
     {
-        static async System.Threading.Tasks.Task Main(string[] args)
+        private static async System.Threading.Tasks.Task Main(string[] args)
         {
             ApiWykazuPodatnikowVatData.Models.Entity entity = null;
             Lazy<List<ApiWykazuPodatnikowVatData.Models.Entity>> entityList = null;
