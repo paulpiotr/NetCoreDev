@@ -3,34 +3,37 @@
 	url = https://github.com/mj1856/SimpleImpersonation
 [submodule "EncryptDecrypt"]
 	path = EncryptDecrypt
-	url = https://github.com/paulpiotr/EncryptDecrypt.git
+	url = http://tfs:8080/tfs/ISK/_git/EncryptDecrypt
 [submodule "Log4netLogger"]
 	path = Log4netLogger
-	url = https://github.com/paulpiotr/Log4netLogger
+	url = http://tfs:8080/tfs/ISK/_git/Log4netLogger
 [submodule "PortalApiGus"]
 	path = PortalApiGus
-	url = https://github.com/paulpiotr/PortalApiGus.git
+	url = http://tfs:8080/tfs/ISK/_git/PortalApiGus
 [submodule "Icasa"]
 	path = Icasa
-	url = https://github.com/paulpiotr/Icasa.git
+	url = http://tfs:8080/tfs/ISK/_git/Icasa
 [submodule "EntropyOfCardShuffling"]
 	path = EntropyOfCardShuffling
-	url = https://github.com/paulpiotr/EntropyOfCardShuffling.git
+	url = http://tfs:8080/tfs/ISK/_git/EntropyOfCardShuffling
 [submodule "IUIntegrationSystem"]
 	path = IUIntegrationSystem
-	url = https://piotrpaulisk@dev.azure.com/piotrpaulisk/IUIntegrationSystem/_git/IUIntegrationSystem
+	url = http://tfs:8080/tfs/ISK/_git/IUIntegrationSystem
 [submodule "NetAppCommon"]
 	path = NetAppCommon
-	url = https://github.com/paulpiotr/NetAppCommon.git
+	url = http://tfs:8080/tfs/ISK/_git/NetAppCommon
 [submodule "RabbitMQPublisherCommon"]
 	path = RabbitMQPublisherCommon
-	url = https://github.com/paulpiotr/RabbitMQPublisherCommon.git
+	url = http://tfs:8080/tfs/ISK/_git/RabbitMQPublisherCommon
 [submodule "SerwisRzeczypospolitejPolskiej"]
 	path = SerwisRzeczypospolitejPolskiej
-	url = https://github.com/paulpiotr/SerwisRzeczypospolitejPolskiej.git
+	url = http://tfs:8080/tfs/ISK/_git/SerwisRzeczypospolitejPolskiej
 [submodule "RabbitMQDockerComposeCommon"]
 	path = RabbitMQDockerComposeCommon
-	url = https://github.com/paulpiotr/RabbitMQDockerComposeCommon.git
+	url = http://tfs:8080/tfs/ISK/_git/RabbitMQDockerComposeCommon
 [submodule "RabbitMQWorkerServiceCommon"]
 	path = RabbitMQWorkerServiceCommon
-	url = https://github.com/paulpiotr/RabbitMQWorkerServiceCommon.git
+	url = http://tfs:8080/tfs/ISK/_git/RabbitMQWorkerServiceCommon
+[submodule "RabbitMQReceiverCommon"]
+	path = RabbitMQReceiverCommon
+	url = http://tfs:8080/tfs/ISK/_git/RabbitMQReceiverCommon
