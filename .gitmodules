@@ -37,3 +37,6 @@
 [submodule "RabbitMQReceiverCommon"]
 	path = RabbitMQReceiverCommon
 	url = http://tfs:8080/tfs/ISK/_git/RabbitMQReceiverCommon
+[submodule "WebApplicationNetCoreDevInstaller"]
+	path = WebApplicationNetCoreDevInstaller
+	url = https://github.com/paulpiotr/WebApplicationNetCoreDevInstaller.git
