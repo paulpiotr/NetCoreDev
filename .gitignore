@@ -362,3 +362,4 @@ RabbitMQPublisherTest/
 .data/
 RabbitmqDockerCompose/
 WebApplicationTestDocker/
+.WebApplicationNetCoreDevInstaller/

@@ -1,17 +1,15 @@
 ﻿using ApiWykazuPodatnikowVatData.Data;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using System;
 using System.Reflection;
-using System.Threading.Tasks;
 
 namespace WebApplicationNetCoreDev.Controllers.ApiWykazuPodatnikowVatDataController
 {
     #region public class WykazPodatnikowVatController : Controller
     /// <summary>
-    /// Kontroler Wykaz Podatników Vat
-    /// Controller List of VAT taxpayers
+    /// Kontroler Wykaz Podatników Vat, serwis https://wl-api.mf.gov.pl/
+    /// Controller List of VAT taxpayers, website https://wl-api.mf.gov.pl/
     /// Authorize(AuthenticationSchemes = "Cookies")
     /// Route("SerwisRzeczypospolitejPolskiej/MinisterstwoFinansow/KrajowaAdministracjaSkarbowa/[controller]/[action]")
     /// </summary>
@@ -49,7 +47,7 @@ namespace WebApplicationNetCoreDev.Controllers.ApiWykazuPodatnikowVatDataControl
         }
         #endregion
 
-        #region public async Task<IActionResult> Index()
+        #region public IActionResult Index()
         // GET: SerwisRzeczypospolitejPolskiej/MinisterstwoFinansow/KrajowaAdministracjaSkarbowa/WykazPodatnikowVat/Index
         /// <summary>
         /// GET: SerwisRzeczypospolitejPolskiej/MinisterstwoFinansow/KrajowaAdministracjaSkarbowa/WykazPodatnikowVat/Index
@@ -60,13 +58,71 @@ namespace WebApplicationNetCoreDev.Controllers.ApiWykazuPodatnikowVatDataControl
         /// IActionResult
         /// IActionResult
         /// </returns>
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
-            return View(await _context.Entity.Include(i => i.EntityAccountNumber).ToListAsync());
+            try
+            {
+                return View(/*await _context.Entity.Include(i => i.EntityAccountNumber).ToListAsync()*/);
+            }
+            catch (Exception e)
+            {
+                _log4net.Error(string.Format("{0}, {1}.", e.Message, e.StackTrace), e);
+            }
+            return NotFound();
         }
         #endregion
 
-        #region public async Task<IActionResult> Settings()
+        #region public IActionResult Search()
+        // GET: SerwisRzeczypospolitejPolskiej/MinisterstwoFinansow/KrajowaAdministracjaSkarbowa/WykazPodatnikowVat/Search
+        /// <summary>
+        /// GET: SerwisRzeczypospolitejPolskiej/MinisterstwoFinansow/KrajowaAdministracjaSkarbowa/WykazPodatnikowVat/Search
+        /// Wyszukaj podmioty gospodarcze według parametrów NIP lub REGON lub Numer rachunku bankowego NRB w serwisie https://wl-api.mf.gov.pl/
+        /// Search for economic entities according to the NIP or REGON parameters or the NRB bank account number on the website https://wl-api.mf.gov.pl/
+        /// </summary>
+        /// <returns>
+        /// IActionResult
+        /// IActionResult
+        /// </returns>
+        public IActionResult Search()
+        {
+            try
+            {
+                return View(/*await _context.Entity.Include(i => i.EntityAccountNumber).ToListAsync()*/);
+            }
+            catch (Exception e)
+            {
+                _log4net.Error(string.Format("{0}, {1}.", e.Message, e.StackTrace), e);
+            }
+            return NotFound();
+        }
+        #endregion
+
+        #region public IActionResult Check()
+        // GET: SerwisRzeczypospolitejPolskiej/MinisterstwoFinansow/KrajowaAdministracjaSkarbowa/WykazPodatnikowVat/Check
+        /// <summary>
+        /// GET: SerwisRzeczypospolitejPolskiej/MinisterstwoFinansow/KrajowaAdministracjaSkarbowa/WykazPodatnikowVat/Check
+        /// Sprawdź podmiot gospodarczy według parametru NIP i Numeru rachunku bankowego NRB lub według parametru REGON i Numeru rachunku bankowego NRB w serwisie https://wl-api.mf.gov.pl/
+        /// Check the economic entity according to the NIP parameter and the NRB bank account number or the REGON parameter and the NRB bank account number on the website https://wl-api.mf.gov.pl/
+        /// </summary>
+        /// <returns>
+        /// IActionResult
+        /// IActionResult
+        /// </returns>
+        public IActionResult Check()
+        {
+            try
+            {
+                return View(/*await _context.EntityCheck.ToListAsync()*/);
+            }
+            catch (Exception e)
+            {
+                _log4net.Error(string.Format("{0}, {1}.", e.Message, e.StackTrace), e);
+            }
+            return NotFound();
+        }
+        #endregion
+
+        #region public IActionResult Settings()
         // GET: SerwisRzeczypospolitejPolskiej/MinisterstwoFinansow/KrajowaAdministracjaSkarbowa/WykazPodatnikowVat/Settings
         /// <summary>
         /// GET: SerwisRzeczypospolitejPolskiej/MinisterstwoFinansow/KrajowaAdministracjaSkarbowa/WykazPodatnikowVat/Settings
@@ -77,13 +133,21 @@ namespace WebApplicationNetCoreDev.Controllers.ApiWykazuPodatnikowVatDataControl
         /// IActionResult
         /// IActionResult
         /// </returns>
-        public async Task<IActionResult> Settings()
+        public IActionResult Settings()
         {
-            return View(await _context.Entity.ToListAsync());
+            try
+            {
+                return View(/*await _context.Entity.ToListAsync()*/);
+            }
+            catch (Exception e)
+            {
+                _log4net.Error(string.Format("{0}, {1}.", e.Message, e.StackTrace), e);
+            }
+            return NotFound();
         }
         #endregion
 
-        #region public async Task<IActionResult> Route()
+        #region public IActionResult Route()
         // GET: SerwisRzeczypospolitejPolskiej/MinisterstwoFinansow/KrajowaAdministracjaSkarbowa/WykazPodatnikowVat/Route
         /// <summary>
         /// GET: SerwisRzeczypospolitejPolskiej/MinisterstwoFinansow/KrajowaAdministracjaSkarbowa/WykazPodatnikowVat/Route
@@ -94,7 +158,7 @@ namespace WebApplicationNetCoreDev.Controllers.ApiWykazuPodatnikowVatDataControl
         /// IActionResult
         /// IActionResult
         /// </returns>
-        public async Task<IActionResult> RouteAsync()
+        public IActionResult Route()
         {
             try
             {
@@ -102,9 +166,9 @@ namespace WebApplicationNetCoreDev.Controllers.ApiWykazuPodatnikowVatDataControl
             }
             catch (Exception e)
             {
-                await Task.Run(() => _log4net.Error(string.Format("{0}, {1}.", e.Message, e.StackTrace), e));
-                return NotFound();
+                _log4net.Error(string.Format("{0}, {1}.", e.Message, e.StackTrace), e);
             }
+            return NotFound();
         }
         #endregion
     }
