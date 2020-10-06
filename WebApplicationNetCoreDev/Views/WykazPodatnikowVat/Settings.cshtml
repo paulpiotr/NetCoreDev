@@ -1,144 +1,71 @@
-﻿@model IEnumerable<ApiWykazuPodatnikowVatData.Models.Entity>
+﻿@using WebApplicationNetCoreDev.Helpers;
 
-@{
-    ViewData["Title"] = "Index";
-    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
-}
+@model ApiWykazuPodatnikowVatData.Models.AppSettings
 
-<h1>Index</h1>
+@{ ViewData["Title"] = "Ustawienia aplikacja " + Model.GetType().FullName; }
+@{ Layout = "~/Views/Shared/_LayoutAdmin.cshtml"; }
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.UniqueIdentifierOfTheLoggedInUser)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Nip)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.StatusVat)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Regon)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Pesel)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Krs)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ResidenceAddress)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.WorkingAddress)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.RegistrationLegalDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.RegistrationDenialDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.RegistrationDenialBasis)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.RestorationDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.RestorationBasis)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.RemovalDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.RemovalBasis)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.HasVirtualAccounts)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DateOfCreate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DateOfModification)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.UniqueIdentifierOfTheLoggedInUser)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Nip)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.StatusVat)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Regon)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Pesel)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Krs)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ResidenceAddress)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.WorkingAddress)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.RegistrationLegalDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.RegistrationDenialDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.RegistrationDenialBasis)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.RestorationDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.RestorationBasis)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.RemovalDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.RemovalBasis)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.HasVirtualAccounts)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DateOfCreate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DateOfModification)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+<div class="card bg-info text-white m-0 p-0 align-middle shadow">
+    <div class="card-header text-left">
+        <i class="ti-settings"></i> @ViewData["Title"]
+    </div>
+    <div class="card-body bg-white text-justify">
+        <form class="form-horizontal form-material" asp-controller="WykazPodatnikowVat" asp-action="Settings" asp-route-ReturnUrl="@Context.Request.Query["ReturnUrl"]">
+            <div class="form-group has-danger">
+                <div class="col-sm-12">
+                    @if (null != Model && null != Model.RestClientUrl && !string.IsNullOrWhiteSpace(Model.RestClientUrl))
+                    {
+                        @Html.LabelFor(m => m.RestClientUrl, new { Class = "control-label text-success" })
+                    }
+                    @Html.TextBoxFor(m => m.RestClientUrl, new { Class = "form-control" })
+                    <div class="form-control-feedback text-justify mt-2">
+                        @Html.ValidationMessageFor(m => m.RestClientUrl)
+                    </div>
+                </div>
+                <div class="col-sm-12 mt-2">
+                    @if (null != Model && Model.CacheLifeTimeForApiServiceQueries > 0)
+                    {
+                        @Html.LabelFor(m => m.CacheLifeTimeForApiServiceQueries, new { Class = "control-label text-success" })
+                    }
+                    @Html.TextBoxFor(m => m.CacheLifeTimeForApiServiceQueries, new { Class = "form-control" })
+                    <div class="form-control-feedback text-justify mt-2">
+                        @Html.ValidationMessageFor(m => m.CacheLifeTimeForApiServiceQueries)
+                    </div>
+                </div>
+                <div class="col-sm-12 mt-2">
+                    @if (null != Model && null != Model.ConnectionString && !string.IsNullOrWhiteSpace(Model.ConnectionString))
+                    {
+                        @Html.LabelFor(m => m.ConnectionString, new { Class = "control-label text-success" })
+                    }
+                    @Html.TextAreaFor(m => m.ConnectionString, new { Class = "form-control", Style = "height: 2rem" })
+                    <div class="form-control-feedback text-justify mt-2">
+                        @Html.ValidationMessageFor(m => m.ConnectionString)
+                    </div>
+                </div>
+            </div>
+            <div class="row justify-content-center mt-5">
+                <div class="form-group align-self text-center">
+                    <div class="col-sm-12 align-self-center align-items-center">
+                        <button class="btn btn-block btn-lg btn-info btn-rounded" type="submit" title="Zapisz ustawienia"><i class="ti-save"></i> Zapisz<span class="d-none d-md-inline"> ustawienia</span></button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+@*@Html.Script(
+    @<script type="text/javascript">
+         $(function () {
+             try {
+                 $('#CopyButton').click(function () {
+                     $('#JwtStringToken').select();
+                     document.execCommand("copy");
+                 });
+             }
+             catch (e) {
+                 console.log(e);
+             }
+         });
+    </script>
+    )*@

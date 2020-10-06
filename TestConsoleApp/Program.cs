@@ -8,6 +8,10 @@ namespace TestConsoleApp
     {
         private static async System.Threading.Tasks.Task Main(string[] args)
         {
+
+            NetAppCommon.DatabaseMssql.CanConnect(@"Server=.\SQLExpress; Database=IUIntegrationSystemData; MultipleActiveResultSets=true; User Id=IUIntegrationSystemDataApi; Password=pTdp/6P:Z-ZP86dS%Q:U!ZK34`2UvB=v;");
+            Console.ReadKey();
+
             ApiWykazuPodatnikowVatData.Models.Entity entity = null;
             Lazy<List<ApiWykazuPodatnikowVatData.Models.Entity>> entityList = null;
             ApiWykazuPodatnikowVatData.Models.EntityCheck entityCheck = null;

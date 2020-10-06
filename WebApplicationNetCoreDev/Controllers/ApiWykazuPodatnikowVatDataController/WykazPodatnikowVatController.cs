@@ -133,17 +133,61 @@ namespace WebApplicationNetCoreDev.Controllers.ApiWykazuPodatnikowVatDataControl
         /// IActionResult
         /// IActionResult
         /// </returns>
+        [HttpGet]
         public IActionResult Settings()
         {
             try
             {
-                return View(/*await _context.Entity.ToListAsync()*/);
+                return View(new ApiWykazuPodatnikowVatData.Models.AppSettings());
             }
             catch (Exception e)
             {
                 _log4net.Error(string.Format("{0}, {1}.", e.Message, e.StackTrace), e);
             }
             return NotFound();
+        }
+        #endregion
+
+        #region public IActionResult Settings...
+        /// <summary>
+        /// POST: SerwisRzeczypospolitejPolskiej/MinisterstwoFinansow/KrajowaAdministracjaSkarbowa/WykazPodatnikowVat/Settings
+        /// Zapisz ustawienia aplikacji WykazPodatnikowVat
+        /// Save the settings of the WykazPodatnikowVat
+        /// </summary>
+        /// <param name="model">
+        /// Model danych jako ApiWykazuPodatnikowVatData.Models.AppSettings
+        /// Data model as ApiWykazuPodatnikowVatData.Models.AppSettings
+        /// </param>
+        /// <returns>
+        /// IActionResult
+        /// IActionResult
+        /// </returns>
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize(AuthenticationSchemes = "Cookies")]
+        public async System.Threading.Tasks.Task<IActionResult> SettingsAsync([Bind("RestClientUrl, CacheLifeTimeForApiServiceQueries, ConnectionString")] ApiWykazuPodatnikowVatData.Models.AppSettings model)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    try
+                    {
+                        await model.SaveAsync();
+                    }
+                    catch(Exception e)
+                    {
+                        _log4net.Error(string.Format("{0}, {1}", e.Message, e.StackTrace), e);
+                    }
+                    return Redirect(nameof(Index));
+                }
+            }
+            catch (Exception e)
+            {
+                _log4net.Error(string.Format("{0}, {1}", e.Message, e.StackTrace), e);
+                return NotFound(e);
+            }
+            return View(model);
         }
         #endregion
 
