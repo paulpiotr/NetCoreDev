@@ -51,8 +51,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "KrajowaAdministracjaSkarbow
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ApiWykazuPodatnikowVatData", "SerwisRzeczypospolitejPolskiej\MinisterstwoFinansow\KrajowaAdministracjaSkarbowa\ApiWykazuPodatnikowVatData\ApiWykazuPodatnikowVatData.csproj", "{6C9CD224-7D6D-487B-AE18-C520223D8650}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApplicationNetCoreDevRest", "WebApplicationNetCoreDevRest\WebApplicationNetCoreDevRest.csproj", "{64E964DD-C1A0-4E69-99A6-E464BC010E85}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "EncryptDecrypt", "EncryptDecrypt", "{6BBAE997-7773-428B-AB47-C7FA89B2EE05}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EncryptDecrypt", "EncryptDecrypt\EncryptDecrypt\EncryptDecrypt.csproj", "{B9540CEC-ECE7-47FE-BCD2-A25B8E106EBE}"
@@ -157,14 +155,6 @@ Global
 		{6C9CD224-7D6D-487B-AE18-C520223D8650}.DefaultBuild|Any CPU.Build.0 = Debug|Any CPU
 		{6C9CD224-7D6D-487B-AE18-C520223D8650}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6C9CD224-7D6D-487B-AE18-C520223D8650}.Release|Any CPU.Build.0 = Release|Any CPU
-		{64E964DD-C1A0-4E69-99A6-E464BC010E85}.All|Any CPU.ActiveCfg = Debug|Any CPU
-		{64E964DD-C1A0-4E69-99A6-E464BC010E85}.All|Any CPU.Build.0 = Debug|Any CPU
-		{64E964DD-C1A0-4E69-99A6-E464BC010E85}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{64E964DD-C1A0-4E69-99A6-E464BC010E85}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{64E964DD-C1A0-4E69-99A6-E464BC010E85}.DefaultBuild|Any CPU.ActiveCfg = Debug|Any CPU
-		{64E964DD-C1A0-4E69-99A6-E464BC010E85}.DefaultBuild|Any CPU.Build.0 = Debug|Any CPU
-		{64E964DD-C1A0-4E69-99A6-E464BC010E85}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{64E964DD-C1A0-4E69-99A6-E464BC010E85}.Release|Any CPU.Build.0 = Release|Any CPU
 		{B9540CEC-ECE7-47FE-BCD2-A25B8E106EBE}.All|Any CPU.ActiveCfg = Debug|Any CPU
 		{B9540CEC-ECE7-47FE-BCD2-A25B8E106EBE}.All|Any CPU.Build.0 = Debug|Any CPU
 		{B9540CEC-ECE7-47FE-BCD2-A25B8E106EBE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU

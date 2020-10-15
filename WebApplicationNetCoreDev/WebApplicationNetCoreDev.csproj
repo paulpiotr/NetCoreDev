@@ -12,12 +12,20 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Remove="lib\**" />
+    <Compile Remove="WebApplicationNetCoreDevDebug\**" />
+    <Compile Remove="WebApplicationNetCoreDevRelease\**" />
     <Compile Remove="wwwroot\vendor\elegant\**" />
     <Content Remove="lib\**" />
+    <Content Remove="WebApplicationNetCoreDevDebug\**" />
+    <Content Remove="WebApplicationNetCoreDevRelease\**" />
     <Content Remove="wwwroot\vendor\elegant\**" />
     <EmbeddedResource Remove="lib\**" />
+    <EmbeddedResource Remove="WebApplicationNetCoreDevDebug\**" />
+    <EmbeddedResource Remove="WebApplicationNetCoreDevRelease\**" />
     <EmbeddedResource Remove="wwwroot\vendor\elegant\**" />
     <None Remove="lib\**" />
+    <None Remove="WebApplicationNetCoreDevDebug\**" />
+    <None Remove="WebApplicationNetCoreDevRelease\**" />
     <None Remove="wwwroot\vendor\elegant\**" />
   </ItemGroup>
   <ItemGroup>

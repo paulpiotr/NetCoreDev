@@ -37,9 +37,12 @@
 [submodule "RabbitMQReceiverCommon"]
 	path = RabbitMQReceiverCommon
 	url = http://tfs:8080/tfs/ISK/_git/RabbitMQReceiverCommon
-[submodule "WebApplicationNetCoreDevInstaller"]
-	path = WebApplicationNetCoreDevInstaller
-	url = https://github.com/paulpiotr/WebApplicationNetCoreDevInstaller.git
 [submodule "FileSystemWatcherCommon"]
 	path = FileSystemWatcherCommon
 	url = http://tfs:8080/tfs/ISK/_git/FileSystemWatcherCommon
+[submodule "WebApplicationNetCoreDev/WebApplicationNetCoreDevDebug"]
+	path = WebApplicationNetCoreDev/WebApplicationNetCoreDevDebug
+	url = http://tfs:8080/tfs/Unimot/_git/WebApplicationNetCoreDevDebug.git
+[submodule "WebApplicationNetCoreDev/WebApplicationNetCoreDevRelease"]
+	path = WebApplicationNetCoreDev/WebApplicationNetCoreDevRelease
+	url = http://tfs:8080/tfs/Unimot/_git/WebApplicationNetCoreDevRelease.git
