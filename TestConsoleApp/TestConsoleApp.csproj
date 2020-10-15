@@ -11,6 +11,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\FileSystemWatcherCommon\FileSystemWatcherCommon.csproj" />
+    <ProjectReference Include="..\Icasa\MutationService\IcasaMutationServiceData\IcasaMutationServiceData.csproj" />
+    <ProjectReference Include="..\IUIntegrationSystem\IUIntegrationSystemData\IUIntegrationSystemData.csproj" />
     <ProjectReference Include="..\Log4netLogger\Log4netLogger.csproj" />
     <ProjectReference Include="..\SerwisRzeczypospolitejPolskiej\MinisterstwoFinansow\KrajowaAdministracjaSkarbowa\ApiWykazuPodatnikowVatData\ApiWykazuPodatnikowVatData.csproj" />
   </ItemGroup>

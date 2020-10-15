@@ -62,7 +62,7 @@ namespace WebApplicationNetCoreDev.Controllers.ApiWykazuPodatnikowVatDataControl
         {
             try
             {
-                return View(/*await _context.Entity.Include(i => i.EntityAccountNumber).ToListAsync()*/);
+                return Redirect(nameof(Search));
             }
             catch (Exception e)
             {
@@ -175,7 +175,7 @@ namespace WebApplicationNetCoreDev.Controllers.ApiWykazuPodatnikowVatDataControl
                     {
                         await model.SaveAsync();
                     }
-                    catch(Exception e)
+                    catch (Exception e)
                     {
                         _log4net.Error(string.Format("{0}, {1}", e.Message, e.StackTrace), e);
                     }

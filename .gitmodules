@@ -40,3 +40,6 @@
 [submodule "WebApplicationNetCoreDevInstaller"]
 	path = WebApplicationNetCoreDevInstaller
 	url = https://github.com/paulpiotr/WebApplicationNetCoreDevInstaller.git
+[submodule "FileSystemWatcherCommon"]
+	path = FileSystemWatcherCommon
+	url = http://tfs:8080/tfs/ISK/_git/FileSystemWatcherCommon

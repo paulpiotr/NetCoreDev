@@ -47,17 +47,17 @@
             .Columns(
             columns =>
             {
-                columns.Bound(c => c.Id).Filterable(false);
-                columns.Bound(c => c.RequestId).Filterable(false);
-                columns.Bound(c => c.DateOfCreate).Format("{0:MM-dd-yyyy HH:mm:ss}").Filterable(false);
-                columns.Bound(c => c.DateOfModification).Format("{0:MM-dd-yyyy HH:mm:ss}").Filterable(false);
-                columns.Bound(c => c.UniqueIdentifierOfTheLoggedInUser).Filterable(false);
+                //columns.Bound(c => c.Id).Filterable(false);
+                //columns.Bound(c => c.RequestId).Filterable(false);
+                //columns.Bound(c => c.DateOfCreate).Format("{0:MM-dd-yyyy HH:mm:ss}").Filterable(false);
+                //columns.Bound(c => c.DateOfModification).Format("{0:MM-dd-yyyy HH:mm:ss}").Filterable(false);
+                //columns.Bound(c => c.UniqueIdentifierOfTheLoggedInUser).Filterable(false);
                 columns.Bound(c => c.Nip).Filterable(false);
                 columns.Bound(c => c.Regon).Filterable(false);
                 columns.Bound(c => c.AccountNumber).Filterable(false);
                 columns.Bound(c => c.AccountAssigned).Filterable(false);
-                columns.Bound(c => c.RequestDateTime).Filterable(false);
-                columns.Bound(c => c.RequestDateTimeAsDate).Filterable(false);
+                //columns.Bound(c => c.RequestDateTime).Filterable(false);
+                columns.Bound(c => c.RequestDateTimeAsDate).Filterable(false).Format("{0:MM-dd-yyyy HH:mm:ss}").Filterable(false);
             })
             .ToolBar(toolbar =>
             {
