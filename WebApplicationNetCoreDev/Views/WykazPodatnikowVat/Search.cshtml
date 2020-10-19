@@ -50,7 +50,7 @@
                 //columns.Bound(c => c.Id).Filterable(false);
                 columns.Bound(c => c.DateOfCreate).Format("{0:MM-dd-yyyy HH:mm:ss}").Filterable(false);
                 columns.Bound(c => c.DateOfModification).Format("{0:MM-dd-yyyy HH:mm:ss}").Filterable(false);
-                //columns.Bound(c => c.UniqueIdentifierOfTheLoggedInUser).Filterable(false);
+                columns.Bound(c => c.UniqueIdentifierOfTheLoggedInUser).Filterable(false);
                 columns.Bound(c => c.Name).Filterable(false);
                 columns.Bound(c => c.Nip).Filterable(false);
                 columns.Bound(c => c.StatusVat).Filterable(false);

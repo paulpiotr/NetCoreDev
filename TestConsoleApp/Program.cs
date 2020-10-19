@@ -1,4 +1,7 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using PortalApiGusApiRegonData;
+using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 //using ApiWykazuPodatnikowVatData;
 
@@ -8,23 +11,57 @@ namespace TestConsoleApp
     {
         private static async System.Threading.Tasks.Task Main(string[] args)
         {
+            //PortalApiGusApiRegonData.Data.PortalApiGusApiRegonDataDbContext portalApiGusApiRegonDataDbContext = NE
+
+            //using (PortalApiGusApiRegonData.Data.PortalApiGusApiRegonDataDbContext context = await NetAppCommon.DatabaseMssql.CreateInstancesForDatabaseContextClassAsync<PortalApiGusApiRegonData.Data.PortalApiGusApiRegonDataDbContext>())
+            //{
+            //    await context.CheckForUpdateAndMigrateAsync();
+            //}
+            //await DaneSzukajPodmioty.DaneSzukajPodmiotyAsyncByKrs("b65986a6300044a0b7fb", krs: "0000349095");
+            //Console.Read();
+
+            //using (ApiWykazuPodatnikowVatData.Data.ApiWykazuPodatnikowVatDataDbContext context = await NetAppCommon.DatabaseMssql.CreateInstancesForDatabaseContextClassAsync<ApiWykazuPodatnikowVatData.Data.ApiWykazuPodatnikowVatDataDbContext>())
+            //{
+            //    await context.CheckForUpdateAndMigrateAsync();
+            //}
+            //ApiWykazuPodatnikowVatData.Models.Entity entity = null;
+            //Console.WriteLine(@"Find ApiFindByNipAsync(5731029185)");
+            //entity = await ApiWykazuPodatnikowVatData.ApiWykazuPodatnikowVatData.ApiFindByNipAsync("5731029185");
+            //Console.WriteLine($"Found { entity.Id } { entity.Nip } { entity.UniqueIdentifierOfTheLoggedInUser }");
+            //Console.Read();
+
+            //NetAppCommon.DatabaseMssql.ParseConnectionString(@"Data Source=(LocalDB)\MSSQLLocalDB; AttachDbFilename=%Environment.GetFolderPath(Environment.SpecialFolder.UserProfile)%\MSSQLLocalDB\MSSQLLocalDB.mdf; Database=%AttachDBFilename%; MultipleActiveResultSets=true; Integrated Security=True; Trusted_Connection=Yes");
+
+            //NetAppCommon.DatabaseMssql.ParseConnectionString(@"Data Source=(LocalDB)\MSSQLLocalDB; AttachDbFilename=%Environment.GetFolderPath(Environment.SpecialFolder.Programs)%\MSSQLLocalDB\MSSQLLocalDB.mdf; Database=%AttachDBFilename%; MultipleActiveResultSets=true; Integrated Security=True; Trusted_Connection=Yes");
+
+            //PortalApiGusApiRegonData.PortalApiGusApiRegonDataContext.DatabaseMdfCreate();
+            //NetAppCommon.DatabaseMssqlMdf.GetInstance
+
+            //NetAppCommon.DatabaseMssqlMdf.GetInstance("PortalApiGusApiRegonData", "PortalApiGusApiRegonData.json").Create();
+            //NetAppCommon.DatabaseMssqlMdf.GetInstance().Create("PortalApiGusApiRegonDataDbContext", "portal.api.gus.api.regon.data.appsettings.debug.json");
+
+            //List<PortalApiGusApiRegonData.Models.DaneSzukajPodmioty.DaneSzukajPodmioty> daneSzukajPodmiotyList = await PortalApiGusApiRegonData.DaneSzukajPodmioty.DaneSzukajPodmiotyAsyncByKrs("b65986a6300044a0b7fb", krs: "0000349095");
+
+            //Console.WriteLine(daneSzukajPodmiotyList.Count);
+
+            //ApiWykazuPodatnikowVatData.Data.ApiWykazuPodatnikowVatDataDbContext context = await NetAppCommon.DatabaseMssql.CreateInstancesForDatabaseContextClassAsync<ApiWykazuPodatnikowVatData.Data.ApiWykazuPodatnikowVatDataDbContext>();
+            //await context.CheckForUpdateAndMigrateAsync();
+            //Console.WriteLine("Done... :) ");
 
             //await TestApiWykazuPodatnikowVatData.TestApiWykazuPodatnikowVatDataAsync();
 
             //await TestIcasaMutationServiceData.TestIcasaMutationServiceDataAsync();
 
             //TestFileSystemWatcherCommon.TestFileSystemWatcherCommonWatch();
-            
-            Task fileSystemWatcherInTask = Task.Run(() => {
-                IUIntegrationSystemData.FileSystemWatcherInvoicesIn fileSystemWatcherInvoicesIn = new IUIntegrationSystemData.FileSystemWatcherInvoicesIn();
-                fileSystemWatcherInvoicesIn.Watch(@"E:\icasa\in");
-            });
+
+            //Task fileSystemWatcherInTask = Task.Run(() => {
+            //    IUIntegrationSystemData.FileSystemWatcherInvoicesIn fileSystemWatcherInvoicesIn = new IUIntegrationSystemData.FileSystemWatcherInvoicesIn();
+            //    fileSystemWatcherInvoicesIn.Watch(@"E:\icasa\in");
+            //});
 
             //Task fileSystemWatcherOutTask = Task.Run(() => {
             //    IUIntegrationSystemData.FileSystemWatcherIn.OnWatch(@"E:\icasa\out");
             //});
-
-            Console.ReadKey();
 
             //RabbitMQPublisherCommon.RabbitMQPublisherCommon.Publish("TestConsoleApp", "From TestConsoleApp");
             //string s = string.Empty;

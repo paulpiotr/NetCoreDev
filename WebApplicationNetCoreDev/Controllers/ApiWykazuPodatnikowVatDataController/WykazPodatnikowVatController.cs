@@ -165,7 +165,7 @@ namespace WebApplicationNetCoreDev.Controllers.ApiWykazuPodatnikowVatDataControl
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(AuthenticationSchemes = "Cookies")]
-        public async System.Threading.Tasks.Task<IActionResult> SettingsAsync([Bind("RestClientUrl, CacheLifeTimeForApiServiceQueries, ConnectionString")] ApiWykazuPodatnikowVatData.Models.AppSettings model)
+        public async System.Threading.Tasks.Task<IActionResult> SettingsAsync([Bind("RestClientUrl, CacheLifeTime, CheckForUpdateAndMigrate, CheskForConnection, ConnectionString, CheckForUpdateEveryDays, LastMigrateDateTime")] ApiWykazuPodatnikowVatData.Models.AppSettings model)
         {
             try
             {
@@ -174,6 +174,18 @@ namespace WebApplicationNetCoreDev.Controllers.ApiWykazuPodatnikowVatDataControl
                     try
                     {
                         await model.SaveAsync();
+                        if (model.CheckForUpdateAndMigrate)
+                        {
+                            try
+                            {
+                                ApiWykazuPodatnikowVatDataDbContext apiWykazuPodatnikowVatDataDbContext = await NetAppCommon.DatabaseMssql.CreateInstancesForDatabaseContextClassAsync<ApiWykazuPodatnikowVatDataDbContext>();
+                                await apiWykazuPodatnikowVatDataDbContext.CheckForUpdateAndMigrateAsync();
+                            }
+                            catch (Exception e)
+                            {
+                                _log4net.Error(string.Format("{0}, {1}", e.Message, e.StackTrace), e);
+                            }
+                        }
                     }
                     catch (Exception e)
                     {

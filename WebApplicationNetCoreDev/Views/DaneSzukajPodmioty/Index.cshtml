@@ -50,6 +50,7 @@
             {
                 columns.Bound(c => c.DataUtworzenia).Title("Data utworzenia").Format("{0:MM-dd-yyyy HH:mm:ss}").Filterable(false);
                 columns.Bound(c => c.DataModyfikacji).Title("Data modyfikacji").Format("{0:MM-dd-yyyy HH:mm:ss}").Filterable(false);
+                columns.Bound(c => c.UniqueIdentifierOfTheLoggedInUser).Filterable(false);
                 columns.Bound(c => c.Nazwa).Title("Nazwa").Filterable(false);
                 columns.Bound(c => c.Nip).Title("Nip").Filterable(false);
                 columns.Bound(c => c.Regon).Title("Regon").Filterable(false);
