@@ -23,11 +23,11 @@ namespace WebApplicationNetCoreDev.Controllers.ApiWykazuPodatnikowVatDataControl
     public class WykazPodatnikowVatApiController : ControllerBase
     {
 
-        #region private static readonly log4net.ILog _log4net
+        #region private static readonly log4net.ILog log4net
         /// <summary>
         /// log4net
         /// </summary>
-        private static readonly log4net.ILog _log4net = Log4netLogger.Log4netLogger.GetLog4netInstance(MethodBase.GetCurrentMethod().DeclaringType);
+        private static readonly log4net.ILog log4net = Log4netLogger.Log4netLogger.GetLog4netInstance(MethodBase.GetCurrentMethod().DeclaringType);
         #endregion
 
         #region private readonly ApiWykazuPodatnikowVatDataDbContext _context;
@@ -115,7 +115,7 @@ namespace WebApplicationNetCoreDev.Controllers.ApiWykazuPodatnikowVatDataControl
             }
             catch (Exception e)
             {
-                _log4net.Error(string.Format("{0}, {1}", e.Message, e.StackTrace), e);
+                log4net.Error(string.Format("{0}, {1}", e.Message, e.StackTrace), e);
             }
             return NotFound();
         }
@@ -170,7 +170,7 @@ namespace WebApplicationNetCoreDev.Controllers.ApiWykazuPodatnikowVatDataControl
             }
             catch (Exception e)
             {
-                _log4net.Error(string.Format("{0}, {1}", e.Message, e.StackTrace), e);
+                log4net.Error(string.Format("{0}, {1}", e.Message, e.StackTrace), e);
             }
             return NotFound();
         }
@@ -201,7 +201,7 @@ namespace WebApplicationNetCoreDev.Controllers.ApiWykazuPodatnikowVatDataControl
             }
             catch (Exception e)
             {
-                await Task.Run(() => _log4net.Error(string.Format("{0}, {1}.", e.Message, e.StackTrace), e));
+                await Task.Run(() => log4net.Error(string.Format("{0}, {1}.", e.Message, e.StackTrace), e));
             }
             return NotFound();
         }
@@ -232,7 +232,7 @@ namespace WebApplicationNetCoreDev.Controllers.ApiWykazuPodatnikowVatDataControl
             }
             catch (Exception e)
             {
-                await Task.Run(() => _log4net.Error(string.Format("{0}, {1}.", e.Message, e.StackTrace), e));
+                await Task.Run(() => log4net.Error(string.Format("{0}, {1}.", e.Message, e.StackTrace), e));
             }
             return NotFound();
         }
@@ -269,7 +269,7 @@ namespace WebApplicationNetCoreDev.Controllers.ApiWykazuPodatnikowVatDataControl
             }
             catch (Exception e)
             {
-                await Task.Run(() => _log4net.Error(string.Format("{0}, {1}.", e.Message, e.StackTrace), e));
+                await Task.Run(() => log4net.Error(string.Format("{0}, {1}.", e.Message, e.StackTrace), e));
             }
             return NotFound();
         }
@@ -329,7 +329,7 @@ namespace WebApplicationNetCoreDev.Controllers.ApiWykazuPodatnikowVatDataControl
             }
             catch (Exception e)
             {
-                await Task.Run(() => _log4net.Error(string.Format("{0}, {1}.", e.Message, e.StackTrace), e));
+                await Task.Run(() => log4net.Error(string.Format("{0}, {1}.", e.Message, e.StackTrace), e));
             }
             return NotFound();
         }
@@ -366,7 +366,7 @@ namespace WebApplicationNetCoreDev.Controllers.ApiWykazuPodatnikowVatDataControl
             }
             catch (Exception e)
             {
-                await Task.Run(() => _log4net.Error(string.Format("{0}, {1}.", e.Message, e.StackTrace), e));
+                await Task.Run(() => log4net.Error(string.Format("{0}, {1}.", e.Message, e.StackTrace), e));
             }
             return NotFound();
         }
@@ -435,7 +435,7 @@ namespace WebApplicationNetCoreDev.Controllers.ApiWykazuPodatnikowVatDataControl
             }
             catch (Exception e)
             {
-                await Task.Run(() => _log4net.Error(string.Format("{0}, {1}.", e.Message, e.StackTrace), e));
+                await Task.Run(() => log4net.Error(string.Format("{0}, {1}.", e.Message, e.StackTrace), e));
             }
             return NotFound();
         }
@@ -472,7 +472,7 @@ namespace WebApplicationNetCoreDev.Controllers.ApiWykazuPodatnikowVatDataControl
             }
             catch (Exception e)
             {
-                await Task.Run(() => _log4net.Error(string.Format("{0}, {1}.", e.Message, e.StackTrace), e));
+                await Task.Run(() => log4net.Error(string.Format("{0}, {1}.", e.Message, e.StackTrace), e));
             }
             return NotFound();
         }
@@ -536,7 +536,7 @@ namespace WebApplicationNetCoreDev.Controllers.ApiWykazuPodatnikowVatDataControl
             }
             catch (Exception e)
             {
-                await Task.Run(() => _log4net.Error(string.Format("{0}, {1}.", e.Message, e.StackTrace), e));
+                await Task.Run(() => log4net.Error(string.Format("{0}, {1}.", e.Message, e.StackTrace), e));
             }
             return NotFound();
         }
@@ -577,7 +577,7 @@ namespace WebApplicationNetCoreDev.Controllers.ApiWykazuPodatnikowVatDataControl
             }
             catch (Exception e)
             {
-                await Task.Run(() => _log4net.Error(string.Format("{0}, {1}.", e.Message, e.StackTrace), e));
+                await Task.Run(() => log4net.Error(string.Format("{0}, {1}.", e.Message, e.StackTrace), e));
             }
             return NotFound();
         }
@@ -622,7 +622,7 @@ namespace WebApplicationNetCoreDev.Controllers.ApiWykazuPodatnikowVatDataControl
             }
             catch (Exception e)
             {
-                await Task.Run(() => _log4net.Error(string.Format("{0}, {1}.", e.Message, e.StackTrace), e));
+                await Task.Run(() => log4net.Error(string.Format("{0}, {1}.", e.Message, e.StackTrace), e));
             }
             return NotFound();
         }
@@ -692,7 +692,7 @@ namespace WebApplicationNetCoreDev.Controllers.ApiWykazuPodatnikowVatDataControl
             }
             catch (Exception e)
             {
-                await Task.Run(() => _log4net.Error(string.Format("{0}, {1}.", e.Message, e.StackTrace), e));
+                await Task.Run(() => log4net.Error(string.Format("{0}, {1}.", e.Message, e.StackTrace), e));
             }
             return NotFound();
         }
@@ -737,7 +737,7 @@ namespace WebApplicationNetCoreDev.Controllers.ApiWykazuPodatnikowVatDataControl
             }
             catch (Exception e)
             {
-                await Task.Run(() => _log4net.Error(string.Format("{0}, {1}.", e.Message, e.StackTrace), e));
+                await Task.Run(() => log4net.Error(string.Format("{0}, {1}.", e.Message, e.StackTrace), e));
             }
             return NotFound();
         }

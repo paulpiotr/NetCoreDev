@@ -17,7 +17,7 @@ namespace WebApplicationNetCoreDev.Models
         /// <summary>
         /// Log4net Logger
         /// </summary>
-        private static readonly log4net.ILog _log4net = Log4netLogger.Log4netLogger.GetLog4netInstance(MethodBase.GetCurrentMethod().DeclaringType);
+        private static readonly log4net.ILog log4net = Log4netLogger.Log4netLogger.GetLog4netInstance(MethodBase.GetCurrentMethod().DeclaringType);
 
         /// <summary>
         /// Nzawa użytkownika
@@ -72,7 +72,7 @@ namespace WebApplicationNetCoreDev.Models
             }
             catch (Exception e)
             {
-                _log4net.Error(string.Format("{0}, {1}", e.Message, e.StackTrace), e);
+                log4net.Error(string.Format("{0}, {1}", e.Message, e.StackTrace), e);
             }
         }
 
@@ -98,7 +98,7 @@ namespace WebApplicationNetCoreDev.Models
             }
             catch (Exception e)
             {
-                _log4net.Error(string.Format("{0}, {1}", e.Message, e.StackTrace), e);
+                log4net.Error(string.Format("{0}, {1}", e.Message, e.StackTrace), e);
                 return null;
             }
         }

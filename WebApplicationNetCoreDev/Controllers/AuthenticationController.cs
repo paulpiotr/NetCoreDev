@@ -23,7 +23,7 @@ namespace WebApplicationNetCoreDev.Controllers
         /// <summary>
         /// Log4net Logger
         /// </summary>
-        private static readonly log4net.ILog _log4net = Log4netLogger.Log4netLogger.GetLog4netInstance(MethodBase.GetCurrentMethod().DeclaringType);
+        private static readonly log4net.ILog log4net = Log4netLogger.Log4netLogger.GetLog4netInstance(MethodBase.GetCurrentMethod().DeclaringType);
 
         /// <summary>
         /// Wyświetl formularz autoryzacji.
@@ -48,7 +48,7 @@ namespace WebApplicationNetCoreDev.Controllers
             }
             catch (Exception e)
             {
-                _log4net.Error(string.Format("{0}, {1}", e.Message, e.StackTrace), e);
+                log4net.Error(string.Format("{0}, {1}", e.Message, e.StackTrace), e);
                 return NotFound(e);
             }
         }
@@ -98,7 +98,7 @@ namespace WebApplicationNetCoreDev.Controllers
                     }
                     catch (Exception e)
                     {
-                        _log4net.Error(string.Format("{0}, {1}", e.Message, e.StackTrace), e);
+                        log4net.Error(string.Format("{0}, {1}", e.Message, e.StackTrace), e);
                         model.Message = e.Message;
                         model.StackTrace = e.StackTrace;
                         return View(model);
@@ -108,7 +108,7 @@ namespace WebApplicationNetCoreDev.Controllers
             }
             catch (Exception e)
             {
-                _log4net.Error(string.Format("{0}, {1}", e.Message, e.StackTrace), e);
+                log4net.Error(string.Format("{0}, {1}", e.Message, e.StackTrace), e);
                 return NotFound(e);
             }
         }
@@ -133,7 +133,7 @@ namespace WebApplicationNetCoreDev.Controllers
             }
             catch (Exception e)
             {
-                _log4net.Error(string.Format("{0}, {1}", e.Message, e.StackTrace), e);
+                log4net.Error(string.Format("{0}, {1}", e.Message, e.StackTrace), e);
                 return NotFound(e);
             }
         }
@@ -155,7 +155,7 @@ namespace WebApplicationNetCoreDev.Controllers
             }
             catch (Exception e)
             {
-                _log4net.Error(string.Format("{0}, {1}", e.Message, e.StackTrace), e);
+                log4net.Error(string.Format("{0}, {1}", e.Message, e.StackTrace), e);
                 return NotFound(e);
             }
         }
@@ -176,7 +176,7 @@ namespace WebApplicationNetCoreDev.Controllers
             }
             catch (Exception e)
             {
-                _log4net.Error(string.Format("{0}, {1}", e.Message, e.StackTrace), e);
+                log4net.Error(string.Format("{0}, {1}", e.Message, e.StackTrace), e);
                 return NotFound(e);
             }
         }
@@ -197,7 +197,7 @@ namespace WebApplicationNetCoreDev.Controllers
             }
             catch (Exception e)
             {
-                _log4net.Error(string.Format("{0}, {1}", e.Message, e.StackTrace), e);
+                log4net.Error(string.Format("{0}, {1}", e.Message, e.StackTrace), e);
                 return NotFound(e);
             }
         }
@@ -225,7 +225,7 @@ namespace WebApplicationNetCoreDev.Controllers
             }
             catch (Exception e)
             {
-                _log4net.Error(string.Format("{0}, {1}", e.Message, e.StackTrace), e);
+                log4net.Error(string.Format("{0}, {1}", e.Message, e.StackTrace), e);
                 return NotFound(e);
             }
         }

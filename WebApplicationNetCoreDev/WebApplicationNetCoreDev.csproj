@@ -67,7 +67,7 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Kendo.Mvc">
-      <HintPath>..\packages\telerik.ui.for.aspnet.core\2020.2.617\lib\netcoreapp3.1\Kendo.Mvc.dll</HintPath>
+      <HintPath>..\env\telerik.ui.for.aspnet.core\2020.2.617\lib\netcoreapp3.1\Kendo.Mvc.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

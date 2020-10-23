@@ -1,8 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using PortalApiGusApiRegonData;
+//using PortalApiGusApiRegonData;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Linq;
 //using ApiWykazuPodatnikowVatData;
 
 namespace TestConsoleApp
@@ -11,6 +12,24 @@ namespace TestConsoleApp
     {
         private static async System.Threading.Tasks.Task Main(string[] args)
         {
+
+            //IUIntegrationSystemData.Data.IUIntegrationSystemDataDbContext context = await NetAppCommon.DatabaseMssql.CreateInstancesForDatabaseContextClassAsync<IUIntegrationSystemData.Data.IUIntegrationSystemDataDbContext>();
+
+            //await context.CheckForUpdateAndMigrateAsync();
+
+            List<IUIntegrationSystemData.Models.InvoiceFromIcasaCsv> invoiceFromIcasaCsvList = (List<IUIntegrationSystemData.Models.InvoiceFromIcasaCsv>)await IUIntegrationSystemData.InvoiceFromIcasaCsvData.GetInstance().ImportAsync(@"e:\export.csv");
+
+            Console.WriteLine(invoiceFromIcasaCsvList.Count);
+
+            foreach (IUIntegrationSystemData.Models.InvoiceFromIcasaCsv invoiceFromIcasaCsv in invoiceFromIcasaCsvList)
+            {
+                Console.WriteLine(invoiceFromIcasaCsv.Id);
+                //Console.WriteLine(invoiceFromIcasaCsv.Exception.Message);
+            }
+
+            Console.WriteLine("Done");
+            Console.Read();
+
             //PortalApiGusApiRegonData.Data.PortalApiGusApiRegonDataDbContext portalApiGusApiRegonDataDbContext = NE
 
             //using (PortalApiGusApiRegonData.Data.PortalApiGusApiRegonDataDbContext context = await NetAppCommon.DatabaseMssql.CreateInstancesForDatabaseContextClassAsync<PortalApiGusApiRegonData.Data.PortalApiGusApiRegonDataDbContext>())

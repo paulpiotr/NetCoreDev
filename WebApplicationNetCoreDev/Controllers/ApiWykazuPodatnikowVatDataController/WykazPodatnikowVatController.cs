@@ -17,11 +17,11 @@ namespace WebApplicationNetCoreDev.Controllers.ApiWykazuPodatnikowVatDataControl
     [Route("SerwisRzeczypospolitejPolskiej/MinisterstwoFinansow/KrajowaAdministracjaSkarbowa/[controller]/[action]")]
     public class WykazPodatnikowVatController : Controller
     {
-        #region private static readonly log4net.ILog _log4net
+        #region private static readonly log4net.ILog log4net
         /// <summary>
         /// Log4 Net Logger
         /// </summary>
-        private static readonly log4net.ILog _log4net = Log4netLogger.Log4netLogger.GetLog4netInstance(MethodBase.GetCurrentMethod().DeclaringType);
+        private static readonly log4net.ILog log4net = Log4netLogger.Log4netLogger.GetLog4netInstance(MethodBase.GetCurrentMethod().DeclaringType);
         #endregion
 
         #region private readonly ApiWykazuPodatnikowVatDataDbContext _context;
@@ -66,7 +66,7 @@ namespace WebApplicationNetCoreDev.Controllers.ApiWykazuPodatnikowVatDataControl
             }
             catch (Exception e)
             {
-                _log4net.Error(string.Format("{0}, {1}.", e.Message, e.StackTrace), e);
+                log4net.Error(string.Format("{0}, {1}.", e.Message, e.StackTrace), e);
             }
             return NotFound();
         }
@@ -91,7 +91,7 @@ namespace WebApplicationNetCoreDev.Controllers.ApiWykazuPodatnikowVatDataControl
             }
             catch (Exception e)
             {
-                _log4net.Error(string.Format("{0}, {1}.", e.Message, e.StackTrace), e);
+                log4net.Error(string.Format("{0}, {1}.", e.Message, e.StackTrace), e);
             }
             return NotFound();
         }
@@ -116,7 +116,7 @@ namespace WebApplicationNetCoreDev.Controllers.ApiWykazuPodatnikowVatDataControl
             }
             catch (Exception e)
             {
-                _log4net.Error(string.Format("{0}, {1}.", e.Message, e.StackTrace), e);
+                log4net.Error(string.Format("{0}, {1}.", e.Message, e.StackTrace), e);
             }
             return NotFound();
         }
@@ -142,7 +142,7 @@ namespace WebApplicationNetCoreDev.Controllers.ApiWykazuPodatnikowVatDataControl
             }
             catch (Exception e)
             {
-                _log4net.Error(string.Format("{0}, {1}.", e.Message, e.StackTrace), e);
+                log4net.Error(string.Format("{0}, {1}.", e.Message, e.StackTrace), e);
             }
             return NotFound();
         }
@@ -183,20 +183,20 @@ namespace WebApplicationNetCoreDev.Controllers.ApiWykazuPodatnikowVatDataControl
                             }
                             catch (Exception e)
                             {
-                                _log4net.Error(string.Format("{0}, {1}", e.Message, e.StackTrace), e);
+                                log4net.Error(string.Format("{0}, {1}", e.Message, e.StackTrace), e);
                             }
                         }
                     }
                     catch (Exception e)
                     {
-                        _log4net.Error(string.Format("{0}, {1}", e.Message, e.StackTrace), e);
+                        log4net.Error(string.Format("{0}, {1}", e.Message, e.StackTrace), e);
                     }
                     return Redirect(nameof(Index));
                 }
             }
             catch (Exception e)
             {
-                _log4net.Error(string.Format("{0}, {1}", e.Message, e.StackTrace), e);
+                log4net.Error(string.Format("{0}, {1}", e.Message, e.StackTrace), e);
                 return NotFound(e);
             }
             return View(model);
@@ -222,7 +222,7 @@ namespace WebApplicationNetCoreDev.Controllers.ApiWykazuPodatnikowVatDataControl
             }
             catch (Exception e)
             {
-                _log4net.Error(string.Format("{0}, {1}.", e.Message, e.StackTrace), e);
+                log4net.Error(string.Format("{0}, {1}.", e.Message, e.StackTrace), e);
             }
             return NotFound();
         }
