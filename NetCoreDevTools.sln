@@ -65,9 +65,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IcasaMutationServiceData", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FileSystemWatcherCommon", "FileSystemWatcherCommon\FileSystemWatcherCommon.csproj", "{8730CB9F-9649-46EA-B267-B1D7373D9A0D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FileSystemWatcherWorkerService", "IUIntegrationSystem\FileSystemWatcherWorkerService\FileSystemWatcherWorkerService.csproj", "{73F04957-D043-4030-A73C-33C7155341D8}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IUIntegrationSystemConsoleApp", "IUIntegrationSystem\IUIntegrationSystemConsoleApp\IUIntegrationSystemConsoleApp.csproj", "{DE7E4911-09A5-4E28-A52D-EF885F748CC2}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IUFileSystemWatcherWorkerService", "IUIntegrationSystem\IUFileSystemWatcherWorkerService\IUFileSystemWatcherWorkerService.csproj", "{C100CB7B-A9D0-491A-906A-EB6C157E9222}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -205,14 +205,6 @@ Global
 		{8730CB9F-9649-46EA-B267-B1D7373D9A0D}.DefaultBuild|Any CPU.Build.0 = Debug|Any CPU
 		{8730CB9F-9649-46EA-B267-B1D7373D9A0D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8730CB9F-9649-46EA-B267-B1D7373D9A0D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{73F04957-D043-4030-A73C-33C7155341D8}.All|Any CPU.ActiveCfg = Debug|Any CPU
-		{73F04957-D043-4030-A73C-33C7155341D8}.All|Any CPU.Build.0 = Debug|Any CPU
-		{73F04957-D043-4030-A73C-33C7155341D8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{73F04957-D043-4030-A73C-33C7155341D8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{73F04957-D043-4030-A73C-33C7155341D8}.DefaultBuild|Any CPU.ActiveCfg = Debug|Any CPU
-		{73F04957-D043-4030-A73C-33C7155341D8}.DefaultBuild|Any CPU.Build.0 = Debug|Any CPU
-		{73F04957-D043-4030-A73C-33C7155341D8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{73F04957-D043-4030-A73C-33C7155341D8}.Release|Any CPU.Build.0 = Release|Any CPU
 		{DE7E4911-09A5-4E28-A52D-EF885F748CC2}.All|Any CPU.ActiveCfg = Debug|Any CPU
 		{DE7E4911-09A5-4E28-A52D-EF885F748CC2}.All|Any CPU.Build.0 = Debug|Any CPU
 		{DE7E4911-09A5-4E28-A52D-EF885F748CC2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -221,6 +213,14 @@ Global
 		{DE7E4911-09A5-4E28-A52D-EF885F748CC2}.DefaultBuild|Any CPU.Build.0 = Debug|Any CPU
 		{DE7E4911-09A5-4E28-A52D-EF885F748CC2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DE7E4911-09A5-4E28-A52D-EF885F748CC2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C100CB7B-A9D0-491A-906A-EB6C157E9222}.All|Any CPU.ActiveCfg = Debug|Any CPU
+		{C100CB7B-A9D0-491A-906A-EB6C157E9222}.All|Any CPU.Build.0 = Debug|Any CPU
+		{C100CB7B-A9D0-491A-906A-EB6C157E9222}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C100CB7B-A9D0-491A-906A-EB6C157E9222}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C100CB7B-A9D0-491A-906A-EB6C157E9222}.DefaultBuild|Any CPU.ActiveCfg = Debug|Any CPU
+		{C100CB7B-A9D0-491A-906A-EB6C157E9222}.DefaultBuild|Any CPU.Build.0 = Debug|Any CPU
+		{C100CB7B-A9D0-491A-906A-EB6C157E9222}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C100CB7B-A9D0-491A-906A-EB6C157E9222}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -236,8 +236,8 @@ Global
 		{B9540CEC-ECE7-47FE-BCD2-A25B8E106EBE} = {6BBAE997-7773-428B-AB47-C7FA89B2EE05}
 		{DB45A1F7-DC31-409D-97C1-BCD66A28067F} = {6BBAE997-7773-428B-AB47-C7FA89B2EE05}
 		{CFDC4384-ECB0-41BA-ACF2-D40A7CA8A4F9} = {1AB1E35A-4DBD-4B8D-8B88-9302B7B3BBB8}
-		{73F04957-D043-4030-A73C-33C7155341D8} = {383B27D1-2E8E-4526-B7D0-6F7BA652A28E}
 		{DE7E4911-09A5-4E28-A52D-EF885F748CC2} = {383B27D1-2E8E-4526-B7D0-6F7BA652A28E}
+		{C100CB7B-A9D0-491A-906A-EB6C157E9222} = {383B27D1-2E8E-4526-B7D0-6F7BA652A28E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {76F1B00C-2A40-4B88-82DC-8A1D00A17DBD}

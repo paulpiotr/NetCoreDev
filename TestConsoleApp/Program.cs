@@ -17,7 +17,7 @@ namespace TestConsoleApp
 
             //await context.CheckForUpdateAndMigrateAsync();
 
-            List<IUIntegrationSystemData.Models.InvoiceFromIcasaCsv> invoiceFromIcasaCsvList = (List<IUIntegrationSystemData.Models.InvoiceFromIcasaCsv>)await IUIntegrationSystemData.InvoiceFromIcasaCsvData.GetInstance().ImportAsync(@"e:\export.csv");
+            List<IUIntegrationSystemData.Models.InvoiceFromIcasaCsv> invoiceFromIcasaCsvList = (List<IUIntegrationSystemData.Models.InvoiceFromIcasaCsv>)await IUIntegrationSystemData.InvoiceFromIcasaCsvData.GetInstance().ImportCsvFileAsync(@"e:\export.csv");
 
             Console.WriteLine(invoiceFromIcasaCsvList.Count);
 
