@@ -7,7 +7,7 @@
     <title>@ViewData["Title"] - WebApplicationNetCoreDev</title>
     @if (System.IO.File.Exists("wwwroot/vendor/dist/default-styles.html"))
     {
-@Html.Raw(System.IO.File.ReadAllText("wwwroot/vendor/dist/default-styles.html"));
+@Html.Raw(System.IO.File.ReadAllText("wwwroot/vendor/dist/default-styles.html").Replace(@"auto/", string.Empty));
 }
     @RenderSection("css", required: false)
     @RenderSection("jstop", required: false)
@@ -19,7 +19,7 @@
     <![endif]-->
     @if (System.IO.File.Exists("wwwroot/vendor/dist/default-scripts.html"))
     {
-        @Html.Raw(System.IO.File.ReadAllText("wwwroot/vendor/dist/default-scripts.html"));
+        @Html.Raw(System.IO.File.ReadAllText("wwwroot/vendor/dist/default-scripts.html").Replace(@"auto/", string.Empty));
     }
 </head>
 <body class="m-0 p-0 min-vh-100">

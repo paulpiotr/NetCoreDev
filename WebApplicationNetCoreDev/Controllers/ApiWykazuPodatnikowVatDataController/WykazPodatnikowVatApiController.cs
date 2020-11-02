@@ -22,7 +22,6 @@ namespace WebApplicationNetCoreDev.Controllers.ApiWykazuPodatnikowVatDataControl
     [ApiController]
     public class WykazPodatnikowVatApiController : ControllerBase
     {
-
         #region private static readonly log4net.ILog log4net
         /// <summary>
         /// log4net
@@ -30,39 +29,42 @@ namespace WebApplicationNetCoreDev.Controllers.ApiWykazuPodatnikowVatDataControl
         private static readonly log4net.ILog log4net = Log4netLogger.Log4netLogger.GetLog4netInstance(MethodBase.GetCurrentMethod().DeclaringType);
         #endregion
 
-        #region private readonly ApiWykazuPodatnikowVatDataDbContext _context;
+        #region private readonly ApiWykazuPodatnikowVatDataDbContext apiWykazuPodatnikowVatDataDbContext;
         /// <summary>
-        /// Kontekst bazy danych _context jako ApiWykazuPodatnikowVatDataDbContext
-        /// The context of the database _context as ApiWykazuPodatnikowVatDataDbContext
+        /// Kontekst bazy danych apiWykazuPodatnikowVatDataDbContext jako ApiWykazuPodatnikowVatDataDbContext
+        /// The apiWykazuPodatnikowVatDataDbContext of the database apiWykazuPodatnikowVatDataDbContext as ApiWykazuPodatnikowVatDataDbContext
         /// </summary>
-        private readonly ApiWykazuPodatnikowVatDataDbContext _context;
+        private readonly ApiWykazuPodatnikowVatDataDbContext apiWykazuPodatnikowVatDataDbContext;
         #endregion
 
-        #region private readonly IActionDescriptorCollectionProvider _provider;
+        #region private readonly IActionDescriptorCollectionProvider actionDescriptorCollectionProvider;
         /// <summary>
-        /// Dostawca kolekcji deskryptorów akcji _provider jako IActionDescriptorCollectionProvider
-        /// The _provider action descriptor collection provider as IActionDescriptorCollectionProvider
+        /// Dostawca kolekcji deskryptorów akcji actionDescriptorCollectionProvider jako IActionDescriptorCollectionProvider
+        /// The actionDescriptorCollectionProvider action descriptor collection actionDescriptorCollectionProvider as IActionDescriptorCollectionProvider
         /// </summary>
-        private readonly IActionDescriptorCollectionProvider _provider;
+        private readonly IActionDescriptorCollectionProvider actionDescriptorCollectionProvider;
         #endregion
+
+        private readonly ApiWykazuPodatnikowVatData.ApiWykazuPodatnikowVatData apiWykazuPodatnikowVatData;
 
         #region public WykazPodatnikowVatApiController...
         /// <summary>
-        /// Konstruktor klasy z parametrem context jako ApiWykazuPodatnikowVatDataDbContext
-        /// A class constructor with the context parameter as ApiTatDataDbContext
+        /// Konstruktor klasy z parametrem apiWykazuPodatnikowVatDataDbContext jako ApiWykazuPodatnikowVatDataDbContext
+        /// A class constructor with the apiWykazuPodatnikowVatDataDbContext parameter as ApiTatDataDbContext
         /// </summary>
-        /// <param name="context">
-        /// Kontekst bazy danych _context jako ApiWykazuPodatnikowVatDataDbContext
-        /// The context of the database _context as ApiWykazuPodatnikowVatDataDbContext
+        /// <param name="apiWykazuPodatnikowVatDataDbContext">
+        /// Kontekst bazy danych apiWykazuPodatnikowVatDataDbContext jako ApiWykazuPodatnikowVatDataDbContext
+        /// The apiWykazuPodatnikowVatDataDbContext of the database apiWykazuPodatnikowVatDataDbContext as ApiWykazuPodatnikowVatDataDbContext
         /// </param>
-        /// <param name="provider">
-        /// Dostawca kolekcji deskryptorów akcji _provider jako IActionDescriptorCollectionProvider
-        /// The _provider action descriptor collection provider as IActionDescriptorCollectionProvider
+        /// <param name="actionDescriptorCollectionProvider">
+        /// Dostawca kolekcji deskryptorów akcji actionDescriptorCollectionProvider jako IActionDescriptorCollectionProvider
+        /// The actionDescriptorCollectionProvider action descriptor collection actionDescriptorCollectionProvider as IActionDescriptorCollectionProvider
         /// </param>
-        public WykazPodatnikowVatApiController(ApiWykazuPodatnikowVatDataDbContext context, IActionDescriptorCollectionProvider provider)
+        public WykazPodatnikowVatApiController(ApiWykazuPodatnikowVatDataDbContext apiWykazuPodatnikowVatDataDbContext, IActionDescriptorCollectionProvider actionDescriptorCollectionProvider)
         {
-            _context = context;
-            _provider = provider;
+            this.apiWykazuPodatnikowVatDataDbContext = apiWykazuPodatnikowVatDataDbContext;
+            this.actionDescriptorCollectionProvider = actionDescriptorCollectionProvider;
+            apiWykazuPodatnikowVatData = new ApiWykazuPodatnikowVatData.ApiWykazuPodatnikowVatData(apiWykazuPodatnikowVatDataDbContext);
         }
         #endregion
 
@@ -107,7 +109,7 @@ namespace WebApplicationNetCoreDev.Controllers.ApiWykazuPodatnikowVatDataControl
         {
             try
             {
-                List<Entity> entityList = await _context.Entity.Include(i => i.EntityAccountNumber).ToListAsync();
+                List<Entity> entityList = await apiWykazuPodatnikowVatDataDbContext.Entity.Include(i => i.EntityAccountNumber).ToListAsync();
                 if (null != entityList && entityList.Count > 0)
                 {
                     return new KendoGrid<List<Entity>> { Total = entityList.Count, Data = entityList };
@@ -162,7 +164,7 @@ namespace WebApplicationNetCoreDev.Controllers.ApiWykazuPodatnikowVatDataControl
         {
             try
             {
-                List<EntityCheck> entityCheckList = await _context.EntityCheck.ToListAsync();
+                List<EntityCheck> entityCheckList = await apiWykazuPodatnikowVatDataDbContext.EntityCheck.ToListAsync();
                 if (null != entityCheckList && entityCheckList.Count > 0)
                 {
                     return new KendoGrid<List<EntityCheck>> { Total = entityCheckList.Count, Data = entityCheckList };
@@ -193,7 +195,7 @@ namespace WebApplicationNetCoreDev.Controllers.ApiWykazuPodatnikowVatDataControl
         {
             try
             {
-                List<ControllerRoutingActions> controllerRoutingActionsList = await NetAppCommon.ControllerRoute.GetRouteActionAsync(_provider, ControllerContext.ActionDescriptor.ControllerName.ToString(), Url, this);
+                List<ControllerRoutingActions> controllerRoutingActionsList = await NetAppCommon.ControllerRoute.GetRouteActionAsync(actionDescriptorCollectionProvider, ControllerContext.ActionDescriptor.ControllerName.ToString(), Url, this);
                 if (null != controllerRoutingActionsList && controllerRoutingActionsList.Count > 0)
                 {
                     return controllerRoutingActionsList;
@@ -224,7 +226,7 @@ namespace WebApplicationNetCoreDev.Controllers.ApiWykazuPodatnikowVatDataControl
         {
             try
             {
-                KendoGrid<List<ControllerRoutingActions>> kendoGrid = await NetAppCommon.ControllerRoute.GetRouteActionForKendoGridAsync(_provider, ControllerContext.ActionDescriptor.ControllerName.ToString(), Url, this);
+                KendoGrid<List<ControllerRoutingActions>> kendoGrid = await NetAppCommon.ControllerRoute.GetRouteActionForKendoGridAsync(actionDescriptorCollectionProvider, ControllerContext.ActionDescriptor.ControllerName.ToString(), Url, this);
                 if (null != kendoGrid && kendoGrid.Data.Count > 0)
                 {
                     return kendoGrid;
@@ -238,11 +240,11 @@ namespace WebApplicationNetCoreDev.Controllers.ApiWykazuPodatnikowVatDataControl
         }
         #endregion
 
-        #region public async Task<ActionResult<Entity>> GetFindByNipAsync(string nip)
+        #region public async Task<ActionResult<Entity>> GetFindByNipAsync(string nip, DateTime? dateOfChecking)
         /// <summary>
         /// [Authorize(AuthenticationSchemes = "Bearer")]
         /// [HttpGet("FindByNip/{nip}")]
-        /// GET: api/SerwisRzeczypospolitejPolskiej/MinisterstwoFinansow/KrajowaAdministracjaSkarbowa/WykazPodatnikowVatApi/FindByNip/{nip}
+        /// GET: api/SerwisRzeczypospolitejPolskiej/MinisterstwoFinansow/KrajowaAdministracjaSkarbowa/WykazPodatnikowVatApi/FindByNip/{nip}/{dateOfChecking?}
         /// Wyszukaj podmioty według numeru NIP
         /// Search entities by tax identification number NIP
         /// </summary>
@@ -250,18 +252,22 @@ namespace WebApplicationNetCoreDev.Controllers.ApiWykazuPodatnikowVatDataControl
         /// Numer identyfikacji podatkowej NIP jako string [^\d{10}$]
         /// NIP tax identification number as string [^\d{10}$]
         /// </param>
+        /// <param name="dateOfChecking">
+        /// Określ datę sprawdzenia danych w dniu jako DateTime lub brak (null - domyśnie data bieżąca)
+        /// Specify the date of checking the data on the date as DateTime or none (null - current date by default)
+        /// </param>
         /// <returns>
         /// Podmiot jako obiekt Entity lub status NotFound
         /// Entity as an Entity object or NotFound status
         /// </returns>
-        // GET: api/SerwisRzeczypospolitejPolskiej/MinisterstwoFinansow/KrajowaAdministracjaSkarbowa/WykazPodatnikowVatApi/FindByNip/{nip}
+        // GET: api/SerwisRzeczypospolitejPolskiej/MinisterstwoFinansow/KrajowaAdministracjaSkarbowa/WykazPodatnikowVatApi/FindByNip/{nip}/{dateOfChecking?}
         [Authorize(AuthenticationSchemes = "Bearer")]
-        [HttpGet("FindByNip/{nip}")]
-        public async Task<ActionResult<Entity>> GetFindByNipAsync(string nip)
+        [HttpGet("FindByNip/{nip}/{dateOfChecking?}")]
+        public async Task<ActionResult<Entity>> GetFindByNipAsync(string nip, DateTime? dateOfChecking)
         {
             try
             {
-                Entity entity = await ApiWykazuPodatnikowVatData.ApiWykazuPodatnikowVatData.ApiFindByNipAsync(nip);
+                Entity entity = await apiWykazuPodatnikowVatData.ApiFindByNipAsync(nip, dateOfChecking ?? DateTime.Now);
                 if (null != entity)
                 {
                     return entity;
@@ -275,7 +281,7 @@ namespace WebApplicationNetCoreDev.Controllers.ApiWykazuPodatnikowVatDataControl
         }
         #endregion
 
-        #region public async Task<ActionResult<Entity>> GetFindByNipFromQueryAsync([FromQuery] string nip)
+        #region public async Task<ActionResult<Entity>> GetFindByNipFromQueryAsync([FromQuery] string nip, [FromQuery] DateTime? dateOfChecking)
         /// <summary>
         /// [Authorize(AuthenticationSchemes = "Bearer")]
         /// [HttpGet("FindByNip?nip={nip}")]
@@ -287,6 +293,10 @@ namespace WebApplicationNetCoreDev.Controllers.ApiWykazuPodatnikowVatDataControl
         /// Numer identyfikacji podatkowej NIP jako string [^\d{10}$]
         /// NIP tax identification number as string [^\d{10}$]
         /// </param>
+        /// <param name="dateOfChecking">
+        /// Określ datę sprawdzenia danych w dniu jako DateTime lub brak (null - domyśnie data bieżąca)
+        /// Specify the date of checking the data on the date as DateTime or none (null - current date by default)
+        /// </param>
         /// <returns>
         /// Podmiot jako obiekt Entity lub status NotFound
         /// Entity as an Entity object or NotFound status
@@ -294,30 +304,38 @@ namespace WebApplicationNetCoreDev.Controllers.ApiWykazuPodatnikowVatDataControl
         // GET: api/SerwisRzeczypospolitejPolskiej/MinisterstwoFinansow/KrajowaAdministracjaSkarbowa/WykazPodatnikowVatApi/FindByNip?nip={nip}
         [Authorize(AuthenticationSchemes = "Bearer")]
         [HttpGet("FindByNip")]
-        public async Task<ActionResult<Entity>> GetFindByNipFromQueryAsync([FromQuery] string nip)
+        public async Task<ActionResult<Entity>> GetFindByNipFromQueryAsync([FromQuery] string nip, [FromQuery] DateTime? dateOfChecking)
         {
-            return await GetFindByNipAsync(nip);
+            return await GetFindByNipAsync(nip, dateOfChecking ?? DateTime.Now);
         }
         #endregion
 
-        #region public async Task<ActionResult<KendoGrid<List<Entity>>>> GetFindByNipKendoGirdAsync(string nip)
+        #region public async Task<ActionResult<KendoGrid<List<Entity>>>> GetFindByNipKendoGirdAsync(string nip, DateTime? dateOfChecking)
         /// <summary>
         /// GET: api/SerwisRzeczypospolitejPolskiej/MinisterstwoFinansow/KrajowaAdministracjaSkarbowa/WykazPodatnikowVatApi/FindByNipKendoGird/{nip}
         /// Wyszukaj podmioty według numeru NIP dla widoku KendoGrid
         /// Search entities by tax identification number NIP for the KendoGrid view
         /// </summary>
+        /// <param name="nip">
+        /// Numer identyfikacji podatkowej NIP jako string [^\d{10}$]
+        /// NIP tax identification number as string [^\d{10}$]
+        /// </param>
+        /// <param name="dateOfChecking">
+        /// Określ datę sprawdzenia danych w dniu jako DateTime lub brak (null - domyśnie data bieżąca)
+        /// Specify the date of checking the data on the date as DateTime or none (null - current date by default)
+        /// </param>
         /// <returns>
         /// Lista znalezionych podmiotów dla widoku KendoGrid
         /// List of entities found for the KendoGrid view
         /// </returns>
         // GET: api/SerwisRzeczypospolitejPolskiej/MinisterstwoFinansow/KrajowaAdministracjaSkarbowa/WykazPodatnikowVatApi/FindByNipKendoGird/{nip}
         [Authorize(AuthenticationSchemes = "Cookies")]
-        [HttpGet("FindByNipKendoGird/{nip}")]
-        public async Task<ActionResult<KendoGrid<List<Entity>>>> GetFindByNipKendoGirdAsync(string nip)
+        [HttpGet("FindByNipKendoGird/{nip}/{dateOfChecking?}")]
+        public async Task<ActionResult<KendoGrid<List<Entity>>>> GetFindByNipKendoGirdAsync(string nip, DateTime? dateOfChecking)
         {
             try
             {
-                Entity entity = await ApiWykazuPodatnikowVatData.ApiWykazuPodatnikowVatData.ApiFindByNipAsync(nip);
+                Entity entity = await apiWykazuPodatnikowVatData.ApiFindByNipAsync(nip, dateOfChecking ?? DateTime.Now);
                 if (null != entity)
                 {
                     return new KendoGrid<List<Entity>>()
@@ -335,7 +353,7 @@ namespace WebApplicationNetCoreDev.Controllers.ApiWykazuPodatnikowVatDataControl
         }
         #endregion
 
-        #region public async Task<ActionResult<Entity>> GetFindByRegonAsync(string regon)
+        #region public async Task<ActionResult<Entity>> GetFindByRegonAsync(string regon, DateTime? dateOfChecking)
         /// <summary>
         /// [Authorize(AuthenticationSchemes = "Bearer")]
         /// [HttpGet("FindByRegon/{regon}")]
@@ -347,21 +365,30 @@ namespace WebApplicationNetCoreDev.Controllers.ApiWykazuPodatnikowVatDataControl
         /// Numer identyfikacyjny REGON przypisany przez Krajowy Rejestr Urzędowy Podmiotów Gospodarki Narodowej jako string [^\d{9}$|^\d{14}$]
         /// REGON identification number assigned by the National Register of Entities of National Economy as string [^\d{9}$|^\d{14}$]
         /// </param>
+        /// <param name="dateOfChecking">
+        /// Określ datę sprawdzenia danych w dniu jako DateTime lub brak (null - domyśnie data bieżąca)
+        /// Specify the date of checking the data on the date as DateTime or none (null - current date by default)
+        /// </param>
         /// <returns>
         /// Podmiot jako obiekt Entity lub status NotFound
         /// Entity as an Entity object or NotFound status
         /// </returns>
         // GET: api/SerwisRzeczypospolitejPolskiej/MinisterstwoFinansow/KrajowaAdministracjaSkarbowa/WykazPodatnikowVatApi/FindByRegon/{regon}
         [Authorize(AuthenticationSchemes = "Bearer")]
-        [HttpGet("FindByRegon/{regon}")]
-        public async Task<ActionResult<Entity>> GetFindByRegonAsync(string regon)
+        [HttpGet("FindByRegon/{regon}/{dateOfChecking?}")]
+        public async Task<ActionResult<Entity>> GetFindByRegonAsync(string regon, DateTime? dateOfChecking)
         {
             try
             {
-                Entity entity = await ApiWykazuPodatnikowVatData.ApiWykazuPodatnikowVatData.ApiFindByRegonAsync(regon);
-                if (null != entity)
+                Regex digitsOnly = new Regex(@"[^\d]");
+                regon = digitsOnly.Replace(regon, string.Empty);
+                if (null != regon && !string.IsNullOrWhiteSpace(regon) && (regon.Length == 9 || regon.Length == 14))
                 {
-                    return entity;
+                    Entity entity = await apiWykazuPodatnikowVatData.ApiFindByRegonAsync(regon, dateOfChecking ?? DateTime.Now);
+                    if (null != entity)
+                    {
+                        return entity;
+                    }
                 }
             }
             catch (Exception e)
@@ -372,7 +399,7 @@ namespace WebApplicationNetCoreDev.Controllers.ApiWykazuPodatnikowVatDataControl
         }
         #endregion
 
-        #region public async Task<ActionResult<Entity>> GetFindByRegonFromQueryAsync([FromQuery] string regon)
+        #region public async Task<ActionResult<Entity>> GetFindByRegonFromQueryAsync([FromQuery] string regon, DateTime? dateOfChecking)
         /// <summary>
         /// [Authorize(AuthenticationSchemes = "Bearer")]
         /// [HttpGet("FindByRegon?regon={regon}")]
@@ -384,6 +411,10 @@ namespace WebApplicationNetCoreDev.Controllers.ApiWykazuPodatnikowVatDataControl
         /// Numer identyfikacyjny REGON przypisany przez Krajowy Rejestr Urzędowy Podmiotów Gospodarki Narodowej jako string [^\d{9}$|^\d{14}$]
         /// REGON identification number assigned by the National Register of Entities of National Economy as string [^\d{9}$|^\d{14}$]
         /// </param>
+        /// <param name="dateOfChecking">
+        /// Określ datę sprawdzenia danych w dniu jako DateTime lub brak (null - domyśnie data bieżąca)
+        /// Specify the date of checking the data on the date as DateTime or none (null - current date by default)
+        /// </param>
         /// <returns>
         /// Podmiot jako obiekt Entity lub status NotFound
         /// Entity as an Entity object or NotFound status
@@ -391,13 +422,13 @@ namespace WebApplicationNetCoreDev.Controllers.ApiWykazuPodatnikowVatDataControl
         // GET: api/SerwisRzeczypospolitejPolskiej/MinisterstwoFinansow/KrajowaAdministracjaSkarbowa/WykazPodatnikowVatApi/FindByRegon?regon={regon}
         [Authorize(AuthenticationSchemes = "Bearer")]
         [HttpGet("FindByRegon")]
-        public async Task<ActionResult<Entity>> GetFindByRegonFromQueryAsync([FromQuery] string regon)
+        public async Task<ActionResult<Entity>> GetFindByRegonFromQueryAsync([FromQuery] string regon, DateTime? dateOfChecking)
         {
-            return await GetFindByRegonAsync(regon);
+            return await GetFindByRegonAsync(regon, dateOfChecking ?? DateTime.Now);
         }
         #endregion
 
-        #region public async Task<ActionResult<KendoGrid<List<Entity>>>> GetFindByRegonKendoGirdAsync(string regon)
+        #region public async Task<ActionResult<KendoGrid<List<Entity>>>> GetFindByRegonKendoGirdAsync(string regon, DateTime? dateOfChecking)
         /// <summary>
         /// GET: api/SerwisRzeczypospolitejPolskiej/MinisterstwoFinansow/KrajowaAdministracjaSkarbowa/WykazPodatnikowVatApi/FindByRegonKendoGird/{regon}
         /// Wyszukaj podmioty według numeru REGON dla widoku KendoGrid
@@ -407,14 +438,18 @@ namespace WebApplicationNetCoreDev.Controllers.ApiWykazuPodatnikowVatDataControl
         /// Numer identyfikacyjny REGON przypisany przez Krajowy Rejestr Urzędowy Podmiotów Gospodarki Narodowej jako string [^\d{9}$|^\d{14}$]
         /// REGON identification number assigned by the National Register of Entities of National Economy as string [^\d{9}$|^\d{14}$]
         /// </param>
+        /// <param name="dateOfChecking">
+        /// Określ datę sprawdzenia danych w dniu jako DateTime lub brak (null - domyśnie data bieżąca)
+        /// Specify the date of checking the data on the date as DateTime or none (null - current date by default)
+        /// </param>
         /// <returns>
         /// Lista znalezionych podmiotów dla widoku KendoGrid
         /// List of entities found for the KendoGrid view
         /// </returns>
         // GET: api/SerwisRzeczypospolitejPolskiej/MinisterstwoFinansow/KrajowaAdministracjaSkarbowa/WykazPodatnikowVatApi/FindByRegonKendoGird/{regon}
         [Authorize(AuthenticationSchemes = "Cookies")]
-        [HttpGet("FindByRegonKendoGird/{regon}")]
-        public async Task<ActionResult<KendoGrid<List<Entity>>>> GetFindByRegonKendoGirdAsync(string regon)
+        [HttpGet("FindByRegonKendoGird/{regon}/{dateOfChecking?}")]
+        public async Task<ActionResult<KendoGrid<List<Entity>>>> GetFindByRegonKendoGirdAsync(string regon, DateTime? dateOfChecking)
         {
             try
             {
@@ -422,7 +457,7 @@ namespace WebApplicationNetCoreDev.Controllers.ApiWykazuPodatnikowVatDataControl
                 regon = digitsOnly.Replace(regon, string.Empty);
                 if (null != regon && !string.IsNullOrWhiteSpace(regon) && (regon.Length == 9 || regon.Length == 14))
                 {
-                    Entity entity = await ApiWykazuPodatnikowVatData.ApiWykazuPodatnikowVatData.ApiFindByRegonAsync(regon);
+                    Entity entity = await apiWykazuPodatnikowVatData.ApiFindByRegonAsync(regon, dateOfChecking ?? DateTime.Now);
                     if (null != entity)
                     {
                         return new KendoGrid<List<Entity>>()
@@ -441,7 +476,7 @@ namespace WebApplicationNetCoreDev.Controllers.ApiWykazuPodatnikowVatDataControl
         }
         #endregion
 
-        #region public async Task<ActionResult<Entity>> GetFindByBankAccountAsync(string bankAccount)
+        #region public async Task<ActionResult<List<Entity>>> GetFindByBankAccountAsync(string bankAccount, DateTime? dateOfChecking)
         /// <summary>
         /// [Authorize(AuthenticationSchemes = "Bearer")]
         /// [HttpGet("FindByBankAccount/{bankAccount}")]
@@ -453,18 +488,22 @@ namespace WebApplicationNetCoreDev.Controllers.ApiWykazuPodatnikowVatDataControl
         /// Numer rachunku bankowego (26 znaków) w formacie NRB (kkAAAAAAAABBBBBBBBBBBBBBBB)
         /// Bank account number (26 characters) in the format NRB (kkAAAAAAAABBBBBBBBBBBBBBBB)
         /// </param>
+        /// <param name="dateOfChecking">
+        /// Określ datę sprawdzenia danych w dniu jako DateTime lub brak (null - domyśnie data bieżąca)
+        /// Specify the date of checking the data on the date as DateTime or none (null - current date by default)
+        /// </param>
         /// <returns>
         /// Lista podmiotów jako lista obiektów Entity lub status NotFound
         /// Entity list as a list of Entity objects or NotFound status
         /// </returns>
         // GET: api/SerwisRzeczypospolitejPolskiej/MinisterstwoFinansow/KrajowaAdministracjaSkarbowa/WykazPodatnikowVatApi/FindByBankAccount/{bankAccount}
         [Authorize(AuthenticationSchemes = "Bearer")]
-        [HttpGet("FindByBankAccount/{bankAccount}")]
-        public async Task<ActionResult<List<Entity>>> GetFindByBankAccountAsync(string bankAccount)
+        [HttpGet("FindByBankAccount/{bankAccount}/{dateOfChecking?}")]
+        public async Task<ActionResult<List<Entity>>> GetFindByBankAccountAsync(string bankAccount, DateTime? dateOfChecking)
         {
             try
             {
-                List<Entity> entityList = await ApiWykazuPodatnikowVatData.ApiWykazuPodatnikowVatData.ApiFindByBankAccountAsync(bankAccount);
+                List<Entity> entityList = await apiWykazuPodatnikowVatData.ApiFindByBankAccountAsync(bankAccount, dateOfChecking ?? DateTime.Now);
                 if (null != entityList && entityList.Count > 0)
                 {
                     return entityList;
@@ -478,7 +517,7 @@ namespace WebApplicationNetCoreDev.Controllers.ApiWykazuPodatnikowVatDataControl
         }
         #endregion
 
-        #region public async Task<ActionResult<Entity>> GetFindByBankAccountFromQueryAsync([FromQuery] string bankAccount)
+        #region public async Task<ActionResult<List<Entity>>> GetFindByBankAccountFromQueryAsync([FromQuery] string bankAccount, [FromQuery] DateTime? dateOfChecking)
         /// <summary>
         /// [Authorize(AuthenticationSchemes = "Bearer")]
         /// [HttpGet("FindByBankAccount?bankAccount={bankAccount}")]
@@ -490,6 +529,10 @@ namespace WebApplicationNetCoreDev.Controllers.ApiWykazuPodatnikowVatDataControl
         /// Numer rachunku bankowego (26 znaków) w formacie NRB (kkAAAAAAAABBBBBBBBBBBBBBBB)
         /// Bank account number (26 characters) in the format NRB (kkAAAAAAAABBBBBBBBBBBBBBBB)
         /// </param>
+        /// <param name="dateOfChecking">
+        /// Określ datę sprawdzenia danych w dniu jako DateTime lub brak (null - domyśnie data bieżąca)
+        /// Specify the date of checking the data on the date as DateTime or none (null - current date by default)
+        /// </param>
         /// <returns>
         /// Podmiot jako obiekt Entity lub status NotFound
         /// Entity as an Entity object or NotFound status
@@ -497,13 +540,13 @@ namespace WebApplicationNetCoreDev.Controllers.ApiWykazuPodatnikowVatDataControl
         // GET: api/SerwisRzeczypospolitejPolskiej/MinisterstwoFinansow/KrajowaAdministracjaSkarbowa/WykazPodatnikowVatApi/FindByBankAccount?bankAccount={bankAccount}
         [Authorize(AuthenticationSchemes = "Bearer")]
         [HttpGet("FindByBankAccount")]
-        public async Task<ActionResult<List<Entity>>> GetFindByBankAccountFromQueryAsync([FromQuery] string bankAccount)
+        public async Task<ActionResult<List<Entity>>> GetFindByBankAccountFromQueryAsync([FromQuery] string bankAccount, [FromQuery] DateTime? dateOfChecking)
         {
-            return await GetFindByBankAccountAsync(bankAccount);
+            return await GetFindByBankAccountAsync(bankAccount, dateOfChecking ?? DateTime.Now);
         }
         #endregion
 
-        #region public async Task<ActionResult<KendoGrid<List<Entity>>>> GetFindByBankAccountKendoGirdAsync(string bankAccount)
+        #region public async Task<ActionResult<KendoGrid<List<Entity>>>> GetFindByBankAccountKendoGirdAsync(string bankAccount, DateTime? dateOfChecking)
         /// <summary>
         /// GET: api/SerwisRzeczypospolitejPolskiej/MinisterstwoFinansow/KrajowaAdministracjaSkarbowa/WykazPodatnikowVatApi/FindByBankAccountKendoGird/{bankAccount}
         /// Wyszukaj podmioty według numeru rachunku bankowego NRB dla widoku KendoGrid
@@ -513,18 +556,22 @@ namespace WebApplicationNetCoreDev.Controllers.ApiWykazuPodatnikowVatDataControl
         /// Numer rachunku bankowego (26 znaków) w formacie NRB (kkAAAAAAAABBBBBBBBBBBBBBBB)
         /// Bank account number (26 characters) in the format NRB (kkAAAAAAAABBBBBBBBBBBBBBBB)
         /// </param>
+        /// <param name="dateOfChecking">
+        /// Określ datę sprawdzenia danych w dniu jako DateTime lub brak (null - domyśnie data bieżąca)
+        /// Specify the date of checking the data on the date as DateTime or none (null - current date by default)
+        /// </param>
         /// <returns>
         /// Lista znalezionych podmiotów dla widoku KendoGrid
         /// List of entities found for the KendoGrid view
         /// </returns>
         // GET: api/SerwisRzeczypospolitejPolskiej/MinisterstwoFinansow/KrajowaAdministracjaSkarbowa/WykazPodatnikowVatApi/FindByBankAccountKendoGird/{bankAccount}
         [Authorize(AuthenticationSchemes = "Cookies")]
-        [HttpGet("FindByBankAccountKendoGird/{bankAccount}")]
-        public async Task<ActionResult<KendoGrid<List<Entity>>>> GetFindByBankAccountKendoGirdAsync(string bankAccount)
+        [HttpGet("FindByBankAccountKendoGird/{bankAccount}/{dateOfChecking?}")]
+        public async Task<ActionResult<KendoGrid<List<Entity>>>> GetFindByBankAccountKendoGirdAsync(string bankAccount, DateTime? dateOfChecking)
         {
             try
             {
-                List<Entity> entityList = await ApiWykazuPodatnikowVatData.ApiWykazuPodatnikowVatData.ApiFindByBankAccountAsync(bankAccount);
+                List<Entity> entityList = await apiWykazuPodatnikowVatData.ApiFindByBankAccountAsync(bankAccount, dateOfChecking ?? DateTime.Now);
                 if (null != entityList && entityList.Count > 0)
                 {
                     return new KendoGrid<List<Entity>>()
@@ -542,7 +589,7 @@ namespace WebApplicationNetCoreDev.Controllers.ApiWykazuPodatnikowVatDataControl
         }
         #endregion
 
-        #region public async Task<ActionResult<EntityCheck>> GetCheckBankAccountByNipAsync(string nip, string bankAccount)
+        #region public async Task<ActionResult<EntityCheck>> GetCheckBankAccountByNipAsync(string nip, string bankAccount, DateTime? dateOfChecking)
         /// <summary>
         /// [Authorize(AuthenticationSchemes = "Bearer")]
         /// [HttpGet("CheckBankAccountByNip/{nip}/{bankAccount}")]
@@ -558,18 +605,22 @@ namespace WebApplicationNetCoreDev.Controllers.ApiWykazuPodatnikowVatDataControl
         /// Numer rachunku bankowego (26 znaków) w formacie NRB (kkAAAAAAAABBBBBBBBBBBBBBBB)
         /// Bank account number (26 characters) in the format NRB (kkAAAAAAAABBBBBBBBBBBBBBBB)
         /// </param>
+        /// <param name="dateOfChecking">
+        /// Określ datę sprawdzenia danych w dniu jako DateTime lub brak (null - domyśnie data bieżąca)
+        /// Specify the date of checking the data on the date as DateTime or none (null - current date by default)
+        /// </param>
         /// <returns>
         /// Odpowiedź, czy dany rachunek jest przypisany do podmiotu jako EntityCheck
         /// Reply whether the account is assigned to the subject as EntityCheck
         /// </returns>
         // GET: api/SerwisRzeczypospolitejPolskiej/MinisterstwoFinansow/KrajowaAdministracjaSkarbowa/WykazPodatnikowVatApi/CheckBankAccountByNipAsync/{nip}/{bankAccount}
         [Authorize(AuthenticationSchemes = "Bearer")]
-        [HttpGet("CheckBankAccountByNipAsync/{nip}/{bankAccount}")]
-        public async Task<ActionResult<EntityCheck>> GetCheckBankAccountByNipAsync(string nip, string bankAccount)
+        [HttpGet("CheckBankAccountByNipAsync/{nip}/{bankAccount}/{dateOfChecking?}")]
+        public async Task<ActionResult<EntityCheck>> GetCheckBankAccountByNipAsync(string nip, string bankAccount, DateTime? dateOfChecking)
         {
             try
             {
-                EntityCheck entityCheck = await ApiWykazuPodatnikowVatData.ApiWykazuPodatnikowVatData.ApiCheckBankAccountByNipAsync(nip, bankAccount);
+                EntityCheck entityCheck = await apiWykazuPodatnikowVatData.ApiCheckBankAccountByNipAsync(nip, bankAccount, dateOfChecking ?? DateTime.Now);
                 if (null != entityCheck)
                 {
                     return entityCheck;
@@ -583,7 +634,7 @@ namespace WebApplicationNetCoreDev.Controllers.ApiWykazuPodatnikowVatDataControl
         }
         #endregion
 
-        #region public async Task<ActionResult<KendoGrid<List<EntityCheck>>>> GetCheckBankAccountByNipKendoGirdAsync(string nip, string bankAccount)
+        #region public async Task<ActionResult<KendoGrid<List<EntityCheck>>>> GetCheckBankAccountByNipKendoGirdAsync(string nip, string bankAccount, DateTime? dateOfChecking)
         /// <summary>
         /// GET: api/SerwisRzeczypospolitejPolskiej/MinisterstwoFinansow/KrajowaAdministracjaSkarbowa/WykazPodatnikowVatApi/CheckBankAccountByNipKendoGird/{nip}/{bankAccount}
         /// [Authorize(AuthenticationSchemes = "Cookies")]
@@ -599,18 +650,22 @@ namespace WebApplicationNetCoreDev.Controllers.ApiWykazuPodatnikowVatDataControl
         /// Numer rachunku bankowego (26 znaków) w formacie NRB (kkAAAAAAAABBBBBBBBBBBBBBBB)
         /// Bank account number (26 characters) in the format NRB (kkAAAAAAAABBBBBBBBBBBBBBBB)
         /// </param>
+        /// <param name="dateOfChecking">
+        /// Określ datę sprawdzenia danych w dniu jako DateTime lub brak (null - domyśnie data bieżąca)
+        /// Specify the date of checking the data on the date as DateTime or none (null - current date by default)
+        /// </param>
         /// <returns>
         /// Odpowiedź, czy dany rachunek jest przypisany do podmiotu jako EntityCheck
         /// Reply whether the account is assigned to the subject as EntityCheck
         /// </returns>
         // GET: api/SerwisRzeczypospolitejPolskiej/MinisterstwoFinansow/KrajowaAdministracjaSkarbowa/WykazPodatnikowVatApi/CheckBankAccountByNipKendoGird/{nip}/{bankAccount}
         [Authorize(AuthenticationSchemes = "Cookies")]
-        [HttpGet("CheckBankAccountByNipKendoGird/{nip}/{bankAccount}")]
-        public async Task<ActionResult<KendoGrid<List<EntityCheck>>>> GetCheckBankAccountByNipKendoGirdAsync(string nip, string bankAccount)
+        [HttpGet("CheckBankAccountByNipKendoGird/{nip}/{bankAccount}/{dateOfChecking?}")]
+        public async Task<ActionResult<KendoGrid<List<EntityCheck>>>> GetCheckBankAccountByNipKendoGirdAsync(string nip, string bankAccount, DateTime? dateOfChecking)
         {
             try
             {
-                EntityCheck entityCheck = await ApiWykazuPodatnikowVatData.ApiWykazuPodatnikowVatData.ApiCheckBankAccountByNipAsync(nip, bankAccount);
+                EntityCheck entityCheck = await apiWykazuPodatnikowVatData.ApiCheckBankAccountByNipAsync(nip, bankAccount, dateOfChecking ?? DateTime.Now);
                 if (null != entityCheck)
                 {
                     return new KendoGrid<List<EntityCheck>>()
@@ -628,7 +683,7 @@ namespace WebApplicationNetCoreDev.Controllers.ApiWykazuPodatnikowVatDataControl
         }
         #endregion
 
-        #region public async Task<ActionResult<EntityCheck>> GetCheckBankAccountByNipFromQueryAsync([FromQuery] string nip, [FromQuery] string bankAccount)
+        #region public async Task<ActionResult<EntityCheck>> GetCheckBankAccountByNipFromQueryAsync([FromQuery] string nip, [FromQuery] string bankAccount, [FromQuery] DateTime? dateOfChecking)
         /// <summary>
         /// GET: api/SerwisRzeczypospolitejPolskiej/MinisterstwoFinansow/KrajowaAdministracjaSkarbowa/WykazPodatnikowVatApi/CheckBankAccountByNip?nip={nip}&bankAccount={bankAccount}
         /// [Authorize(AuthenticationSchemes = "Bearer")]
@@ -644,6 +699,10 @@ namespace WebApplicationNetCoreDev.Controllers.ApiWykazuPodatnikowVatDataControl
         /// Numer rachunku bankowego (26 znaków) w formacie NRB (kkAAAAAAAABBBBBBBBBBBBBBBB)
         /// Bank account number (26 characters) in the format NRB (kkAAAAAAAABBBBBBBBBBBBBBBB)
         /// </param>
+        /// <param name="dateOfChecking">
+        /// Określ datę sprawdzenia danych w dniu jako DateTime lub brak (null - domyśnie data bieżąca)
+        /// Specify the date of checking the data on the date as DateTime or none (null - current date by default)
+        /// </param>
         /// <returns>
         /// Odpowiedź, czy dany rachunek jest przypisany do podmiotu jako EntityCheck
         /// Reply whether the account is assigned to the subject as EntityCheck
@@ -651,13 +710,13 @@ namespace WebApplicationNetCoreDev.Controllers.ApiWykazuPodatnikowVatDataControl
         // GET: api/SerwisRzeczypospolitejPolskiej/MinisterstwoFinansow/KrajowaAdministracjaSkarbowa/WykazPodatnikowVatApi/CheckBankAccountByNip?nip={nip}&bankAccount={bankAccount}
         [Authorize(AuthenticationSchemes = "Bearer")]
         [HttpGet("CheckBankAccountByNip")]
-        public async Task<ActionResult<EntityCheck>> GetCheckBankAccountByNipFromQueryAsync([FromQuery] string nip, [FromQuery] string bankAccount)
+        public async Task<ActionResult<EntityCheck>> GetCheckBankAccountByNipFromQueryAsync([FromQuery] string nip, [FromQuery] string bankAccount, [FromQuery] DateTime? dateOfChecking)
         {
-            return await GetCheckBankAccountByNipAsync(nip, bankAccount);
+            return await GetCheckBankAccountByNipAsync(nip, bankAccount, dateOfChecking ?? DateTime.Now);
         }
         #endregion
 
-        #region public async Task<ActionResult<EntityCheck>> GetCheckBankAccountByNipAsync(string nip, string bankAccount)
+        #region public async Task<ActionResult<EntityCheck>> GetCheckBankAccountByRegonAsync(string regon, string bankAccount, DateTime? dateOfChecking)
         /// <summary>
         /// [Authorize(AuthenticationSchemes = "Bearer")]
         /// [HttpGet("CheckBankAccountByRegon/{regon}/{bankAccount}")]
@@ -673,21 +732,30 @@ namespace WebApplicationNetCoreDev.Controllers.ApiWykazuPodatnikowVatDataControl
         /// Numer rachunku bankowego (26 znaków) w formacie NRB (kkAAAAAAAABBBBBBBBBBBBBBBB)
         /// Bank account number (26 characters) in the format NRB (kkAAAAAAAABBBBBBBBBBBBBBBB)
         /// </param>
+        /// <param name="dateOfChecking">
+        /// Określ datę sprawdzenia danych w dniu jako DateTime lub brak (null - domyśnie data bieżąca)
+        /// Specify the date of checking the data on the date as DateTime or none (null - current date by default)
+        /// </param>
         /// <returns>
         /// Odpowiedź, czy dany rachunek jest przypisany do podmiotu jako EntityCheck
         /// Reply whether the account is assigned to the subject as EntityCheck
         /// </returns>
         // GET: api/SerwisRzeczypospolitejPolskiej/MinisterstwoFinansow/KrajowaAdministracjaSkarbowa/WykazPodatnikowVatApi/CheckBankAccountByRegonAsync/{regon}/{bankAccount}
         [Authorize(AuthenticationSchemes = "Bearer")]
-        [HttpGet("CheckBankAccountByRegonAsync/{regon}/{bankAccount}")]
-        public async Task<ActionResult<EntityCheck>> GetCheckBankAccountByRegonAsync(string regon, string bankAccount)
+        [HttpGet("CheckBankAccountByRegonAsync/{regon}/{bankAccount}/{dateOfChecking?}")]
+        public async Task<ActionResult<EntityCheck>> GetCheckBankAccountByRegonAsync(string regon, string bankAccount, DateTime? dateOfChecking)
         {
             try
             {
-                EntityCheck entityCheck = await ApiWykazuPodatnikowVatData.ApiWykazuPodatnikowVatData.ApiCheckBankAccountByRegonAsync(regon, bankAccount);
-                if (null != entityCheck)
+                Regex digitsOnly = new Regex(@"[^\d]");
+                regon = digitsOnly.Replace(regon, string.Empty);
+                if (null != regon && !string.IsNullOrWhiteSpace(regon) && (regon.Length == 9 || regon.Length == 14))
                 {
-                    return entityCheck;
+                    EntityCheck entityCheck = await apiWykazuPodatnikowVatData.ApiCheckBankAccountByRegonAsync(regon, bankAccount, dateOfChecking ?? DateTime.Now);
+                    if (null != entityCheck)
+                    {
+                        return entityCheck;
+                    }
                 }
             }
             catch (Exception e)
@@ -698,9 +766,9 @@ namespace WebApplicationNetCoreDev.Controllers.ApiWykazuPodatnikowVatDataControl
         }
         #endregion
 
-        #region public async Task<ActionResult<KendoGrid<List<EntityCheck>>>> GetCheckBankAccountByRegonKendoGirdAsync(string regon, string bankAccount)
+        #region public async Task<ActionResult<KendoGrid<List<EntityCheck>>>> GetCheckBankAccountByRegonKendoGirdAsync(string regon, string bankAccount, DateTime? dateOfChecking)
         /// <summary>
-        /// GET: api/SerwisRzeczypospolitejPolskiej/MinisterstwoFinansow/KrajowaAdministracjaSkarbowa/WykazPodatnikowVatApi/CheckBankAccountByRegonKendoGird/{regon}/{bankAccount}
+        /// GET: api/SerwisRzeczypospolitejPolskiej/MinisterstwoFinansow/KrajowaAdministracjaSkarbowa/WykazPodatnikowVatApi/CheckBankAccountByRegonKendoGird/{regon}/{bankAccount}/{dateOfChecking?}
         /// [Authorize(AuthenticationSchemes = "Cookies")]
         /// [HttpGet("CheckBankAccountByRegonKendoGird/{bankAccount}")]
         /// Sprawdź, czy dany rachunek jest przypisany do podmiotu według numeru NIP i numeru rachunku bankowego NRB
@@ -714,25 +782,34 @@ namespace WebApplicationNetCoreDev.Controllers.ApiWykazuPodatnikowVatDataControl
         /// Numer rachunku bankowego (26 znaków) w formacie NRB (kkAAAAAAAABBBBBBBBBBBBBBBB)
         /// Bank account number (26 characters) in the format NRB (kkAAAAAAAABBBBBBBBBBBBBBBB)
         /// </param>
+        /// <param name="dateOfChecking">
+        /// Określ datę sprawdzenia danych w dniu jako DateTime lub brak (null - domyśnie data bieżąca)
+        /// Specify the date of checking the data on the date as DateTime or none (null - current date by default)
+        /// </param>
         /// <returns>
         /// Odpowiedź, czy dany rachunek jest przypisany do podmiotu jako EntityCheck
         /// Reply whether the account is assigned to the subject as EntityCheck
         /// </returns>
-        // GET: api/SerwisRzeczypospolitejPolskiej/MinisterstwoFinansow/KrajowaAdministracjaSkarbowa/WykazPodatnikowVatApi/CheckBankAccountByRegonKendoGird/{regon}/{bankAccount}
+        // GET: api/SerwisRzeczypospolitejPolskiej/MinisterstwoFinansow/KrajowaAdministracjaSkarbowa/WykazPodatnikowVatApi/CheckBankAccountByRegonKendoGird/{regon}/{bankAccount}/{dateOfChecking?}
         [Authorize(AuthenticationSchemes = "Cookies")]
-        [HttpGet("CheckBankAccountByRegonKendoGird/{regon}/{bankAccount}")]
-        public async Task<ActionResult<KendoGrid<List<EntityCheck>>>> GetCheckBankAccountByRegonKendoGirdAsync(string regon, string bankAccount)
+        [HttpGet("CheckBankAccountByRegonKendoGird/{regon}/{bankAccount}/{dateOfChecking?}")]
+        public async Task<ActionResult<KendoGrid<List<EntityCheck>>>> GetCheckBankAccountByRegonKendoGirdAsync(string regon, string bankAccount, DateTime? dateOfChecking)
         {
             try
             {
-                EntityCheck entityCheck = await ApiWykazuPodatnikowVatData.ApiWykazuPodatnikowVatData.ApiCheckBankAccountByRegonAsync(regon, bankAccount);
-                if (null != entityCheck)
+                Regex digitsOnly = new Regex(@"[^\d]");
+                regon = digitsOnly.Replace(regon, string.Empty);
+                if (null != regon && !string.IsNullOrWhiteSpace(regon) && (regon.Length == 9 || regon.Length == 14))
                 {
-                    return new KendoGrid<List<EntityCheck>>()
+                    EntityCheck entityCheck = await apiWykazuPodatnikowVatData.ApiCheckBankAccountByRegonAsync(regon, bankAccount, dateOfChecking ?? DateTime.Now);
+                    if (null != entityCheck)
                     {
-                        Total = 1,
-                        Data = new List<EntityCheck> { entityCheck }
-                    };
+                        return new KendoGrid<List<EntityCheck>>()
+                        {
+                            Total = 1,
+                            Data = new List<EntityCheck> { entityCheck }
+                        };
+                    }
                 }
             }
             catch (Exception e)
@@ -766,9 +843,9 @@ namespace WebApplicationNetCoreDev.Controllers.ApiWykazuPodatnikowVatDataControl
         // GET: api/SerwisRzeczypospolitejPolskiej/MinisterstwoFinansow/KrajowaAdministracjaSkarbowa/WykazPodatnikowVatApi/CheckBankAccountByRegon?regon={regon}&bankAccount={bankAccount}
         [Authorize(AuthenticationSchemes = "Bearer")]
         [HttpGet("CheckBankAccountByRegon")]
-        public async Task<ActionResult<EntityCheck>> GetCheckBankAccountByRegonFromQueryAsync([FromQuery] string regon, [FromQuery] string bankAccount)
+        public async Task<ActionResult<EntityCheck>> GetCheckBankAccountByRegonFromQueryAsync([FromQuery] string regon, [FromQuery] string bankAccount, [FromQuery] DateTime? dateOfChecking)
         {
-            return await GetCheckBankAccountByRegonAsync(regon, bankAccount);
+            return await GetCheckBankAccountByRegonAsync(regon, bankAccount, dateOfChecking ?? DateTime.Now);
         }
         #endregion
     }

@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Linq;
+using PortalApiGusApiRegonData;
 //using ApiWykazuPodatnikowVatData;
 
 namespace TestConsoleApp
@@ -13,22 +14,29 @@ namespace TestConsoleApp
         private static async System.Threading.Tasks.Task Main(string[] args)
         {
 
+            //ApiWykazuPodatnikowVatData.Data.ApiWykazuPodatnikowVatDataDbContext context = await NetAppCommon.DatabaseMssql.CreateInstancesForDatabaseContextClassAsync<ApiWykazuPodatnikowVatData.Data.ApiWykazuPodatnikowVatDataDbContext>();
+            //await context.CheckForUpdateAndMigrateAsync();
+
+            await TestApiWykazuPodatnikowVatData.TestApiWykazuPodatnikowVatDataAsync();
+
+            //await DaneSzukajPodmioty.DaneSzukajPodmiotyAsyncByKrs("b65986a6300044a0b7fb", krs: "0000349095");
+
             //IUIntegrationSystemData.Data.IUIntegrationSystemDataDbContext context = await NetAppCommon.DatabaseMssql.CreateInstancesForDatabaseContextClassAsync<IUIntegrationSystemData.Data.IUIntegrationSystemDataDbContext>();
 
             //await context.CheckForUpdateAndMigrateAsync();
 
-            List<IUIntegrationSystemData.Models.InvoiceFromIcasaCsv> invoiceFromIcasaCsvList = (List<IUIntegrationSystemData.Models.InvoiceFromIcasaCsv>)await IUIntegrationSystemData.InvoiceFromIcasaCsvData.GetInstance().ImportCsvFileAsync(@"e:\export.csv");
+            //List<IUIntegrationSystemData.Models.InvoiceFromIcasaCsv> invoiceFromIcasaCsvList = (List<IUIntegrationSystemData.Models.InvoiceFromIcasaCsv>)await IUIntegrationSystemData.InvoiceFromIcasaCsvData.GetInstance().ImportCsvFileAsync(@"e:\export.csv");
 
-            Console.WriteLine(invoiceFromIcasaCsvList.Count);
+            //Console.WriteLine(invoiceFromIcasaCsvList.Count);
 
-            foreach (IUIntegrationSystemData.Models.InvoiceFromIcasaCsv invoiceFromIcasaCsv in invoiceFromIcasaCsvList)
-            {
-                Console.WriteLine(invoiceFromIcasaCsv.Id);
-                //Console.WriteLine(invoiceFromIcasaCsv.Exception.Message);
-            }
+            //foreach (IUIntegrationSystemData.Models.InvoiceFromIcasaCsv invoiceFromIcasaCsv in invoiceFromIcasaCsvList)
+            //{
+            //    Console.WriteLine(invoiceFromIcasaCsv.Id);
+            //    //Console.WriteLine(invoiceFromIcasaCsv.Exception.Message);
+            //}
 
-            Console.WriteLine("Done");
-            Console.Read();
+            //Console.WriteLine("Done");
+            //Console.Read();
 
             //PortalApiGusApiRegonData.Data.PortalApiGusApiRegonDataDbContext portalApiGusApiRegonDataDbContext = NE
 

@@ -83,6 +83,9 @@
                     <div class="col-sm-12 col-md-6 col-lg-3 col-xl-2 mt-n4">
                         @(Html.Kendo().MaskedTextBox().Name("checkBankAccountByNipAccountNumber").Mask("00000000000000000000000000").Label(l => l.Content("Numer rachunku bankowego NRB (26 cyfr)").Floating(true)).ToClientTemplate())
                     </div>
+                    <div class="col-sm-12 col-md-6 col-lg-3 col-xl-2">
+                        @(Html.Kendo().DatePicker().Name("checkBankAccountByNipDateOfChecking").Value(DateTime.Now).Format("yyyy-MM-dd").HtmlAttributes(new { style = "width: 100%", title = "Wybierz datę sprawdzenia danych" }).ToClientTemplate())
+                    </div>
                     <div class="col-sm-12 col-md-6 col-lg-3 col-xl-6 p-sm-15 p-md-15">
                         <a href="javascript:void(0)" class="k-search k-link k-button k-button-search check-bank-account-by-nip" title="Sprawdź"><span class="k-icon k-i-check"></span>Sprawdź</a>
                         <a href="javascript:void(0)" class="k-pager-refresh k-link k-button k-button-icon" title="Odśwież widok"><span class="k-icon k-i-reload"></span></a>
@@ -99,6 +102,9 @@
                     </div>
                     <div class="col-sm-12 col-md-6 col-lg-3 col-xl-2 mt-n4">
                         @(Html.Kendo().MaskedTextBox().Name("checkBankAccountByRegonAccountNumber").Mask("00000000000000000000000000").Label(l => l.Content("Numer rachunku bankowego NRB (26 cyfr)").Floating(true)).ToClientTemplate())
+                    </div>
+                    <div class="col-sm-12 col-md-6 col-lg-3 col-xl-2">
+                        @(Html.Kendo().DatePicker().Name("checkBankAccountByRegonDateOfChecking").Value(DateTime.Now).Format("yyyy-MM-dd").HtmlAttributes(new { style = "width: 100%", title = "Wybierz datę sprawdzenia danych" }).ToClientTemplate())
                     </div>
                     <div class="col-sm-12 col-md-6 col-lg-3 col-xl-6 p-sm-15 p-md-15">
                         <a href="javascript:void(0)" class="k-search k-link k-button k-button-search check-bank-account-by-regon" title="Sprawdź"><span class="k-icon k-i-check"></span>Sprawdź</a>
@@ -122,10 +128,10 @@
                     e.preventDefault();
                     gridDataSource.read();
                 }).on("click", ".check-bank-account-by-nip", function (e) {
-                    if (parseInt($("#checkBankAccountByNipNip").val(), 10) > 0 && $("#checkBankAccountByNipAccountNumber").val().length == 26) {
+                    if (Date.parse($("#checkBankAccountByNipDateOfChecking").val()) && parseInt($("#checkBankAccountByNipNip").val(), 10) > 0 && $("#checkBankAccountByNipAccountNumber").val().length == 26) {
                         e.preventDefault($("#checkBankAccountByNipNip").val(), $("#checkBankAccountByNipAccountNumber").val());
                         var url = gridDataSource.transport.options.read.url;
-                        gridDataSource.transport.options.read.url = "/api/SerwisRzeczypospolitejPolskiej/MinisterstwoFinansow/KrajowaAdministracjaSkarbowa/WykazPodatnikowVatApi/CheckBankAccountByNipKendoGird/" + $("#checkBankAccountByNipNip").val() + "/" + $("#checkBankAccountByNipAccountNumber").val();
+                        gridDataSource.transport.options.read.url = "/api/SerwisRzeczypospolitejPolskiej/MinisterstwoFinansow/KrajowaAdministracjaSkarbowa/WykazPodatnikowVatApi/CheckBankAccountByNipKendoGird/" + $("#checkBankAccountByNipNip").val() + "/" + $("#checkBankAccountByNipAccountNumber").val() + "/" + $("#checkBankAccountByNipDateOfChecking").val();
                         gridDataSource.read();
                         gridDataSource.transport.options.read.url = url;
                     }
@@ -133,7 +139,7 @@
                         $(function () {
                             $.toast({
                                 heading: 'Popraw dane!',
-                                text: 'Wpisz poprawny numer NIP i poprawny numer rachunku bankowego NRB!',
+                                text: 'Wybierz datę, wpisz poprawny numer NIP i poprawny numer rachunku bankowego NRB!',
                                 position: 'top-center',
                                 loaderBg: '#ff6849',
                                 icon: 'error',
@@ -143,10 +149,10 @@
                         });
                     }
                 }).on("click", ".check-bank-account-by-regon", function (e) {
-                    if (parseInt($("#checkBankAccountByRegonRegon").val(), 10) > 0 && $("#checkBankAccountByRegonAccountNumber").val().length == 26) {
+                    if (Date.parse($("#checkBankAccountByRegonDateOfChecking").val()) && parseInt($("#checkBankAccountByRegonRegon").val(), 10) > 0 && $("#checkBankAccountByRegonAccountNumber").val().length == 26) {
                         e.preventDefault($("#checkBankAccountByRegonRegon").val(), $("#checkBankAccountByRegonAccountNumber").val());
                         var url = gridDataSource.transport.options.read.url;
-                        gridDataSource.transport.options.read.url = "/api/SerwisRzeczypospolitejPolskiej/MinisterstwoFinansow/KrajowaAdministracjaSkarbowa/WykazPodatnikowVatApi/CheckBankAccountByRegonKendoGird/" + $("#checkBankAccountByRegonRegon").val() + "/" + $("#checkBankAccountByRegonAccountNumber").val();
+                        gridDataSource.transport.options.read.url = "/api/SerwisRzeczypospolitejPolskiej/MinisterstwoFinansow/KrajowaAdministracjaSkarbowa/WykazPodatnikowVatApi/CheckBankAccountByRegonKendoGird/" + $("#checkBankAccountByRegonRegon").val() + "/" + $("#checkBankAccountByRegonAccountNumber").val() + "/" + $("#checkBankAccountByRegonDateOfChecking").val();
                         gridDataSource.read();
                         gridDataSource.transport.options.read.url = url;
                     }
@@ -154,7 +160,7 @@
                         $(function () {
                             $.toast({
                                 heading: 'Popraw dane!',
-                                text: 'Wpisz poprawny numer REGON i poprawny numer rachunku bankowego NRB!',
+                                text: 'Wybierz datę, wpisz poprawny numer REGON i poprawny numer rachunku bankowego NRB!',
                                 position: 'top-center',
                                 loaderBg: '#ff6849',
                                 icon: 'error',
