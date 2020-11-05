@@ -8,9 +8,7 @@
 @{ string gridDataSource = string.Format("{0}DataSource", gridName); }
 @{ string gridToolbarTemplate = string.Format("{0}GridToolbarTemplate", gridName); }
 @{ string gridActionApiUrl = string.Format("{0}", "/api/SerwisRzeczypospolitejPolskiej/MinisterstwoFinansow/KrajowaAdministracjaSkarbowa/WykazPodatnikowVatApi/EntityKendoGrid"); }
-
 @{ string windowName = string.Format("{0}Window", gridName); }
-
 @{ ViewData["Title"] = "Ministerstwo Finansów - Wykaz podatników VAT"; }
 @{ Layout = "~/Views/Shared/_LayoutAdmin.cshtml"; }
 
@@ -45,12 +43,15 @@
                 .ServerOperation(true)
                 .Read(read => read.Url(gridActionApiUrl).Type(HttpVerbs.Get)
             )))
+
         @(Html.Kendo().Grid<ApiWykazuPodatnikowVatData.Models.Entity>()
             .Name(gridName)
             .Columns(
             columns =>
             {
-                //columns.Bound(c => c.Id).Filterable(false);
+                columns.Bound(c => c.Id).Filterable(false);
+                columns.Bound(c => c.RequestAndResponseHistory.Id).Filterable(false);
+                columns.Bound(c => c.RequestAndResponseHistory.RequestId).Filterable(false);
                 columns.Bound(c => c.DateOfChecking).Format("{0:dd-MM-yyyy}").Filterable(false);
                 columns.Bound(c => c.DateOfCreate).Format("{0:dd-MM-yyyy HH:mm:ss}").Filterable(false);
                 columns.Bound(c => c.DateOfModification).Format("{0:dd-MM-yyyy HH:mm:ss}").Filterable(false);
@@ -92,18 +93,19 @@
             .DataSource(gridDataSource))
 
     </div>
+
 </div>
 
 @(Html.Kendo().Window()
     .Name(windowName)
-    .Title("About")
-    .Content(@<text>About</text>)
+    .Title("")
+    .Content(@<text></text>)
     .Draggable()
     .Resizable()
     .Width(1024)
     .Visible(false)
     .Actions(actions => actions.Pin().Minimize().Maximize().Close())
-    .Events(ev => ev.Close("onClose")))
+    .Events(e => e.Close("onClose").Open("onOpen")))
 
 @Html.Script(
 
@@ -140,77 +142,80 @@
     @<script type="text/javascript">
 
         function onChangeGridWidget(e) {
-            console.log(e);
-        $("#@windowName").data("kendoWindow").close();
-        var currentDataItem = e.sender.dataItem(this.select());
-        $("#@windowName")
-            .data("kendoWindow")
-            .open()
-            .content("<div class='p-3'>" + JSON.stringify(currentDataItem ) + "</div>")
-            .title("Sczegóły " + currentDataItem.Id)
-            .refresh()
-            .center();
-    }
+            $("#@windowName").data("kendoWindow").close();
+            var currentDataItem = e.sender.dataItem(this.select());
+            $("#@windowName").data("kendoWindow")
+                .open()
+                .content("<div class='p-3'><pre id='json-renderer'></pre></div>")
+                .refresh()
+                .title("Sczegóły " + currentDataItem.Id)
+                .center()
+                .setOptions({ width: $(document).width() * 0.62, height: $(document).height() * 0.62, position: { left: ($(document).width() * 0.38) / 2, top: ($(document).height() * 0.38) / 2 } });
+            $('#json-renderer').jsonViewer(JSON.parse(JSON.stringify(currentDataItem)));
+        }
 
-    function onClose() {
-    }
+        function onClose() {
+        }
 
-$(function () {
-    try {
-        var grid = $("#@gridName");
-        var gridDataSource = @gridDataSource;
-        var gridWidget = grid.data("kendoGrid");
+        function onOpen() {
+        }
 
-        gridWidget.wrapper.height($(".page-wrapper").first().height() * 0.9);
-        gridWidget.resize();
-        gridWidget.resize(true);
+    $(function () {
+        try {
+            var grid = $("#@gridName");
+            var gridDataSource = @gridDataSource;
+            var gridWidget = grid.data("kendoGrid");
 
-        grid.find(".k-grid-toolbar").on("click", ".k-pager-refresh", function (e) {
-            e.preventDefault();
-            gridDataSource.read();
-        }).on("click", ".k-search", function (e) {
-            if (Date.parse($("#dateOfChecking").val()) && parseInt($("#findByRegon").val(), 10) > 0 || parseInt($("#findByNip").val(), 10) > 0 || $("#findByBankAccount").val().length == 26) {
-                e.preventDefault($("#findByRegon").val(), $("#findByNip").val(), $("#findByBankAccount").val());
-                var url = gridDataSource.transport.options.read.url;
-                if (parseInt($("#findByNip").val(), 10) > 0) {
-                    gridDataSource.transport.options.read.url = "/api/SerwisRzeczypospolitejPolskiej/MinisterstwoFinansow/KrajowaAdministracjaSkarbowa/WykazPodatnikowVatApi/FindByNipKendoGird/" + $("#findByNip").val() + "/" + $("#dateOfChecking").val() ;
-                }
-                else if (parseInt($("#findByRegon").val(), 10) > 0) {
-                    gridDataSource.transport.options.read.url = "/api/SerwisRzeczypospolitejPolskiej/MinisterstwoFinansow/KrajowaAdministracjaSkarbowa/WykazPodatnikowVatApi/FindByRegonKendoGird/" + $("#findByRegon").val() + "/" + $("#dateOfChecking").val();
-                }
-                else if ($("#findByBankAccount").val().length == 26) {
-                    gridDataSource.transport.options.read.url = "/api/SerwisRzeczypospolitejPolskiej/MinisterstwoFinansow/KrajowaAdministracjaSkarbowa/WykazPodatnikowVatApi/FindByBankAccountKendoGird/" + $("#findByBankAccount").val() + "/" + $("#dateOfChecking").val();
-                }
+            gridWidget.wrapper.height($(".page-wrapper").first().height() * 0.9);
+            gridWidget.resize();
+            gridWidget.resize(true);
+
+            grid.find(".k-grid-toolbar").on("click", ".k-pager-refresh", function (e) {
+                e.preventDefault();
                 gridDataSource.read();
-                gridDataSource.transport.options.read.url = url;
-            }
-            else {
-                $(function () {
-                    $.toast({
-                        heading: 'Popraw dane!',
-                        text: 'Wybierz datę, wpisz poprawny numer NIP lub REGON lub Numer rachunku bankowego NRB!',
-                        position: 'top-center',
-                        loaderBg: '#ff6849',
-                        icon: 'error',
-                        hideAfter: 7000,
-                        stack: 7
+            }).on("click", ".k-search", function (e) {
+                if (Date.parse($("#dateOfChecking").val()) && parseInt($("#findByRegon").val(), 10) > 0 || parseInt($("#findByNip").val(), 10) > 0 || $("#findByBankAccount").val().length == 26) {
+                    e.preventDefault($("#findByRegon").val(), $("#findByNip").val(), $("#findByBankAccount").val());
+                    var url = gridDataSource.transport.options.read.url;
+                    if (parseInt($("#findByNip").val(), 10) > 0) {
+                        gridDataSource.transport.options.read.url = "/api/SerwisRzeczypospolitejPolskiej/MinisterstwoFinansow/KrajowaAdministracjaSkarbowa/WykazPodatnikowVatApi/FindByNipKendoGrid/" + $("#findByNip").val() + "/" + $("#dateOfChecking").val() ;
+                    }
+                    else if (parseInt($("#findByRegon").val(), 10) > 0) {
+                        gridDataSource.transport.options.read.url = "/api/SerwisRzeczypospolitejPolskiej/MinisterstwoFinansow/KrajowaAdministracjaSkarbowa/WykazPodatnikowVatApi/FindByRegonKendoGrid/" + $("#findByRegon").val() + "/" + $("#dateOfChecking").val();
+                    }
+                    else if ($("#findByBankAccount").val().length == 26) {
+                        gridDataSource.transport.options.read.url = "/api/SerwisRzeczypospolitejPolskiej/MinisterstwoFinansow/KrajowaAdministracjaSkarbowa/WykazPodatnikowVatApi/FindByBankAccountKendoGrid/" + $("#findByBankAccount").val() + "/" + $("#dateOfChecking").val();
+                    }
+                    gridDataSource.read();
+                    gridDataSource.transport.options.read.url = url;
+                }
+                else {
+                    $(function () {
+                        $.toast({
+                            heading: 'Popraw dane!',
+                            text: 'Wybierz datę, wpisz poprawny numer NIP lub REGON lub Numer rachunku bankowego NRB!',
+                            position: 'top-center',
+                            loaderBg: '#ff6849',
+                            icon: 'error',
+                            hideAfter: 7000,
+                            stack: 7
+                        });
+                    });
+                }
+            }).find("input.k-textbox").each(function (i, currentElement) {
+                $(this).change(function (e) {
+                    e.preventDefault();
+                    grid.find(".k-grid-toolbar").find("input.k-textbox").each(function (j, findElement) {
+                        if (currentElement.id != findElement.id && currentElement.id !="dateOfChecking") {
+                            $(findElement).val("");
+                        }
                     });
                 });
-            }
-        }).find("input.k-textbox").each(function (i, currentElement) {
-            $(this).change(function (e) {
-                e.preventDefault();
-                grid.find(".k-grid-toolbar").find("input.k-textbox").each(function (j, findElement) {
-                    if (currentElement.id != findElement.id && currentElement.id !="dateOfChecking") {
-                        $(findElement).val("");
-                    }
-                });
             });
-        });
-    }
-    catch (e) {
-        console.log(e);
-    }
-});
+        }
+        catch (e) {
+            console.log(e);
+        }
+    });
 
-    </script>)
+</script>)

@@ -47,6 +47,7 @@ namespace WebApplicationNetCoreDev
                 services.AddDbContext<ApiWykazuPodatnikowVatData.Data.ApiWykazuPodatnikowVatDataDbContext>(options => options.UseSqlServer(apiWykazuPodatnikowVatDataAppSettings.GetConnectionString()));
             }
             catch (Exception e) { }
+#if DEBUG
             try
             {
                 ///Kontekst bazy danych IUIntegrationSystemData
@@ -54,6 +55,7 @@ namespace WebApplicationNetCoreDev
                 services.AddDbContext<IUIntegrationSystemData.Data.IUIntegrationSystemDataDbContext>(options => options.UseSqlServer(iUIntegrationSystemDataAppSettings.GetConnectionString()));
             }
             catch (Exception e) { }
+#endif
 
             //To do
             //services.AddDbContextPool<PortalApiGusApiRegonData.Data.PortalApiGusApiRegonDataDbContext>(options => options.UseSqlServer(PortalApiGusApiRegonData.PortalApiGusApiRegonDataContext.GetConnectionString()));
@@ -172,12 +174,14 @@ namespace WebApplicationNetCoreDev
                 await NetAppCommon.Helpers.EntityContextHelper.RunMigrationAsync<ApiWykazuPodatnikowVatData.Data.ApiWykazuPodatnikowVatDataDbContext>(app.ApplicationServices).ConfigureAwait(false);
             }
             catch (Exception e) { }
+#if DEBUG
             try
             {
                 ///Migracja danych IUIntegrationSystemData
                 await NetAppCommon.Helpers.EntityContextHelper.RunMigrationAsync<IUIntegrationSystemData.Data.IUIntegrationSystemDataDbContext>(app.ApplicationServices).ConfigureAwait(false);
             }
             catch(Exception e) { }
+#endif
         }
     }
 }

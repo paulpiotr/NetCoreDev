@@ -84,11 +84,11 @@ namespace WebApplicationNetCoreDev.Controllers.PortalApiGusApiRegonDataControler
         }
         #endregion
 
-        #region public async Task<ActionResult<KendoGrid<List<ControllerRoutingActions>>>> GetRouteKendoGirdAsync()
+        #region public async Task<ActionResult<KendoGrid<List<ControllerRoutingActions>>>> GetRouteKendoGridAsync()
         /// <summary>
         /// [Authorize(AuthenticationSchemes = "Cookies")]
-        /// [HttpGet("RouteKendoGird")]
-        /// GET: api/PortalApiGus/DaneSzukajPodmiotyApi/RouteKendoGird
+        /// [HttpGet("RouteKendoGrid")]
+        /// GET: api/PortalApiGus/DaneSzukajPodmiotyApi/RouteKendoGrid
         /// Pobierz listę akcji (tras) dostępnych dla kontrolera i zwróć listę dla widoku KendoGrid
         /// Get the list of actions (routes) available for the controller and return the list for the Kendo view
         /// </summary>
@@ -96,10 +96,10 @@ namespace WebApplicationNetCoreDev.Controllers.PortalApiGusApiRegonDataControler
         /// Lista dostępnych tras routingu jako List dla KendoGrid
         /// List of available routing routes as List for KendoGrid
         /// </returns>
-        // GET: api/PortalApiGus/DaneSzukajPodmiotyApi/RouteKendoGird
+        // GET: api/PortalApiGus/DaneSzukajPodmiotyApi/RouteKendoGrid
         [Authorize(AuthenticationSchemes = "Cookies")]
-        [HttpGet("RouteKendoGird")]
-        public async Task<ActionResult<KendoGrid<List<ControllerRoutingActions>>>> GetRouteKendoGirdAsync()
+        [HttpGet("RouteKendoGrid")]
+        public async Task<ActionResult<KendoGrid<List<ControllerRoutingActions>>>> GetRouteKendoGridAsync()
         {
             try
             {

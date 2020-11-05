@@ -1,5 +1,6 @@
 ﻿using ApiWykazuPodatnikowVatData.Data;
 using ApiWykazuPodatnikowVatData.Models;
+using Kendo.Mvc.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
@@ -7,9 +8,11 @@ using Microsoft.EntityFrameworkCore;
 using NetAppCommon.Models;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using Z.EntityFramework.Plus;
 
 namespace WebApplicationNetCoreDev.Controllers.ApiWykazuPodatnikowVatDataController
 {
@@ -45,7 +48,13 @@ namespace WebApplicationNetCoreDev.Controllers.ApiWykazuPodatnikowVatDataControl
         private readonly IActionDescriptorCollectionProvider actionDescriptorCollectionProvider;
         #endregion
 
+        #region private readonly ApiWykazuPodatnikowVatData.ApiWykazuPodatnikowVatData apiWykazuPodatnikowVatData;
+        /// <summary>
+        /// Obiekt instancji ApiWykazuPodatnikowVatData.ApiWykazuPodatnikowVatData
+        /// Instance object of the ApiWykazuPodatnikowVatData.ApiWykazuPodatnikowVatData
+        /// </summary>
         private readonly ApiWykazuPodatnikowVatData.ApiWykazuPodatnikowVatData apiWykazuPodatnikowVatData;
+        #endregion
 
         #region public WykazPodatnikowVatApiController...
         /// <summary>
@@ -109,7 +118,7 @@ namespace WebApplicationNetCoreDev.Controllers.ApiWykazuPodatnikowVatDataControl
         {
             try
             {
-                List<Entity> entityList = await apiWykazuPodatnikowVatDataDbContext.Entity.Include(i => i.EntityAccountNumber).ToListAsync();
+                List<Entity> entityList = await apiWykazuPodatnikowVatDataDbContext.Entity.IncludeOptimized(w => w.EntityAccountNumber).IncludeOptimized(w => w.AuthorizedClerk).IncludeOptimized(w => w.Partner).IncludeOptimized(w => w.Representative).IncludeOptimized(w => w.RequestAndResponseHistory).IncludeOptimized(w => w.RequestAndResponseHistory).ToListAsync();
                 if (null != entityList && entityList.Count > 0)
                 {
                     return new KendoGrid<List<Entity>> { Total = entityList.Count, Data = entityList };
@@ -164,10 +173,65 @@ namespace WebApplicationNetCoreDev.Controllers.ApiWykazuPodatnikowVatDataControl
         {
             try
             {
-                List<EntityCheck> entityCheckList = await apiWykazuPodatnikowVatDataDbContext.EntityCheck.ToListAsync();
+                List<EntityCheck> entityCheckList = await apiWykazuPodatnikowVatDataDbContext.EntityCheck.IncludeOptimized(w => w.RequestAndResponseHistory).ToListAsync();
                 if (null != entityCheckList && entityCheckList.Count > 0)
                 {
                     return new KendoGrid<List<EntityCheck>> { Total = entityCheckList.Count, Data = entityCheckList };
+                }
+            }
+            catch (Exception e)
+            {
+                log4net.Error(string.Format("{0}, {1}", e.Message, e.StackTrace), e);
+            }
+            return NotFound();
+        }
+        #endregion
+
+        #region public async Task<ActionResult<object>> GetRequestAndResponseHistoryKendoGridAsync
+        /// Get: api/SerwisRzeczypospolitejPolskiej/MinisterstwoFinansow/KrajowaAdministracjaSkarbowa/WykazPodatnikowVatApi/KendoGrid?sort=&page=1&pageSize=100&group=&filter=
+        /// <summary>
+        /// Pobierz dane sprawdzonych podmiotów z bazy danych
+        /// Get data of found entities from the database
+        /// [Authorize(AuthenticationSchemes = "Cookies")]
+        /// [HttpGet("KendoGrid")]
+        /// Get: api/SerwisRzeczypospolitejPolskiej/MinisterstwoFinansow/KrajowaAdministracjaSkarbowa/WykazPodatnikowVatApi/KendoGrid?sort=&page=1&pageSize=100&group=&filter=
+        /// </summary>
+        /// <param name="sort">
+        /// Parametr Kendo Grid sort jako string lub null
+        /// Kendo Grid sort parameter as string or null
+        /// </param>
+        /// <param name="page">
+        /// Parametr Kendo Grid page AS int lub null
+        /// Kendo Grid page AS int or null
+        /// </param>
+        /// <param name="pageSize">
+        /// Parametr Kendo Grid pageSize AS int lub null
+        /// Kendo Grid pageSize AS int or null
+        /// </param>
+        /// <param name="group">
+        /// Parametr Kendo Grid group jako string lub null
+        /// Kendo Grid group parameter as string or null
+        /// </param>
+        /// <param name="filter">
+        /// Parametr Kendo Grid filter jako string lub null
+        /// Kendo Grid filter parameter as string or null
+        /// </param>
+        /// <returns>
+        /// NetAppCommon.Models.KendoGrid
+        /// object { Total = Ilość rekordów jako int, Data = Wyszukane dane jako lista obiektów ApiWykazuPodatnikowVatData.Models.RequestAndResponseHistory } jako Json dla Kendo Grid
+        /// object { Total = Number of records as int, Data = Data retrieved as a list of ApiWykazuPodatnikowVatData.Models.RequestAndResponseHistory } as Json for Kendo Grid
+        /// </returns>
+        // Get: api/SerwisRzeczypospolitejPolskiej/MinisterstwoFinansow/KrajowaAdministracjaSkarbowa/WykazPodatnikowVatApi/KendoGrid?sort=&page=1&pageSize=100&group=&filter=
+        [Authorize(AuthenticationSchemes = "Cookies")]
+        [HttpGet("RequestAndResponseHistoryKendoGrid")]
+        public async Task<ActionResult<KendoGrid<List<RequestAndResponseHistory>>>> GetRequestAndResponseHistoryKendoGridAsync([FromQuery] string sort = null, [FromQuery] int? page = null, [FromQuery] int? pageSize = null, [FromQuery] string group = null, [FromQuery] string filter = null)
+        {
+            try
+            {
+                List<RequestAndResponseHistory> RequestAndResponseHistoryList = await apiWykazuPodatnikowVatDataDbContext.RequestAndResponseHistory.IncludeOptimized(w => w.Entity).IncludeOptimized(w => w.EntityCheck).ToListAsync();
+                if (null != RequestAndResponseHistoryList && RequestAndResponseHistoryList.Count > 0)
+                {
+                    return new KendoGrid<List<RequestAndResponseHistory>> { Total = RequestAndResponseHistoryList.Count, Data = RequestAndResponseHistoryList };
                 }
             }
             catch (Exception e)
@@ -209,9 +273,9 @@ namespace WebApplicationNetCoreDev.Controllers.ApiWykazuPodatnikowVatDataControl
         }
         #endregion
 
-        #region public async Task<ActionResult<KendoGrid<List<ControllerRoutingActions>>>> GetRouteKendoGirdAsync()
+        #region public async Task<ActionResult<KendoGrid<List<ControllerRoutingActions>>>> GetRouteKendoGridAsync()
         /// <summary>
-        /// GET: api/SerwisRzeczypospolitejPolskiej/MinisterstwoFinansow/KrajowaAdministracjaSkarbowa/WykazPodatnikowVatApi/RouteKendoGird
+        /// GET: api/SerwisRzeczypospolitejPolskiej/MinisterstwoFinansow/KrajowaAdministracjaSkarbowa/WykazPodatnikowVatApi/RouteKendoGrid
         /// Pobierz listę akcji (tras) dostępnych dla kontrolera i zwróć listę dla widoku Kendo
         /// Get the list of actions (routes) available for the controller and return the list for the Kendo view
         /// </summary>
@@ -219,10 +283,10 @@ namespace WebApplicationNetCoreDev.Controllers.ApiWykazuPodatnikowVatDataControl
         /// Lista dostępnych tras routingu jako List dla KendoGrid
         /// List of available routing routes as List for KendoGrid
         /// </returns>
-        // GET: api/SerwisRzeczypospolitejPolskiej/MinisterstwoFinansow/KrajowaAdministracjaSkarbowa/WykazPodatnikowVatApi/RouteKendoGird
+        // GET: api/SerwisRzeczypospolitejPolskiej/MinisterstwoFinansow/KrajowaAdministracjaSkarbowa/WykazPodatnikowVatApi/RouteKendoGrid
         [Authorize(AuthenticationSchemes = "Cookies")]
-        [HttpGet("RouteKendoGird")]
-        public async Task<ActionResult<KendoGrid<List<ControllerRoutingActions>>>> GetRouteKendoGirdAsync()
+        [HttpGet("RouteKendoGrid")]
+        public async Task<ActionResult<KendoGrid<List<ControllerRoutingActions>>>> GetRouteKendoGridAsync()
         {
             try
             {
@@ -310,9 +374,9 @@ namespace WebApplicationNetCoreDev.Controllers.ApiWykazuPodatnikowVatDataControl
         }
         #endregion
 
-        #region public async Task<ActionResult<KendoGrid<List<Entity>>>> GetFindByNipKendoGirdAsync(string nip, DateTime? dateOfChecking)
+        #region public async Task<ActionResult<KendoGrid<List<Entity>>>> GetFindByNipKendoGridAsync(string nip, DateTime? dateOfChecking)
         /// <summary>
-        /// GET: api/SerwisRzeczypospolitejPolskiej/MinisterstwoFinansow/KrajowaAdministracjaSkarbowa/WykazPodatnikowVatApi/FindByNipKendoGird/{nip}
+        /// GET: api/SerwisRzeczypospolitejPolskiej/MinisterstwoFinansow/KrajowaAdministracjaSkarbowa/WykazPodatnikowVatApi/FindByNipKendoGrid/{nip}
         /// Wyszukaj podmioty według numeru NIP dla widoku KendoGrid
         /// Search entities by tax identification number NIP for the KendoGrid view
         /// </summary>
@@ -328,10 +392,10 @@ namespace WebApplicationNetCoreDev.Controllers.ApiWykazuPodatnikowVatDataControl
         /// Lista znalezionych podmiotów dla widoku KendoGrid
         /// List of entities found for the KendoGrid view
         /// </returns>
-        // GET: api/SerwisRzeczypospolitejPolskiej/MinisterstwoFinansow/KrajowaAdministracjaSkarbowa/WykazPodatnikowVatApi/FindByNipKendoGird/{nip}
+        // GET: api/SerwisRzeczypospolitejPolskiej/MinisterstwoFinansow/KrajowaAdministracjaSkarbowa/WykazPodatnikowVatApi/FindByNipKendoGrid/{nip}
         [Authorize(AuthenticationSchemes = "Cookies")]
-        [HttpGet("FindByNipKendoGird/{nip}/{dateOfChecking?}")]
-        public async Task<ActionResult<KendoGrid<List<Entity>>>> GetFindByNipKendoGirdAsync(string nip, DateTime? dateOfChecking)
+        [HttpGet("FindByNipKendoGrid/{nip}/{dateOfChecking?}")]
+        public async Task<ActionResult<KendoGrid<List<Entity>>>> GetFindByNipKendoGridAsync(string nip, DateTime? dateOfChecking)
         {
             try
             {
@@ -428,9 +492,9 @@ namespace WebApplicationNetCoreDev.Controllers.ApiWykazuPodatnikowVatDataControl
         }
         #endregion
 
-        #region public async Task<ActionResult<KendoGrid<List<Entity>>>> GetFindByRegonKendoGirdAsync(string regon, DateTime? dateOfChecking)
+        #region public async Task<ActionResult<KendoGrid<List<Entity>>>> GetFindByRegonKendoGridAsync(string regon, DateTime? dateOfChecking)
         /// <summary>
-        /// GET: api/SerwisRzeczypospolitejPolskiej/MinisterstwoFinansow/KrajowaAdministracjaSkarbowa/WykazPodatnikowVatApi/FindByRegonKendoGird/{regon}
+        /// GET: api/SerwisRzeczypospolitejPolskiej/MinisterstwoFinansow/KrajowaAdministracjaSkarbowa/WykazPodatnikowVatApi/FindByRegonKendoGrid/{regon}
         /// Wyszukaj podmioty według numeru REGON dla widoku KendoGrid
         /// Search entities by REGON number for the KendoGrid view
         /// </summary>
@@ -446,10 +510,10 @@ namespace WebApplicationNetCoreDev.Controllers.ApiWykazuPodatnikowVatDataControl
         /// Lista znalezionych podmiotów dla widoku KendoGrid
         /// List of entities found for the KendoGrid view
         /// </returns>
-        // GET: api/SerwisRzeczypospolitejPolskiej/MinisterstwoFinansow/KrajowaAdministracjaSkarbowa/WykazPodatnikowVatApi/FindByRegonKendoGird/{regon}
+        // GET: api/SerwisRzeczypospolitejPolskiej/MinisterstwoFinansow/KrajowaAdministracjaSkarbowa/WykazPodatnikowVatApi/FindByRegonKendoGrid/{regon}
         [Authorize(AuthenticationSchemes = "Cookies")]
-        [HttpGet("FindByRegonKendoGird/{regon}/{dateOfChecking?}")]
-        public async Task<ActionResult<KendoGrid<List<Entity>>>> GetFindByRegonKendoGirdAsync(string regon, DateTime? dateOfChecking)
+        [HttpGet("FindByRegonKendoGrid/{regon}/{dateOfChecking?}")]
+        public async Task<ActionResult<KendoGrid<List<Entity>>>> GetFindByRegonKendoGridAsync(string regon, DateTime? dateOfChecking)
         {
             try
             {
@@ -546,9 +610,9 @@ namespace WebApplicationNetCoreDev.Controllers.ApiWykazuPodatnikowVatDataControl
         }
         #endregion
 
-        #region public async Task<ActionResult<KendoGrid<List<Entity>>>> GetFindByBankAccountKendoGirdAsync(string bankAccount, DateTime? dateOfChecking)
+        #region public async Task<ActionResult<KendoGrid<List<Entity>>>> GetFindByBankAccountKendoGridAsync(string bankAccount, DateTime? dateOfChecking)
         /// <summary>
-        /// GET: api/SerwisRzeczypospolitejPolskiej/MinisterstwoFinansow/KrajowaAdministracjaSkarbowa/WykazPodatnikowVatApi/FindByBankAccountKendoGird/{bankAccount}
+        /// GET: api/SerwisRzeczypospolitejPolskiej/MinisterstwoFinansow/KrajowaAdministracjaSkarbowa/WykazPodatnikowVatApi/FindByBankAccountKendoGrid/{bankAccount}
         /// Wyszukaj podmioty według numeru rachunku bankowego NRB dla widoku KendoGrid
         /// Search for entities by NRB bank account number for the KendoGrid view
         /// </summary>
@@ -564,10 +628,10 @@ namespace WebApplicationNetCoreDev.Controllers.ApiWykazuPodatnikowVatDataControl
         /// Lista znalezionych podmiotów dla widoku KendoGrid
         /// List of entities found for the KendoGrid view
         /// </returns>
-        // GET: api/SerwisRzeczypospolitejPolskiej/MinisterstwoFinansow/KrajowaAdministracjaSkarbowa/WykazPodatnikowVatApi/FindByBankAccountKendoGird/{bankAccount}
+        // GET: api/SerwisRzeczypospolitejPolskiej/MinisterstwoFinansow/KrajowaAdministracjaSkarbowa/WykazPodatnikowVatApi/FindByBankAccountKendoGrid/{bankAccount}
         [Authorize(AuthenticationSchemes = "Cookies")]
-        [HttpGet("FindByBankAccountKendoGird/{bankAccount}/{dateOfChecking?}")]
-        public async Task<ActionResult<KendoGrid<List<Entity>>>> GetFindByBankAccountKendoGirdAsync(string bankAccount, DateTime? dateOfChecking)
+        [HttpGet("FindByBankAccountKendoGrid/{bankAccount}/{dateOfChecking?}")]
+        public async Task<ActionResult<KendoGrid<List<Entity>>>> GetFindByBankAccountKendoGridAsync(string bankAccount, DateTime? dateOfChecking)
         {
             try
             {
@@ -615,7 +679,7 @@ namespace WebApplicationNetCoreDev.Controllers.ApiWykazuPodatnikowVatDataControl
         /// </returns>
         // GET: api/SerwisRzeczypospolitejPolskiej/MinisterstwoFinansow/KrajowaAdministracjaSkarbowa/WykazPodatnikowVatApi/CheckBankAccountByNipAsync/{nip}/{bankAccount}
         [Authorize(AuthenticationSchemes = "Bearer")]
-        [HttpGet("CheckBankAccountByNipAsync/{nip}/{bankAccount}/{dateOfChecking?}")]
+        [HttpGet("CheckBankAccountByNip/{nip}/{bankAccount}/{dateOfChecking?}")]
         public async Task<ActionResult<EntityCheck>> GetCheckBankAccountByNipAsync(string nip, string bankAccount, DateTime? dateOfChecking)
         {
             try
@@ -634,11 +698,11 @@ namespace WebApplicationNetCoreDev.Controllers.ApiWykazuPodatnikowVatDataControl
         }
         #endregion
 
-        #region public async Task<ActionResult<KendoGrid<List<EntityCheck>>>> GetCheckBankAccountByNipKendoGirdAsync(string nip, string bankAccount, DateTime? dateOfChecking)
+        #region public async Task<ActionResult<KendoGrid<List<EntityCheck>>>> GetCheckBankAccountByNipKendoGridAsync...
         /// <summary>
-        /// GET: api/SerwisRzeczypospolitejPolskiej/MinisterstwoFinansow/KrajowaAdministracjaSkarbowa/WykazPodatnikowVatApi/CheckBankAccountByNipKendoGird/{nip}/{bankAccount}
+        /// GET: api/SerwisRzeczypospolitejPolskiej/MinisterstwoFinansow/KrajowaAdministracjaSkarbowa/WykazPodatnikowVatApi/CheckBankAccountByNipKendoGrid/{nip}/{bankAccount}
         /// [Authorize(AuthenticationSchemes = "Cookies")]
-        /// [HttpGet("CheckBankAccountByNipKendoGird/{bankAccount}")]
+        /// [HttpGet("CheckBankAccountByNipKendoGrid/{bankAccount}")]
         /// Sprawdź, czy dany rachunek jest przypisany do podmiotu według numeru NIP i numeru rachunku bankowego NRB
         /// Check if a given account is assigned to the entity according to the NIP number and NRB bank account number
         /// </summary>
@@ -658,10 +722,10 @@ namespace WebApplicationNetCoreDev.Controllers.ApiWykazuPodatnikowVatDataControl
         /// Odpowiedź, czy dany rachunek jest przypisany do podmiotu jako EntityCheck
         /// Reply whether the account is assigned to the subject as EntityCheck
         /// </returns>
-        // GET: api/SerwisRzeczypospolitejPolskiej/MinisterstwoFinansow/KrajowaAdministracjaSkarbowa/WykazPodatnikowVatApi/CheckBankAccountByNipKendoGird/{nip}/{bankAccount}
+        // GET: api/SerwisRzeczypospolitejPolskiej/MinisterstwoFinansow/KrajowaAdministracjaSkarbowa/WykazPodatnikowVatApi/CheckBankAccountByNipKendoGrid/{nip}/{bankAccount}
         [Authorize(AuthenticationSchemes = "Cookies")]
-        [HttpGet("CheckBankAccountByNipKendoGird/{nip}/{bankAccount}/{dateOfChecking?}")]
-        public async Task<ActionResult<KendoGrid<List<EntityCheck>>>> GetCheckBankAccountByNipKendoGirdAsync(string nip, string bankAccount, DateTime? dateOfChecking)
+        [HttpGet("CheckBankAccountByNipKendoGrid/{nip}/{bankAccount}/{dateOfChecking?}")]
+        public async Task<ActionResult<KendoGrid<List<EntityCheck>>>> GetCheckBankAccountByNipKendoGridAsync(string nip, string bankAccount, DateTime? dateOfChecking)
         {
             try
             {
@@ -683,7 +747,7 @@ namespace WebApplicationNetCoreDev.Controllers.ApiWykazuPodatnikowVatDataControl
         }
         #endregion
 
-        #region public async Task<ActionResult<EntityCheck>> GetCheckBankAccountByNipFromQueryAsync([FromQuery] string nip, [FromQuery] string bankAccount, [FromQuery] DateTime? dateOfChecking)
+        #region public async Task<ActionResult<EntityCheck>> GetCheckBankAccountByNipFromQueryAsync...
         /// <summary>
         /// GET: api/SerwisRzeczypospolitejPolskiej/MinisterstwoFinansow/KrajowaAdministracjaSkarbowa/WykazPodatnikowVatApi/CheckBankAccountByNip?nip={nip}&bankAccount={bankAccount}
         /// [Authorize(AuthenticationSchemes = "Bearer")]
@@ -716,7 +780,7 @@ namespace WebApplicationNetCoreDev.Controllers.ApiWykazuPodatnikowVatDataControl
         }
         #endregion
 
-        #region public async Task<ActionResult<EntityCheck>> GetCheckBankAccountByRegonAsync(string regon, string bankAccount, DateTime? dateOfChecking)
+        #region public async Task<ActionResult<EntityCheck>> GetCheckBankAccountByRegonAsync...
         /// <summary>
         /// [Authorize(AuthenticationSchemes = "Bearer")]
         /// [HttpGet("CheckBankAccountByRegon/{regon}/{bankAccount}")]
@@ -742,7 +806,7 @@ namespace WebApplicationNetCoreDev.Controllers.ApiWykazuPodatnikowVatDataControl
         /// </returns>
         // GET: api/SerwisRzeczypospolitejPolskiej/MinisterstwoFinansow/KrajowaAdministracjaSkarbowa/WykazPodatnikowVatApi/CheckBankAccountByRegonAsync/{regon}/{bankAccount}
         [Authorize(AuthenticationSchemes = "Bearer")]
-        [HttpGet("CheckBankAccountByRegonAsync/{regon}/{bankAccount}/{dateOfChecking?}")]
+        [HttpGet("CheckBankAccountByRegon/{regon}/{bankAccount}/{dateOfChecking?}")]
         public async Task<ActionResult<EntityCheck>> GetCheckBankAccountByRegonAsync(string regon, string bankAccount, DateTime? dateOfChecking)
         {
             try
@@ -766,11 +830,11 @@ namespace WebApplicationNetCoreDev.Controllers.ApiWykazuPodatnikowVatDataControl
         }
         #endregion
 
-        #region public async Task<ActionResult<KendoGrid<List<EntityCheck>>>> GetCheckBankAccountByRegonKendoGirdAsync(string regon, string bankAccount, DateTime? dateOfChecking)
+        #region public async Task<ActionResult<KendoGrid<List<EntityCheck>>>> GetCheckBankAccountByRegonKendoGridAsync...
         /// <summary>
-        /// GET: api/SerwisRzeczypospolitejPolskiej/MinisterstwoFinansow/KrajowaAdministracjaSkarbowa/WykazPodatnikowVatApi/CheckBankAccountByRegonKendoGird/{regon}/{bankAccount}/{dateOfChecking?}
+        /// GET: api/SerwisRzeczypospolitejPolskiej/MinisterstwoFinansow/KrajowaAdministracjaSkarbowa/WykazPodatnikowVatApi/CheckBankAccountByRegonKendoGrid/{regon}/{bankAccount}/{dateOfChecking?}
         /// [Authorize(AuthenticationSchemes = "Cookies")]
-        /// [HttpGet("CheckBankAccountByRegonKendoGird/{bankAccount}")]
+        /// [HttpGet("CheckBankAccountByRegonKendoGrid/{bankAccount}")]
         /// Sprawdź, czy dany rachunek jest przypisany do podmiotu według numeru NIP i numeru rachunku bankowego NRB
         /// Check if a given account is assigned to the entity according to the NIP number and NRB bank account number
         /// </summary>
@@ -790,10 +854,10 @@ namespace WebApplicationNetCoreDev.Controllers.ApiWykazuPodatnikowVatDataControl
         /// Odpowiedź, czy dany rachunek jest przypisany do podmiotu jako EntityCheck
         /// Reply whether the account is assigned to the subject as EntityCheck
         /// </returns>
-        // GET: api/SerwisRzeczypospolitejPolskiej/MinisterstwoFinansow/KrajowaAdministracjaSkarbowa/WykazPodatnikowVatApi/CheckBankAccountByRegonKendoGird/{regon}/{bankAccount}/{dateOfChecking?}
+        // GET: api/SerwisRzeczypospolitejPolskiej/MinisterstwoFinansow/KrajowaAdministracjaSkarbowa/WykazPodatnikowVatApi/CheckBankAccountByRegonKendoGrid/{regon}/{bankAccount}/{dateOfChecking?}
         [Authorize(AuthenticationSchemes = "Cookies")]
-        [HttpGet("CheckBankAccountByRegonKendoGird/{regon}/{bankAccount}/{dateOfChecking?}")]
-        public async Task<ActionResult<KendoGrid<List<EntityCheck>>>> GetCheckBankAccountByRegonKendoGirdAsync(string regon, string bankAccount, DateTime? dateOfChecking)
+        [HttpGet("CheckBankAccountByRegonKendoGrid/{regon}/{bankAccount}/{dateOfChecking?}")]
+        public async Task<ActionResult<KendoGrid<List<EntityCheck>>>> GetCheckBankAccountByRegonKendoGridAsync(string regon, string bankAccount, DateTime? dateOfChecking)
         {
             try
             {
@@ -820,7 +884,7 @@ namespace WebApplicationNetCoreDev.Controllers.ApiWykazuPodatnikowVatDataControl
         }
         #endregion
 
-        #region public async Task<ActionResult<EntityCheck>> GetCheckBankAccountByRegonFromQueryAsync([FromQuery] string regon, [FromQuery] string bankAccount)
+        #region public async Task<ActionResult<EntityCheck>> GetCheckBankAccountByRegonFromQueryAsync...
         /// <summary>
         /// GET: api/SerwisRzeczypospolitejPolskiej/MinisterstwoFinansow/KrajowaAdministracjaSkarbowa/WykazPodatnikowVatApi/CheckBankAccountByRegon?regon={regon}&bankAccount={bankAccount}
         /// [Authorize(AuthenticationSchemes = "Bearer")]

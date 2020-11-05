@@ -227,6 +227,31 @@ namespace WebApplicationNetCoreDev.Controllers.ApiWykazuPodatnikowVatDataControl
             return NotFound();
         }
         #endregion
+
+        #region public IActionResult RequestAndResponseHistory()
+        // GET: SerwisRzeczypospolitejPolskiej/MinisterstwoFinansow/KrajowaAdministracjaSkarbowa/WykazPodatnikowVat/RequestAndResponseHistory
+        /// <summary>
+        /// GET: SerwisRzeczypospolitejPolskiej/MinisterstwoFinansow/KrajowaAdministracjaSkarbowa/WykazPodatnikowVat/RequestAndResponseHistory
+        /// Pokaż historię wyszukiwania podmiotów i sprawdzania podmiotów
+        /// Show the history of searching for entities and checking entities
+        /// </summary>
+        /// <returns>
+        /// IActionResult
+        /// IActionResult
+        /// </returns>
+        public IActionResult RequestAndResponseHistory()
+        {
+            try
+            {
+                return View();
+            }
+            catch (Exception e)
+            {
+                log4net.Error(string.Format("{0}, {1}.", e.Message, e.StackTrace), e);
+            }
+            return NotFound();
+        }
+        #endregion
     }
     #endregion
 }
