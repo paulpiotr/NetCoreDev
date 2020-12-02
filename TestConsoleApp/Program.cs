@@ -5,19 +5,30 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Linq;
 using PortalApiGusApiRegonData;
+using System.IO;
+using System.Xml;
+using Newtonsoft.Json;
 //using ApiWykazuPodatnikowVatData;
 
 namespace TestConsoleApp
 {
     internal class Program
     {
-        private static async System.Threading.Tasks.Task Main(string[] args)
+        private static void Main(string[] args)
         {
+
+            string xml = File.ReadAllText(@"e:\test.xml");
+            XmlDocument doc = new XmlDocument();
+            doc.LoadXml(xml);
+            string json = JsonConvert.SerializeXmlNode(doc);
+
+            File.WriteAllText(@"e:\test.json", json);
+
 
             //ApiWykazuPodatnikowVatData.Data.ApiWykazuPodatnikowVatDataDbContext context = await NetAppCommon.DatabaseMssql.CreateInstancesForDatabaseContextClassAsync<ApiWykazuPodatnikowVatData.Data.ApiWykazuPodatnikowVatDataDbContext>();
             //await context.CheckForUpdateAndMigrateAsync();
 
-            await TestApiWykazuPodatnikowVatData.TestApiWykazuPodatnikowVatDataAsync();
+            //await TestApiWykazuPodatnikowVatData.TestApiWykazuPodatnikowVatDataAsync();
 
             //await DaneSzukajPodmioty.DaneSzukajPodmiotyAsyncByKrs("b65986a6300044a0b7fb", krs: "0000349095");
 

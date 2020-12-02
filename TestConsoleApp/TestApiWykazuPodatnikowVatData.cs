@@ -19,8 +19,8 @@ namespace TestConsoleApp
                     await context.CheckForUpdateAndMigrateAsync();
 
                     ApiWykazuPodatnikowVatData.ApiWykazuPodatnikowVatData apiWykazuPodatnikowVatData = new ApiWykazuPodatnikowVatData.ApiWykazuPodatnikowVatData();
-                    ApiWykazuPodatnikowVatData.Models.Entity entity = null;
-                    List<ApiWykazuPodatnikowVatData.Models.Entity> entityList = null;
+                    //ApiWykazuPodatnikowVatData.Models.Entity entity = null;
+                    //List<ApiWykazuPodatnikowVatData.Models.Entity> entityList = null;
                     ApiWykazuPodatnikowVatData.Models.EntityCheck entityCheck = null;
                     //Lazy<List<ApiWykazuPodatnikowVatData.Models.Entity>> lazyEntityList = null;
 
