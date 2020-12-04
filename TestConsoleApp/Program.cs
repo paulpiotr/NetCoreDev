@@ -1,28 +1,20 @@
-﻿using Microsoft.EntityFrameworkCore;
-//using PortalApiGusApiRegonData;
-using System;
-using System.Collections.Generic;
+﻿using System;
+using System.Globalization;
 using System.Threading.Tasks;
-using System.Linq;
-using PortalApiGusApiRegonData;
-using System.IO;
-using System.Xml;
-using Newtonsoft.Json;
-//using ApiWykazuPodatnikowVatData;
 
 namespace TestConsoleApp
 {
     internal class Program
     {
-        private static void Main(string[] args)
+        private static async Task Main(string[] args)
         {
+            await WFAttachmentFiles.AttachWFAttachmentFilesAsync();
 
-            string xml = File.ReadAllText(@"e:\test.xml");
-            XmlDocument doc = new XmlDocument();
-            doc.LoadXml(xml);
-            string json = JsonConvert.SerializeXmlNode(doc);
-
-            File.WriteAllText(@"e:\test.json", json);
+            //string xml = File.ReadAllText(@"e:\test.xml");
+            //XmlDocument doc = new XmlDocument();
+            //doc.LoadXml(xml);
+            //string json = JsonConvert.SerializeXmlNode(doc);
+            //File.WriteAllText(@"e:\test.json", json);
 
 
             //ApiWykazuPodatnikowVatData.Data.ApiWykazuPodatnikowVatDataDbContext context = await NetAppCommon.DatabaseMssql.CreateInstancesForDatabaseContextClassAsync<ApiWykazuPodatnikowVatData.Data.ApiWykazuPodatnikowVatDataDbContext>();
