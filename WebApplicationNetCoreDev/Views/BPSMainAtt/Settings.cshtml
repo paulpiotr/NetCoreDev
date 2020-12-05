@@ -1,6 +1,6 @@
 ﻿@using WebApplicationNetCoreDev.Helpers;
 
-@model IUIntegrationSystemData.Models.AppSettings
+@model WebconIntegrationSystem.Models.BPSMainAtt.AppSettings
 
 @{ ViewData["Title"] = "Ustawienia aplikacja " + Model.GetType().FullName; }
 @{ Layout = "~/Views/Shared/_LayoutAdmin.cshtml"; }
@@ -10,28 +10,8 @@
         <i class="ti-settings"></i> @ViewData["Title"]
     </div>
     <div class="card-body bg-white">
-        <form class="form-horizontal form-material" asp-controller="IUIntegrationSystemData" asp-action="Settings" asp-route-ReturnUrl="@Context.Request.Query["ReturnUrl"]">
+        <form class="form-horizontal form-material" asp-controller="BPSMainAtt" asp-action="Settings" asp-route-ReturnUrl="@Context.Request.Query["ReturnUrl"]">
             <div class="form-group has-danger">
-                <div class="col-sm-12">
-                    @if (null != Model && Model.CheckForUpdateEveryDays >= 0)
-                    {
-                        @Html.LabelFor(m => m.CheckForUpdateEveryDays, new { Class = "control-label text-success" })
-                    }
-                    @Html.TextBoxFor(m => m.CheckForUpdateEveryDays, new { Class = "form-control", Readonly = "readonly" })
-                    <div class="form-control-feedback mt-2">
-                        @Html.ValidationMessageFor(m => m.CheckForUpdateEveryDays)
-                    </div>
-                </div>
-                <div class="col-sm-12 mt-2">
-                    @if (null != Model)
-                    {
-                        @Html.LabelFor(m => m.LastMigrateDateTime, new { Class = "control-label text-success" })
-                    }
-                    @Html.TextBoxFor(m => m.LastMigrateDateTime, new { Class = "form-control", Readonly = "readonly" })
-                    <div class="form-control-feedback mt-2">
-                        @Html.ValidationMessageFor(m => m.LastMigrateDateTime)
-                    </div>
-                </div>
                 <div class="col-sm-12 mt-2">
                     @if (null != Model && null != Model.ConnectionString && !string.IsNullOrWhiteSpace(Model.ConnectionString))
                     {
@@ -49,9 +29,6 @@
                     </div>
                     <div class="checkbox text-success mt-2">
                         <label>@Html.CheckBoxFor(m => m.CheskForConnection, new { Class = "checkbox checkbox-success" }) @Html.DisplayNameFor(m => m.CheskForConnection)</label>
-                    </div>
-                    <div class="checkbox text-success mt-2">
-                        <label>@Html.CheckBoxFor(m => m.CheckForUpdateAndMigrate, new { Class = "checkbox checkbox-success" }) @Html.DisplayNameFor(m => m.CheckForUpdateAndMigrate)</label>
                     </div>
                 </div>
             </div>

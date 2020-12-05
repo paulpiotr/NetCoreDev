@@ -1,6 +1,5 @@
-﻿using ApiWykazuPodatnikowVatData.Data;
+using ApiWykazuPodatnikowVatData.Data;
 using ApiWykazuPodatnikowVatData.Models;
-using Kendo.Mvc.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
@@ -8,7 +7,6 @@ using Microsoft.EntityFrameworkCore;
 using NetAppCommon.Models;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -37,7 +35,7 @@ namespace WebApplicationNetCoreDev.Controllers.ApiWykazuPodatnikowVatDataControl
         /// Kontekst bazy danych apiWykazuPodatnikowVatDataDbContext jako ApiWykazuPodatnikowVatDataDbContext
         /// The apiWykazuPodatnikowVatDataDbContext of the database apiWykazuPodatnikowVatDataDbContext as ApiWykazuPodatnikowVatDataDbContext
         /// </summary>
-        private readonly ApiWykazuPodatnikowVatDataDbContext apiWykazuPodatnikowVatDataDbContext;
+        private readonly ApiWykazuPodatnikowVatDataDbContext _apiWykazuPodatnikowVatDataDbContext;
         #endregion
 
         #region private readonly IActionDescriptorCollectionProvider actionDescriptorCollectionProvider;
@@ -71,7 +69,7 @@ namespace WebApplicationNetCoreDev.Controllers.ApiWykazuPodatnikowVatDataControl
         /// </param>
         public WykazPodatnikowVatApiController(ApiWykazuPodatnikowVatDataDbContext apiWykazuPodatnikowVatDataDbContext, IActionDescriptorCollectionProvider actionDescriptorCollectionProvider)
         {
-            this.apiWykazuPodatnikowVatDataDbContext = apiWykazuPodatnikowVatDataDbContext;
+            this._apiWykazuPodatnikowVatDataDbContext = apiWykazuPodatnikowVatDataDbContext;
             this.actionDescriptorCollectionProvider = actionDescriptorCollectionProvider;
             apiWykazuPodatnikowVatData = new ApiWykazuPodatnikowVatData.ApiWykazuPodatnikowVatData(apiWykazuPodatnikowVatDataDbContext);
         }
@@ -118,7 +116,7 @@ namespace WebApplicationNetCoreDev.Controllers.ApiWykazuPodatnikowVatDataControl
         {
             try
             {
-                List<Entity> entityList = await apiWykazuPodatnikowVatDataDbContext.Entity.IncludeOptimized(w => w.EntityAccountNumber).IncludeOptimized(w => w.AuthorizedClerk).IncludeOptimized(w => w.Partner).IncludeOptimized(w => w.Representative).IncludeOptimized(w => w.RequestAndResponseHistory).IncludeOptimized(w => w.RequestAndResponseHistory).ToListAsync();
+                List<Entity> entityList = await _apiWykazuPodatnikowVatDataDbContext.Entity.IncludeOptimized(w => w.EntityAccountNumber).IncludeOptimized(w => w.AuthorizedClerk).IncludeOptimized(w => w.Partner).IncludeOptimized(w => w.Representative).IncludeOptimized(w => w.RequestAndResponseHistory).IncludeOptimized(w => w.RequestAndResponseHistory).ToListAsync();
                 if (null != entityList && entityList.Count > 0)
                 {
                     return new KendoGrid<List<Entity>> { Total = entityList.Count, Data = entityList };
@@ -173,7 +171,7 @@ namespace WebApplicationNetCoreDev.Controllers.ApiWykazuPodatnikowVatDataControl
         {
             try
             {
-                List<EntityCheck> entityCheckList = await apiWykazuPodatnikowVatDataDbContext.EntityCheck.IncludeOptimized(w => w.RequestAndResponseHistory).ToListAsync();
+                List<EntityCheck> entityCheckList = await _apiWykazuPodatnikowVatDataDbContext.EntityCheck.IncludeOptimized(w => w.RequestAndResponseHistory).ToListAsync();
                 if (null != entityCheckList && entityCheckList.Count > 0)
                 {
                     return new KendoGrid<List<EntityCheck>> { Total = entityCheckList.Count, Data = entityCheckList };
@@ -228,7 +226,7 @@ namespace WebApplicationNetCoreDev.Controllers.ApiWykazuPodatnikowVatDataControl
         {
             try
             {
-                List<RequestAndResponseHistory> RequestAndResponseHistoryList = await apiWykazuPodatnikowVatDataDbContext.RequestAndResponseHistory.IncludeOptimized(w => w.Entity).IncludeOptimized(w => w.EntityCheck).ToListAsync();
+                List<RequestAndResponseHistory> RequestAndResponseHistoryList = await _apiWykazuPodatnikowVatDataDbContext.RequestAndResponseHistory.IncludeOptimized(w => w.Entity).IncludeOptimized(w => w.EntityCheck).ToListAsync();
                 if (null != RequestAndResponseHistoryList && RequestAndResponseHistoryList.Count > 0)
                 {
                     return new KendoGrid<List<RequestAndResponseHistory>> { Total = RequestAndResponseHistoryList.Count, Data = RequestAndResponseHistoryList };

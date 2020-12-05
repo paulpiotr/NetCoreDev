@@ -10,7 +10,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
-using NetAppCommon;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using System;
@@ -36,25 +35,32 @@ namespace WebApplicationNetCoreDev
             try
             {
                 ///Kontekst bazy danych PortalApiGusApiRegonData
-                PortalApiGusApiRegonData.Models.AppSettings portalApiGusApiRegonDataAppSettings = PortalApiGusApiRegonData.Models.AppSettings.GetInstance();
+                var portalApiGusApiRegonDataAppSettings = PortalApiGusApiRegonData.Models.AppSettings.GetInstance();
                 services.AddDbContext<PortalApiGusApiRegonData.Data.PortalApiGusApiRegonDataDbContext>(options => options.UseSqlServer(portalApiGusApiRegonDataAppSettings.GetConnectionString()));
             }
-            catch(Exception e) { }
+            catch (Exception) { }
             try
             {
                 ///Kontekst bazy danych ApiWykazuPodatnikowVatData
-                ApiWykazuPodatnikowVatData.Models.AppSettings apiWykazuPodatnikowVatDataAppSettings = ApiWykazuPodatnikowVatData.Models.AppSettings.GetInstance();
+                var apiWykazuPodatnikowVatDataAppSettings = ApiWykazuPodatnikowVatData.Models.AppSettings.GetInstance();
                 services.AddDbContext<ApiWykazuPodatnikowVatData.Data.ApiWykazuPodatnikowVatDataDbContext>(options => options.UseSqlServer(apiWykazuPodatnikowVatDataAppSettings.GetConnectionString()));
             }
-            catch (Exception e) { }
+            catch (Exception) { }
+            try
+            {
+                ///Kontekst bazy danych WebconIntegrationSystem BPSMainAttDbContext
+                var webconIntegrationSystemAppSettings = WebconIntegrationSystem.Models.BPSMainAtt.AppSettings.GetInstance();
+                services.AddDbContext<WebconIntegrationSystem.Data.BPSMainAttDbContext.BPSMainAttDbContext>(options => options.UseSqlServer(webconIntegrationSystemAppSettings.GetConnectionString()));
+            }
+            catch (Exception) { }
 #if DEBUG
             try
             {
                 ///Kontekst bazy danych IUIntegrationSystemData
-                IUIntegrationSystemData.Models.AppSettings iUIntegrationSystemDataAppSettings = IUIntegrationSystemData.Models.AppSettings.GetInstance();
+                var iUIntegrationSystemDataAppSettings = IUIntegrationSystemData.Models.AppSettings.GetInstance();
                 services.AddDbContext<IUIntegrationSystemData.Data.IUIntegrationSystemDataDbContext>(options => options.UseSqlServer(iUIntegrationSystemDataAppSettings.GetConnectionString()));
             }
-            catch (Exception e) { }
+            catch (Exception) { }
 #endif
 
             //To do
@@ -146,7 +152,7 @@ namespace WebApplicationNetCoreDev
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseRouting();
-            CookiePolicyOptions cookiePolicyOptions = new CookiePolicyOptions
+            var cookiePolicyOptions = new CookiePolicyOptions
             {
                 MinimumSameSitePolicy = SameSiteMode.Strict,
             };
@@ -159,7 +165,7 @@ namespace WebApplicationNetCoreDev
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
-            ///Waøne - dodawanie kontekstu HTTP
+            ///Wa≈ºne - dodawanie kontekstu HTTP
             NetAppCommon.HttpContextAccessor.AppContext.Configure(app.ApplicationServices.GetRequiredService<IHttpContextAccessor>());
             try
             {
@@ -167,20 +173,20 @@ namespace WebApplicationNetCoreDev
                 await NetAppCommon.Helpers.EntityContextHelper.RunMigrationAsync<PortalApiGusApiRegonData.Data.PortalApiGusApiRegonDataDbContext>(app.ApplicationServices).ConfigureAwait(false);
                 ///Migracja danych ApiWykazuPodatnikowVatData
             }
-            catch(Exception e) { }
+            catch (Exception) { }
             try
             {
                 ///Migracja danych ApiWykazuPodatnikowVatData
                 await NetAppCommon.Helpers.EntityContextHelper.RunMigrationAsync<ApiWykazuPodatnikowVatData.Data.ApiWykazuPodatnikowVatDataDbContext>(app.ApplicationServices).ConfigureAwait(false);
             }
-            catch (Exception e) { }
+            catch (Exception) { }
 #if DEBUG
             try
             {
                 ///Migracja danych IUIntegrationSystemData
                 await NetAppCommon.Helpers.EntityContextHelper.RunMigrationAsync<IUIntegrationSystemData.Data.IUIntegrationSystemDataDbContext>(app.ApplicationServices).ConfigureAwait(false);
             }
-            catch(Exception e) { }
+            catch (Exception) { }
 #endif
         }
     }

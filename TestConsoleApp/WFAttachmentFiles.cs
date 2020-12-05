@@ -1,4 +1,4 @@
-﻿using ExcelDataReader;
+using ExcelDataReader;
 using Newtonsoft.Json;
 using System;
 using System.IO;
@@ -12,19 +12,19 @@ namespace TestConsoleApp
     {
         public static async System.Threading.Tasks.Task AttachWFAttachmentFilesAsync()
         {
-            string filePath = @"d:\wpisy.xlsx";
+            var filePath = @"d:\wpisy.xlsx";
             Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
             using (FileStream stream = File.Open(filePath, FileMode.Open, FileAccess.Read))
             {
                 using (IExcelDataReader reader = ExcelReaderFactory.CreateReader(stream))
                 {
-                    WfattachmentFilesRepository wfattachmentFilesRepository = WfattachmentFilesRepository.GetInstance();
+                    var wfattachmentFilesRepository = WfattachmentFilesRepository.GetInstance();
                     do
                     {
                         while (reader.Read())
                         {
-                            object atfId = reader.GetValue(0);
-                            object atfOrginalName = reader.GetValue(16);
+                            var atfId = reader.GetValue(0);
+                            var atfOrginalName = reader.GetValue(16);
                             try
                             {
                                 atfId = Convert.ToInt32(atfId);
@@ -32,9 +32,9 @@ namespace TestConsoleApp
                                 {
                                     Console.WriteLine(atfId);
                                     Console.WriteLine(atfOrginalName);
-                                    string filePathXml = Path.Combine(@"d:", Convert.ToString(atfOrginalName));
+                                    var filePathXml = Path.Combine(@"d:", Convert.ToString(atfOrginalName));
                                     Console.WriteLine(filePath);
-                                    byte[] atfValue = File.ReadAllBytes(filePathXml);
+                                    var atfValue = File.ReadAllBytes(filePathXml);
                                     if (null != atfValue)
                                     {
                                         Console.WriteLine($"{ atfId }");
@@ -43,12 +43,11 @@ namespace TestConsoleApp
                                         {
                                             wfattachmentFiles.AtfValue = atfValue;
                                             wfattachmentFiles = await wfattachmentFilesRepository.ModifyAsync(wfattachmentFiles);
-                                            XmlDocument xmlDocument = new XmlDocument();
-                                            using (MemoryStream memoryStream = new MemoryStream(wfattachmentFiles.AtfValue))
+                                            var xmlDocument = new XmlDocument();
+                                            using (var memoryStream = new MemoryStream(wfattachmentFiles.AtfValue))
                                             {
                                                 xmlDocument.Load(memoryStream);
                                             }
-
                                             Console.WriteLine($"{ atfId } = { wfattachmentFiles.AtfId } { JsonConvert.SerializeXmlNode(xmlDocument) }");
                                         }
                                     }

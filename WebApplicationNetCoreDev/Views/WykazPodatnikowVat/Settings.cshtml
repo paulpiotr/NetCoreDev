@@ -23,7 +23,7 @@
                     </div>
                 </div>
                 <div class="col-sm-12 mt-2">
-                    @if (null != Model && null != Model.LastMigrateDateTime)
+                    @if (null != Model)
                     {
                         @Html.LabelFor(m => m.LastMigrateDateTime, new { Class = "control-label text-success" })
                     }

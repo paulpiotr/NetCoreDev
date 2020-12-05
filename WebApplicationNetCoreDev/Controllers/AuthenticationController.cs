@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -23,7 +23,7 @@ namespace WebApplicationNetCoreDev.Controllers
         /// <summary>
         /// Log4net Logger
         /// </summary>
-        private static readonly log4net.ILog log4net = Log4netLogger.Log4netLogger.GetLog4netInstance(MethodBase.GetCurrentMethod().DeclaringType);
+        private static readonly log4net.ILog Log4net = Log4netLogger.Log4netLogger.GetLog4netInstance(MethodBase.GetCurrentMethod().DeclaringType);
 
         /// <summary>
         /// Wyświetl formularz autoryzacji.
@@ -32,23 +32,19 @@ namespace WebApplicationNetCoreDev.Controllers
         /// <returns>IActionResult</returns>
         [AllowAnonymous]
         // GET: /Authentication
-        public IActionResult Index([FromQuery] string ReturnUrl)
+        public IActionResult Index([FromQuery] string returnUrl)
         {
             try
             {
-                if (User.Identity.IsAuthenticated)
-                {
-                    if (Url.IsLocalUrl(ReturnUrl))
-                    {
-                        return Redirect(ReturnUrl);
-                    }
-                    return RedirectToAction(nameof(Index), "Home", new { UserName = User.Identity.Name, ReturnUrl });
-                }
-                return View();
+                return User.Identity.IsAuthenticated
+                    ? Url.IsLocalUrl(returnUrl)
+                        ? Redirect(returnUrl)
+                        : (IActionResult)RedirectToAction(nameof(Index), "Home", new { UserName = User.Identity.Name, returnUrl })
+                    : View();
             }
             catch (Exception e)
             {
-                log4net.Error(string.Format("{0}, {1}", e.Message, e.StackTrace), e);
+                Log4net.Error(string.Format("{0}, {1}", e.Message, e.StackTrace), e);
                 return NotFound(e);
             }
         }
@@ -65,7 +61,7 @@ namespace WebApplicationNetCoreDev.Controllers
         [ValidateAntiForgeryToken]
         [AllowAnonymous]
         // POST: /Authentication
-        public async Task<IActionResult> IndexAsync([Bind("UserName, Password, RememberMe")] WebApplicationNetCoreDev.Models.AuthenticationModel model, [FromQuery] string ReturnUrl)
+        public async Task<IActionResult> IndexAsync([Bind("UserName, Password, RememberMe")] AuthenticationModel model, [FromQuery] string returnUrl)
         {
             try
             {
@@ -73,32 +69,27 @@ namespace WebApplicationNetCoreDev.Controllers
                 {
                     try
                     {
-                        bool result = false;
-
+                        var result = false;
                         result = await WindowsIdentityCookieAuthenticationAsync(model);
                         if (true == result)
                         {
-                            if (Url.IsLocalUrl(ReturnUrl))
-                            {
-                                return Redirect(ReturnUrl);
-                            }
-                            return RedirectToAction(nameof(Index), "Home", new { model.UserName, ReturnUrl });
+                            return Url.IsLocalUrl(returnUrl) ? Redirect(returnUrl) : (IActionResult)RedirectToAction(nameof(Index), "Home", new { model.UserName, returnUrl });
                         }
 
                         result = await HttpContextAuthenticateWindowsCookieAuthenticationAsync(model);
                         if (true == result)
                         {
-                            if (Url.IsLocalUrl(ReturnUrl))
+                            return Url.IsLocalUrl(returnUrl) ? Redirect(returnUrl) : (IActionResult)RedirectToAction(nameof(Index), "Home", new
                             {
-                                return Redirect(ReturnUrl);
-                            }
-                            return RedirectToAction(nameof(Index), "Home", new { model.UserName, ReturnUrl });
+                                model.UserName,
+                                returnUrl
+                            });
                         }
                         //return Challenge("Windows");
                     }
                     catch (Exception e)
                     {
-                        log4net.Error(string.Format("{0}, {1}", e.Message, e.StackTrace), e);
+                        Log4net.Error(string.Format("{0}, {1}", e.Message, e.StackTrace), e);
                         model.Message = e.Message;
                         model.StackTrace = e.StackTrace;
                         return View(model);
@@ -108,7 +99,7 @@ namespace WebApplicationNetCoreDev.Controllers
             }
             catch (Exception e)
             {
-                log4net.Error(string.Format("{0}, {1}", e.Message, e.StackTrace), e);
+                Log4net.Error(string.Format("{0}, {1}", e.Message, e.StackTrace), e);
                 return NotFound(e);
             }
         }
@@ -133,7 +124,7 @@ namespace WebApplicationNetCoreDev.Controllers
             }
             catch (Exception e)
             {
-                log4net.Error(string.Format("{0}, {1}", e.Message, e.StackTrace), e);
+                Log4net.Error(string.Format("{0}, {1}", e.Message, e.StackTrace), e);
                 return NotFound(e);
             }
         }
@@ -142,12 +133,12 @@ namespace WebApplicationNetCoreDev.Controllers
         /// Wyświetl stronę brak uprawnień
         /// GET: Authentication/AccessDenied
         /// </summary>
-        /// <param name="ReturnUrl"></param>
+        /// <param name="returnUrl"></param>
         /// <returns></returns>
         [HttpGet]
         [AllowAnonymous]
         // GET: Authentication/AccessDenied
-        public IActionResult AccessDenied([FromQuery] string ReturnUrl)
+        public IActionResult AccessDenied([FromQuery] string returnUrl)
         {
             try
             {
@@ -155,7 +146,7 @@ namespace WebApplicationNetCoreDev.Controllers
             }
             catch (Exception e)
             {
-                log4net.Error(string.Format("{0}, {1}", e.Message, e.StackTrace), e);
+                Log4net.Error(string.Format("{0}, {1}", e.Message, e.StackTrace), e);
                 return NotFound(e);
             }
         }
@@ -176,7 +167,7 @@ namespace WebApplicationNetCoreDev.Controllers
             }
             catch (Exception e)
             {
-                log4net.Error(string.Format("{0}, {1}", e.Message, e.StackTrace), e);
+                Log4net.Error(string.Format("{0}, {1}", e.Message, e.StackTrace), e);
                 return NotFound(e);
             }
         }
@@ -192,12 +183,12 @@ namespace WebApplicationNetCoreDev.Controllers
         {
             try
             {
-                JwtTokenModel jwtTokenModel = new JwtTokenModel(HttpContext);
+                var jwtTokenModel = new JwtTokenModel(HttpContext);
                 return View(jwtTokenModel);
             }
             catch (Exception e)
             {
-                log4net.Error(string.Format("{0}, {1}", e.Message, e.StackTrace), e);
+                Log4net.Error(string.Format("{0}, {1}", e.Message, e.StackTrace), e);
                 return NotFound(e);
             }
         }
@@ -225,7 +216,7 @@ namespace WebApplicationNetCoreDev.Controllers
             }
             catch (Exception e)
             {
-                log4net.Error(string.Format("{0}, {1}", e.Message, e.StackTrace), e);
+                Log4net.Error(string.Format("{0}, {1}", e.Message, e.StackTrace), e);
                 return NotFound(e);
             }
         }
@@ -238,53 +229,55 @@ namespace WebApplicationNetCoreDev.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [AllowAnonymous]
-        public async Task<bool> WindowsIdentityCookieAuthenticationAsync([Bind("UserName, Password, RememberMe")] Models.AuthenticationModel model)
+        public async Task<bool> WindowsIdentityCookieAuthenticationAsync([Bind("UserName, Password, RememberMe")] AuthenticationModel model)
         {
             try
             {
-                UserCredentials userCredentials = new UserCredentials(model.UserName, model.Password);
+                var userCredentials = new UserCredentials(model.UserName, model.Password);
                 return await Impersonation.RunAsUser(userCredentials, LogonType.Batch, async () =>
                 {
-                    WindowsIdentity windowsIdentity = WindowsIdentity.GetCurrent();
-                    AppDomain appDomain = Thread.GetDomain();
-                    appDomain.SetPrincipalPolicy(PrincipalPolicy.WindowsPrincipal);
-                    WindowsPrincipal windowsPrincipal = (WindowsPrincipal)Thread.CurrentPrincipal;
-                    List<Claim> claims = new List<Claim>() {
+                    using (var windowsIdentity = WindowsIdentity.GetCurrent())
+                    {
+                        AppDomain appDomain = Thread.GetDomain();
+                        appDomain.SetPrincipalPolicy(PrincipalPolicy.WindowsPrincipal);
+                        var windowsPrincipal = (WindowsPrincipal)Thread.CurrentPrincipal;
+                        var claims = new List<Claim>() {
                             new Claim(ClaimTypes.Name, windowsIdentity.Name),
                             new Claim("FullName", windowsIdentity.Name)
                         };
-                    foreach (WindowsBuiltInRoles windowsBuiltInRoles in WindowsBuiltInRoles.WindowsBuiltInRolesList())
-                    {
-                        if (windowsPrincipal.IsInRole(windowsBuiltInRoles.WindowsBuiltInRole))
+                        foreach (WindowsBuiltInRoles windowsBuiltInRoles in WindowsBuiltInRoles.WindowsBuiltInRolesList())
                         {
-                            claims.Add(new Claim(ClaimTypes.Role, windowsBuiltInRoles.RoleNeme));
+                            if (windowsPrincipal.IsInRole(windowsBuiltInRoles.WindowsBuiltInRole))
+                            {
+                                claims.Add(new Claim(ClaimTypes.Role, windowsBuiltInRoles.RoleNeme));
+                            }
                         }
+                        foreach (IdentityReference group in windowsIdentity.Groups)
+                        {
+                            claims.Add(new Claim(ClaimTypes.Role, group.Translate(typeof(NTAccount)).ToString()));
+                        }
+                        var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+                        var authenticationProperties = new AuthenticationProperties
+                        {
+                            AllowRefresh = true,
+                            // Refreshing the authentication session should be allowed.
+                            ExpiresUtc = DateTimeOffset.UtcNow.AddMinutes(30),
+                            // The time at which the authentication ticket expires. A 
+                            // value set here overrides the ExpireTimeSpan option of 
+                            // CookieAuthenticationOptions set with AddCookie.
+                            IsPersistent = true,
+                            // Whether the authentication session is persisted across 
+                            // multiple requests. When used with cookies, controls
+                            // whether the cookie's lifetime is absolute (matching the
+                            // lifetime of the authentication ticket) or session-based.
+                            //IssuedUtc = <DateTimeOffset>,
+                            // The time at which the authentication ticket was issued.
+                            RedirectUri = "/",
+                            // The full path or absolute URI to be used as an http 
+                            // redirect response value.
+                        };
+                        await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity), authenticationProperties);
                     }
-                    foreach (IdentityReference group in windowsIdentity.Groups)
-                    {
-                        claims.Add(new Claim(ClaimTypes.Role, group.Translate(typeof(NTAccount)).ToString()));
-                    }
-                    ClaimsIdentity claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
-                    AuthenticationProperties authenticationProperties = new AuthenticationProperties
-                    {
-                        AllowRefresh = true,
-                        // Refreshing the authentication session should be allowed.
-                        ExpiresUtc = DateTimeOffset.UtcNow.AddMinutes(30),
-                        // The time at which the authentication ticket expires. A 
-                        // value set here overrides the ExpireTimeSpan option of 
-                        // CookieAuthenticationOptions set with AddCookie.
-                        IsPersistent = true,
-                        // Whether the authentication session is persisted across 
-                        // multiple requests. When used with cookies, controls
-                        // whether the cookie's lifetime is absolute (matching the
-                        // lifetime of the authentication ticket) or session-based.
-                        //IssuedUtc = <DateTimeOffset>,
-                        // The time at which the authentication ticket was issued.
-                        RedirectUri = "/",
-                        // The full path or absolute URI to be used as an http 
-                        // redirect response value.
-                    };
-                    await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity), authenticationProperties);
                     return true;
                 });
             }
@@ -304,7 +297,7 @@ namespace WebApplicationNetCoreDev.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [AllowAnonymous]
-        public async Task<bool> HttpContextAuthenticateWindowsCookieAuthenticationAsync([Bind("UserName, Password, RememberMe")] Models.AuthenticationModel model)
+        public async Task<bool> HttpContextAuthenticateWindowsCookieAuthenticationAsync([Bind("UserName, Password, RememberMe")] AuthenticationModel model)
         {
             try
             {
@@ -322,13 +315,13 @@ namespace WebApplicationNetCoreDev.Controllers
                     //claimsIdentity.AddClaim(new Claim(JwtClaimTypes.Name, windowsPrincipal.Identity.Name));
                     //// add the groups as claims -- be careful if the number of groups is too large
 
-                    WindowsIdentity windowsIdentity = windowsPrincipal.Identity as WindowsIdentity;
+                    var windowsIdentity = windowsPrincipal.Identity as WindowsIdentity;
                     AppDomain appDomain = Thread.GetDomain();
                     appDomain.SetPrincipalPolicy(PrincipalPolicy.WindowsPrincipal);
 
                     //WindowsPrincipal windowsPrincipal = (WindowsPrincipal)Thread.CurrentPrincipal;
 
-                    List<Claim> claims = new List<Claim>() {
+                    var claims = new List<Claim>() {
                             new Claim(ClaimTypes.Name, windowsIdentity.Name),
                             new Claim("FullName", windowsIdentity.Name)
                         };
@@ -343,8 +336,8 @@ namespace WebApplicationNetCoreDev.Controllers
                     {
                         claims.Add(new Claim(ClaimTypes.Role, group.Translate(typeof(NTAccount)).ToString()));
                     }
-                    ClaimsIdentity claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
-                    AuthenticationProperties authenticationProperties = new AuthenticationProperties
+                    var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+                    var authenticationProperties = new AuthenticationProperties
                     {
                         AllowRefresh = true,
                         // Refreshing the authentication session should be allowed.

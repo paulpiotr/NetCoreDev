@@ -1,6 +1,6 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using IUIntegrationSystemData.Data;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using IUIntegrationSystemData.Data;
 using System;
 using System.Reflection;
 
@@ -53,13 +53,12 @@ namespace WebApplicationNetCoreDev.Controllers.IUIntegrationSystemDataControler
             {
                 return View();
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 log4net.Error(string.Format("\n{0}\n{1}\n{2}\n{3}\n", e.GetType(), e.InnerException?.GetType(), e.Message, e.StackTrace), e);
             }
             return NotFound();
         }
-
 
         #region public IActionResult Settings()
         // GET: IUIntegrationSystemData/Settings
