@@ -46,3 +46,6 @@
 [submodule "WebApplicationNetCoreDev/WebApplicationNetCoreDevRelease"]
 	path = WebApplicationNetCoreDev/WebApplicationNetCoreDevRelease
 	url = http://tfs:8080/tfs/Unimot/_git/WebApplicationNetCoreDevRelease
+[submodule "WebconIntegrationSystem"]
+	path = WebconIntegrationSystem
+	url = http://tfs:8080/tfs/ISK/_git/WebconIntegrationSystem
