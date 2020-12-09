@@ -6,6 +6,7 @@
 @{ string gridName = string.Format("{0}{1}", @System.Reflection.Assembly.GetEntryAssembly().GetName().Name, @System.Reflection.Assembly.GetAssembly(typeof(NetAppCommon.Models.ControllerRoutingActions)).GetName().Name); }
 @{ string gridDataSource = string.Format("{0}DataSource", gridName); }
 @{ string gridActionApiUrl = string.Format("{0}", "/api/PortalApiGus/DaneSzukajPodmiotyApi/RouteKendoGrid"); }
+@{ string windowName = string.Format("{0}Window", gridName); }
 @{ ViewData["Title"] = "Dostępne Akcje w Portal Api Gus - Dane Szukaj Podmioty"; }
 @{ Layout = "~/Views/Shared/_LayoutAdmin.cshtml"; }
 
@@ -52,33 +53,64 @@
             .Columns(
             columns =>
             {
-                columns.Bound(c => c.RouteId);
+                //columns.Bound(c => c.RouteId);
                 columns.Bound(c => c.RouteController);
                 columns.Bound(c => c.RouteAction);
+                columns.Bound(c => c.RouteAttributeInfoTemplate);
                 columns.Bound(c => c.RouteUrlAction);
                 columns.Bound(c => c.RouteUrlAbsoluteAction);
+                //columns.Bound(c => c.RouteParameters);
             })
+            .Selectable()
+            .Events(e => e.Change("onChangeGridWidget"))
             .Sortable()
             .Scrollable()
             .Filterable()
             .DataSource(gridDataSource))
 
-        @Html.Script(
-        @<script type="text/javascript">
-                $(function () {
-                    try {
-                        var grid = $("#@gridName");
-                        var gridDataSource = @gridDataSource;
-                        var gridWidget = grid.data("kendoGrid");
-                        gridWidget.wrapper.height($(".page-wrapper").first().height() * 0.9);
-                        gridWidget.resize();
-                        gridWidget.resize(true);
-                    }
-                    catch (e) {
-                        console.log(e);
-                    }
-                });
-        </script>)
-
     </div>
 </div>
+
+@(Html.Kendo().Window()
+    .Name(windowName)
+    .Title("")
+    .Content(@<text></text>)
+    .Draggable()
+    .Resizable()
+    .Width(1024)
+    .Visible(false)
+    .Actions(actions => actions.Pin().Minimize().Maximize().Close())
+    .Events(e => e.Close("onClose").Open("onOpen")))
+
+@Html.Script(
+@<script type="text/javascript">
+        function onChangeGridWidget(e) {
+            $("#@windowName").data("kendoWindow").close();
+            var currentDataItem = e.sender.dataItem(this.select());
+            $("#@windowName").data("kendoWindow")
+                .open()
+                .content("<div class='p-3'><pre id='json-renderer'></pre></div>")
+                .refresh()
+                .title("Sczegóły " + currentDataItem.RouteId)
+                .center()
+                .setOptions({ width: $(document).width() * 0.62, height: $(document).height() * 0.62, position: { left: ($(document).width() * 0.38) / 2, top: ($(document).height() * 0.38) / 2 } });
+            $('#json-renderer').jsonViewer(JSON.parse(JSON.stringify(currentDataItem)));
+        }
+        function onClose() {
+        }
+        function onOpen() {
+        }
+        $(function () {
+            try {
+                var grid = $("#@gridName");
+                var gridDataSource = @gridDataSource;
+                var gridWidget = grid.data("kendoGrid");
+                gridWidget.wrapper.height($(".page-wrapper").first().height() * 0.9);
+                gridWidget.resize();
+                gridWidget.resize(true);
+            }
+            catch (e) {
+                console.log(e);
+            }
+        });
+</script>)

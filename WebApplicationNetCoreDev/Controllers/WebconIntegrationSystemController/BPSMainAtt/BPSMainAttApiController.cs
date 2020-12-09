@@ -1,6 +1,3 @@
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -10,6 +7,10 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Xml;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
+using NetAppCommon.Models;
 using WebconIntegrationSystem.Data.BPSMainAttDbContext;
 using WebconIntegrationSystem.Models.BPSMainAtt;
 using WebconIntegrationSystem.Repositories.BPSMainAtt;
@@ -28,12 +29,70 @@ namespace WebApplicationNetCoreDev.Controllers.WebconIntegrationSystemController
         private readonly log4net.ILog _log4net = Log4netLogger.Log4netLogger.GetLog4netInstance(MethodBase.GetCurrentMethod().DeclaringType);
         #endregion
 
-        private readonly BPSMainAttDbContext _bPSMainAttDbContext;
+        private readonly BPSMainAttDbContext _context;
 
-        public BPSMainAttApiController(BPSMainAttDbContext bPSMainAttDbContext)
+        #region private readonly IActionDescriptorCollectionProvider _provider
+        /// <summary>
+        /// Action Descriptor Collection Provider
+        /// </summary>
+        private readonly IActionDescriptorCollectionProvider _provider;
+        #endregion
+
+        public BPSMainAttApiController(BPSMainAttDbContext context, IActionDescriptorCollectionProvider provider)
         {
-            _bPSMainAttDbContext = bPSMainAttDbContext;
+            _context = context;
+            _provider = provider;
         }
+
+        #region public async Task<ActionResult<List<ControllerRoutingActions>>> GetRouteAsync()
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        [Authorize(AuthenticationSchemes = "Bearer")]
+        [HttpGet("Route")]
+        public async Task<ActionResult<List<ControllerRoutingActions>>> GetRouteAsync()
+        {
+            try
+            {
+                List<ControllerRoutingActions> controllerRoutingActionsList = await NetAppCommon.ControllerRoute.GetRouteActionAsync(_provider, ControllerContext.ActionDescriptor.ControllerName.ToString(), Url, this);
+                if (null != controllerRoutingActionsList && controllerRoutingActionsList.Count > 0)
+                {
+                    return controllerRoutingActionsList;
+                }
+            }
+            catch (Exception e)
+            {
+                await Task.Run(() => _log4net.Error(string.Format("{0}, {1}.", e.Message, e.StackTrace), e));
+            }
+            return NotFound();
+        }
+        #endregion
+
+        #region public async Task<ActionResult<KendoGrid<List<ControllerRoutingActions>>>> GetRouteKendoGridAsync()
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        [Authorize(AuthenticationSchemes = "Cookies")]
+        [HttpGet("RouteKendoGrid")]
+        public async Task<ActionResult<KendoGrid<List<ControllerRoutingActions>>>> GetRouteKendoGridAsync()
+        {
+            try
+            {
+                KendoGrid<List<ControllerRoutingActions>> kendoGrid = await NetAppCommon.ControllerRoute.GetRouteActionForKendoGridAsync(_provider, ControllerContext.ActionDescriptor.ControllerName.ToString(), Url, this);
+                if (null != kendoGrid && kendoGrid.Data.Count > 0)
+                {
+                    return kendoGrid;
+                }
+            }
+            catch (Exception e)
+            {
+                await Task.Run(() => _log4net.Error(string.Format("{0}, {1}.", e.Message, e.StackTrace), e));
+            }
+            return NotFound();
+        }
+        #endregion
 
         #region public async Task<ActionResult<object>> GetAsync(int atfId)
         /// <summary>
@@ -48,7 +107,7 @@ namespace WebApplicationNetCoreDev.Controllers.WebconIntegrationSystemController
         {
             try
             {
-                WfattachmentFiles wfattachmentFiles = await WfattachmentFilesRepository.GetInstance(_bPSMainAttDbContext).FindByAtfIdAsync(atfId);
+                WfattachmentFiles wfattachmentFiles = await WfattachmentFilesRepository.GetInstance(_context).FindByAtfIdAsync(atfId);
                 if (null != wfattachmentFiles)
                 {
                     var xmlDocument = new XmlDocument();

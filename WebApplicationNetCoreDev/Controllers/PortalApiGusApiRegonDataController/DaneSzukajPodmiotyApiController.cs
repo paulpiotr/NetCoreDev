@@ -1,15 +1,15 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using System;
+using System.Collections.Generic;
+using System.Reflection;
+using System.Text.RegularExpressions;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using NetAppCommon.Models;
 using PortalApiGusApiRegonData.Data;
 using PortalApiGusApiRegonData.Models.DaneSzukajPodmioty;
-using System;
-using System.Collections.Generic;
-using System.Reflection;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
 namespace WebApplicationNetCoreDev.Controllers.PortalApiGusApiRegonDataControler
 {
@@ -206,7 +206,7 @@ namespace WebApplicationNetCoreDev.Controllers.PortalApiGusApiRegonDataControler
             {
                 if (null != nip)
                 {
-                    Regex digitsOnly = new Regex(@"[^\d]");
+                    var digitsOnly = new Regex(@"[^\d]");
                     nip = digitsOnly.Replace(nip, string.Empty);
                     if (null != pKluczUzytkownika && !string.IsNullOrWhiteSpace(pKluczUzytkownika))
                     {
@@ -292,7 +292,7 @@ namespace WebApplicationNetCoreDev.Controllers.PortalApiGusApiRegonDataControler
             {
                 if (null != nip)
                 {
-                    Regex digitsOnly = new Regex(@"[^\d]");
+                    var digitsOnly = new Regex(@"[^\d]");
                     nip = digitsOnly.Replace(nip, string.Empty);
                     if (null != pKluczUzytkownika && !string.IsNullOrWhiteSpace(pKluczUzytkownika))
                     {
@@ -355,7 +355,7 @@ namespace WebApplicationNetCoreDev.Controllers.PortalApiGusApiRegonDataControler
         {
             try
             {
-                Regex digitsOnly = new Regex(@"[^\d]");
+                var digitsOnly = new Regex(@"[^\d]");
                 regon = digitsOnly.Replace(regon, string.Empty);
                 if (null != regon && !string.IsNullOrWhiteSpace(regon) && regon.Length == 9)
                 {
@@ -415,7 +415,7 @@ namespace WebApplicationNetCoreDev.Controllers.PortalApiGusApiRegonDataControler
         {
             try
             {
-                Regex digitsOnly = new Regex(@"[^\d]");
+                var digitsOnly = new Regex(@"[^\d]");
                 regon = digitsOnly.Replace(regon, string.Empty);
                 if (null != regon && !string.IsNullOrWhiteSpace(regon) && regon.Length == 9)
                 {
@@ -477,7 +477,7 @@ namespace WebApplicationNetCoreDev.Controllers.PortalApiGusApiRegonDataControler
             {
                 if (null != regon)
                 {
-                    Regex digitsOnly = new Regex(@"[^\d]");
+                    var digitsOnly = new Regex(@"[^\d]");
                     regon = digitsOnly.Replace(regon, string.Empty);
                     if (null != regon && !string.IsNullOrWhiteSpace(regon) && regon.Length == 9)
                     {

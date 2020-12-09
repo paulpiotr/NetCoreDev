@@ -1,8 +1,8 @@
-﻿using ApiWykazuPodatnikowVatData.Data;
+﻿using System;
+using System.Reflection;
+using ApiWykazuPodatnikowVatData.Data;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Reflection;
 
 namespace WebApplicationNetCoreDev.Controllers.ApiWykazuPodatnikowVatDataController
 {

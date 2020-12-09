@@ -1,3 +1,8 @@
+using System;
+using System.Collections.Generic;
+using System.Reflection;
+using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using ApiWykazuPodatnikowVatData.Data;
 using ApiWykazuPodatnikowVatData.Models;
 using Microsoft.AspNetCore.Authorization;
@@ -5,11 +10,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using NetAppCommon.Models;
-using System;
-using System.Collections.Generic;
-using System.Reflection;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using Z.EntityFramework.Plus;
 
 namespace WebApplicationNetCoreDev.Controllers.ApiWykazuPodatnikowVatDataController
@@ -69,7 +69,7 @@ namespace WebApplicationNetCoreDev.Controllers.ApiWykazuPodatnikowVatDataControl
         /// </param>
         public WykazPodatnikowVatApiController(ApiWykazuPodatnikowVatDataDbContext apiWykazuPodatnikowVatDataDbContext, IActionDescriptorCollectionProvider actionDescriptorCollectionProvider)
         {
-            this._apiWykazuPodatnikowVatDataDbContext = apiWykazuPodatnikowVatDataDbContext;
+            _apiWykazuPodatnikowVatDataDbContext = apiWykazuPodatnikowVatDataDbContext;
             this.actionDescriptorCollectionProvider = actionDescriptorCollectionProvider;
             apiWykazuPodatnikowVatData = new ApiWykazuPodatnikowVatData.ApiWykazuPodatnikowVatData(apiWykazuPodatnikowVatDataDbContext);
         }
@@ -442,7 +442,7 @@ namespace WebApplicationNetCoreDev.Controllers.ApiWykazuPodatnikowVatDataControl
         {
             try
             {
-                Regex digitsOnly = new Regex(@"[^\d]");
+                var digitsOnly = new Regex(@"[^\d]");
                 regon = digitsOnly.Replace(regon, string.Empty);
                 if (null != regon && !string.IsNullOrWhiteSpace(regon) && (regon.Length == 9 || regon.Length == 14))
                 {
@@ -515,7 +515,7 @@ namespace WebApplicationNetCoreDev.Controllers.ApiWykazuPodatnikowVatDataControl
         {
             try
             {
-                Regex digitsOnly = new Regex(@"[^\d]");
+                var digitsOnly = new Regex(@"[^\d]");
                 regon = digitsOnly.Replace(regon, string.Empty);
                 if (null != regon && !string.IsNullOrWhiteSpace(regon) && (regon.Length == 9 || regon.Length == 14))
                 {
@@ -809,7 +809,7 @@ namespace WebApplicationNetCoreDev.Controllers.ApiWykazuPodatnikowVatDataControl
         {
             try
             {
-                Regex digitsOnly = new Regex(@"[^\d]");
+                var digitsOnly = new Regex(@"[^\d]");
                 regon = digitsOnly.Replace(regon, string.Empty);
                 if (null != regon && !string.IsNullOrWhiteSpace(regon) && (regon.Length == 9 || regon.Length == 14))
                 {
@@ -859,7 +859,7 @@ namespace WebApplicationNetCoreDev.Controllers.ApiWykazuPodatnikowVatDataControl
         {
             try
             {
-                Regex digitsOnly = new Regex(@"[^\d]");
+                var digitsOnly = new Regex(@"[^\d]");
                 regon = digitsOnly.Replace(regon, string.Empty);
                 if (null != regon && !string.IsNullOrWhiteSpace(regon) && (regon.Length == 9 || regon.Length == 14))
                 {

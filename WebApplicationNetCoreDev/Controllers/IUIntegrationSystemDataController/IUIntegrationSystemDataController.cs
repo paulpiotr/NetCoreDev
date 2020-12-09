@@ -1,8 +1,8 @@
-﻿using IUIntegrationSystemData.Data;
+﻿using System;
+using System.Reflection;
+using IUIntegrationSystemData.Data;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Reflection;
 
 namespace WebApplicationNetCoreDev.Controllers.IUIntegrationSystemDataControler
 {

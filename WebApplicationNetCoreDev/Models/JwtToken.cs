@@ -1,11 +1,11 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.IdentityModel.Tokens;
-using System;
+﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.IdentityModel.Tokens.Jwt;
 using System.Reflection;
 using System.Security.Claims;
 using System.Text;
+using Microsoft.AspNetCore.Http;
+using Microsoft.IdentityModel.Tokens;
 
 namespace WebApplicationNetCoreDev.Models
 {
@@ -84,9 +84,9 @@ namespace WebApplicationNetCoreDev.Models
         {
             try
             {
-                JwtSecurityTokenHandler jwtSecurityTokenHandler = new JwtSecurityTokenHandler();
-                byte[] key = Encoding.UTF8.GetBytes(Key);
-                SecurityTokenDescriptor securityTokenDescriptor = new SecurityTokenDescriptor
+                var jwtSecurityTokenHandler = new JwtSecurityTokenHandler();
+                var key = Encoding.UTF8.GetBytes(Key);
+                var securityTokenDescriptor = new SecurityTokenDescriptor
                 {
                     Subject = new ClaimsIdentity(new[] { new Claim("UserName", UserName) }),
                     Expires = DateTime.UtcNow.AddSeconds(Expires),

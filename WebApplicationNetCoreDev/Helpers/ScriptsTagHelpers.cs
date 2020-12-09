@@ -1,7 +1,7 @@
-﻿using Microsoft.AspNetCore.Html;
+﻿using System;
+using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using System;
 
 namespace WebApplicationNetCoreDev.Helpers
 {
@@ -43,11 +43,11 @@ namespace WebApplicationNetCoreDev.Helpers
         /// <returns></returns>
         public static HtmlString RenderScripts(this IHtmlHelper htmlHelper)
         {
-            foreach (object key in htmlHelper.ViewContext.HttpContext.Items.Keys)
+            foreach (var key in htmlHelper.ViewContext.HttpContext.Items.Keys)
             {
                 if (key.ToString().StartsWith("_script_"))
                 {
-                    Func<object, HelperResult> template = htmlHelper.ViewContext.HttpContext.Items[key] as Func<object, HelperResult>;
+                    var template = htmlHelper.ViewContext.HttpContext.Items[key] as Func<object, HelperResult>;
                     if (template != null)
                     {
                         htmlHelper.ViewContext.Writer.Write(template(null));

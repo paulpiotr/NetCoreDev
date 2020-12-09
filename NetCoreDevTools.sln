@@ -36,7 +36,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "doc", "doc", "{D03E1BDB-302
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetAppCommon", "NetAppCommon\NetAppCommon\NetAppCommon.csproj", "{D6031C83-CE2E-4663-8CD5-DA95A890BA61}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IUIntegrationSystemData", "IUIntegrationSystem\IUIntegrationSystemData\IUIntegrationSystemData.csproj", "{F2F8AF3F-3DFC-4C13-B131-04C3ED11719F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IUIntegrationSystem.Core.Server", "IUIntegrationSystem\IUIntegrationSystemData\IUIntegrationSystem.Core.Server.csproj", "{F2F8AF3F-3DFC-4C13-B131-04C3ED11719F}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RabbitMQPublisherCommon", "RabbitMQPublisherCommon\RabbitMQPublisherCommon.csproj", "{2A8B3365-C6BD-495B-B471-8EFBE1598EB0}"
 EndProject
@@ -65,9 +65,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IcasaMutationServiceData", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FileSystemWatcherCommon", "FileSystemWatcherCommon\FileSystemWatcherCommon.csproj", "{8730CB9F-9649-46EA-B267-B1D7373D9A0D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IUIntegrationSystemConsoleApp", "IUIntegrationSystem\IUIntegrationSystemConsoleApp\IUIntegrationSystemConsoleApp.csproj", "{DE7E4911-09A5-4E28-A52D-EF885F748CC2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IUIntegrationSystem.ConsoleApp", "IUIntegrationSystem\IUIntegrationSystemConsoleApp\IUIntegrationSystem.ConsoleApp.csproj", "{DE7E4911-09A5-4E28-A52D-EF885F748CC2}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IUFileSystemWatcherWorkerService", "IUIntegrationSystem\IUFileSystemWatcherWorkerService\IUFileSystemWatcherWorkerService.csproj", "{C100CB7B-A9D0-491A-906A-EB6C157E9222}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IUIntegrationSystem.WorkerService.Server", "IUIntegrationSystem\IUFileSystemWatcherWorkerService\IUIntegrationSystem.WorkerService.Server.csproj", "{C100CB7B-A9D0-491A-906A-EB6C157E9222}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{8DAB6CF6-2ECE-478E-8284-B747C5973186}"
 EndProject
@@ -85,9 +85,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IUIntegrationSystemApp.Wpf"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PlatformaUslugElektronicznychSkarbowoCelnych", "PlatformaUslugElektronicznychSkarbowoCelnych", "{62F9FF22-CBB5-47A9-9851-5C279B84EAE6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutomatycznySystemImportu", "SerwisRzeczypospolitejPolskiej\MinisterstwoFinansow\PlatformaUslugElektronicznychSkarbowoCelnych\AutomatycznySystemImportu\AutomatycznySystemImportu.csproj", "{3C9BB47A-0634-45ED-97C3-788DF428FC55}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AutomatycznySystemImportu", "SerwisRzeczypospolitejPolskiej\MinisterstwoFinansow\PlatformaUslugElektronicznychSkarbowoCelnych\AutomatycznySystemImportu\AutomatycznySystemImportu.csproj", "{3C9BB47A-0634-45ED-97C3-788DF428FC55}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebconIntegrationSystem", "WebconIntegrationSystem\WebconIntegrationSystem\WebconIntegrationSystem.csproj", "{F75CC04C-4F48-43AE-87D5-375AFA2EFAEA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebconIntegrationSystem", "WebconIntegrationSystem\WebconIntegrationSystem\WebconIntegrationSystem.csproj", "{F75CC04C-4F48-43AE-87D5-375AFA2EFAEA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

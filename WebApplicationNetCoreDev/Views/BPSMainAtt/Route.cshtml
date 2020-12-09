@@ -5,9 +5,9 @@
 
 @{ string gridName = string.Format("{0}{1}", @System.Reflection.Assembly.GetEntryAssembly().GetName().Name, @System.Reflection.Assembly.GetAssembly(typeof(NetAppCommon.Models.ControllerRoutingActions)).GetName().Name); }
 @{ string gridDataSource = string.Format("{0}DataSource", gridName); }
-@{ string gridActionApiUrl = string.Format("{0}", "/api/SerwisRzeczypospolitejPolskiej/MinisterstwoFinansow/KrajowaAdministracjaSkarbowa/WykazPodatnikowVatApi/RouteKendoGrid"); }
+@{ string gridActionApiUrl = string.Format("{0}", "/api/BPSMainAttApi/RouteKendoGrid"); }
 @{ string windowName = string.Format("{0}Window", gridName); }
-@{ ViewData["Title"] = "Dostępne akcje w Ministerstwo Finansów - Wykaz podatników VAT"; }
+@{ ViewData["Title"] = "Dostępne Akcje w System integracji Webcon BPS (BPSMainAtt)"; }
 @{ Layout = "~/Views/Shared/_LayoutAdmin.cshtml"; }
 
 <div class="container-fluid k-content">
@@ -21,14 +21,14 @@
                 items.Add()
                 .Type(BreadcrumbItemType.RootItem)
                 .Href(Url.Action("Index", "DaneSzukajPodmioty"))
-                .Text("Ministerstwo Finansów - Wykaz podatników VAT")
+                .Text("System integracji Webcon BPS (BPSMainAtt)")
                 .ShowText(true)
                 .Icon("home")
                 .ShowIcon(true);
                 items.Add()
                 .Type(BreadcrumbItemType.Item)
                 .Href("javascript:void(0)")
-                .Text("Dostępne akcje")
+                .Text("Dostępne Akcje")
                 .ShowText(true)
                 .Icon("link-horizontal")
                 .ShowIcon(true);
@@ -65,11 +65,11 @@
             .Events(e => e.Change("onChangeGridWidget"))
             .Sortable()
             .Scrollable()
+            .Filterable()
             .DataSource(gridDataSource))
 
     </div>
 </div>
-
 
 @(Html.Kendo().Window()
     .Name(windowName)

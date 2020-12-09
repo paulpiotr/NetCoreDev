@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Reflection;
@@ -16,26 +16,22 @@ namespace WebApplicationNetCoreDev.Controllers.WebconIntegrationSystemController
         /// <summary>
         /// Log4 Net Logger
         /// </summary>
-        private static readonly log4net.ILog log4net = Log4netLogger.Log4netLogger.GetLog4netInstance(MethodBase.GetCurrentMethod().DeclaringType);
+        private readonly log4net.ILog _log4net = Log4netLogger.Log4netLogger.GetLog4netInstance(MethodBase.GetCurrentMethod().DeclaringType);
         #endregion
 
+        #region public IActionResult Index()
         [HttpGet]
         public IActionResult Index()
         {
             return View();
         }
+        #endregion
 
         #region public IActionResult Settings()
-        // GET: SerwisRzeczypospolitejPolskiej/MinisterstwoFinansow/KrajowaAdministracjaSkarbowa/WykazPodatnikowVat/Settings
         /// <summary>
-        /// GET: SerwisRzeczypospolitejPolskiej/MinisterstwoFinansow/KrajowaAdministracjaSkarbowa/WykazPodatnikowVat/Settings
-        /// Pokaż lub edytuj ustawienia aplikacji WykazPodatnikowVat
-        /// View or edit the settings of the WykazPodatnikowVat
+        /// 
         /// </summary>
-        /// <returns>
-        /// IActionResult
-        /// IActionResult
-        /// </returns>
+        /// <returns></returns>
         [HttpGet]
         public IActionResult Settings()
         {
@@ -45,54 +41,57 @@ namespace WebApplicationNetCoreDev.Controllers.WebconIntegrationSystemController
             }
             catch (Exception e)
             {
-                log4net.Error(string.Format("\n{0}\n{1}\n{2}\n{3}\n", e.GetType(), e.InnerException?.GetType(), e.Message, e.StackTrace), e);
+                _log4net.Error(string.Format("\n{0}\n{1}\n{2}\n{3}\n", e.GetType(), e.InnerException?.GetType(), e.Message, e.StackTrace), e);
             }
             return NotFound();
         }
         #endregion
 
-        #region public IActionResult Settings...
+        #region public async Task<IActionResult> SettingsAsync
         /// <summary>
-        /// POST: SerwisRzeczypospolitejPolskiej/MinisterstwoFinansow/KrajowaAdministracjaSkarbowa/WykazPodatnikowVat/Settings
-        /// Zapisz ustawienia aplikacji WykazPodatnikowVat
-        /// Save the settings of the WykazPodatnikowVat
+        /// 
         /// </summary>
-        /// <param name="model">
-        /// Model danych jako ApiWykazuPodatnikowVatData.Models.AppSettings
-        /// Data model as ApiWykazuPodatnikowVatData.Models.AppSettings
-        /// </param>
-        /// <returns>
-        /// IActionResult
-        /// IActionResult
-        /// </returns>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(AuthenticationSchemes = "Cookies")]
-        public async Task<IActionResult> SettingsAsync([Bind("ConnectionString")] AppSettings model)
+        public async Task<IActionResult> SettingsAsync([Bind("ConnectionString", "CheskForConnection")] AppSettings model)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
-                    try
-                    {
-                        await AppSettingsRepository.GetInstance().SaveAsync(model);
-                    }
-                    catch (Exception e)
-                    {
-                        log4net.Error(string.Format("{0}, {1}", e.Message, e.StackTrace), e);
-                    }
-                    return Redirect(nameof(Index));
+                    await AppSettingsRepository.GetInstance().SaveAsync(model);
+                    return Redirect(nameof(Settings));
                 }
             }
             catch (Exception e)
             {
-                log4net.Error(string.Format("{0}, {1}", e.Message, e.StackTrace), e);
+                _log4net.Error(string.Format("\n{0}\n{1}\n{2}\n{3}\n", e.GetType(), e.InnerException?.GetType(), e.Message, e.StackTrace), e);
                 return NotFound(e);
             }
             return View(model);
         }
         #endregion
 
+        #region public IActionResult Route()
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public IActionResult Route()
+        {
+            try
+            {
+                return View();
+            }
+            catch (Exception e)
+            {
+                _log4net.Error(string.Format("\n{0}\n{1}\n{2}\n{3}\n", e.GetType(), e.InnerException?.GetType(), e.Message, e.StackTrace), e);
+            }
+            return NotFound();
+        }
+        #endregion
     }
 }

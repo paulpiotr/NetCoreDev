@@ -1,8 +1,8 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using System;
+using System.Reflection;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PortalApiGusApiRegonData.Data;
-using System;
-using System.Reflection;
 
 namespace WebApplicationNetCoreDev.Controllers.PortalApiGusApiRegonDataControler
 {
