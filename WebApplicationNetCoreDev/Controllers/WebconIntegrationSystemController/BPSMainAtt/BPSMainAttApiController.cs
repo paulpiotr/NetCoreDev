@@ -22,11 +22,11 @@ namespace WebApplicationNetCoreDev.Controllers.WebconIntegrationSystemController
     [ApiController]
     public class BPSMainAttApiController : ControllerBase
     {
-        #region private readonly log4net.ILog _log4net
+        #region private readonly log4net.ILog log4net
         /// <summary>
         /// log4net
         /// </summary>
-        private readonly log4net.ILog _log4net = Log4netLogger.Log4netLogger.GetLog4netInstance(MethodBase.GetCurrentMethod().DeclaringType);
+        private readonly log4net.ILog log4net = Log4netLogger.Log4netLogger.GetLog4netInstance(MethodBase.GetCurrentMethod().DeclaringType);
         #endregion
 
         private readonly BPSMainAttDbContext _context;
@@ -63,7 +63,7 @@ namespace WebApplicationNetCoreDev.Controllers.WebconIntegrationSystemController
             }
             catch (Exception e)
             {
-                await Task.Run(() => _log4net.Error(string.Format("{0}, {1}.", e.Message, e.StackTrace), e));
+                await Task.Run(() => log4net.Error(string.Format("{0}, {1}.", e.Message, e.StackTrace), e));
             }
             return NotFound();
         }
@@ -88,7 +88,7 @@ namespace WebApplicationNetCoreDev.Controllers.WebconIntegrationSystemController
             }
             catch (Exception e)
             {
-                await Task.Run(() => _log4net.Error(string.Format("{0}, {1}.", e.Message, e.StackTrace), e));
+                await Task.Run(() => log4net.Error(string.Format("{0}, {1}.", e.Message, e.StackTrace), e));
             }
             return NotFound();
         }
@@ -147,7 +147,7 @@ namespace WebApplicationNetCoreDev.Controllers.WebconIntegrationSystemController
             }
             catch (Exception e)
             {
-                await Task.Run(() => _log4net.Error(string.Format("{0}, {1}.", e.Message, e.StackTrace), e));
+                await Task.Run(() => log4net.Error(string.Format("{0}, {1}.", e.Message, e.StackTrace), e));
             }
             return NotFound();
         }

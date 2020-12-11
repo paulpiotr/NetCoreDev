@@ -12,11 +12,11 @@ namespace WebApplicationNetCoreDev.Controllers.WebconIntegrationSystemController
     [Route("WebconIntegrationSystem/[controller]/[action]")]
     public class BPSMainAttController : Controller
     {
-        #region private static readonly log4net.ILog log4net
+        #region private readonly log4net.ILog log4net
         /// <summary>
         /// Log4 Net Logger
         /// </summary>
-        private readonly log4net.ILog _log4net = Log4netLogger.Log4netLogger.GetLog4netInstance(MethodBase.GetCurrentMethod().DeclaringType);
+        private readonly log4net.ILog log4net = Log4netLogger.Log4netLogger.GetLog4netInstance(MethodBase.GetCurrentMethod().DeclaringType);
         #endregion
 
         #region public IActionResult Index()
@@ -41,7 +41,7 @@ namespace WebApplicationNetCoreDev.Controllers.WebconIntegrationSystemController
             }
             catch (Exception e)
             {
-                _log4net.Error(string.Format("\n{0}\n{1}\n{2}\n{3}\n", e.GetType(), e.InnerException?.GetType(), e.Message, e.StackTrace), e);
+                log4net.Error(string.Format("\n{0}\n{1}\n{2}\n{3}\n", e.GetType(), e.InnerException?.GetType(), e.Message, e.StackTrace), e);
             }
             return NotFound();
         }
@@ -68,7 +68,7 @@ namespace WebApplicationNetCoreDev.Controllers.WebconIntegrationSystemController
             }
             catch (Exception e)
             {
-                _log4net.Error(string.Format("\n{0}\n{1}\n{2}\n{3}\n", e.GetType(), e.InnerException?.GetType(), e.Message, e.StackTrace), e);
+                log4net.Error(string.Format("\n{0}\n{1}\n{2}\n{3}\n", e.GetType(), e.InnerException?.GetType(), e.Message, e.StackTrace), e);
                 return NotFound(e);
             }
             return View(model);
@@ -88,7 +88,7 @@ namespace WebApplicationNetCoreDev.Controllers.WebconIntegrationSystemController
             }
             catch (Exception e)
             {
-                _log4net.Error(string.Format("\n{0}\n{1}\n{2}\n{3}\n", e.GetType(), e.InnerException?.GetType(), e.Message, e.StackTrace), e);
+                log4net.Error(string.Format("\n{0}\n{1}\n{2}\n{3}\n", e.GetType(), e.InnerException?.GetType(), e.Message, e.StackTrace), e);
             }
             return NotFound();
         }
