@@ -21,6 +21,14 @@ namespace WebApplicationNetCoreDev
 {
     public class Startup
     {
+        #region private readonly log4net.ILog _log4Net
+        // <summary>
+        // Referencja klasy Log4NetLogger
+        // Reference to the Log4NetLogger class
+        // </summary>
+        private readonly log4net.ILog _log4Net = Log4netLogger.Log4netLogger.GetLog4netInstance(MethodBase.GetCurrentMethod()?.DeclaringType);
+        #endregion
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -31,40 +39,54 @@ namespace WebApplicationNetCoreDev
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllersWithViews();
+
+            services.AddControllersWithViews(options =>
+                // System sprawdzania poprawności w programie .NET Core 3,0 lub nowszy traktuje parametry niedopuszczające wartości null lub właściwości powiązane tak, jakby miały [Required] atrybut. - Wyłączenie
+                options.SuppressImplicitRequiredAttributeForNonNullableReferenceTypes = true);
+
             try
             {
-                ///Kontekst bazy danych PortalApiGusApiRegonData
+                // Kontekst bazy danych PortalApiGusApiRegonData.Data.PortalApiGusApiRegonDataDbContext
                 var portalApiGusApiRegonDataAppSettings = PortalApiGusApiRegonData.Models.AppSettings.GetInstance();
                 services.AddDbContext<PortalApiGusApiRegonData.Data.PortalApiGusApiRegonDataDbContext>(options => options.UseSqlServer(portalApiGusApiRegonDataAppSettings.GetConnectionString()));
             }
-            catch (Exception) { }
+            catch (Exception e)
+            {
+                _log4Net.Error($"\n{e.GetType()}\n{e.InnerException?.GetType()}\n{e.Message}\n{e.StackTrace}\n", e);
+            }
+
             try
             {
-                ///Kontekst bazy danych ApiWykazuPodatnikowVatData
+                // Kontekst bazy danych ApiWykazuPodatnikowVatData.Data.ApiWykazuPodatnikowVatDataDbContext
                 var apiWykazuPodatnikowVatDataAppSettings = ApiWykazuPodatnikowVatData.Models.AppSettings.GetInstance();
                 services.AddDbContext<ApiWykazuPodatnikowVatData.Data.ApiWykazuPodatnikowVatDataDbContext>(options => options.UseSqlServer(apiWykazuPodatnikowVatDataAppSettings.GetConnectionString()));
             }
-            catch (Exception) { }
+            catch (Exception e)
+            {
+                _log4Net.Error($"\n{e.GetType()}\n{e.InnerException?.GetType()}\n{e.Message}\n{e.StackTrace}\n", e);
+            }
+
             try
             {
-                ///Kontekst bazy danych WebconIntegrationSystem BPSMainAttDbContext
+                // Kontekst bazy danych WebconIntegrationSystem.Data.BPSMainAttDbContext.BPSMainAttDbContext
                 var webconIntegrationSystemAppSettings = WebconIntegrationSystem.Models.BPSMainAtt.AppSettings.GetInstance();
                 services.AddDbContext<WebconIntegrationSystem.Data.BPSMainAttDbContext.BPSMainAttDbContext>(options => options.UseSqlServer(webconIntegrationSystemAppSettings.GetConnectionString()));
             }
-            catch (Exception) { }
-//#if DEBUG
-//            try
-//            {
-//                ///Kontekst bazy danych IUIntegrationSystemData
-//                var iUIntegrationSystemDataAppSettings = IUIntegrationSystemData.Models.AppSettings.GetInstance();
-//                services.AddDbContext<IUIntegrationSystemData.Data.IUIntegrationSystemDataDbContext>(options => options.UseSqlServer(iUIntegrationSystemDataAppSettings.GetConnectionString()));
-//            }
-//            catch (Exception) { }
-//#endif
+            catch (Exception e)
+            {
+                _log4Net.Error($"\n{e.GetType()}\n{e.InnerException?.GetType()}\n{e.Message}\n{e.StackTrace}\n", e);
+            }
 
-            //To do
-            //services.AddDbContextPool<PortalApiGusApiRegonData.Data.PortalApiGusApiRegonDataDbContext>(options => options.UseSqlServer(PortalApiGusApiRegonData.PortalApiGusApiRegonDataContext.GetConnectionString()));
+            try
+            {
+                // Kontekst bazy danych Vies.Core.Database.Data.ViesCoreDatabaseContext
+                var viesCoreDatabaseAppSettings = Vies.Core.Database.Models.AppSettings.GetInstance();
+                services.AddDbContextPool<Vies.Core.Database.Data.ViesCoreDatabaseContext>(options => options.UseSqlServer(viesCoreDatabaseAppSettings.GetConnectionString(), element => element.EnableRetryOnFailure()));
+            }
+            catch (Exception e)
+            {
+                _log4Net.Error($"\n{e.GetType()}\n{e.InnerException?.GetType()}\n{e.Message}\n{e.StackTrace}\n", e);
+            }
 
             services.AddAuthentication().AddCookie(
                     options =>
@@ -84,10 +106,7 @@ namespace WebApplicationNetCoreDev
                     options.RequireHttpsMetadata = false;
                     options.TokenValidationParameters = new TokenValidationParameters
                     {
-                        LifetimeValidator = (before, expires, token, param) =>
-                        {
-                            return expires > DateTime.UtcNow;
-                        },
+                        LifetimeValidator = (before, expires, token, param) => expires > DateTime.UtcNow,
                         //ClockSkew = TimeSpan.FromMinutes(5),
                         RequireSignedTokens = true,
                         RequireExpirationTime = true,
@@ -105,7 +124,7 @@ namespace WebApplicationNetCoreDev
                     {
                         OnMessageReceived = context =>
                         {
-                            if (context.Request.Query.ContainsKey("AccessToken"))
+                            if (context != null && context.Request.Query.ContainsKey("AccessToken"))
                             {
                                 context.Token = context.Request.Query["AccessToken"];
                             }
@@ -120,7 +139,7 @@ namespace WebApplicationNetCoreDev
             services.AddKendo();
             services.AddControllers().AddNewtonsoftJson(options =>
                 {
-                    options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+                    options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
                     options.SerializerSettings.ContractResolver = new DefaultContractResolver()
                     {
                         NamingStrategy = new CamelCaseNamingStrategy()
@@ -134,11 +153,11 @@ namespace WebApplicationNetCoreDev
                 }
             );
             services.AddHttpContextAccessor();
-            services.AddSingleton<IHttpContextAccessor, Microsoft.AspNetCore.Http.HttpContextAccessor>();
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public async void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {
@@ -165,29 +184,48 @@ namespace WebApplicationNetCoreDev
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
-            ///Ważne - dodawanie kontekstu HTTP
+
+            // Important Add HttpContextAccessor
             NetAppCommon.HttpContextAccessor.AppContext.Configure(app.ApplicationServices.GetRequiredService<IHttpContextAccessor>());
-            try
+
+            #region Migracja bazy danych
+            Task.Run(() =>
             {
-                ///Migracja danych PortalApiGusApiRegonData
-                await NetAppCommon.Helpers.EntityContextHelper.RunMigrationAsync<PortalApiGusApiRegonData.Data.PortalApiGusApiRegonDataDbContext>(app.ApplicationServices).ConfigureAwait(false);
-                ///Migracja danych ApiWykazuPodatnikowVatData
-            }
-            catch (Exception) { }
-            try
+                try
+                {
+                    // Migracja bazy danych PortalApiGusApiRegonData.Data.PortalApiGusApiRegonDataDbContext
+                    NetAppCommon.Helpers.EntityContextHelper.RunMigrationAsync<PortalApiGusApiRegonData.Data.PortalApiGusApiRegonDataDbContext>(app.ApplicationServices).Wait();
+                }
+                catch (Exception e)
+                {
+                    _log4Net.Error($"\n{e.GetType()}\n{e.InnerException?.GetType()}\n{e.Message}\n{e.StackTrace}\n", e);
+                }
+            }).Wait();
+            Task.Run(() =>
             {
-                ///Migracja danych ApiWykazuPodatnikowVatData
-                await NetAppCommon.Helpers.EntityContextHelper.RunMigrationAsync<ApiWykazuPodatnikowVatData.Data.ApiWykazuPodatnikowVatDataDbContext>(app.ApplicationServices).ConfigureAwait(false);
-            }
-            catch (Exception) { }
-//#if DEBUG
-//            try
-//            {
-//                ///Migracja danych IUIntegrationSystemData
-//                await NetAppCommon.Helpers.EntityContextHelper.RunMigrationAsync<IUIntegrationSystemData.Data.IUIntegrationSystemDataDbContext>(app.ApplicationServices).ConfigureAwait(false);
-//            }
-//            catch (Exception) { }
-//#endif
+                try
+                {
+                    // Migracja bazy danych ApiWykazuPodatnikowVatData.Data.ApiWykazuPodatnikowVatDataDbContext
+                    NetAppCommon.Helpers.EntityContextHelper.RunMigrationAsync<ApiWykazuPodatnikowVatData.Data.ApiWykazuPodatnikowVatDataDbContext>(app.ApplicationServices).Wait();
+                }
+                catch (Exception e)
+                {
+                    _log4Net.Error($"\n{e.GetType()}\n{e.InnerException?.GetType()}\n{e.Message}\n{e.StackTrace}\n", e);
+                }
+            }).Wait();
+            Task.Run(() =>
+            {
+                try
+                {
+                    // Migracja bazy danych Vies.Core.Database.Data.ViesCoreDatabaseContext
+                    NetAppCommon.Helpers.EntityContextHelper.RunMigrationAsync<Vies.Core.Database.Data.ViesCoreDatabaseContext>(app.ApplicationServices).Wait();
+                }
+                catch (Exception e)
+                {
+                    _log4Net.Error($"\n{e.GetType()}\n{e.InnerException?.GetType()}\n{e.Message}\n{e.StackTrace}\n", e);
+                }
+            }).Wait();
+            #endregion
         }
     }
 }

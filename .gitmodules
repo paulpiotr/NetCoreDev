@@ -6,7 +6,7 @@
 	url = http://tfs:8080/tfs/ISK/_git/EncryptDecrypt
 [submodule "Log4netLogger"]
 	path = Log4netLogger
-	url = http://tfs:8080/tfs/ISK/_git/Log4netLogger
+	url = https://github.com/paulpiotr/Log4netLogger.git
 [submodule "PortalApiGus"]
 	path = PortalApiGus
 	url = http://tfs:8080/tfs/ISK/_git/PortalApiGus
@@ -21,7 +21,7 @@
 	url = http://tfs:8080/tfs/ISK/_git/IUIntegrationSystem
 [submodule "NetAppCommon"]
 	path = NetAppCommon
-	url = http://tfs:8080/tfs/ISK/_git/NetAppCommon
+	url = https://github.com/paulpiotr/NetAppCommon.git
 [submodule "RabbitMQPublisherCommon"]
 	path = RabbitMQPublisherCommon
 	url = http://tfs:8080/tfs/ISK/_git/RabbitMQPublisherCommon
@@ -40,8 +40,8 @@
 [submodule "FileSystemWatcherCommon"]
 	path = FileSystemWatcherCommon
 	url = http://tfs:8080/tfs/ISK/_git/FileSystemWatcherCommon
-[submodule "WebApplicationNetCoreDev/WebApplicationNetCoreDevDebug"]
-	path = WebApplicationNetCoreDev/WebApplicationNetCoreDevDebug
+[submodule ".publish/WebApplicationNetCoreDev/WebApplicationNetCoreDevDebug"]
+	path = .publish/WebApplicationNetCoreDev/WebApplicationNetCoreDevDebug
 	url = http://tfs:8080/tfs/Unimot/_git/WebApplicationNetCoreDevDebug
 [submodule "WebApplicationNetCoreDev/WebApplicationNetCoreDevRelease"]
 	path = WebApplicationNetCoreDev/WebApplicationNetCoreDevRelease
@@ -49,3 +49,9 @@
 [submodule "WebconIntegrationSystem"]
 	path = WebconIntegrationSystem
 	url = http://tfs:8080/tfs/ISK/_git/WebconIntegrationSystem
+[submodule "EuropeanCommission"]
+	path = EuropeanCommission
+	url = https://github.com/paulpiotr/EuropeanCommission.git
+[submodule "AutoMapper"]
+	path = AutoMapper
+	url = https://github.com/AutoMapper/AutoMapper.git

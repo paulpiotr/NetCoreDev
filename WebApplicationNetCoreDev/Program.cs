@@ -1,3 +1,4 @@
+using System.Threading;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 
@@ -5,10 +6,11 @@ namespace WebApplicationNetCoreDev
 {
     public class Program
     {
+        private static readonly CancellationTokenSource _cancelTokenSource = new CancellationTokenSource();
+
         public static void Main(string[] args)
         {
-            //var configuration = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
-            CreateHostBuilder(args).Build().Run();
+            CreateHostBuilder(args).Build().RunAsync(_cancelTokenSource.Token).GetAwaiter().GetResult();
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args)
@@ -17,6 +19,11 @@ namespace WebApplicationNetCoreDev
             {
                 webBuilder.UseStartup<Startup>();
             });
+        }
+
+        public static void Shutdown()
+        {
+            _cancelTokenSource.Cancel();
         }
     }
 }

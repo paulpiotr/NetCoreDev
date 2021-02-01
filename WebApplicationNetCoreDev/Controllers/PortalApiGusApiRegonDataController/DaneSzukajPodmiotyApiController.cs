@@ -36,7 +36,7 @@ namespace WebApplicationNetCoreDev.Controllers.PortalApiGusApiRegonDataControler
         /// <summary>
         /// Log4 Net Logger
         /// </summary>
-        private readonly log4net.ILog log4net = Log4netLogger.Log4netLogger.GetLog4netInstance(MethodBase.GetCurrentMethod().DeclaringType);
+        private readonly log4net.ILog log4net = Log4netLogger.Log4netLogger.GetLog4netInstance(MethodBase.GetCurrentMethod()?.DeclaringType);
         #endregion
 
         #region public DaneSzukajPodmiotyApiController...
@@ -210,11 +210,11 @@ namespace WebApplicationNetCoreDev.Controllers.PortalApiGusApiRegonDataControler
                     nip = digitsOnly.Replace(nip, string.Empty);
                     if (null != pKluczUzytkownika && !string.IsNullOrWhiteSpace(pKluczUzytkownika))
                     {
-                        return await PortalApiGusApiRegonData.DaneSzukajPodmioty.DaneSzukajPodmiotyAsyncByNip(pKluczUzytkownika, nip);
+                        return await PortalApiGusApiRegonData.DaneSzukajPodmioty.DaneSzukajPodmiotyAsyncByNipAsync(pKluczUzytkownika, nip);
                     }
                     else
                     {
-                        return await PortalApiGusApiRegonData.DaneSzukajPodmioty.DaneSzukajPodmiotyAsyncByNip(nip);
+                        return await PortalApiGusApiRegonData.DaneSzukajPodmioty.DaneSzukajPodmiotyAsyncByNipAsync(nip);
                     }
                 }
             }
@@ -296,7 +296,7 @@ namespace WebApplicationNetCoreDev.Controllers.PortalApiGusApiRegonDataControler
                     nip = digitsOnly.Replace(nip, string.Empty);
                     if (null != pKluczUzytkownika && !string.IsNullOrWhiteSpace(pKluczUzytkownika))
                     {
-                        List<DaneSzukajPodmioty> daneSzukajPodmioty = await PortalApiGusApiRegonData.DaneSzukajPodmioty.DaneSzukajPodmiotyAsyncByNip(pKluczUzytkownika, nip);
+                        List<DaneSzukajPodmioty> daneSzukajPodmioty = await PortalApiGusApiRegonData.DaneSzukajPodmioty.DaneSzukajPodmiotyAsyncByNipAsync(pKluczUzytkownika, nip);
                         if (null != daneSzukajPodmioty && daneSzukajPodmioty.Count > 0)
                         {
                             return new KendoGrid<List<DaneSzukajPodmioty>>
@@ -308,7 +308,7 @@ namespace WebApplicationNetCoreDev.Controllers.PortalApiGusApiRegonDataControler
                     }
                     else
                     {
-                        List<DaneSzukajPodmioty> daneSzukajPodmioty = await PortalApiGusApiRegonData.DaneSzukajPodmioty.DaneSzukajPodmiotyAsyncByNip(nip);
+                        List<DaneSzukajPodmioty> daneSzukajPodmioty = await PortalApiGusApiRegonData.DaneSzukajPodmioty.DaneSzukajPodmiotyAsyncByNipAsync(nip);
                         if (null != daneSzukajPodmioty && daneSzukajPodmioty.Count > 0)
                         {
                             return new KendoGrid<List<DaneSzukajPodmioty>>
@@ -361,22 +361,22 @@ namespace WebApplicationNetCoreDev.Controllers.PortalApiGusApiRegonDataControler
                 {
                     if (null != pKluczUzytkownika && !string.IsNullOrWhiteSpace(pKluczUzytkownika))
                     {
-                        return await PortalApiGusApiRegonData.DaneSzukajPodmioty.DaneSzukajPodmiotyAsyncByRegony9zn(pKluczUzytkownika, regon);
+                        return await PortalApiGusApiRegonData.DaneSzukajPodmioty.DaneSzukajPodmiotyAsyncByRegony9znAsync(pKluczUzytkownika, regon);
                     }
                     else
                     {
-                        return await PortalApiGusApiRegonData.DaneSzukajPodmioty.DaneSzukajPodmiotyAsyncByRegony9zn(regon);
+                        return await PortalApiGusApiRegonData.DaneSzukajPodmioty.DaneSzukajPodmiotyAsyncByRegony9znAsync(regon);
                     }
                 }
                 if (null != regon && !string.IsNullOrWhiteSpace(regon) && regon.Length == 14)
                 {
                     if (null != pKluczUzytkownika && !string.IsNullOrWhiteSpace(pKluczUzytkownika))
                     {
-                        return await PortalApiGusApiRegonData.DaneSzukajPodmioty.DaneSzukajPodmiotyAsyncByRegony14zn(pKluczUzytkownika, regon);
+                        return await PortalApiGusApiRegonData.DaneSzukajPodmioty.DaneSzukajPodmiotyAsyncByRegony14znAsync(pKluczUzytkownika, regon);
                     }
                     else
                     {
-                        return await PortalApiGusApiRegonData.DaneSzukajPodmioty.DaneSzukajPodmiotyAsyncByRegony14zn(regon);
+                        return await PortalApiGusApiRegonData.DaneSzukajPodmioty.DaneSzukajPodmiotyAsyncByRegony14znAsync(regon);
                     }
                 }
             }
@@ -421,22 +421,22 @@ namespace WebApplicationNetCoreDev.Controllers.PortalApiGusApiRegonDataControler
                 {
                     if (null != pKluczUzytkownika && !string.IsNullOrWhiteSpace(pKluczUzytkownika))
                     {
-                        return await PortalApiGusApiRegonData.DaneSzukajPodmioty.DaneSzukajPodmiotyAsyncByRegony9zn(pKluczUzytkownika, regon);
+                        return await PortalApiGusApiRegonData.DaneSzukajPodmioty.DaneSzukajPodmiotyAsyncByRegony9znAsync(pKluczUzytkownika, regon);
                     }
                     else
                     {
-                        return await PortalApiGusApiRegonData.DaneSzukajPodmioty.DaneSzukajPodmiotyAsyncByRegony9zn(regon);
+                        return await PortalApiGusApiRegonData.DaneSzukajPodmioty.DaneSzukajPodmiotyAsyncByRegony9znAsync(regon);
                     }
                 }
                 if (null != regon && !string.IsNullOrWhiteSpace(regon) && regon.Length == 14)
                 {
                     if (null != pKluczUzytkownika && !string.IsNullOrWhiteSpace(pKluczUzytkownika))
                     {
-                        return await PortalApiGusApiRegonData.DaneSzukajPodmioty.DaneSzukajPodmiotyAsyncByRegony14zn(pKluczUzytkownika, regon);
+                        return await PortalApiGusApiRegonData.DaneSzukajPodmioty.DaneSzukajPodmiotyAsyncByRegony14znAsync(pKluczUzytkownika, regon);
                     }
                     else
                     {
-                        return await PortalApiGusApiRegonData.DaneSzukajPodmioty.DaneSzukajPodmiotyAsyncByRegony14zn(regon);
+                        return await PortalApiGusApiRegonData.DaneSzukajPodmioty.DaneSzukajPodmiotyAsyncByRegony14znAsync(regon);
                     }
                 }
             }
@@ -483,7 +483,7 @@ namespace WebApplicationNetCoreDev.Controllers.PortalApiGusApiRegonDataControler
                     {
                         if (null != pKluczUzytkownika && !string.IsNullOrWhiteSpace(pKluczUzytkownika))
                         {
-                            List<DaneSzukajPodmioty> daneSzukajPodmioty = await PortalApiGusApiRegonData.DaneSzukajPodmioty.DaneSzukajPodmiotyAsyncByRegony9zn(pKluczUzytkownika, regon);
+                            List<DaneSzukajPodmioty> daneSzukajPodmioty = await PortalApiGusApiRegonData.DaneSzukajPodmioty.DaneSzukajPodmiotyAsyncByRegony9znAsync(pKluczUzytkownika, regon);
                             return new KendoGrid<List<DaneSzukajPodmioty>>
                             {
                                 Total = daneSzukajPodmioty.Count,
@@ -492,7 +492,7 @@ namespace WebApplicationNetCoreDev.Controllers.PortalApiGusApiRegonDataControler
                         }
                         else
                         {
-                            List<DaneSzukajPodmioty> daneSzukajPodmioty = await PortalApiGusApiRegonData.DaneSzukajPodmioty.DaneSzukajPodmiotyAsyncByRegony9zn(regon);
+                            List<DaneSzukajPodmioty> daneSzukajPodmioty = await PortalApiGusApiRegonData.DaneSzukajPodmioty.DaneSzukajPodmiotyAsyncByRegony9znAsync(regon);
                             return new KendoGrid<List<DaneSzukajPodmioty>>
                             {
                                 Total = daneSzukajPodmioty.Count,
@@ -504,7 +504,7 @@ namespace WebApplicationNetCoreDev.Controllers.PortalApiGusApiRegonDataControler
                     {
                         if (null != pKluczUzytkownika && !string.IsNullOrWhiteSpace(pKluczUzytkownika))
                         {
-                            List<DaneSzukajPodmioty> daneSzukajPodmioty = await PortalApiGusApiRegonData.DaneSzukajPodmioty.DaneSzukajPodmiotyAsyncByRegony14zn(pKluczUzytkownika, regon);
+                            List<DaneSzukajPodmioty> daneSzukajPodmioty = await PortalApiGusApiRegonData.DaneSzukajPodmioty.DaneSzukajPodmiotyAsyncByRegony14znAsync(pKluczUzytkownika, regon);
                             return new KendoGrid<List<DaneSzukajPodmioty>>
                             {
                                 Total = daneSzukajPodmioty.Count,
@@ -513,7 +513,7 @@ namespace WebApplicationNetCoreDev.Controllers.PortalApiGusApiRegonDataControler
                         }
                         else
                         {
-                            List<DaneSzukajPodmioty> daneSzukajPodmioty = await PortalApiGusApiRegonData.DaneSzukajPodmioty.DaneSzukajPodmiotyAsyncByRegony14zn(regon);
+                            List<DaneSzukajPodmioty> daneSzukajPodmioty = await PortalApiGusApiRegonData.DaneSzukajPodmioty.DaneSzukajPodmiotyAsyncByRegony14znAsync(regon);
                             return new KendoGrid<List<DaneSzukajPodmioty>>
                             {
                                 Total = daneSzukajPodmioty.Count,

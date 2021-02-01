@@ -1,14 +1,141 @@
-﻿using System;
-using System.Globalization;
-using System.Threading.Tasks;
+using System;
 
 namespace TestConsoleApp
 {
     internal class Program
     {
-        private static async Task Main(string[] args)
+        private static void Main(string[] args)
         {
-            await WFAttachmentFiles.AttachWFAttachmentFilesAsync();
+
+            //var appSettings = new PortalApiGusApiRegonData.Models.AppSettings();
+
+            //Console.WriteLine(appSettings.GetConnectionString());
+
+            //var appSettings = Vies.Core.Database.Models.AppSettings.GetInstance();
+
+
+            //Console.WriteLine(appSettings.RsaProviderService.AsymmetricPublicKeyAsString);
+
+            //Console.WriteLine(appSettings.GetConnectionString());
+
+            //Console.WriteLine(appSettings.RsaProviderService.EncryptWithPrivateKey("0"));
+
+            //NetAppCommon.Crypto.BouncyCastle.Services.RsaProviderService rsaProviderService = appSettings.RsaProviderService;
+            ////var rsaProviderService = new NetAppCommon.Crypto.BouncyCastle.Services.RsaProviderService();
+
+            //Console.WriteLine(rsaProviderService.AsymmetricPublicKeyAsString);
+            //Console.WriteLine(rsaProviderService.AsymmetricPrivateKeyAsString);
+
+            //var connectionString = "Data Source=(LocalDB)\\MSSQLLocalDB; AttachDbFilename=%Environment.GetFolderPath(Environment.SpecialFolder.UserProfile)%\\MSSQLLocalDB\\MSSQLLocalDB.mdf; Database=%AttachDbFilename%; MultipleActiveResultSets=true; Integrated Security=SSPI; Trusted_Connection=Yes; Max Pool Size=65536; Pooling=True";
+            /////appSettings.GetConnectionString();
+            ////var encrypt = rsaProviderService.EncryptWithPrivateKey(connectionString);
+            ////var test1 = rsaProviderService.DecryptWithPrivateKey(encrypt);
+            ////var test2 = rsaProviderService.DecryptWithPublicKey(encrypt);
+            ////Console.WriteLine($" \n\n{connectionString} \n\n{encrypt} \n\n{test1} \n\n{test2} ");
+
+            //var aesIVProviderService = new NetAppCommon.Crypto.AesCryptography.Services.AesIVProviderService();
+            //var encrypt = aesIVProviderService.Encrypt(rsaProviderService.EncryptWithPrivateKey(connectionString), rsaProviderService.AsymmetricPublicKeyAsString);
+            //var decrypt = aesIVProviderService.Decpypt(encrypt, rsaProviderService.AsymmetricPublicKeyAsString);
+
+            //Console.WriteLine($"{ encrypt }\n\n{ rsaProviderService.DecryptWithPublicKey(decrypt) }");
+
+            //Console.WriteLine($"{ appSettings.RsaProviderService.EncryptWithPrivateKey(appSettings.ConnectionString) }");
+
+            //IsPrime(2);
+
+            //var encrypt = appSettings.RsaProviderService.EncryptWithPrivateKey("encrypt");
+            //Console.WriteLine($"{ appSettings.FilePath }");
+
+            //Console.WriteLine($"{ appSettings.AsymmetricPrivateKeyFilePath }");
+            //Console.WriteLine($"{ appSettings.AsymmetricPrivateKeyAsString }");
+
+            //Console.WriteLine($"{ appSettings.AsymmetricPublicKeyFilePath }");
+            //Console.WriteLine($"{ appSettings.AsymmetricPublicKeyAsString }");
+
+            //Console.WriteLine($"{ appSettings.ConnectionString } { appSettings.ConnectionString.Length }");
+
+            ///var ecs = appSettings.RsaProviderService.EncryptWithPrivateKey(appSettings.ConnectionString, appSettings.AsymmetricPrivateKeyAsString);
+
+            ///Console.WriteLine($"{ ecs } { ecs.Length }");
+
+            ///ecs = appSettings.RsaProviderService.EncryptWithPrivateKey("1", appSettings.AsymmetricPrivateKeyAsString);
+
+            ///Console.WriteLine($"{ ecs } { ecs.Length }");
+
+
+            //var rsaServiceProvider = new NetAppCommon.Crypto.BouncyCastle.Services.RsaProviderService(
+            //    appSettings.AsymmetricPrivateKeyFilePath,
+            //    appSettings.AsymmetricPublicKeyFilePath,
+            //    true
+            //    );
+
+
+            ////var specialFolderDesktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+
+            ////var rsaServiceProvider = new NetAppCommon.Crypto.BouncyCastle.Services.RsaProviderService(
+            ////    Path.Combine(specialFolderDesktopPath, "Klucze", "id_rsa"),
+            ////    Path.Combine(specialFolderDesktopPath, "Klucze", "id_rsa.pub"),
+            ////    true
+            ////    );
+
+
+            //Console.WriteLine($"{ rsaServiceProvider.AsymmetricPrivateKeyAsString }");
+            //Console.WriteLine($"{ rsaServiceProvider.AsymmetricPublicKeyAsString }");
+
+            //var text = appSettings.ConnectionString;
+            //var encrypt = rsaServiceProvider.EncryptWithPrivateKey(text);
+            //Console.WriteLine(rsaServiceProvider.DecryptWithPrivateKey(encrypt));
+
+            //Console.WriteLine(rsaServiceProvider.DecryptWithPublicKey(encrypt));
+
+            //id_rsa and the public key named id_rsa.pub
+            //rsaServiceProvider.SaveAsymmetricKeyPairToFile();
+
+            //var publicKeyParam = DotNetUtilities.GetRsaPublicKey(rsa.ExportParameters(false));
+            //var publicKey = SubjectPublicKeyInfoFactory.CreateSubjectPublicKeyInfo(publicKeyParam).GetDerEncoded();
+
+
+            //var appSettings = new NetAppCommon.AppSettings.Models.AppSettingsModel();
+            //var appSettingsRepository = new NetAppCommon.AppSettings.Repositories.AppSettingsRepository();
+            //Console.WriteLine($"{ appSettings.FileName } { appSettings.FilePath } { appSettings.GetConnectionString() }");
+            ////appSettings.ConnectionString = "Nowa wartość ustawienia";
+            ////appSettings = NetAppCommon.AppSettings.Repositories.AppSettingsRepository.GetInstance().MergeAndCopyToUserDirectory(appSettings);
+            //Console.WriteLine($"{ appSettings.FileName } { appSettings.FilePath } { appSettings.GetConnectionString() }");
+            //Console.WriteLine($"{ appSettings.BaseDirectory } { appSettings.UserProfileDirectory } ");
+            //var portalApiGusKey = await appSettingsRepository.GetValueAsync<string>("PortalApiGusKey");
+            //Console.WriteLine($" { portalApiGusKey } { await appSettingsRepository.GetValueAsync<string>("PortalApiGusKey") } ");
+
+            //var appSettings = new Vies.Core.Database.Models.AppSettings();
+            //appSettings = new Vies.Core.Database.Models.AppSettings();
+            //appSettings = new Vies.Core.Database.Models.AppSettings();
+
+            //Console.WriteLine($"{ appSettings.FileName } { appSettings.FilePath } { appSettings.GetConnectionString() }");
+            //Console.WriteLine($"{ appSettings.BaseDirectory } { appSettings.UserProfileDirectory } ");
+            //Console.WriteLine($"{ appSettings.LastMigrateDateTime } ");
+            //await appSettings.AppSettingsRepository.SaveAsync(appSettings);
+            //appSettings.LastMigrateDateTime = DateTime.Now;
+            //await appSettings.AppSettingsRepository.SaveAsync(appSettings);
+
+            //Microsoft.EntityFrameworkCore.DbContextOptions<ViesCoreDatabaseContext> dbContextOptions = appSettings.GetDbContextOptions<ViesCoreDatabaseContext>();
+            //var viesCoreDatabaseContext = new ViesCoreDatabaseContext(dbContextOptions);
+
+            //Console.WriteLine($"{ appSettings.FileName } { appSettings.FilePath } { appSettings.GetConnectionString() } { appSettings.GetConnectionString() }");
+
+            //Console.WriteLine($" { await viesCoreDatabaseContext.Database.CanConnectAsync() } ");
+
+            //appSettingsRepository.GetValueAsync<string>("PortalApiGusKey");
+            //await NetAppCommon.AppSettings.Repositories.AppSettingsRepository.GetInstance().MergeAsync(appSettings);
+            //NetAppCommon.AppSettings.Repositories.AppSettingsRepository()
+            //Console.WriteLine($"{ appSettings.FileName } { appSettings.GetFilePath() }");
+            //Console.WriteLine($"{ appSettings.FileName } { appSettings.GetFilePath() }");
+            //Console.WriteLine($"{ appSettings.GetConnectionStringName() } { appSettings.ConnectionStringName }");
+            //Console.WriteLine($"{ appSettings.GetConnectionString() } { appSettings.ConnectionString }");
+            //Microsoft.EntityFrameworkCore.DbContextOptionsBuilder dbContextOptionsBuilder = new NetAppCommon.AppSettings.Models.AppSettingsModel().GetDbContextOptionsBuilder<Vies.Core.Database.Data.ViesCoreDatabaseContext>();
+            //Console.WriteLine(dbContextOptionsBuilder?.Options?.ContextType?.FullName);
+            //Microsoft.EntityFrameworkCore.DbContextOptions dbContextOptions = new NetAppCommon.AppSettings.Models.AppSettingsModel().GetDbContextOptions<Vies.Core.Database.Data.ViesCoreDatabaseContext>();
+            //Console.WriteLine(dbContextOptions?.ContextType?.FullName);
+
+            //await WFAttachmentFiles.AttachWFAttachmentFilesAsync();
 
             //string xml = File.ReadAllText(@"e:\test.xml");
             //XmlDocument doc = new XmlDocument();
@@ -60,9 +187,9 @@ namespace TestConsoleApp
             //Console.WriteLine($"Found { entity.Id } { entity.Nip } { entity.UniqueIdentifierOfTheLoggedInUser }");
             //Console.Read();
 
-            //NetAppCommon.DatabaseMssql.ParseConnectionString(@"Data Source=(LocalDB)\MSSQLLocalDB; AttachDbFilename=%Environment.GetFolderPath(Environment.SpecialFolder.UserProfile)%\MSSQLLocalDB\MSSQLLocalDB.mdf; Database=%AttachDBFilename%; MultipleActiveResultSets=true; Integrated Security=True; Trusted_Connection=Yes");
+            //NetAppCommon.DatabaseMssql.ParseConnectionString(@"Data Source=(LocalDB)\MSSQLLocalDB; AttachDbFilename=%Environment.GetFolderPath(Environment.SpecialFolder.UserProfile)%\MSSQLLocalDB\MSSQLLocalDB.mdf; Database=%AttachDBFilename%; MultipleActiveResultSets=true; Integrated Security=SSPI; Trusted_Connection=Yes");
 
-            //NetAppCommon.DatabaseMssql.ParseConnectionString(@"Data Source=(LocalDB)\MSSQLLocalDB; AttachDbFilename=%Environment.GetFolderPath(Environment.SpecialFolder.Programs)%\MSSQLLocalDB\MSSQLLocalDB.mdf; Database=%AttachDBFilename%; MultipleActiveResultSets=true; Integrated Security=True; Trusted_Connection=Yes");
+            //NetAppCommon.DatabaseMssql.ParseConnectionString(@"Data Source=(LocalDB)\MSSQLLocalDB; AttachDbFilename=%Environment.GetFolderPath(Environment.SpecialFolder.Programs)%\MSSQLLocalDB\MSSQLLocalDB.mdf; Database=%AttachDBFilename%; MultipleActiveResultSets=true; Integrated Security=SSPI; Trusted_Connection=Yes");
 
             //PortalApiGusApiRegonData.PortalApiGusApiRegonDataContext.DatabaseMdfCreate();
             //NetAppCommon.DatabaseMssqlMdf.GetInstance
@@ -179,3 +306,4 @@ namespace TestConsoleApp
         }
     }
 }
+

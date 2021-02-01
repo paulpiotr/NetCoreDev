@@ -5,14 +5,6 @@
         <h1 class="display-4">Welcome @System.Reflection.Assembly.GetEntryAssembly().GetName().Name</h1>
         <p>Learn Building Web apps with ASP.NET Core.</p>
         <p>
-            @*@foreach (var item in Enum.GetValues(typeof(Environment.SpecialFolder)))
-            {
-                var value = (Environment.SpecialFolder)item;
-                <p>
-                    @Html.Raw($"Environment.SpecialFolder.{value} = {Environment.GetFolderPath(value)}");
-                </p>
-                //Console.WriteLine($"Environment.SpecialFolder.{value} = {Environment.GetFolderPath(value)}");
-            }*@
             @NetAppCommon.HttpContextAccessor.AppContext.GetCurrentUserIdentityName()
         </p>
     </div>

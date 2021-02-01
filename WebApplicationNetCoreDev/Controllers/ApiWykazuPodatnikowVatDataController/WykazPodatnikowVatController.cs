@@ -1,5 +1,7 @@
-﻿using System;
+using System;
+using System.Net;
 using System.Reflection;
+using System.Threading.Tasks;
 using ApiWykazuPodatnikowVatData.Data;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -21,7 +23,7 @@ namespace WebApplicationNetCoreDev.Controllers.ApiWykazuPodatnikowVatDataControl
         /// <summary>
         /// Log4 Net Logger
         /// </summary>
-        private readonly log4net.ILog log4net = Log4netLogger.Log4netLogger.GetLog4netInstance(MethodBase.GetCurrentMethod().DeclaringType);
+        private readonly log4net.ILog _log4Net = Log4netLogger.Log4netLogger.GetLog4netInstance(MethodBase.GetCurrentMethod()?.DeclaringType);
         #endregion
 
         #region private readonly ApiWykazuPodatnikowVatDataDbContext _context;
@@ -66,7 +68,7 @@ namespace WebApplicationNetCoreDev.Controllers.ApiWykazuPodatnikowVatDataControl
             }
             catch (Exception e)
             {
-                log4net.Error(string.Format("\n{0}\n{1}\n{2}\n{3}\n", e.GetType(), e.InnerException?.GetType(), e.Message, e.StackTrace), e);
+                _log4Net.Error($"\n{e.GetType()}\n{e.InnerException?.GetType()}\n{e.Message}\n{e.StackTrace}\n", e);
             }
             return NotFound();
         }
@@ -91,7 +93,7 @@ namespace WebApplicationNetCoreDev.Controllers.ApiWykazuPodatnikowVatDataControl
             }
             catch (Exception e)
             {
-                log4net.Error(string.Format("\n{0}\n{1}\n{2}\n{3}\n", e.GetType(), e.InnerException?.GetType(), e.Message, e.StackTrace), e);
+                _log4Net.Error($"\n{e.GetType()}\n{e.InnerException?.GetType()}\n{e.Message}\n{e.StackTrace}\n", e);
             }
             return NotFound();
         }
@@ -116,7 +118,7 @@ namespace WebApplicationNetCoreDev.Controllers.ApiWykazuPodatnikowVatDataControl
             }
             catch (Exception e)
             {
-                log4net.Error(string.Format("\n{0}\n{1}\n{2}\n{3}\n", e.GetType(), e.InnerException?.GetType(), e.Message, e.StackTrace), e);
+                _log4Net.Error($"\n{e.GetType()}\n{e.InnerException?.GetType()}\n{e.Message}\n{e.StackTrace}\n", e);
             }
             return NotFound();
         }
@@ -142,7 +144,7 @@ namespace WebApplicationNetCoreDev.Controllers.ApiWykazuPodatnikowVatDataControl
             }
             catch (Exception e)
             {
-                log4net.Error(string.Format("\n{0}\n{1}\n{2}\n{3}\n", e.GetType(), e.InnerException?.GetType(), e.Message, e.StackTrace), e);
+                _log4Net.Error($"\n{e.GetType()}\n{e.InnerException?.GetType()}\n{e.Message}\n{e.StackTrace}\n", e);
             }
             return NotFound();
         }
@@ -165,38 +167,38 @@ namespace WebApplicationNetCoreDev.Controllers.ApiWykazuPodatnikowVatDataControl
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(AuthenticationSchemes = "Cookies")]
-        public async System.Threading.Tasks.Task<IActionResult> SettingsAsync([Bind("RestClientUrl, CacheLifeTime, CheckForUpdateAndMigrate, CheskForConnection, ConnectionString, CheckForUpdateEveryDays, LastMigrateDateTime")] ApiWykazuPodatnikowVatData.Models.AppSettings model)
+        public async System.Threading.Tasks.Task<IActionResult> SettingsAsync([Bind("RestClientUrl", "CacheLifeTime", "ConnectionString", "CheckForConnection", "CheckAndMigrate", "UseGlobalDatabaseConnectionSettings")] ApiWykazuPodatnikowVatData.Models.AppSettings model)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
-                    try
+                    if (model.CheckAndMigrate)
                     {
-                        await model.SaveAsync();
-                        if (model.CheckForUpdateAndMigrate)
-                        {
-                            try
-                            {
-                                ApiWykazuPodatnikowVatDataDbContext apiWykazuPodatnikowVatDataDbContext = await NetAppCommon.DatabaseMssql.CreateInstancesForDatabaseContextClassAsync<ApiWykazuPodatnikowVatDataDbContext>();
-                                await apiWykazuPodatnikowVatDataDbContext.CheckForUpdateAndMigrateAsync();
-                            }
-                            catch (Exception e)
-                            {
-                                log4net.Error(string.Format("{0}, {1}", e.Message, e.StackTrace), e);
-                            }
-                        }
+                        model.LastMigrateDateTime = DateTime.MinValue;
                     }
-                    catch (Exception e)
+                    if (model.UseGlobalDatabaseConnectionSettings)
                     {
-                        log4net.Error(string.Format("{0}, {1}", e.Message, e.StackTrace), e);
+                        model.ConnectionString = NetAppCommon.AppSettings.Models.AppSettingsModel.GetInstance().GetConnectionString();
                     }
-                    return Redirect(nameof(Index));
+                    await model.AppSettingsRepository.MergeAndSaveAsync(model);
+                    var url = string.Format("{0}://{1}{2}", HttpContext.Request.Scheme, HttpContext.Request.Host, Url.Action("RedirectAfterStatus", "Home"));
+                    var content = new WebClient().DownloadString(url);
+                    await Task.Run(() =>
+                    {
+                        Program.Shutdown();
+                    });
+                    return new ContentResult
+                    {
+                        ContentType = "text/html",
+                        StatusCode = (int)HttpStatusCode.OK,
+                        Content = content
+                    };
                 }
             }
             catch (Exception e)
             {
-                log4net.Error(string.Format("{0}, {1}", e.Message, e.StackTrace), e);
+                _log4Net.Error($"\n{e.GetType()}\n{e.InnerException?.GetType()}\n{e.Message}\n{e.StackTrace}\n", e);
                 return NotFound(e);
             }
             return View(model);
@@ -222,7 +224,7 @@ namespace WebApplicationNetCoreDev.Controllers.ApiWykazuPodatnikowVatDataControl
             }
             catch (Exception e)
             {
-                log4net.Error(string.Format("\n{0}\n{1}\n{2}\n{3}\n", e.GetType(), e.InnerException?.GetType(), e.Message, e.StackTrace), e);
+                _log4Net.Error($"\n{e.GetType()}\n{e.InnerException?.GetType()}\n{e.Message}\n{e.StackTrace}\n", e);
             }
             return NotFound();
         }
@@ -247,7 +249,7 @@ namespace WebApplicationNetCoreDev.Controllers.ApiWykazuPodatnikowVatDataControl
             }
             catch (Exception e)
             {
-                log4net.Error(string.Format("\n{0}\n{1}\n{2}\n{3}\n", e.GetType(), e.InnerException?.GetType(), e.Message, e.StackTrace), e);
+                _log4Net.Error($"\n{e.GetType()}\n{e.InnerException?.GetType()}\n{e.Message}\n{e.StackTrace}\n", e);
             }
             return NotFound();
         }

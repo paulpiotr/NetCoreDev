@@ -1,10 +1,10 @@
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Reflection;
-using WebconIntegrationSystem.Repositories.BPSMainAtt;
-using WebconIntegrationSystem.Models.BPSMainAtt;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using WebconIntegrationSystem.Models.BPSMainAtt;
+using WebconIntegrationSystem.Repositories.BPSMainAtt;
 
 namespace WebApplicationNetCoreDev.Controllers.WebconIntegrationSystemController.BPSMainAtt
 {
@@ -16,7 +16,7 @@ namespace WebApplicationNetCoreDev.Controllers.WebconIntegrationSystemController
         /// <summary>
         /// Log4 Net Logger
         /// </summary>
-        private readonly log4net.ILog log4net = Log4netLogger.Log4netLogger.GetLog4netInstance(MethodBase.GetCurrentMethod().DeclaringType);
+        private readonly log4net.ILog log4net = Log4netLogger.Log4netLogger.GetLog4netInstance(MethodBase.GetCurrentMethod()?.DeclaringType);
         #endregion
 
         #region public IActionResult Index()
@@ -41,7 +41,7 @@ namespace WebApplicationNetCoreDev.Controllers.WebconIntegrationSystemController
             }
             catch (Exception e)
             {
-                log4net.Error(string.Format("\n{0}\n{1}\n{2}\n{3}\n", e.GetType(), e.InnerException?.GetType(), e.Message, e.StackTrace), e);
+                log4net.Error($"\n{e.GetType()}\n{e.InnerException?.GetType()}\n{e.Message}\n{e.StackTrace}\n", e);
             }
             return NotFound();
         }
@@ -56,7 +56,7 @@ namespace WebApplicationNetCoreDev.Controllers.WebconIntegrationSystemController
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(AuthenticationSchemes = "Cookies")]
-        public async Task<IActionResult> SettingsAsync([Bind("ConnectionString", "CheskForConnection")] AppSettings model)
+        public async Task<IActionResult> SettingsAsync([Bind("ConnectionString", "CheckForConnection")] AppSettings model)
         {
             try
             {
@@ -68,7 +68,7 @@ namespace WebApplicationNetCoreDev.Controllers.WebconIntegrationSystemController
             }
             catch (Exception e)
             {
-                log4net.Error(string.Format("\n{0}\n{1}\n{2}\n{3}\n", e.GetType(), e.InnerException?.GetType(), e.Message, e.StackTrace), e);
+                log4net.Error($"\n{e.GetType()}\n{e.InnerException?.GetType()}\n{e.Message}\n{e.StackTrace}\n", e);
                 return NotFound(e);
             }
             return View(model);
@@ -88,7 +88,7 @@ namespace WebApplicationNetCoreDev.Controllers.WebconIntegrationSystemController
             }
             catch (Exception e)
             {
-                log4net.Error(string.Format("\n{0}\n{1}\n{2}\n{3}\n", e.GetType(), e.InnerException?.GetType(), e.Message, e.StackTrace), e);
+                log4net.Error($"\n{e.GetType()}\n{e.InnerException?.GetType()}\n{e.Message}\n{e.StackTrace}\n", e);
             }
             return NotFound();
         }

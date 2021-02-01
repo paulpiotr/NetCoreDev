@@ -1,8 +1,11 @@
-﻿using System;
+using System;
 using System.Reflection;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using PortalApiGusApiRegonData.Models;
 using PortalApiGusApiRegonData.Data;
+using System.Net;
 
 namespace WebApplicationNetCoreDev.Controllers.PortalApiGusApiRegonDataControler
 {
@@ -15,7 +18,7 @@ namespace WebApplicationNetCoreDev.Controllers.PortalApiGusApiRegonDataControler
         /// <summary>
         /// Log4 Net Logger
         /// </summary>
-        private readonly log4net.ILog log4net = Log4netLogger.Log4netLogger.GetLog4netInstance(MethodBase.GetCurrentMethod().DeclaringType);
+        private readonly log4net.ILog _log4Net = Log4netLogger.Log4netLogger.GetLog4netInstance(MethodBase.GetCurrentMethod()?.DeclaringType);
         #endregion
 
         private readonly PortalApiGusApiRegonDataDbContext _context;
@@ -55,11 +58,11 @@ namespace WebApplicationNetCoreDev.Controllers.PortalApiGusApiRegonDataControler
         {
             try
             {
-                return View(new PortalApiGusApiRegonData.Models.AppSettings());
+                return View(new AppSettings());
             }
             catch (Exception e)
             {
-                log4net.Error(string.Format("\n{0}\n{1}\n{2}\n{3}\n", e.GetType(), e.InnerException?.GetType(), e.Message, e.StackTrace), e);
+                _log4Net.Error($"\n{e.GetType()}\n{e.InnerException?.GetType()}\n{e.Message}\n{e.StackTrace}\n", e);
             }
             return NotFound();
         }
@@ -82,38 +85,38 @@ namespace WebApplicationNetCoreDev.Controllers.PortalApiGusApiRegonDataControler
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(AuthenticationSchemes = "Cookies")]
-        public async System.Threading.Tasks.Task<IActionResult> SettingsAsync([Bind("PortalApiGusKey, CacheLifeTime, ConnectionString, CheskForConnection, CheckForUpdateAndMigrate")] PortalApiGusApiRegonData.Models.AppSettings model)
+        public async Task<IActionResult> SettingsAsync([Bind("PortalApiGusKey", "CacheLifeTime", "ConnectionString", "CheckForConnection", "CheckAndMigrate", "UseGlobalDatabaseConnectionSettings")] AppSettings model)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
-                    try
+                    if (model.CheckAndMigrate)
                     {
-                        await model.SaveAsync();
-                        if (model.CheckForUpdateAndMigrate)
-                        {
-                            try
-                            {
-                                PortalApiGusApiRegonDataDbContext portalApiGusApiRegonDataDbContext = await NetAppCommon.DatabaseMssql.CreateInstancesForDatabaseContextClassAsync<PortalApiGusApiRegonDataDbContext>();
-                                await portalApiGusApiRegonDataDbContext.CheckForUpdateAndMigrateAsync();
-                            }
-                            catch (Exception e)
-                            {
-                                log4net.Error(string.Format("{0}, {1}", e.Message, e.StackTrace), e);
-                            }
-                        }
+                        model.LastMigrateDateTime = DateTime.MinValue;
                     }
-                    catch (Exception e)
+                    if (model.UseGlobalDatabaseConnectionSettings)
                     {
-                        log4net.Error(string.Format("{0}, {1}", e.Message, e.StackTrace), e);
+                        model.ConnectionString = NetAppCommon.AppSettings.Models.AppSettingsModel.GetInstance().GetConnectionString();
                     }
-                    return Redirect(nameof(Index));
+                    await model.AppSettingsRepository.MergeAndSaveAsync(model);
+                    var url = string.Format("{0}://{1}{2}", HttpContext.Request.Scheme, HttpContext.Request.Host, Url.Action("RedirectAfterStatus", "Home"));
+                    var content = new WebClient().DownloadString(url);
+                    await Task.Run(() =>
+                    {
+                        Program.Shutdown();
+                    });
+                    return new ContentResult
+                    {
+                        ContentType = "text/html",
+                        StatusCode = (int)HttpStatusCode.OK,
+                        Content = content
+                    };
                 }
             }
             catch (Exception e)
             {
-                log4net.Error(string.Format("{0}, {1}", e.Message, e.StackTrace), e);
+                _log4Net.Error($"\n{e.GetType()}\n{e.InnerException?.GetType()}\n{e.Message}\n{e.StackTrace}\n", e);
                 return NotFound(e);
             }
             return View(model);

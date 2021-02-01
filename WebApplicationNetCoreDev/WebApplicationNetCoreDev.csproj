@@ -6,11 +6,13 @@
     <DockerComposeProjectPath>..\docker-compose.dcproj</DockerComposeProjectPath>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <DockerfileContext>.</DockerfileContext>
-    <Version>2.0.0</Version>
-    <AssemblyVersion>2.1.1.1</AssemblyVersion>
-    <FileVersion>2.1.1.1</FileVersion>
-    <NeutralLanguage></NeutralLanguage>
+    <Version>5.0.1</Version>
+    <AssemblyVersion>5.0.0.1</AssemblyVersion>
+    <FileVersion>5.0.0.1</FileVersion>
+    <NeutralLanguage>pl-PL</NeutralLanguage>
     <UserSecretsId>3980f927-6963-47ff-b7f5-1f807a305905</UserSecretsId>
+    <RepositoryUrl>http://tfs:8080/tfs/ISK/_git/NetCoreDev</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
   </PropertyGroup>
   <ItemGroup>
     <Compile Remove="lib\**" />
@@ -38,29 +40,32 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Dapper" Version="2.0.78" />
-    <PackageReference Include="IdentityModel" Version="4.5.0" />
+    <PackageReference Include="IdentityModel" Version="5.0.0" />
     <PackageReference Include="IdentityServer4" Version="4.1.1" />
     <PackageReference Include="log4net" Version="2.0.12" />
     <PackageReference Include="log4net-loggly" Version="9.0.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="5.0.1" />
-    <PackageReference Include="Microsoft.AspNetCore.Authentication.Negotiate" Version="5.0.1" />
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="5.0.0" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.0" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.0">
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="5.0.2" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.Negotiate" Version="5.0.2" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="5.0.2" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.2" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.2">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="5.0.0" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="5.0.0">
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="5.0.2" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.2" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="5.0.2">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.10.9" />
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="5.0.0" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="5.0.1" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\IUIntegrationSystem\src\IUIntegrationSystem.Server.Core\IUIntegrationSystem.Server.Core.csproj" />
+    <ProjectReference Include="..\EncryptDecrypt\EncryptDecrypt\EncryptDecrypt.csproj" />
+    <ProjectReference Include="..\EuropeanCommission\src\TaxationAndCustomsUnion\Vies.Core.Database\Vies.Core.Database.csproj" />
+    <ProjectReference Include="..\EuropeanCommission\src\TaxationAndCustomsUnion\Vies.Core\Vies.Core.csproj" />
     <ProjectReference Include="..\Log4netLogger\Log4netLogger.csproj" />
     <ProjectReference Include="..\NetAppCommon\NetAppCommon\NetAppCommon.csproj" />
     <ProjectReference Include="..\PortalApiGus\ApiRegon\PortalApiGusApiRegonData\PortalApiGusApiRegonData.csproj" />
@@ -70,11 +75,11 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Kendo.Mvc">
-      <HintPath>..\env\telerik.ui.for.aspnet.core\2020.2.617\lib\netcoreapp3.1\Kendo.Mvc.dll</HintPath>
+      <HintPath>..\.env\telerik.ui.for.aspnet.core\2020.2.617\lib\netcoreapp3.1\Kendo.Mvc.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Content Update="appsettings.Development.json">
+    <Content Update="appsettings.setup.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Update="appsettings.json">
@@ -98,7 +103,7 @@
     </None>
   </ItemGroup>
   <Target Name="SetEnvConfig" BeforeTargets="Compile">
-    <Copy SourceFiles="..\env\log4net.debug.config" DestinationFiles="log4net.config" OverwriteReadOnlyFiles="true" Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' " />
-    <Copy SourceFiles="..\env\log4net.release.config" DestinationFiles="log4net.config" OverwriteReadOnlyFiles="true" Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' " />
+    <Copy SourceFiles="..\.env\log4net.debug.config" DestinationFiles="log4net.config" OverwriteReadOnlyFiles="true" Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' " />
+    <Copy SourceFiles="..\.env\log4net.release.config" DestinationFiles="log4net.config" OverwriteReadOnlyFiles="true" Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' " />
   </Target>
 </Project>

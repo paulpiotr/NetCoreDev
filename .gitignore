@@ -363,3 +363,5 @@ RabbitMQPublisherTest/
 RabbitmqDockerCompose/
 WebApplicationTestDocker/
 .WebApplicationNetCoreDevInstaller/
+WebApplicationAngular/
+WebApplicationReact/

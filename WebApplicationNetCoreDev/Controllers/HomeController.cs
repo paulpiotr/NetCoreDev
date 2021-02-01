@@ -1,4 +1,4 @@
-﻿using System.Diagnostics;
+using System.Diagnostics;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -15,11 +15,19 @@ namespace WebApplicationNetCoreDev.Controllers
         {
             _logger = logger;
         }
+
         [AllowAnonymous]
-        public IActionResult Index([FromQuery] string UserName, [FromQuery] string ReturnUrl)
+        public IActionResult RedirectAfterStatus()
         {
             return View();
         }
+
+        [AllowAnonymous]
+        public IActionResult Index(/*[FromQuery] string userName, [FromQuery] string returnUrl*/)
+        {
+            return View();
+        }
+
         //[Authorize(Roles = "Administrator")]
         //[Authorize(Policy = "Administrator")]
         [Authorize(AuthenticationSchemes = "Cookies", Policy = null, Roles = "User")]
