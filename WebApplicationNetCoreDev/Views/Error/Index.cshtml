@@ -1,5 +1,6 @@
-﻿@{ ViewData["Title"] = "Error Page"; }
+﻿@using System.Reflection
+@{ ViewData["Title"] = "Error Page"; }
 <div class="text-center">
-    <h1 class="display-4 text-dark">Error, We have a problem in @System.Reflection.Assembly.GetEntryAssembly().GetName().Name</h1>
+    <h1 class="display-4 text-dark">Error, We have a problem in @Assembly.GetEntryAssembly().GetName().Name</h1>
     <p class="display-4 text-dark">Sorry, an error occurred while executing your request.</p>
 </div>

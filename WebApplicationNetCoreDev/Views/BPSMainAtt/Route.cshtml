@@ -1,12 +1,13 @@
-﻿@using Kendo.Mvc.UI;
-@using WebApplicationNetCoreDev.Helpers;
-
+﻿@using System.Reflection
+@using Kendo.Mvc.UI
+@using NetAppCommon.Models
+@using WebApplicationNetCoreDev.Helpers
 @model IEnumerable<NetAppCommon.Models.KendoGrid<NetAppCommon.Models.ControllerRoutingActions>>
 
-@{ string gridName = string.Format("{0}{1}", @System.Reflection.Assembly.GetEntryAssembly().GetName().Name, @System.Reflection.Assembly.GetAssembly(typeof(NetAppCommon.Models.ControllerRoutingActions)).GetName().Name); }
-@{ string gridDataSource = string.Format("{0}DataSource", gridName); }
-@{ string gridActionApiUrl = string.Format("{0}", "/api/BPSMainAttApi/RouteKendoGrid"); }
-@{ string windowName = string.Format("{0}Window", gridName); }
+@{ var gridName = string.Format("{0}{1}", Assembly.GetEntryAssembly().GetName().Name, Assembly.GetAssembly(typeof(ControllerRoutingActions)).GetName().Name); }
+@{ var gridDataSource = string.Format("{0}DataSource", gridName); }
+@{ var gridActionApiUrl = string.Format("{0}", "/api/BPSMainAttApi/RouteKendoGrid"); }
+@{ var windowName = string.Format("{0}Window", gridName); }
 @{ ViewData["Title"] = "Dostępne Akcje w System integracji Webcon BPS (BPSMainAtt)"; }
 @{ Layout = "~/Views/Shared/_LayoutAdmin.cshtml"; }
 
@@ -19,48 +20,48 @@
             .Items(items =>
             {
                 items.Add()
-                .Type(BreadcrumbItemType.RootItem)
-                .Href(Url.Action("Index", "DaneSzukajPodmioty"))
-                .Text("System integracji Webcon BPS (BPSMainAtt)")
-                .ShowText(true)
-                .Icon("home")
-                .ShowIcon(true);
+                    .Type(BreadcrumbItemType.RootItem)
+                    .Href(Url.Action("Index", "DaneSzukajPodmioty"))
+                    .Text("System integracji Webcon BPS (BPSMainAtt)")
+                    .ShowText(true)
+                    .Icon("home")
+                    .ShowIcon(true);
                 items.Add()
-                .Type(BreadcrumbItemType.Item)
-                .Href("javascript:void(0)")
-                .Text("Dostępne Akcje")
-                .ShowText(true)
-                .Icon("link-horizontal")
-                .ShowIcon(true);
+                    .Type(BreadcrumbItemType.Item)
+                    .Href("javascript:void(0)")
+                    .Text("Dostępne Akcje")
+                    .ShowText(true)
+                    .Icon("link-horizontal")
+                    .ShowIcon(true);
             }))
 
     </div>
 
     <div class="row overflow-auto">
 
-        @(Html.Kendo().DataSource<NetAppCommon.Models.ControllerRoutingActions>()
+        @(Html.Kendo().DataSource<ControllerRoutingActions>()
             .Name(gridDataSource)
             .Ajax(
                 dataSource => dataSource
-                .Batch(true)
-                .PageSize(1024)
-                .AutoSync(false)
-                .ServerOperation(false)
-                .Read(read => read.Url(gridActionApiUrl).Type(HttpVerbs.Get)
-            )))
-        @(Html.Kendo().Grid<NetAppCommon.Models.ControllerRoutingActions>()
+                    .Batch(true)
+                    .PageSize(1024)
+                    .AutoSync(false)
+                    .ServerOperation(false)
+                    .Read(read => read.Url(gridActionApiUrl).Type(HttpVerbs.Get)
+                    )))
+        @(Html.Kendo().Grid<ControllerRoutingActions>()
             .Name(gridName)
             .Columns(
-            columns =>
-            {
-                //columns.Bound(c => c.RouteId);
-                columns.Bound(c => c.RouteController);
-                columns.Bound(c => c.RouteAction);
-                columns.Bound(c => c.RouteAttributeInfoTemplate);
-                columns.Bound(c => c.RouteUrlAction);
-                columns.Bound(c => c.RouteUrlAbsoluteAction);
-                //columns.Bound(c => c.RouteParameters);
-            })
+                columns =>
+                {
+                    //columns.Bound(c => c.RouteId);
+                    columns.Bound(c => c.RouteController);
+                    columns.Bound(c => c.RouteAction);
+                    columns.Bound(c => c.RouteAttributeInfoTemplate);
+                    columns.Bound(c => c.RouteUrlAction);
+                    columns.Bound(c => c.RouteUrlAbsoluteAction);
+                    //columns.Bound(c => c.RouteParameters);
+                })
             .Selectable()
             .Events(e => e.Change("onChangeGridWidget"))
             .Sortable()
@@ -83,34 +84,36 @@
     .Events(e => e.Close("onClose").Open("onOpen")))
 
 @Html.Script(
-@<script type="text/javascript">
-        function onChangeGridWidget(e) {
-            $("#@windowName").data("kendoWindow").close();
-            var currentDataItem = e.sender.dataItem(this.select());
-            $("#@windowName").data("kendoWindow")
-                .open()
-                .content("<div class='p-3'><pre id='json-renderer'></pre></div>")
-                .refresh()
-                .title("Sczegóły " + currentDataItem.RouteId)
-                .center()
-                .setOptions({ width: $(document).width() * 0.62, height: $(document).height() * 0.62, position: { left: ($(document).width() * 0.38) / 2, top: ($(document).height() * 0.38) / 2 } });
-            $('#json-renderer').jsonViewer(JSON.parse(JSON.stringify(currentDataItem)));
-        }
-        function onClose() {
-        }
-        function onOpen() {
-        }
-        $(function () {
-            try {
-                var grid = $("#@gridName");
-                var gridDataSource = @gridDataSource;
-                var gridWidget = grid.data("kendoGrid");
-                gridWidget.wrapper.height($(".page-wrapper").first().height() * 0.9);
-                gridWidget.resize();
-                gridWidget.resize(true);
-            }
-            catch (e) {
-                console.log(e);
-            }
-        });
-</script>)
+    @<script type="text/javascript">
+         function onChangeGridWidget(e) {
+             $("#@windowName").data("kendoWindow").close();
+             var currentDataItem = e.sender.dataItem(this.select());
+             $("#@windowName").data("kendoWindow")
+                 .open()
+                 .content("<div class='p-3'><pre id='json-renderer'></pre></div>")
+                 .refresh()
+                 .title("Sczegóły " + currentDataItem.RouteId)
+                 .center()
+                 .setOptions({ width: $(document).width() * 0.62, height: $(document).height() * 0.62, position: { left: ($(document).width() * 0.38) / 2, top: ($(document).height() * 0.38) / 2 } });
+             $('#json-renderer').jsonViewer(JSON.parse(JSON.stringify(currentDataItem)));
+         }
+
+         function onClose() {
+         }
+
+         function onOpen() {
+         }
+
+         $(function() {
+             try {
+                 var grid = $("#@gridName");
+                 var gridDataSource = @gridDataSource;
+                 var gridWidget = grid.data("kendoGrid");
+                 gridWidget.wrapper.height($(".page-wrapper").first().height() * 0.9);
+                 gridWidget.resize();
+                 gridWidget.resize(true);
+             } catch (e) {
+                 console.log(e);
+             }
+         });
+     </script>)

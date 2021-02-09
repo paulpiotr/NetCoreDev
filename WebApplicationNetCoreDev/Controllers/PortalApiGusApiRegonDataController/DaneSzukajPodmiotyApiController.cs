@@ -1,15 +1,21 @@
-﻿using System;
+﻿#region using
+
+using System;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using log4net;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.EntityFrameworkCore;
+using NetAppCommon;
 using NetAppCommon.Models;
 using PortalApiGusApiRegonData.Data;
 using PortalApiGusApiRegonData.Models.DaneSzukajPodmioty;
+
+#endregion
 
 namespace WebApplicationNetCoreDev.Controllers.PortalApiGusApiRegonDataControler
 {
@@ -19,53 +25,64 @@ namespace WebApplicationNetCoreDev.Controllers.PortalApiGusApiRegonDataControler
     public class DaneSzukajPodmiotyApiController : ControllerBase
     {
         #region private readonly PortalApiGusApiRegonDataDbContext _context
+
         /// <summary>
-        /// Context do bazy danych as PortalApiGusApiRegonDataDbContext
+        ///     Context do bazy danych as PortalApiGusApiRegonDataDbContext
         /// </summary>
         private readonly PortalApiGusApiRegonDataDbContext _context;
+
         #endregion
 
         #region private readonly IActionDescriptorCollectionProvider _provider
+
         /// <summary>
-        /// Action Descriptor Collection Provider
+        ///     Action Descriptor Collection Provider
         /// </summary>
         private readonly IActionDescriptorCollectionProvider _provider;
+
         #endregion
 
         #region private readonly log4net.ILog log4net
+
         /// <summary>
-        /// Log4 Net Logger
+        ///     Log4 Net Logger
         /// </summary>
-        private readonly log4net.ILog log4net = Log4netLogger.Log4netLogger.GetLog4netInstance(MethodBase.GetCurrentMethod()?.DeclaringType);
+        private readonly ILog log4net =
+            Log4netLogger.Log4netLogger.GetLog4netInstance(MethodBase.GetCurrentMethod()?.DeclaringType);
+
         #endregion
 
         #region public DaneSzukajPodmiotyApiController...
+
         /// <summary>
-        /// Konstruktor
-        /// Constructor
+        ///     Konstruktor
+        ///     Constructor
         /// </summary>
         /// <param name="context">
-        /// Context do bazy danych as PortalApiGusApiRegonDataDbContext
-        /// Context to the database as PortalApiGusApiRegonDataDbContext
+        ///     Context do bazy danych as PortalApiGusApiRegonDataDbContext
+        ///     Context to the database as PortalApiGusApiRegonDataDbContext
         /// </param>
-        public DaneSzukajPodmiotyApiController(PortalApiGusApiRegonDataDbContext context, IActionDescriptorCollectionProvider provider)
+        public DaneSzukajPodmiotyApiController(PortalApiGusApiRegonDataDbContext context,
+            IActionDescriptorCollectionProvider provider)
         {
             _context = context;
             _provider = provider;
         }
+
         #endregion
 
         #region public async Task<ActionResult<List<ControllerRoutingActions>>> GetRouteAsync()
+
         /// <summary>
-        /// [Authorize(AuthenticationSchemes = "Bearer")]
-        /// [HttpGet("Route")]
-        /// GET: api/PortalApiGus/DaneSzukajPodmiotyApi/Route
-        /// Pobierz listę akcji (tras) dostępnych dla kontrolera i zwróć listę
-        /// Get the list of actions (routes) available for the controller and return the list
+        ///     [Authorize(AuthenticationSchemes = "Bearer")]
+        ///     [HttpGet("Route")]
+        ///     GET: api/PortalApiGus/DaneSzukajPodmiotyApi/Route
+        ///     Pobierz listę akcji (tras) dostępnych dla kontrolera i zwróć listę
+        ///     Get the list of actions (routes) available for the controller and return the list
         /// </summary>
         /// <returns>
-        /// Lista akcji (tras) dostępnych dla kontrolera jako lista obiektów ControllerRoutingActions
-        /// List of actions (routes) available to the controller as a list of ControllerRoutingActions objects
+        ///     Lista akcji (tras) dostępnych dla kontrolera jako lista obiektów ControllerRoutingActions
+        ///     List of actions (routes) available to the controller as a list of ControllerRoutingActions objects
         /// </returns>
         // GET: api/PortalApiGus/DaneSzukajPodmiotyApi/Route
         [Authorize(AuthenticationSchemes = "Bearer")]
@@ -74,7 +91,8 @@ namespace WebApplicationNetCoreDev.Controllers.PortalApiGusApiRegonDataControler
         {
             try
             {
-                return await NetAppCommon.ControllerRoute.GetRouteActionAsync(_provider, ControllerContext.ActionDescriptor.ControllerName.ToString(), Url, this);
+                return await ControllerRoute.GetRouteActionAsync(_provider,
+                    ControllerContext.ActionDescriptor.ControllerName, Url, this);
             }
             catch (Exception e)
             {
@@ -82,19 +100,21 @@ namespace WebApplicationNetCoreDev.Controllers.PortalApiGusApiRegonDataControler
                 return NotFound();
             }
         }
+
         #endregion
 
         #region public async Task<ActionResult<KendoGrid<List<ControllerRoutingActions>>>> GetRouteKendoGridAsync()
+
         /// <summary>
-        /// [Authorize(AuthenticationSchemes = "Cookies")]
-        /// [HttpGet("RouteKendoGrid")]
-        /// GET: api/PortalApiGus/DaneSzukajPodmiotyApi/RouteKendoGrid
-        /// Pobierz listę akcji (tras) dostępnych dla kontrolera i zwróć listę dla widoku KendoGrid
-        /// Get the list of actions (routes) available for the controller and return the list for the Kendo view
+        ///     [Authorize(AuthenticationSchemes = "Cookies")]
+        ///     [HttpGet("RouteKendoGrid")]
+        ///     GET: api/PortalApiGus/DaneSzukajPodmiotyApi/RouteKendoGrid
+        ///     Pobierz listę akcji (tras) dostępnych dla kontrolera i zwróć listę dla widoku KendoGrid
+        ///     Get the list of actions (routes) available for the controller and return the list for the Kendo view
         /// </summary>
         /// <returns>
-        /// Lista dostępnych tras routingu jako List dla KendoGrid
-        /// List of available routing routes as List for KendoGrid
+        ///     Lista dostępnych tras routingu jako List dla KendoGrid
+        ///     List of available routing routes as List for KendoGrid
         /// </returns>
         // GET: api/PortalApiGus/DaneSzukajPodmiotyApi/RouteKendoGrid
         [Authorize(AuthenticationSchemes = "Cookies")]
@@ -103,7 +123,8 @@ namespace WebApplicationNetCoreDev.Controllers.PortalApiGusApiRegonDataControler
         {
             try
             {
-                return await NetAppCommon.ControllerRoute.GetRouteActionForKendoGridAsync(_provider, ControllerContext.ActionDescriptor.ControllerName.ToString(), Url, this);
+                return await ControllerRoute.GetRouteActionForKendoGridAsync(_provider,
+                    ControllerContext.ActionDescriptor.ControllerName, Url, this);
             }
             catch (Exception e)
             {
@@ -111,15 +132,17 @@ namespace WebApplicationNetCoreDev.Controllers.PortalApiGusApiRegonDataControler
                 return NotFound();
             }
         }
+
         #endregion
 
         #region public async Task<ActionResult<IEnumerable<DaneSzukajPodmioty>>> GetDaneSzukajPodmiotyAsync()
+
         /// <summary>
-        /// [Authorize(AuthenticationSchemes = "Bearer")]
-        /// [HttpGet]
-        /// GET: api/PortalApiGus/DaneSzukajPodmiotyApi
-        /// Pobierz dane wyszukanych podmiotów z bazy danych
-        /// Get data of found entities from the database
+        ///     [Authorize(AuthenticationSchemes = "Bearer")]
+        ///     [HttpGet]
+        ///     GET: api/PortalApiGus/DaneSzukajPodmiotyApi
+        ///     Pobierz dane wyszukanych podmiotów z bazy danych
+        ///     Get data of found entities from the database
         /// </summary>
         /// <returns>List<DaneSzukajPodmioty> lub NotFound()</returns>
         // GET: api/PortalApiGus/DaneSzukajPodmiotyApi
@@ -135,17 +158,20 @@ namespace WebApplicationNetCoreDev.Controllers.PortalApiGusApiRegonDataControler
             {
                 log4net.Error(string.Format("{0}, {1}", e.Message, e.StackTrace), e);
             }
+
             return NotFound();
         }
+
         #endregion
 
         #region public async Task<ActionResult<KendoGrid<List<DaneSzukajPodmioty>>>> GetDaneSzukajPodmiotyKendoGridAsync...
+
         /// <summary>
-        /// [Authorize(AuthenticationSchemes = "Cookies")]
-        /// [HttpGet("KendoGrid")]
-        /// Get: api/PortalApiGus/DaneSzukajPodmiotyApi/KendoGrid?sort=&page=1&pageSize=100&group=&filter=
-        /// Pobierz dane wyszukanych podmiotów z bazy danych
-        /// Get data of found entities from the database
+        ///     [Authorize(AuthenticationSchemes = "Cookies")]
+        ///     [HttpGet("KendoGrid")]
+        ///     Get: api/PortalApiGus/DaneSzukajPodmiotyApi/KendoGrid?sort=&page=1&pageSize=100&group=&filter=
+        ///     Pobierz dane wyszukanych podmiotów z bazy danych
+        ///     Get data of found entities from the database
         /// </summary>
         /// <param name="sort">Parametr Kendo KendoGrid sort jako string lub null</param>
         /// <param name="page">Parametr Kendo KendoGrid page AS int lub null</param>
@@ -153,54 +179,63 @@ namespace WebApplicationNetCoreDev.Controllers.PortalApiGusApiRegonDataControler
         /// <param name="group">Parametr Kendo KendoGrid group jako string lub null</param>
         /// <param name="filter">Parametr Kendo KendoGrid filter jako string lub null</param>
         /// <returns>
-        /// Lista podmiotów jako lista obiektów DaneSzukajPodmioty dla widoku KendoGrid lub status NotFound
-        /// Entity list as a list of Data Objects Search Entities for a KendoGrid view or NotFound status
+        ///     Lista podmiotów jako lista obiektów DaneSzukajPodmioty dla widoku KendoGrid lub status NotFound
+        ///     Entity list as a list of Data Objects Search Entities for a KendoGrid view or NotFound status
         /// </returns>
         //Get: api/PortalApiGus/DaneSzukajPodmiotyApi/KendoGrid?sort=&page=1&pageSize=100&group=&filter=
         [Authorize(AuthenticationSchemes = "Cookies")]
         [HttpGet("KendoGrid")]
-        public async Task<ActionResult<KendoGrid<List<DaneSzukajPodmioty>>>> GetDaneSzukajPodmiotyKendoGridAsync([FromQuery] string sort = null, [FromQuery] int? page = null, [FromQuery] int? pageSize = null, [FromQuery] string group = null, [FromQuery] string filter = null)
+        public async Task<ActionResult<KendoGrid<List<DaneSzukajPodmioty>>>> GetDaneSzukajPodmiotyKendoGridAsync(
+            [FromQuery] string sort = null, [FromQuery] int? page = null, [FromQuery] int? pageSize = null,
+            [FromQuery] string group = null, [FromQuery] string filter = null)
         {
             try
             {
                 List<DaneSzukajPodmioty> daneSzukajPodmioty = await _context.DaneSzukajPodmioty.ToListAsync();
                 if (null != daneSzukajPodmioty && daneSzukajPodmioty.Count > 0)
                 {
-                    return new KendoGrid<List<DaneSzukajPodmioty>> { Total = daneSzukajPodmioty.Count, Data = daneSzukajPodmioty };
+                    return new KendoGrid<List<DaneSzukajPodmioty>>
+                    {
+                        Total = daneSzukajPodmioty.Count, Data = daneSzukajPodmioty
+                    };
                 }
             }
             catch (Exception e)
             {
                 log4net.Error(string.Format("{0}, {1}", e.Message, e.StackTrace), e);
             }
+
             return NotFound();
         }
+
         #endregion
 
         #region public async Task<ActionResult<IEnumerable<DaneSzukajPodmioty>>> GetDaneSzukajPodmiotyNipAsync...
+
         /// <summary>
-        /// [Authorize(AuthenticationSchemes = "Bearer")]
-        /// [HttpGet("Nip/{nip}/{pKluczUzytkownika?}")]
-        /// GET: api/PortalApiGus/DaneSzukajPodmiotyApi/Nip/{nip}/{pKluczUzytkownika?}
-        /// Pobierz dane podmiotu według nip z parametrów URL
-        /// Get entity data by nip from URL parameters
+        ///     [Authorize(AuthenticationSchemes = "Bearer")]
+        ///     [HttpGet("Nip/{nip}/{pKluczUzytkownika?}")]
+        ///     GET: api/PortalApiGus/DaneSzukajPodmiotyApi/Nip/{nip}/{pKluczUzytkownika?}
+        ///     Pobierz dane podmiotu według nip z parametrów URL
+        ///     Get entity data by nip from URL parameters
         /// </summary>
         /// <param name="nip">
-        /// NIP jako string
-        /// Tax ID NIP as a string
+        ///     NIP jako string
+        ///     Tax ID NIP as a string
         /// </param>
         /// <param name="pKluczUzytkownika">
-        /// Opcjonalnie klucz użytkownika API jako string
-        /// Optional API user key as string
+        ///     Opcjonalnie klucz użytkownika API jako string
+        ///     Optional API user key as string
         /// </param>
         /// <returns>
-        /// Lista podmiotów według NIP jako lista obiektów DaneSzukajPodmioty
-        /// List of DaneSzukajPodmioty according to NIP as a list of data objects
+        ///     Lista podmiotów według NIP jako lista obiektów DaneSzukajPodmioty
+        ///     List of DaneSzukajPodmioty according to NIP as a list of data objects
         /// </returns>
         // GET: api/PortalApiGus/DaneSzukajPodmiotyApi/Nip/{nip}/{pKluczUzytkownika?}
         [Authorize(AuthenticationSchemes = "Bearer")]
         [HttpGet("Nip/{nip}/{pKluczUzytkownika?}")]
-        public async Task<ActionResult<IEnumerable<DaneSzukajPodmioty>>> GetDaneSzukajPodmiotyNipAsync(string nip, string pKluczUzytkownika = null)
+        public async Task<ActionResult<IEnumerable<DaneSzukajPodmioty>>> GetDaneSzukajPodmiotyNipAsync(string nip,
+            string pKluczUzytkownika = null)
         {
             try
             {
@@ -210,46 +245,49 @@ namespace WebApplicationNetCoreDev.Controllers.PortalApiGusApiRegonDataControler
                     nip = digitsOnly.Replace(nip, string.Empty);
                     if (null != pKluczUzytkownika && !string.IsNullOrWhiteSpace(pKluczUzytkownika))
                     {
-                        return await PortalApiGusApiRegonData.DaneSzukajPodmioty.DaneSzukajPodmiotyAsyncByNipAsync(pKluczUzytkownika, nip);
+                        return await PortalApiGusApiRegonData.DaneSzukajPodmioty.DaneSzukajPodmiotyAsyncByNipAsync(
+                            pKluczUzytkownika, nip);
                     }
-                    else
-                    {
-                        return await PortalApiGusApiRegonData.DaneSzukajPodmioty.DaneSzukajPodmiotyAsyncByNipAsync(nip);
-                    }
+
+                    return await PortalApiGusApiRegonData.DaneSzukajPodmioty.DaneSzukajPodmiotyAsyncByNipAsync(nip);
                 }
             }
             catch (Exception e)
             {
                 log4net.Error(string.Format("{0}, {1}", e.Message, e.StackTrace), e);
             }
+
             return NotFound();
         }
+
         #endregion
 
         #region public async Task<ActionResult<IEnumerable<DaneSzukajPodmioty>>> GetDaneSzukajPodmiotyFromQueryNipAsync...
+
         /// <summary>
-        /// [Authorize(AuthenticationSchemes = "Bearer")]
-        /// [HttpGet("Nip")]
-        /// GET: api/PortalApiGus/DaneSzukajPodmiotyApi/Nip/?nip={nip}&pKluczUzytkownika={pKluczUzytkownika?}
-        /// Pobierz dane podmiotu według nip z parametrów GET
-        /// Get entity data by tax identification number from GET parameters
+        ///     [Authorize(AuthenticationSchemes = "Bearer")]
+        ///     [HttpGet("Nip")]
+        ///     GET: api/PortalApiGus/DaneSzukajPodmiotyApi/Nip/?nip={nip}&pKluczUzytkownika={pKluczUzytkownika?}
+        ///     Pobierz dane podmiotu według nip z parametrów GET
+        ///     Get entity data by tax identification number from GET parameters
         /// </summary>
         /// <param name="nip">
-        /// NIP jako string
-        /// Tax ID NIP as a string
+        ///     NIP jako string
+        ///     Tax ID NIP as a string
         /// </param>
         /// <param name="pKluczUzytkownika">
-        /// Opcjonalnie klucz użytkownika API jako string
-        /// Optional API user key as string
+        ///     Opcjonalnie klucz użytkownika API jako string
+        ///     Optional API user key as string
         /// </param>
         /// <returns>
-        /// Lista podmiotów według NIP jako lista obiektów DaneSzukajPodmioty
-        /// List of DaneSzukajPodmioty according to NIP as a list of data objects
+        ///     Lista podmiotów według NIP jako lista obiektów DaneSzukajPodmioty
+        ///     List of DaneSzukajPodmioty according to NIP as a list of data objects
         /// </returns>
         // GET: api/PortalApiGus/DaneSzukajPodmiotyApi/Nip/?nip={nip}&pKluczUzytkownika={pKluczUzytkownika?}
         [Authorize(AuthenticationSchemes = "Bearer")]
         [HttpGet("Nip")]
-        public async Task<ActionResult<IEnumerable<DaneSzukajPodmioty>>> GetDaneSzukajPodmiotyFromQueryNipAsync([FromQuery] string nip, [FromQuery] string pKluczUzytkownika = null)
+        public async Task<ActionResult<IEnumerable<DaneSzukajPodmioty>>> GetDaneSzukajPodmiotyFromQueryNipAsync(
+            [FromQuery] string nip, [FromQuery] string pKluczUzytkownika = null)
         {
             try
             {
@@ -259,34 +297,38 @@ namespace WebApplicationNetCoreDev.Controllers.PortalApiGusApiRegonDataControler
             {
                 log4net.Error(string.Format("{0}, {1}", e.Message, e.StackTrace), e);
             }
+
             return NotFound();
         }
+
         #endregion
 
         #region public async Task<ActionResult<KendoGrid<List<DaneSzukajPodmioty>>>> GetDaneSzukajPodmiotyKendoGridNipAsync...
+
         /// <summary>
-        /// [Authorize(AuthenticationSchemes = "Cookies")]
-        /// [HttpGet("KendoGridNip/{nip}/{pKluczUzytkownika?}")]
-        /// GET: api/PortalApiGus/DaneSzukajPodmiotyApi/KendoGridNip/{nip}/{pKluczUzytkownika}
-        /// Pobierz dane podmiotów według nip dla KendoGrid
-        /// Get entity data by tax identification number for KendoGrid
+        ///     [Authorize(AuthenticationSchemes = "Cookies")]
+        ///     [HttpGet("KendoGridNip/{nip}/{pKluczUzytkownika?}")]
+        ///     GET: api/PortalApiGus/DaneSzukajPodmiotyApi/KendoGridNip/{nip}/{pKluczUzytkownika}
+        ///     Pobierz dane podmiotów według nip dla KendoGrid
+        ///     Get entity data by tax identification number for KendoGrid
         /// </summary>
         /// <param name="nip">
-        /// NIP jako string
-        /// Tax ID NIP as a string
+        ///     NIP jako string
+        ///     Tax ID NIP as a string
         /// </param>
         /// <param name="pKluczUzytkownika">
-        /// Opcjonalnie klucz użytkownika API jako string lub null
-        /// Optional API user key as string or null
+        ///     Opcjonalnie klucz użytkownika API jako string lub null
+        ///     Optional API user key as string or null
         /// </param>
         /// <returns>
-        /// Lista podmiotów jako lista obiektów DaneSzukajPodmioty dla widoku KendoGrid lub status NotFound
-        /// Entity list as a list of Data Objects Search Entities for a KendoGrid view or NotFound status
+        ///     Lista podmiotów jako lista obiektów DaneSzukajPodmioty dla widoku KendoGrid lub status NotFound
+        ///     Entity list as a list of Data Objects Search Entities for a KendoGrid view or NotFound status
         /// </returns>
         // GET: api/PortalApiGus/DaneSzukajPodmiotyApi/KendoGridNip/{nip}/{pKluczUzytkownika}
         [Authorize(AuthenticationSchemes = "Cookies")]
         [HttpGet("KendoGridNip/{nip}/{pKluczUzytkownika?}")]
-        public async Task<ActionResult<KendoGrid<List<DaneSzukajPodmioty>>>> GetDaneSzukajPodmiotyKendoGridNipAsync(string nip, string pKluczUzytkownika = null)
+        public async Task<ActionResult<KendoGrid<List<DaneSzukajPodmioty>>>> GetDaneSzukajPodmiotyKendoGridNipAsync(
+            string nip, string pKluczUzytkownika = null)
         {
             try
             {
@@ -296,25 +338,26 @@ namespace WebApplicationNetCoreDev.Controllers.PortalApiGusApiRegonDataControler
                     nip = digitsOnly.Replace(nip, string.Empty);
                     if (null != pKluczUzytkownika && !string.IsNullOrWhiteSpace(pKluczUzytkownika))
                     {
-                        List<DaneSzukajPodmioty> daneSzukajPodmioty = await PortalApiGusApiRegonData.DaneSzukajPodmioty.DaneSzukajPodmiotyAsyncByNipAsync(pKluczUzytkownika, nip);
+                        List<DaneSzukajPodmioty> daneSzukajPodmioty =
+                            await PortalApiGusApiRegonData.DaneSzukajPodmioty.DaneSzukajPodmiotyAsyncByNipAsync(
+                                pKluczUzytkownika, nip);
                         if (null != daneSzukajPodmioty && daneSzukajPodmioty.Count > 0)
                         {
                             return new KendoGrid<List<DaneSzukajPodmioty>>
                             {
-                                Total = daneSzukajPodmioty.Count,
-                                Data = daneSzukajPodmioty
+                                Total = daneSzukajPodmioty.Count, Data = daneSzukajPodmioty
                             };
                         }
                     }
                     else
                     {
-                        List<DaneSzukajPodmioty> daneSzukajPodmioty = await PortalApiGusApiRegonData.DaneSzukajPodmioty.DaneSzukajPodmiotyAsyncByNipAsync(nip);
+                        List<DaneSzukajPodmioty> daneSzukajPodmioty =
+                            await PortalApiGusApiRegonData.DaneSzukajPodmioty.DaneSzukajPodmiotyAsyncByNipAsync(nip);
                         if (null != daneSzukajPodmioty && daneSzukajPodmioty.Count > 0)
                         {
                             return new KendoGrid<List<DaneSzukajPodmioty>>
                             {
-                                Total = daneSzukajPodmioty.Count,
-                                Data = daneSzukajPodmioty
+                                Total = daneSzukajPodmioty.Count, Data = daneSzukajPodmioty
                             };
                         }
                     }
@@ -324,34 +367,38 @@ namespace WebApplicationNetCoreDev.Controllers.PortalApiGusApiRegonDataControler
             {
                 log4net.Error(string.Format("{0}, {1}", e.Message, e.StackTrace), e);
             }
+
             return NotFound();
         }
+
         #endregion
 
         #region public async Task<ActionResult<IEnumerable<DaneSzukajPodmioty>>> GetDaneSzukajPodmiotyRegonAsync...
+
         /// <summary>
-        /// [Authorize(AuthenticationSchemes = "Bearer")]
-        /// [HttpGet("Regon/{regon}/{pKluczUzytkownika?}")]
-        /// Pobierz dane podmiotów według regon
-        /// Get data of entities by region
-        /// GET: api/PortalApiGus/DaneSzukajPodmiotyApi/Regon/{regon}/{pKluczUzytkownika?}
+        ///     [Authorize(AuthenticationSchemes = "Bearer")]
+        ///     [HttpGet("Regon/{regon}/{pKluczUzytkownika?}")]
+        ///     Pobierz dane podmiotów według regon
+        ///     Get data of entities by region
+        ///     GET: api/PortalApiGus/DaneSzukajPodmiotyApi/Regon/{regon}/{pKluczUzytkownika?}
         /// </summary>
         /// <param name="regon">
-        /// Regon 9 lub 14 znaków jako string
-        /// Regon 9 or 14 characters as a string
+        ///     Regon 9 lub 14 znaków jako string
+        ///     Regon 9 or 14 characters as a string
         /// </param>
         /// <param name="pKluczUzytkownika">
-        /// Opcjonalnie klucz użytkownika API jako string
-        /// Optional API user key as string
+        ///     Opcjonalnie klucz użytkownika API jako string
+        ///     Optional API user key as string
         /// </param>
         /// <returns>
-        /// Lista podmiotów według regon jako lista obiektów DaneSzukajPodmioty
-        /// List of entities by region as a list of DaneSzukajPodmioty
+        ///     Lista podmiotów według regon jako lista obiektów DaneSzukajPodmioty
+        ///     List of entities by region as a list of DaneSzukajPodmioty
         /// </returns>
         // GET: api/PortalApiGus/DaneSzukajPodmiotyApi/Regon/{regon}/{pKluczUzytkownika?}
         [Authorize(AuthenticationSchemes = "Bearer")]
         [HttpGet("Regon/{regon}/{pKluczUzytkownika?}")]
-        public async Task<ActionResult<IEnumerable<DaneSzukajPodmioty>>> GetDaneSzukajPodmiotyRegonAsync(string regon, string pKluczUzytkownika = null)
+        public async Task<ActionResult<IEnumerable<DaneSzukajPodmioty>>> GetDaneSzukajPodmiotyRegonAsync(string regon,
+            string pKluczUzytkownika = null)
         {
             try
             {
@@ -361,57 +408,62 @@ namespace WebApplicationNetCoreDev.Controllers.PortalApiGusApiRegonDataControler
                 {
                     if (null != pKluczUzytkownika && !string.IsNullOrWhiteSpace(pKluczUzytkownika))
                     {
-                        return await PortalApiGusApiRegonData.DaneSzukajPodmioty.DaneSzukajPodmiotyAsyncByRegony9znAsync(pKluczUzytkownika, regon);
+                        return await PortalApiGusApiRegonData.DaneSzukajPodmioty
+                            .DaneSzukajPodmiotyAsyncByRegony9znAsync(pKluczUzytkownika, regon);
                     }
-                    else
-                    {
-                        return await PortalApiGusApiRegonData.DaneSzukajPodmioty.DaneSzukajPodmiotyAsyncByRegony9znAsync(regon);
-                    }
+
+                    return await PortalApiGusApiRegonData.DaneSzukajPodmioty
+                        .DaneSzukajPodmiotyAsyncByRegony9znAsync(regon);
                 }
+
                 if (null != regon && !string.IsNullOrWhiteSpace(regon) && regon.Length == 14)
                 {
                     if (null != pKluczUzytkownika && !string.IsNullOrWhiteSpace(pKluczUzytkownika))
                     {
-                        return await PortalApiGusApiRegonData.DaneSzukajPodmioty.DaneSzukajPodmiotyAsyncByRegony14znAsync(pKluczUzytkownika, regon);
+                        return await PortalApiGusApiRegonData.DaneSzukajPodmioty
+                            .DaneSzukajPodmiotyAsyncByRegony14znAsync(pKluczUzytkownika, regon);
                     }
-                    else
-                    {
-                        return await PortalApiGusApiRegonData.DaneSzukajPodmioty.DaneSzukajPodmiotyAsyncByRegony14znAsync(regon);
-                    }
+
+                    return await PortalApiGusApiRegonData.DaneSzukajPodmioty
+                        .DaneSzukajPodmiotyAsyncByRegony14znAsync(regon);
                 }
             }
             catch (Exception e)
             {
                 log4net.Error(string.Format("{0}, {1}", e.Message, e.StackTrace), e);
             }
+
             return NotFound();
         }
+
         #endregion
 
         #region public async Task<ActionResult<IEnumerable<DaneSzukajPodmioty>>> GetDaneSzukajPodmiotyFromQueryRegonAsync...
+
         /// <summary>
-        /// [Authorize(AuthenticationSchemes = "Bearer")]
-        /// [HttpGet("Regon")]
-        /// Pobierz dane podmiotów według regon z parametrów zapytania GET
-        /// Get data of entities by region from GET query parameters
-        /// GET: api/PortalApiGus/DaneSzukajPodmiotyApi/Regon?regon={regon}&pKluczUzytkownika={pKluczUzytkownika}
+        ///     [Authorize(AuthenticationSchemes = "Bearer")]
+        ///     [HttpGet("Regon")]
+        ///     Pobierz dane podmiotów według regon z parametrów zapytania GET
+        ///     Get data of entities by region from GET query parameters
+        ///     GET: api/PortalApiGus/DaneSzukajPodmiotyApi/Regon?regon={regon}&pKluczUzytkownika={pKluczUzytkownika}
         /// </summary>
         /// <param name="regon">
-        /// Regon 9 lub 14 znaków jako string
-        /// Regon 9 or 14 characters as a string
+        ///     Regon 9 lub 14 znaków jako string
+        ///     Regon 9 or 14 characters as a string
         /// </param>
         /// <param name="pKluczUzytkownika">
-        /// Opcjonalnie klucz użytkownika API jako string
-        /// Optional API user key as string
+        ///     Opcjonalnie klucz użytkownika API jako string
+        ///     Optional API user key as string
         /// </param>
         /// <returns>
-        /// Lista podmiotów według regon jako lista obiektów DaneSzukajPodmioty
-        /// List of entities by region as a list of DaneSzukajPodmioty
+        ///     Lista podmiotów według regon jako lista obiektów DaneSzukajPodmioty
+        ///     List of entities by region as a list of DaneSzukajPodmioty
         /// </returns>
         // GET: api/PortalApiGus/DaneSzukajPodmiotyApi/Regon?regon={regon}&pKluczUzytkownika={pKluczUzytkownika}
         [Authorize(AuthenticationSchemes = "Bearer")]
         [HttpGet("Regon")]
-        public async Task<ActionResult<IEnumerable<DaneSzukajPodmioty>>> GetDaneSzukajPodmiotyFromQueryRegonAsync([FromQuery] string regon, [FromQuery] string pKluczUzytkownika = null)
+        public async Task<ActionResult<IEnumerable<DaneSzukajPodmioty>>> GetDaneSzukajPodmiotyFromQueryRegonAsync(
+            [FromQuery] string regon, [FromQuery] string pKluczUzytkownika = null)
         {
             try
             {
@@ -421,57 +473,62 @@ namespace WebApplicationNetCoreDev.Controllers.PortalApiGusApiRegonDataControler
                 {
                     if (null != pKluczUzytkownika && !string.IsNullOrWhiteSpace(pKluczUzytkownika))
                     {
-                        return await PortalApiGusApiRegonData.DaneSzukajPodmioty.DaneSzukajPodmiotyAsyncByRegony9znAsync(pKluczUzytkownika, regon);
+                        return await PortalApiGusApiRegonData.DaneSzukajPodmioty
+                            .DaneSzukajPodmiotyAsyncByRegony9znAsync(pKluczUzytkownika, regon);
                     }
-                    else
-                    {
-                        return await PortalApiGusApiRegonData.DaneSzukajPodmioty.DaneSzukajPodmiotyAsyncByRegony9znAsync(regon);
-                    }
+
+                    return await PortalApiGusApiRegonData.DaneSzukajPodmioty
+                        .DaneSzukajPodmiotyAsyncByRegony9znAsync(regon);
                 }
+
                 if (null != regon && !string.IsNullOrWhiteSpace(regon) && regon.Length == 14)
                 {
                     if (null != pKluczUzytkownika && !string.IsNullOrWhiteSpace(pKluczUzytkownika))
                     {
-                        return await PortalApiGusApiRegonData.DaneSzukajPodmioty.DaneSzukajPodmiotyAsyncByRegony14znAsync(pKluczUzytkownika, regon);
+                        return await PortalApiGusApiRegonData.DaneSzukajPodmioty
+                            .DaneSzukajPodmiotyAsyncByRegony14znAsync(pKluczUzytkownika, regon);
                     }
-                    else
-                    {
-                        return await PortalApiGusApiRegonData.DaneSzukajPodmioty.DaneSzukajPodmiotyAsyncByRegony14znAsync(regon);
-                    }
+
+                    return await PortalApiGusApiRegonData.DaneSzukajPodmioty
+                        .DaneSzukajPodmiotyAsyncByRegony14znAsync(regon);
                 }
             }
             catch (Exception e)
             {
                 log4net.Error(string.Format("{0}, {1}", e.Message, e.StackTrace), e);
             }
+
             return NotFound();
         }
+
         #endregion
 
         #region public async Task<ActionResult<KendoGrid<List<DaneSzukajPodmioty>>>> GetDaneSzukajPodmiotyKendoGridRegonAsync...
+
         /// <summary>
-        /// [Authorize(AuthenticationSchemes = "Cookies")]
-        /// [HttpGet("KendoGridRegon/{regon}/{pKluczUzytkownika?}")]
-        /// GET: api/PortalApiGus/DaneSzukajPodmiotyApi/KendoGridRegon/{regon}/{pKluczUzytkownika?}
-        /// Pobierz dane podmiotów według regon dla widoku KendoGridGrid
-        /// Get entity data by region for the KendoGrid view
+        ///     [Authorize(AuthenticationSchemes = "Cookies")]
+        ///     [HttpGet("KendoGridRegon/{regon}/{pKluczUzytkownika?}")]
+        ///     GET: api/PortalApiGus/DaneSzukajPodmiotyApi/KendoGridRegon/{regon}/{pKluczUzytkownika?}
+        ///     Pobierz dane podmiotów według regon dla widoku KendoGridGrid
+        ///     Get entity data by region for the KendoGrid view
         /// </summary>
         /// <param name="regon">
-        /// Regon 9 lub 14 znaków jako string
-        /// Regon 9 or 14 characters as a string
+        ///     Regon 9 lub 14 znaków jako string
+        ///     Regon 9 or 14 characters as a string
         /// </param>
         /// <param name="pKluczUzytkownika">
-        /// Opcjonalnie klucz użytkownika API jako string
-        /// Optional API user key as string
+        ///     Opcjonalnie klucz użytkownika API jako string
+        ///     Optional API user key as string
         /// </param>
         /// <returns>
-        /// Lista podmiotów jako lista obiektów DaneSzukajPodmioty dla widoku KendoGrid lub status NotFound
-        /// Entity list as a list of Data Objects Search Entities for a KendoGrid view or NotFound status
+        ///     Lista podmiotów jako lista obiektów DaneSzukajPodmioty dla widoku KendoGrid lub status NotFound
+        ///     Entity list as a list of Data Objects Search Entities for a KendoGrid view or NotFound status
         /// </returns>
         // GET: api/PortalApiGus/DaneSzukajPodmiotyApi/KendoGridRegon/{regon}/{pKluczUzytkownika?}
         [Authorize(AuthenticationSchemes = "Cookies")]
         [HttpGet("KendoGridRegon/{regon}/{pKluczUzytkownika?}")]
-        public async Task<ActionResult<KendoGrid<List<DaneSzukajPodmioty>>>> GetDaneSzukajPodmiotyKendoGridRegonAsync(string regon, string pKluczUzytkownika = null)
+        public async Task<ActionResult<KendoGrid<List<DaneSzukajPodmioty>>>> GetDaneSzukajPodmiotyKendoGridRegonAsync(
+            string regon, string pKluczUzytkownika = null)
         {
             try
             {
@@ -483,41 +540,44 @@ namespace WebApplicationNetCoreDev.Controllers.PortalApiGusApiRegonDataControler
                     {
                         if (null != pKluczUzytkownika && !string.IsNullOrWhiteSpace(pKluczUzytkownika))
                         {
-                            List<DaneSzukajPodmioty> daneSzukajPodmioty = await PortalApiGusApiRegonData.DaneSzukajPodmioty.DaneSzukajPodmiotyAsyncByRegony9znAsync(pKluczUzytkownika, regon);
+                            List<DaneSzukajPodmioty> daneSzukajPodmioty =
+                                await PortalApiGusApiRegonData.DaneSzukajPodmioty
+                                    .DaneSzukajPodmiotyAsyncByRegony9znAsync(pKluczUzytkownika, regon);
                             return new KendoGrid<List<DaneSzukajPodmioty>>
                             {
-                                Total = daneSzukajPodmioty.Count,
-                                Data = daneSzukajPodmioty
+                                Total = daneSzukajPodmioty.Count, Data = daneSzukajPodmioty
                             };
                         }
                         else
                         {
-                            List<DaneSzukajPodmioty> daneSzukajPodmioty = await PortalApiGusApiRegonData.DaneSzukajPodmioty.DaneSzukajPodmiotyAsyncByRegony9znAsync(regon);
+                            List<DaneSzukajPodmioty> daneSzukajPodmioty = await PortalApiGusApiRegonData
+                                .DaneSzukajPodmioty.DaneSzukajPodmiotyAsyncByRegony9znAsync(regon);
                             return new KendoGrid<List<DaneSzukajPodmioty>>
                             {
-                                Total = daneSzukajPodmioty.Count,
-                                Data = daneSzukajPodmioty
+                                Total = daneSzukajPodmioty.Count, Data = daneSzukajPodmioty
                             };
                         }
                     }
+
                     if (null != regon && !string.IsNullOrWhiteSpace(regon) && regon.Length == 14)
                     {
                         if (null != pKluczUzytkownika && !string.IsNullOrWhiteSpace(pKluczUzytkownika))
                         {
-                            List<DaneSzukajPodmioty> daneSzukajPodmioty = await PortalApiGusApiRegonData.DaneSzukajPodmioty.DaneSzukajPodmiotyAsyncByRegony14znAsync(pKluczUzytkownika, regon);
+                            List<DaneSzukajPodmioty> daneSzukajPodmioty =
+                                await PortalApiGusApiRegonData.DaneSzukajPodmioty
+                                    .DaneSzukajPodmiotyAsyncByRegony14znAsync(pKluczUzytkownika, regon);
                             return new KendoGrid<List<DaneSzukajPodmioty>>
                             {
-                                Total = daneSzukajPodmioty.Count,
-                                Data = daneSzukajPodmioty
+                                Total = daneSzukajPodmioty.Count, Data = daneSzukajPodmioty
                             };
                         }
                         else
                         {
-                            List<DaneSzukajPodmioty> daneSzukajPodmioty = await PortalApiGusApiRegonData.DaneSzukajPodmioty.DaneSzukajPodmiotyAsyncByRegony14znAsync(regon);
+                            List<DaneSzukajPodmioty> daneSzukajPodmioty = await PortalApiGusApiRegonData
+                                .DaneSzukajPodmioty.DaneSzukajPodmiotyAsyncByRegony14znAsync(regon);
                             return new KendoGrid<List<DaneSzukajPodmioty>>
                             {
-                                Total = daneSzukajPodmioty.Count,
-                                Data = daneSzukajPodmioty
+                                Total = daneSzukajPodmioty.Count, Data = daneSzukajPodmioty
                             };
                         }
                     }
@@ -527,8 +587,10 @@ namespace WebApplicationNetCoreDev.Controllers.PortalApiGusApiRegonDataControler
             {
                 log4net.Error(string.Format("{0}, {1}", e.Message, e.StackTrace), e);
             }
+
             return NotFound();
         }
+
         #endregion
     }
 }

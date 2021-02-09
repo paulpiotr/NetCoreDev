@@ -1,11 +1,13 @@
-﻿@{ ViewData["Title"] = "Home Page"; }
+﻿@using System.Reflection
+@using NetAppCommon
+@{ ViewData["Title"] = "Home Page"; }
 
 <div class="jumbotron bg-transparent">
     <div class="text-center">
-        <h1 class="display-4">Welcome @System.Reflection.Assembly.GetEntryAssembly().GetName().Name</h1>
+        <h1 class="display-4">Welcome @Assembly.GetEntryAssembly().GetName().Name</h1>
         <p>Learn Building Web apps with ASP.NET Core.</p>
         <p>
-            @NetAppCommon.HttpContextAccessor.AppContext.GetCurrentUserIdentityName()
+            @HttpContextAccessor.AppContext.GetCurrentUserIdentityName()
         </p>
     </div>
 </div>

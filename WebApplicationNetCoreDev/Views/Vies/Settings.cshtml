@@ -1,0 +1,160 @@
+﻿@using WebApplicationNetCoreDev.Helpers
+@model Vies.Core.Database.Models.AppSettings
+
+@{ ViewData["Title"] = "Ustawienia aplikacja " + Model.GetType().FullName; }
+@{ Layout = "~/Views/Shared/_LayoutAdmin.cshtml"; }
+
+<div class="card bg-info text-white m-0 p-0 align-middle shadow">
+    <div class="card-header text-left">
+        <i class="ti-settings"></i> @ViewData["Title"]
+    </div>
+    <div class="card-body bg-white">
+        @if (!ViewData.ModelState.IsValid)
+        {
+            foreach (var modelState in ViewData.ModelState.Values)
+            {
+                foreach (var error in modelState.Errors)
+                {
+                    if (error.ErrorMessage.Contains("DbContextOption") || error.ErrorMessage.Contains("DbContextOptionsBuilder"))
+                    {
+                        <p class="alert alert-danger m-t-10 m-b-10">
+                            @Html.Raw(error.ErrorMessage)
+                        </p>
+                    }
+                }
+            }
+        }
+        <form class="form-horizontal form-material" asp-controller="Vies" asp-action="Settings" asp-route-ReturnUrl="@Context.Request.Query["ReturnUrl"]">
+            <div class="form-group has-danger">
+                <div class="col-sm-12 mt-2">
+                    @if (null != Model)
+                    {
+                        @Html.LabelFor(m => m.LastMigrateDateTime, new {Class = "control-label text-success"})
+                    }
+                    @Html.TextBoxFor(m => m.LastMigrateDateTime, new {Class = "form-control", Readonly = "readonly"})
+                    <div class="form-control-feedback mt-2">
+                        @Html.ValidationMessageFor(m => m.LastMigrateDateTime)
+                    </div>
+                </div>
+                @*<div class="col-sm-12 mt-2">
+                    @if (null != Model && !string.IsNullOrWhiteSpace(Model.RequesterCountryCode))
+                    {
+                        @Html.LabelFor(m => m.RequesterCountryCode, new { Class = "control-label text-success" })
+                    }
+                    @Html.TextBoxFor(m => m.RequesterCountryCode, new { Class = "form-control" })
+                    <div class="form-control-feedback mt-2">
+                        @Html.ValidationMessageFor(m => m.RequesterCountryCode)
+                    </div>
+                </div>
+                <div class="col-sm-12 mt-2">
+                    @if (null != Model && !string.IsNullOrWhiteSpace(Model.RequesterVatNumber))
+                    {
+                        @Html.LabelFor(m => m.RequesterVatNumber, new { Class = "control-label text-success" })
+                    }
+                    @Html.TextBoxFor(m => m.RequesterVatNumber, new { Class = "form-control" })
+                    <div class="form-control-feedback mt-2">
+                        @Html.ValidationMessageFor(m => m.RequesterVatNumber)
+                    </div>
+                </div>*@
+                <div class="col-sm-12 mt-2">
+                    @if (null != Model && Model.CacheLifeTime >= 0)
+                    {
+                        @Html.LabelFor(m => m.CacheLifeTime, new {Class = "control-label text-success"})
+                    }
+                    @Html.TextBoxFor(m => m.CacheLifeTime, new {Class = "form-control"})
+                    <div class="form-control-feedback mt-2">
+                        @Html.ValidationMessageFor(m => m.CacheLifeTime)
+                    </div>
+                </div>
+                <div class="col-sm-12 mt-2">
+                    @if (null != Model && null != Model.ConnectionString && !string.IsNullOrWhiteSpace(Model.ConnectionString))
+                    {
+                        @Html.LabelFor(m => m.ConnectionString, new {Class = "control-label text-success"})
+                        ;
+                    }
+                    @Html.TextAreaFor(m => m.ConnectionString, new {Class = "form-control m-1", Style = "min-height: 4rem"})
+                    @if (null != Model && null != Model.ConnectionString && !string.IsNullOrWhiteSpace(Model.ConnectionString))
+                    {
+                        <div class="text-black-50 font-italic m-t-0 m-b-5 accordion">
+                            @if (Model.ConnectionString.Length > 512)
+                            {
+                                <div>
+                                    <button type="button" class="btn btn-sm btn-link text-black-50 text-decoration-none" data-toggle="collapse" data-target="#collapseOne"><i class="ti-angle-down"></i> Wartość połączenia zaszyfrowana</button>
+                                </div>
+                                <div id="collapseOne" class="collapse p-l-10">
+                                    <p>
+                                        <small>@Model.ConnectionString</small>
+                                    </p>
+                                </div>
+                            }
+                            <div>
+                                <button type="button" class="btn btn-sm btn-link text-black-50 text-decoration-none" data-toggle="collapse" data-target="#collapseTwo"><i class="ti-angle-down"></i> Wartość połączenia po tłumaczeniu zmiennych</button>
+                            </div>
+                            <div id="collapseTwo" class="collapse p-l-10">
+                                <p>
+                                    <small>@Model.GetConnectionString()</small>
+                                </p>
+                            </div>
+                        </div>
+                    }
+                    <div class="form-control-feedback mt-2">
+                        @Html.ValidationMessageFor(m => m.ConnectionString)
+                    </div>
+                </div>
+                <div class="col-sm-12 mt-2">
+                    <div class="checkbox text-success mt-2">
+                        <label>@Html.CheckBoxFor(m => m.CheckForConnection, new {Class = "checkbox checkbox-success"}) @Html.DisplayNameFor(m => m.CheckForConnection)</label>
+                    </div>
+                </div>
+                <div class="col-sm-12 mt-2">
+                    <div class="checkbox text-success mt-2">
+                        <label>@Html.CheckBoxFor(m => m.CheckAndMigrate, new {Class = "checkbox checkbox-success"}) @Html.DisplayNameFor(m => m.CheckAndMigrate)</label>
+                    </div>
+                </div>
+                <div class="col-sm-12 mt-2">
+                    <div class="checkbox text-success mt-2">
+                        <label>@Html.CheckBoxFor(m => m.UseGlobalDatabaseConnectionSettings, new {Class = "checkbox checkbox-success"}) @Html.DisplayNameFor(m => m.UseGlobalDatabaseConnectionSettings)</label>
+                    </div>
+                </div>
+                <div class="col-sm-12 mt-2">
+                    @if (null != Model)
+                    {
+                        <div class="text-black-50 font-italic m-t-10 m-b-10">
+                            <small>Bieżący katalog konfiguracji: <a href="file:///@System.IO.Path.GetDirectoryName(Model.GetFilePath())" target="_blank">@System.IO.Path.GetDirectoryName(Model.GetFilePath())</a> Beżąca ścieżka do pliku konfiguracji: <a href="file:///@Model.GetFilePath()" target="_blank">@Model.GetFilePath()</a></small>
+                        </div>
+                    }
+                </div>
+            </div>
+            <div class="row justify-content-center mt-3">
+                <div class="form-group align-self text-center">
+                    <div class="col-sm-12 align-self-center align-items-center">
+                        <button class="btn btn-block btn-lg btn-info btn-rounded" type="submit" title="Zapisz ustawienia i zrestartuj aplikację. Wykonam restart usługi lub serwera IIS." data-toggle="tooltip" data-placement="top"><i class="ti-save"></i> Zapisz<span class="d-none d-md-inline"> ustawienia</span></button>
+                        @*<div class="btn-group" role="group">
+                                <button class="btn btn-lg btn-info btn-rounded" type="submit" title="Zapisz ustawienia i zrestartuj aplikację." data-toggle="tooltip" data-placement="top"><i class="fa fa-save"></i> Zapisz<span class="d-none d-md-inline"> ustawienia</span></button>
+                                <a class="btn btn-lg btn-info btn-rounded" asp-controller="Vies" asp-action="CopyToUserDirectory" asp-route-ReturnUrl="@Context.Request.Query["ReturnUrl"]" data-toggle="tooltip" data-placement="top" title="Skopiuj plik ustawień do lokalizacji użytkownika i zrestartuj aplikację."><i class="fa fa-copy"></i> Skopiuj<span class="d-none d-md-inline"> ustawienia</span></a>
+                                <a class="btn btn-lg btn-info btn-rounded" asp-controller="Vies" asp-action="RestoreAppSettingsDefault" asp-route-ReturnUrl="@Context.Request.Query["ReturnUrl"]" data-toggle="tooltip" data-placement="top" title="Przywróć domyślny plik ustawień z lokalizacji programu do lokalizacji użytkownika i zrestartuj aplikację."><i class="fa fa-window-restore"></i> Przywróć<span class="d-none d-md-inline"> ustawienia</span></a>
+                            </div>*@
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+@Html.Script(
+    @<script type="text/javascript">
+         $(function() {
+             try {
+                 var useGlobalDatabaseConnectionSettings = @(null != Model && Model.UseGlobalDatabaseConnectionSettings ? 1 : 0);
+                 var displayNameForUseGlobalDatabaseConnectionSettings = "@Html.DisplayNameFor(m => m.UseGlobalDatabaseConnectionSettings)";
+                 $("#ConnectionString").val(String.raw`@Html.Raw(Model.RsaProviderService.DecryptWithPublicKey(Model.AesIVProviderService.Decpypt(Model.ConnectionString, Model.RsaProviderService.AsymmetricPublicKeyAsString)))`);
+                 if (useGlobalDatabaseConnectionSettings == 1) {
+                     $("#ConnectionString").prop("readonly", true);
+                     $("label[for='ConnectionString']").append($("<span> obecna konfiguracja nie udostępnia edycji połączenia do bazy danych, odznacz \"" + displayNameForUseGlobalDatabaseConnectionSettings + "\" i zapisz aby edytować wartość!</span>").addClass("control-label text-warning font-italic"));
+                 }
+             } catch (e) {
+                 console.log(e);
+             }
+         });
+     </script>
+    )

@@ -1,14 +1,15 @@
-﻿@using Kendo.Mvc.UI;
-@using WebApplicationNetCoreDev.Helpers;
-
+﻿@using System.Reflection
+@using ApiWykazuPodatnikowVatData.Models
+@using Kendo.Mvc.UI
+@using WebApplicationNetCoreDev.Helpers
 @model IEnumerable<ApiWykazuPodatnikowVatData.Models.EntityCheck>
 
-@{ string gridName = string.Format("{0}{1}", @System.Reflection.Assembly.GetEntryAssembly().GetName().Name, @System.Reflection.Assembly.GetAssembly(typeof(ApiWykazuPodatnikowVatData.Models.Entity)).GetName().Name); }
-@{ string gridActions = string.Format("{0}Actions", gridName); }
-@{ string gridDataSource = string.Format("{0}DataSource", gridName); }
-@{ string gridToolbarTemplate = string.Format("{0}GridToolbarTemplate", gridName); }
-@{ string gridActionApiUrl = string.Format("{0}", "/api/SerwisRzeczypospolitejPolskiej/MinisterstwoFinansow/KrajowaAdministracjaSkarbowa/WykazPodatnikowVatApi/EntityCheckKendoGrid"); }
-@{ string windowName = string.Format("{0}Window", gridName); }
+@{ var gridName = string.Format("{0}{1}", Assembly.GetEntryAssembly().GetName().Name, Assembly.GetAssembly(typeof(Entity)).GetName().Name); }
+@{ var gridActions = string.Format("{0}Actions", gridName); }
+@{ var gridDataSource = string.Format("{0}DataSource", gridName); }
+@{ var gridToolbarTemplate = string.Format("{0}GridToolbarTemplate", gridName); }
+@{ var gridActionApiUrl = string.Format("{0}", "/api/SerwisRzeczypospolitejPolskiej/MinisterstwoFinansow/KrajowaAdministracjaSkarbowa/WykazPodatnikowVatApi/EntityCheckKendoGrid"); }
+@{ var windowName = string.Format("{0}Window", gridName); }
 @{ ViewData["Title"] = "Ministerstwo Finansów - Wykaz podatników VAT"; }
 @{ Layout = "~/Views/Shared/_LayoutAdmin.cshtml"; }
 
@@ -21,50 +22,47 @@
             .Items(items =>
             {
                 items.Add()
-                .Type(BreadcrumbItemType.RootItem)
-                .Href("javascript:void(0)")
-                .Text("Ministerstwo Finansów - Wykaz podatników VAT")
-                .ShowText(true)
-                .Icon("home")
-                .ShowIcon(true);
+                    .Type(BreadcrumbItemType.RootItem)
+                    .Href("javascript:void(0)")
+                    .Text("Ministerstwo Finansów - Wykaz podatników VAT")
+                    .ShowText(true)
+                    .Icon("home")
+                    .ShowIcon(true);
             }))
 
     </div>
 
     <div class="row overflow-auto">
 
-        @(Html.Kendo().DataSource<ApiWykazuPodatnikowVatData.Models.EntityCheck>()
+        @(Html.Kendo().DataSource<EntityCheck>()
             .Name(gridDataSource)
             .Ajax(
                 dataSource => dataSource
-                .Batch(true)
-                .PageSize(100)
-                .AutoSync(true)
-                .ServerOperation(true)
-                .Read(read => read.Url(gridActionApiUrl).Type(HttpVerbs.Get)
-            )))
-        @(Html.Kendo().Grid<ApiWykazuPodatnikowVatData.Models.EntityCheck>()
+                    .Batch(true)
+                    .PageSize(100)
+                    .AutoSync(true)
+                    .ServerOperation(true)
+                    .Read(read => read.Url(gridActionApiUrl).Type(HttpVerbs.Get)
+                    )))
+        @(Html.Kendo().Grid<EntityCheck>()
             .Name(gridName)
             .Columns(
-            columns =>
-            {
-                columns.Bound(c => c.Id).Filterable(false);
-                columns.Bound(c => c.RequestAndResponseHistory.Id).Filterable(false);
-                //columns.Bound(c => c.RequestId).Filterable(false);
-                //columns.Bound(c => c.DateOfCreate).Format("{0:MM-dd-yyyy HH:mm:ss}").Filterable(false);
-                //columns.Bound(c => c.DateOfModification).Format("{0:MM-dd-yyyy HH:mm:ss}").Filterable(false);
-                //columns.Bound(c => c.UniqueIdentifierOfTheLoggedInUser).Filterable(false);
-                columns.Bound(c => c.Nip).Filterable(false);
-                columns.Bound(c => c.Regon).Filterable(false);
-                columns.Bound(c => c.AccountNumber).Filterable(false);
-                columns.Bound(c => c.AccountAssigned).Filterable(false);
-                //columns.Bound(c => c.RequestDateTime).Filterable(false);
-                columns.Bound(c => c.RequestDateTimeAsDate).Filterable(false).Format("{0:MM-dd-yyyy HH:mm:ss}").Filterable(false);
-            })
-            .ToolBar(toolbar =>
-            {
-                toolbar.ClientTemplateId(gridToolbarTemplate);
-            })
+                columns =>
+                {
+                    columns.Bound(c => c.Id).Filterable(false);
+                    columns.Bound(c => c.RequestAndResponseHistory.Id).Filterable(false);
+                    //columns.Bound(c => c.RequestId).Filterable(false);
+                    //columns.Bound(c => c.DateOfCreate).Format("{0:MM-dd-yyyy HH:mm:ss}").Filterable(false);
+                    //columns.Bound(c => c.DateOfModification).Format("{0:MM-dd-yyyy HH:mm:ss}").Filterable(false);
+                    //columns.Bound(c => c.UniqueIdentifierOfTheLoggedInUser).Filterable(false);
+                    columns.Bound(c => c.Nip).Filterable(false);
+                    columns.Bound(c => c.Regon).Filterable(false);
+                    columns.Bound(c => c.AccountNumber).Filterable(false);
+                    columns.Bound(c => c.AccountAssigned).Filterable(false);
+                    //columns.Bound(c => c.RequestDateTime).Filterable(false);
+                    columns.Bound(c => c.RequestDateTimeAsDate).Filterable(false).Format("{0:MM-dd-yyyy HH:mm:ss}").Filterable(false);
+                })
+            .ToolBar(toolbar => { toolbar.ClientTemplateId(gridToolbarTemplate); })
             .Selectable()
             .Sortable()
             .Scrollable()
@@ -102,7 +100,7 @@
                 @(Html.Kendo().MaskedTextBox().Name("checkBankAccountByNipAccountNumber").Mask("00000000000000000000000000").Label(l => l.Content("Numer rachunku bankowego NRB (26 cyfr)").Floating(true)).ToClientTemplate())
             </div>
             <div class="col-sm-12 col-md-6 col-lg-3 col-xl-2">
-                @(Html.Kendo().DatePicker().Name("checkBankAccountByNipDateOfChecking").Value(DateTime.Now).Format("yyyy-MM-dd").HtmlAttributes(new { style = "width: 100%", title = "Wybierz datę sprawdzenia danych" }).ToClientTemplate())
+                @(Html.Kendo().DatePicker().Name("checkBankAccountByNipDateOfChecking").Value(DateTime.Now).Format("yyyy-MM-dd").HtmlAttributes(new {style = "width: 100%", title = "Wybierz datę sprawdzenia danych"}).ToClientTemplate())
             </div>
             <div class="col-sm-12 col-md-6 col-lg-3 col-xl-6 p-sm-15 p-md-15">
                 <a href="javascript:void(0)" class="k-search k-link k-button k-button-search check-bank-account-by-nip" title="Sprawdź"><span class="k-icon k-i-check"></span>Sprawdź</a>
@@ -122,7 +120,7 @@
                 @(Html.Kendo().MaskedTextBox().Name("checkBankAccountByRegonAccountNumber").Mask("00000000000000000000000000").Label(l => l.Content("Numer rachunku bankowego NRB (26 cyfr)").Floating(true)).ToClientTemplate())
             </div>
             <div class="col-sm-12 col-md-6 col-lg-3 col-xl-2">
-                @(Html.Kendo().DatePicker().Name("checkBankAccountByRegonDateOfChecking").Value(DateTime.Now).Format("yyyy-MM-dd").HtmlAttributes(new { style = "width: 100%", title = "Wybierz datę sprawdzenia danych" }).ToClientTemplate())
+                @(Html.Kendo().DatePicker().Name("checkBankAccountByRegonDateOfChecking").Value(DateTime.Now).Format("yyyy-MM-dd").HtmlAttributes(new {style = "width: 100%", title = "Wybierz datę sprawdzenia danych"}).ToClientTemplate())
             </div>
             <div class="col-sm-12 col-md-6 col-lg-3 col-xl-6 p-sm-15 p-md-15">
                 <a href="javascript:void(0)" class="k-search k-link k-button k-button-search check-bank-account-by-regon" title="Sprawdź"><span class="k-icon k-i-check"></span>Sprawdź</a>
@@ -135,83 +133,86 @@
 
 @Html.Script(@<script type="text/javascript">
 
-    function onChangeGridWidget(e) {
-        $("#@windowName").data("kendoWindow").close();
-        var currentDataItem = e.sender.dataItem(this.select());
-        $("#@windowName").data("kendoWindow")
-            .open()
-            .content("<div class='p-3'><pre id='json-renderer'></pre></div>")
-            .refresh()
-            .title("Sczegóły " + currentDataItem.Id)
-            .center()
-            .setOptions({ width: $(document).width() * 0.62, height: $(document).height() * 0.62, position: { left: ($(document).width() * 0.38) / 2, top: ($(document).height() * 0.38) / 2 } });
-        $('#json-renderer').jsonViewer(JSON.parse(JSON.stringify(currentDataItem)));
-    }
+                  function onChangeGridWidget(e) {
+                      $("#@windowName").data("kendoWindow").close();
+                      var currentDataItem = e.sender.dataItem(this.select());
+                      $("#@windowName").data("kendoWindow")
+                          .open()
+                          .content("<div class='p-3'><pre id='json-renderer'></pre></div>")
+                          .refresh()
+                          .title("Sczegóły " + currentDataItem.Id)
+                          .center()
+                          .setOptions({ width: $(document).width() * 0.62, height: $(document).height() * 0.62, position: { left: ($(document).width() * 0.38) / 2, top: ($(document).height() * 0.38) / 2 } });
+                      $('#json-renderer').jsonViewer(JSON.parse(JSON.stringify(currentDataItem)));
+                  }
 
-    function onClose() {
-    }
+                  function onClose() {
+                  }
 
-    function onOpen() {
-    }
+                  function onOpen() {
+                  }
 
-$(function () {
-    try {
-        var grid = $("#@gridName");
-        var gridDataSource = @gridDataSource;
-        var gridWidget = grid.data("kendoGrid");
-        gridWidget.wrapper.height($(".page-wrapper").first().height() * 0.9);
-        gridWidget.resize();
-        gridWidget.resize(true);
-        grid.find(".k-grid-toolbar").on("click", ".k-pager-refresh", function (e) {
-            e.preventDefault();
-            gridDataSource.read();
-        }).on("click", ".check-bank-account-by-nip", function (e) {
-            if (Date.parse($("#checkBankAccountByNipDateOfChecking").val()) && parseInt($("#checkBankAccountByNipNip").val(), 10) > 0 && $("#checkBankAccountByNipAccountNumber").val().length == 26) {
-                e.preventDefault($("#checkBankAccountByNipNip").val(), $("#checkBankAccountByNipAccountNumber").val());
-                var url = gridDataSource.transport.options.read.url;
-                gridDataSource.transport.options.read.url = "/api/SerwisRzeczypospolitejPolskiej/MinisterstwoFinansow/KrajowaAdministracjaSkarbowa/WykazPodatnikowVatApi/CheckBankAccountByNipKendoGrid/" + $("#checkBankAccountByNipNip").val() + "/" + $("#checkBankAccountByNipAccountNumber").val() + "/" + $("#checkBankAccountByNipDateOfChecking").val();
-                gridDataSource.read();
-                gridDataSource.transport.options.read.url = url;
-            }
-            else {
-                $(function () {
-                    $.toast({
-                        heading: 'Popraw dane!',
-                        text: 'Wybierz datę, wpisz poprawny numer NIP i poprawny numer rachunku bankowego NRB!',
-                        position: 'top-center',
-                        loaderBg: '#ff6849',
-                        icon: 'error',
-                        hideAfter: 7000,
-                        stack: 7
-                    });
-                });
-            }
-        }).on("click", ".check-bank-account-by-regon", function (e) {
-            if (Date.parse($("#checkBankAccountByRegonDateOfChecking").val()) && parseInt($("#checkBankAccountByRegonRegon").val(), 10) > 0 && $("#checkBankAccountByRegonAccountNumber").val().length == 26) {
-                e.preventDefault($("#checkBankAccountByRegonRegon").val(), $("#checkBankAccountByRegonAccountNumber").val());
-                var url = gridDataSource.transport.options.read.url;
-                gridDataSource.transport.options.read.url = "/api/SerwisRzeczypospolitejPolskiej/MinisterstwoFinansow/KrajowaAdministracjaSkarbowa/WykazPodatnikowVatApi/CheckBankAccountByRegonKendoGrid/" + $("#checkBankAccountByRegonRegon").val() + "/" + $("#checkBankAccountByRegonAccountNumber").val() + "/" + $("#checkBankAccountByRegonDateOfChecking").val();
-                gridDataSource.read();
-                gridDataSource.transport.options.read.url = url;
-            }
-            else {
-                $(function () {
-                    $.toast({
-                        heading: 'Popraw dane!',
-                        text: 'Wybierz datę, wpisz poprawny numer REGON i poprawny numer rachunku bankowego NRB!',
-                        position: 'top-center',
-                        loaderBg: '#ff6849',
-                        icon: 'error',
-                        hideAfter: 7000,
-                        stack: 7
-                    });
-                });
-            }
-        });
-    }
-    catch (e) {
-        console.log(e);
-    }
-});
+                  $(function() {
+                      try {
+                          var grid = $("#@gridName");
+                          var gridDataSource = @gridDataSource;
+                          var gridWidget = grid.data("kendoGrid");
+                          gridWidget.wrapper.height($(".page-wrapper").first().height() * 0.9);
+                          gridWidget.resize();
+                          gridWidget.resize(true);
+                          grid.find(".k-grid-toolbar").on("click",
+                              ".k-pager-refresh",
+                              function(e) {
+                                  e.preventDefault();
+                                  gridDataSource.read();
+                              }).on("click",
+                              ".check-bank-account-by-nip",
+                              function(e) {
+                                  if (Date.parse($("#checkBankAccountByNipDateOfChecking").val()) && parseInt($("#checkBankAccountByNipNip").val(), 10) > 0 && $("#checkBankAccountByNipAccountNumber").val().length == 26) {
+                                      e.preventDefault($("#checkBankAccountByNipNip").val(), $("#checkBankAccountByNipAccountNumber").val());
+                                      var url = gridDataSource.transport.options.read.url;
+                                      gridDataSource.transport.options.read.url = "/api/SerwisRzeczypospolitejPolskiej/MinisterstwoFinansow/KrajowaAdministracjaSkarbowa/WykazPodatnikowVatApi/CheckBankAccountByNipKendoGrid/" + $("#checkBankAccountByNipNip").val() + "/" + $("#checkBankAccountByNipAccountNumber").val() + "/" + $("#checkBankAccountByNipDateOfChecking").val();
+                                      gridDataSource.read();
+                                      gridDataSource.transport.options.read.url = url;
+                                  } else {
+                                      $(function() {
+                                          $.toast({
+                                              heading: 'Popraw dane!',
+                                              text: 'Wybierz datę, wpisz poprawny numer NIP i poprawny numer rachunku bankowego NRB!',
+                                              position: 'top-center',
+                                              loaderBg: '#ff6849',
+                                              icon: 'error',
+                                              hideAfter: 7000,
+                                              stack: 7
+                                          });
+                                      });
+                                  }
+                              }).on("click",
+                              ".check-bank-account-by-regon",
+                              function(e) {
+                                  if (Date.parse($("#checkBankAccountByRegonDateOfChecking").val()) && parseInt($("#checkBankAccountByRegonRegon").val(), 10) > 0 && $("#checkBankAccountByRegonAccountNumber").val().length == 26) {
+                                      e.preventDefault($("#checkBankAccountByRegonRegon").val(), $("#checkBankAccountByRegonAccountNumber").val());
+                                      var url = gridDataSource.transport.options.read.url;
+                                      gridDataSource.transport.options.read.url = "/api/SerwisRzeczypospolitejPolskiej/MinisterstwoFinansow/KrajowaAdministracjaSkarbowa/WykazPodatnikowVatApi/CheckBankAccountByRegonKendoGrid/" + $("#checkBankAccountByRegonRegon").val() + "/" + $("#checkBankAccountByRegonAccountNumber").val() + "/" + $("#checkBankAccountByRegonDateOfChecking").val();
+                                      gridDataSource.read();
+                                      gridDataSource.transport.options.read.url = url;
+                                  } else {
+                                      $(function() {
+                                          $.toast({
+                                              heading: 'Popraw dane!',
+                                              text: 'Wybierz datę, wpisz poprawny numer REGON i poprawny numer rachunku bankowego NRB!',
+                                              position: 'top-center',
+                                              loaderBg: '#ff6849',
+                                              icon: 'error',
+                                              hideAfter: 7000,
+                                              stack: 7
+                                          });
+                                      });
+                                  }
+                              });
+                      } catch (e) {
+                          console.log(e);
+                      }
+                  });
 
-</script>)
+              </script>)

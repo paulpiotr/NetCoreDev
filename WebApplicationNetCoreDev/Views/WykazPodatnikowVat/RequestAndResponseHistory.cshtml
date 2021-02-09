@@ -1,14 +1,15 @@
-﻿@using Kendo.Mvc.UI;
-@using WebApplicationNetCoreDev.Helpers;
-
+﻿@using System.Reflection
+@using ApiWykazuPodatnikowVatData.Models
+@using Kendo.Mvc.UI
+@using WebApplicationNetCoreDev.Helpers
 @model IEnumerable<ApiWykazuPodatnikowVatData.Models.RequestAndResponseHistory>
 
-@{ string gridName = string.Format("{0}{1}", @System.Reflection.Assembly.GetEntryAssembly().GetName().Name, @System.Reflection.Assembly.GetAssembly(typeof(ApiWykazuPodatnikowVatData.Models.Entity)).GetName().Name); }
-@{ string gridActions = string.Format("{0}Actions", gridName); }
-@{ string gridDataSource = string.Format("{0}DataSource", gridName); }
-@{ string gridToolbarTemplate = string.Format("{0}GridToolbarTemplate", gridName); }
-@{ string gridActionApiUrl = string.Format("{0}", "/api/SerwisRzeczypospolitejPolskiej/MinisterstwoFinansow/KrajowaAdministracjaSkarbowa/WykazPodatnikowVatApi/RequestAndResponseHistoryKendoGrid"); }
-@{ string windowName = string.Format("{0}Window", gridName); }
+@{ var gridName = string.Format("{0}{1}", Assembly.GetEntryAssembly().GetName().Name, Assembly.GetAssembly(typeof(Entity)).GetName().Name); }
+@{ var gridActions = string.Format("{0}Actions", gridName); }
+@{ var gridDataSource = string.Format("{0}DataSource", gridName); }
+@{ var gridToolbarTemplate = string.Format("{0}GridToolbarTemplate", gridName); }
+@{ var gridActionApiUrl = string.Format("{0}", "/api/SerwisRzeczypospolitejPolskiej/MinisterstwoFinansow/KrajowaAdministracjaSkarbowa/WykazPodatnikowVatApi/RequestAndResponseHistoryKendoGrid"); }
+@{ var windowName = string.Format("{0}Window", gridName); }
 @{ ViewData["Title"] = "Ministerstwo Finansów - Wykaz podatników VAT - Historia wyszukiwania podmiotów i sprawdzania podmiotów"; }
 @{ Layout = "~/Views/Shared/_LayoutAdmin.cshtml"; }
 
@@ -21,41 +22,41 @@
             .Items(items =>
             {
                 items.Add()
-                .Type(BreadcrumbItemType.RootItem)
-                .Href("javascript:void(0)")
-                .Text("Ministerstwo Finansów - Wykaz podatników VAT - Historia wyszukiwania podmiotów i sprawdzania podmiotów")
-                .ShowText(true)
-                .Icon("home")
-                .ShowIcon(true);
+                    .Type(BreadcrumbItemType.RootItem)
+                    .Href("javascript:void(0)")
+                    .Text("Ministerstwo Finansów - Wykaz podatników VAT - Historia wyszukiwania podmiotów i sprawdzania podmiotów")
+                    .ShowText(true)
+                    .Icon("home")
+                    .ShowIcon(true);
             }))
 
     </div>
 
     <div class="row overflow-auto">
 
-        @(Html.Kendo().DataSource<ApiWykazuPodatnikowVatData.Models.Entity>()
+        @(Html.Kendo().DataSource<Entity>()
             .Name(gridDataSource)
             .Ajax(
                 dataSource => dataSource
-                .Batch(true)
-                .PageSize(100)
-                .AutoSync(true)
-                .ServerOperation(true)
-                .Read(read => read.Url(gridActionApiUrl).Type(HttpVerbs.Get)
-            )))
+                    .Batch(true)
+                    .PageSize(100)
+                    .AutoSync(true)
+                    .ServerOperation(true)
+                    .Read(read => read.Url(gridActionApiUrl).Type(HttpVerbs.Get)
+                    )))
 
-        @(Html.Kendo().Grid<ApiWykazuPodatnikowVatData.Models.RequestAndResponseHistory>()
+        @(Html.Kendo().Grid<RequestAndResponseHistory>()
             .Name(gridName)
             .Columns(
-            columns =>
-            {
-                columns.Bound(c => c.Id).Filterable(false);
-                columns.Bound(c => c.RequestUrl).Filterable(false);
-                columns.Bound(c => c.ResponseStatusCode).Filterable(false);
-                columns.Bound(c => c.RequestId).Filterable(false);
-                columns.Bound(c => c.RequestDateTimeAsDateTime).Format("{0:dd-MM-yyyy HH:mm:ss}").Filterable(false);
-                columns.Bound(c => c.DateOfCreate).Format("{0:dd-MM-yyyy HH:mm:ss}").Filterable(false);
-            })
+                columns =>
+                {
+                    columns.Bound(c => c.Id).Filterable(false);
+                    columns.Bound(c => c.RequestUrl).Filterable(false);
+                    columns.Bound(c => c.ResponseStatusCode).Filterable(false);
+                    columns.Bound(c => c.RequestId).Filterable(false);
+                    columns.Bound(c => c.RequestDateTimeAsDateTime).Format("{0:dd-MM-yyyy HH:mm:ss}").Filterable(false);
+                    columns.Bound(c => c.DateOfCreate).Format("{0:dd-MM-yyyy HH:mm:ss}").Filterable(false);
+                })
             //.ToolBar(toolbar =>
             //{
             //    toolbar.ClientTemplateId(gridToolbarTemplate);
@@ -83,23 +84,23 @@
 
 @Html.Script(
     @<script type="text/javascript">
-        function onChangeGridWidget(e) {
-            $("#@windowName").data("kendoWindow").close();
-            var currentDataItem = e.sender.dataItem(this.select());
-            $("#@windowName").data("kendoWindow")
-                .open()
-                .content("<div class='p-3'><pre id='json-renderer'></pre></div>")
-                .refresh()
-                .title("Sczegóły " + currentDataItem.Id)
-                .center()
-                .setOptions({ width: $(document).width() * 0.62, height: $(document).height() * 0.62, position: { left: ($(document).width() * 0.38) / 2, top: ($(document).height() * 0.38) / 2 } });
-            $('#json-renderer').jsonViewer(JSON.parse(JSON.stringify(currentDataItem)));
-        }
+         function onChangeGridWidget(e) {
+             $("#@windowName").data("kendoWindow").close();
+             var currentDataItem = e.sender.dataItem(this.select());
+             $("#@windowName").data("kendoWindow")
+                 .open()
+                 .content("<div class='p-3'><pre id='json-renderer'></pre></div>")
+                 .refresh()
+                 .title("Sczegóły " + currentDataItem.Id)
+                 .center()
+                 .setOptions({ width: $(document).width() * 0.62, height: $(document).height() * 0.62, position: { left: ($(document).width() * 0.38) / 2, top: ($(document).height() * 0.38) / 2 } });
+             $('#json-renderer').jsonViewer(JSON.parse(JSON.stringify(currentDataItem)));
+         }
 
-        function onClose() {
-        }
+         function onClose() {
+         }
 
-        function onOpen() {
-        }
-    </script>
-)
+         function onOpen() {
+         }
+     </script>
+    )

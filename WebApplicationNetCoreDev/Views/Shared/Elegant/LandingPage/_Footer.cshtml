@@ -1,14 +1,15 @@
-﻿<footer>
-    <div class="d-inline-flex h-100 w-100 align-content-center align-middle" title="@System.Reflection.Assembly.GetEntryAssembly().GetName().Name">
+﻿@using System.Reflection
+<footer>
+    <div class="d-inline-flex h-100 w-100 align-content-center align-middle" title="@Assembly.GetEntryAssembly().GetName().Name">
         <div class="row p-1">
             <div class="col-sm-6">
                 <h5 class="d-inline-block align-middle font-12">
-                    <span>Copyright @DateTime.Now.Year All Rights Reserved by <a class="text-black-50" href="@Url.Action("Index", "Home")" target="_blank">@System.Reflection.Assembly.GetEntryAssembly().GetName().Name</a></span>
+                    <span>Copyright @DateTime.Now.Year All Rights Reserved by <a class="text-black-50" href="@Url.Action("Index", "Home")" target="_blank">@Assembly.GetEntryAssembly().GetName().Name</a></span>
                 </h5>
             </div>
             <div class="col-sm-6">
                 <h5 class="d-inline-block align-middle font-12">
-                    <span class="pull-right">Design & Developed by <a class="text-black-50" href="@Url.Action("Index", "Home")" target="_blank">@System.Reflection.Assembly.GetEntryAssembly().GetName().Name</a></span>
+                    <span class="pull-right">Design & Developed by <a class="text-black-50" href="@Url.Action("Index", "Home")" target="_blank">@Assembly.GetEntryAssembly().GetName().Name</a></span>
                 </h5>
             </div>
         </div>

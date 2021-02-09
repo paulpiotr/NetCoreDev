@@ -1,34 +1,42 @@
+#region using
+
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Reflection;
 using System.Security.Claims;
 using System.Security.Principal;
 using System.Threading;
 using System.Threading.Tasks;
+using log4net;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using NetAppCommon;
 using SimpleImpersonation;
 using WebApplicationNetCoreDev.Models;
+
+#endregion
 
 namespace WebApplicationNetCoreDev.Controllers
 {
     /// <summary>
-    /// Kontroler akcji autoryzacji
+    ///     Kontroler akcji autoryzacji
     /// </summary>
     [Authorize(AuthenticationSchemes = "Cookies")]
     public class AuthenticationController : Controller
     {
         /// <summary>
-        /// Log4net Logger
+        ///     Log4net Logger
         /// </summary>
-        private readonly log4net.ILog _log4Net = Log4netLogger.Log4netLogger.GetLog4netInstance(MethodBase.GetCurrentMethod()?.DeclaringType);
+        private readonly ILog _log4Net =
+            Log4netLogger.Log4netLogger.GetLog4netInstance(MethodBase.GetCurrentMethod()?.DeclaringType);
 
         /// <summary>
-        /// Wyświetl formularz autoryzacji.
-        /// GET: /Authentication
+        ///     Wyświetl formularz autoryzacji.
+        ///     GET: /Authentication
         /// </summary>
         /// <returns>IActionResult</returns>
         [AllowAnonymous]
@@ -40,7 +48,8 @@ namespace WebApplicationNetCoreDev.Controllers
                 return User.Identity != null && User.Identity.IsAuthenticated
                     ? Url.IsLocalUrl(returnUrl)
                         ? Redirect(returnUrl)
-                        : (IActionResult)RedirectToAction(nameof(Index), "Home", new { UserName = User.Identity.Name, returnUrl })
+                        : (IActionResult)RedirectToAction(nameof(Index), "Home",
+                            new {UserName = User.Identity.Name, returnUrl})
                     : View();
             }
             catch (Exception e)
@@ -51,9 +60,10 @@ namespace WebApplicationNetCoreDev.Controllers
         }
 
         /// <summary>
-        /// To protect from overposting attacks, enable the specific properties you want to bind to, for more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        /// Wykonaj akcję autoryzacji i przełącz do udanej próbie na stronę lub wyświetl formularz autoryzacji.
-        /// POST: /Authentication
+        ///     To protect from overposting attacks, enable the specific properties you want to bind to, for more details, see
+        ///     http://go.microsoft.com/fwlink/?LinkId=317598.
+        ///     Wykonaj akcję autoryzacji i przełącz do udanej próbie na stronę lub wyświetl formularz autoryzacji.
+        ///     POST: /Authentication
         /// </summary>
         /// <param name="model">object model AS WebApplicationNetCoreDev.Models.AuthenticationModel</param>
         /// <param name="returnUrl"></param>
@@ -62,7 +72,8 @@ namespace WebApplicationNetCoreDev.Controllers
         [ValidateAntiForgeryToken]
         [AllowAnonymous]
         // POST: /Authentication
-        public async Task<IActionResult> IndexAsync([Bind("UserName, Password, RememberMe")] AuthenticationModel model, [FromQuery] string returnUrl)
+        public async Task<IActionResult> IndexAsync([Bind("UserName, Password, RememberMe")]
+            AuthenticationModel model, [FromQuery] string returnUrl)
         {
             try
             {
@@ -72,20 +83,23 @@ namespace WebApplicationNetCoreDev.Controllers
                     {
                         var result = false;
                         result = await WindowsIdentityCookieAuthenticationAsync(model);
-                        if (true == result)
+                        if (result)
                         {
-                            return Url.IsLocalUrl(returnUrl) ? Redirect(returnUrl) : (IActionResult)RedirectToAction(nameof(Index), "Home", new { model.UserName, returnUrl });
+                            return Url.IsLocalUrl(returnUrl)
+                                ? Redirect(returnUrl)
+                                : (IActionResult)RedirectToAction(nameof(Index), "Home",
+                                    new {model.UserName, returnUrl});
                         }
 
                         result = await HttpContextAuthenticateWindowsCookieAuthenticationAsync(model);
-                        if (true == result)
+                        if (result)
                         {
-                            return Url.IsLocalUrl(returnUrl) ? Redirect(returnUrl) : (IActionResult)RedirectToAction(nameof(Index), "Home", new
-                            {
-                                model.UserName,
-                                returnUrl
-                            });
+                            return Url.IsLocalUrl(returnUrl)
+                                ? Redirect(returnUrl)
+                                : (IActionResult)RedirectToAction(nameof(Index), "Home",
+                                    new {model.UserName, returnUrl});
                         }
+
                         //return Challenge("Windows");
                     }
                     catch (Exception e)
@@ -96,6 +110,7 @@ namespace WebApplicationNetCoreDev.Controllers
                         return View(model);
                     }
                 }
+
                 return View(model);
             }
             catch (Exception e)
@@ -106,8 +121,8 @@ namespace WebApplicationNetCoreDev.Controllers
         }
 
         /// <summary>
-        /// Wykonaj akcję wylogowania
-        /// GET: Authentication/Logout
+        ///     Wykonaj akcję wylogowania
+        ///     GET: Authentication/Logout
         /// </summary>
         /// <returns>IActionResult</returns>
         [Authorize]
@@ -121,6 +136,7 @@ namespace WebApplicationNetCoreDev.Controllers
                     await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
                     return RedirectToAction(nameof(Index));
                 }
+
                 return RedirectToAction(nameof(Index), "Home");
             }
             catch (Exception e)
@@ -131,8 +147,8 @@ namespace WebApplicationNetCoreDev.Controllers
         }
 
         /// <summary>
-        /// Wyświetl stronę brak uprawnień
-        /// GET: Authentication/AccessDenied
+        ///     Wyświetl stronę brak uprawnień
+        ///     GET: Authentication/AccessDenied
         /// </summary>
         /// <param name="returnUrl"></param>
         /// <returns></returns>
@@ -153,8 +169,8 @@ namespace WebApplicationNetCoreDev.Controllers
         }
 
         /// <summary>
-        /// Wyświetl profil użytkownika
-        /// GET: Authentication/UserProfile
+        ///     Wyświetl profil użytkownika
+        ///     GET: Authentication/UserProfile
         /// </summary>
         /// <returns></returns>
         [HttpGet]
@@ -174,7 +190,7 @@ namespace WebApplicationNetCoreDev.Controllers
         }
 
         /// <summary>
-        /// Generuj token autoryzacji Jwt - wyświetl formularz
+        ///     Generuj token autoryzacji Jwt - wyświetl formularz
         /// </summary>
         /// <returns></returns>
         [HttpGet]
@@ -195,7 +211,7 @@ namespace WebApplicationNetCoreDev.Controllers
         }
 
         /// <summary>
-        /// Generuj token autoryzacji Jwt - zapisz formularz
+        ///     Generuj token autoryzacji Jwt - zapisz formularz
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
@@ -210,9 +226,10 @@ namespace WebApplicationNetCoreDev.Controllers
                 if (ModelState.IsValid)
                 {
                     model = model.GenerateJwtToken();
-                    NetAppCommon.Configuration.SetAppSettingValue<string>("JwtTokenUserName", model.UserName);
-                    NetAppCommon.Configuration.SetAppSettingValue<string>("JwtStringToken", model.JwtStringToken);
+                    Configuration.SetAppSettingValue("JwtTokenUserName", model.UserName);
+                    Configuration.SetAppSettingValue("JwtStringToken", model.JwtStringToken);
                 }
+
                 return View(model);
             }
             catch (Exception e)
@@ -223,14 +240,15 @@ namespace WebApplicationNetCoreDev.Controllers
         }
 
         /// <summary>
-        /// Uwierzytelnianie Windows Identity Cookie Authentication - autoryzacja danymi windows, zapis danych do ciasteczka
+        ///     Uwierzytelnianie Windows Identity Cookie Authentication - autoryzacja danymi windows, zapis danych do ciasteczka
         /// </summary>
         /// <param name="model"></param>
         /// <returns>Task<bool> result Authentication</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         [AllowAnonymous]
-        public async Task<bool> WindowsIdentityCookieAuthenticationAsync([Bind("UserName, Password, RememberMe")] AuthenticationModel model)
+        public async Task<bool> WindowsIdentityCookieAuthenticationAsync([Bind("UserName, Password, RememberMe")]
+            AuthenticationModel model)
         {
             try
             {
@@ -242,16 +260,21 @@ namespace WebApplicationNetCoreDev.Controllers
                         AppDomain appDomain = Thread.GetDomain();
                         appDomain.SetPrincipalPolicy(PrincipalPolicy.WindowsPrincipal);
                         var windowsPrincipal = (WindowsPrincipal)Thread.CurrentPrincipal;
-                        var claims = new List<Claim>() {
-                            new Claim(ClaimTypes.Name, windowsIdentity.Name),
-                            new Claim("FullName", windowsIdentity.Name)
+                        var claims = new List<Claim>
+                        {
+                            new(ClaimTypes.Name, windowsIdentity.Name), new("FullName", windowsIdentity.Name)
                         };
 
-                        claims.AddRange(from windowsBuiltInRoles in WindowsBuiltInRoles.WindowsBuiltInRolesList() where windowsPrincipal != null && windowsPrincipal.IsInRole(windowsBuiltInRoles.WindowsBuiltInRole) select new Claim(ClaimTypes.Role, windowsBuiltInRoles.RoleNeme));
+                        claims.AddRange(from windowsBuiltInRoles in WindowsBuiltInRoles.WindowsBuiltInRolesList()
+                            where windowsPrincipal != null &&
+                                  windowsPrincipal.IsInRole(windowsBuiltInRoles.WindowsBuiltInRole)
+                            select new Claim(ClaimTypes.Role, windowsBuiltInRoles.RoleNeme));
 
-                        claims.AddRange((windowsIdentity.Groups ?? throw new InvalidOperationException()).Select(@group => new Claim(ClaimTypes.Role, @group.Translate(typeof(NTAccount)).ToString())));
+                        claims.AddRange((windowsIdentity.Groups ?? throw new InvalidOperationException()).Select(
+                            group => new Claim(ClaimTypes.Role, group.Translate(typeof(NTAccount)).ToString())));
 
-                        var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+                        var claimsIdentity =
+                            new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
                         var authenticationProperties = new AuthenticationProperties
                         {
                             AllowRefresh = true,
@@ -267,12 +290,14 @@ namespace WebApplicationNetCoreDev.Controllers
                             // lifetime of the authentication ticket) or session-based.
                             //IssuedUtc = <DateTimeOffset>,
                             // The time at which the authentication ticket was issued.
-                            RedirectUri = "/",
+                            RedirectUri = "/"
                             // The full path or absolute URI to be used as an http 
                             // redirect response value.
                         };
-                        await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity), authenticationProperties);
+                        await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,
+                            new ClaimsPrincipal(claimsIdentity), authenticationProperties);
                     }
+
                     return true;
                 });
             }
@@ -285,15 +310,18 @@ namespace WebApplicationNetCoreDev.Controllers
         }
 
         /// <summary>
-        /// Uwierzytelnianie Windows Identity Cookie Authentication - autoryzacja standardowa danymi windows, zapis danych do ciasteczka
+        ///     Uwierzytelnianie Windows Identity Cookie Authentication - autoryzacja standardowa danymi windows, zapis danych do
+        ///     ciasteczka
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         [AllowAnonymous]
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Interoperability", "CA1416:Weryfikuj zgodność z platformą", Justification = "<Oczekujące>")]
-        public async Task<bool> HttpContextAuthenticateWindowsCookieAuthenticationAsync([Bind("UserName, Password, RememberMe")] AuthenticationModel model)
+        [SuppressMessage("Interoperability", "CA1416:Weryfikuj zgodność z platformą", Justification = "<Oczekujące>")]
+        public async Task<bool> HttpContextAuthenticateWindowsCookieAuthenticationAsync(
+            [Bind("UserName, Password, RememberMe")]
+            AuthenticationModel model)
         {
             try
             {
@@ -318,19 +346,23 @@ namespace WebApplicationNetCoreDev.Controllers
 
                     if (windowsPrincipal.Identity is WindowsIdentity windowsIdentity)
                     {
-                        var claims = new List<Claim>() {
-                            new Claim(ClaimTypes.Name, windowsIdentity.Name),
-                            new Claim("FullName", windowsIdentity.Name)
+                        var claims = new List<Claim>
+                        {
+                            new(ClaimTypes.Name, windowsIdentity.Name), new("FullName", windowsIdentity.Name)
                         };
 
-                        claims.AddRange(from windowsBuiltInRoles in WindowsBuiltInRoles.WindowsBuiltInRolesList() where windowsPrincipal.IsInRole(windowsBuiltInRoles.WindowsBuiltInRole) select new Claim(ClaimTypes.Role, windowsBuiltInRoles.RoleNeme));
+                        claims.AddRange(from windowsBuiltInRoles in WindowsBuiltInRoles.WindowsBuiltInRolesList()
+                            where windowsPrincipal.IsInRole(windowsBuiltInRoles.WindowsBuiltInRole)
+                            select new Claim(ClaimTypes.Role, windowsBuiltInRoles.RoleNeme));
 
                         if (windowsIdentity.Groups != null)
                         {
-                            claims.AddRange(windowsIdentity.Groups.Select(@group => new Claim(ClaimTypes.Role, @group.Translate(typeof(NTAccount)).ToString())));
+                            claims.AddRange(windowsIdentity.Groups.Select(group =>
+                                new Claim(ClaimTypes.Role, group.Translate(typeof(NTAccount)).ToString())));
                         }
 
-                        var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+                        var claimsIdentity =
+                            new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
                         var authenticationProperties = new AuthenticationProperties
                         {
                             AllowRefresh = true,
@@ -350,12 +382,14 @@ namespace WebApplicationNetCoreDev.Controllers
                             // The full path or absolute URI to be used as an http 
                             // redirect response value.
                         };
-                        await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity), authenticationProperties);
+                        await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,
+                            new ClaimsPrincipal(claimsIdentity), authenticationProperties);
                     }
 
                     //await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity), authenticationProperties);
                     return true;
                 }
+
                 return false;
             }
             catch (Exception e)

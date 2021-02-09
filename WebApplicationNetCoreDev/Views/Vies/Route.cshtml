@@ -1,0 +1,119 @@
+﻿@using System.Reflection
+@using Kendo.Mvc.UI
+@using NetAppCommon.Models
+@using WebApplicationNetCoreDev.Helpers
+@model IEnumerable<NetAppCommon.Models.KendoGrid<NetAppCommon.Models.ControllerRoutingActions>>
+
+@{ var gridName = string.Format("{0}{1}", Assembly.GetEntryAssembly().GetName().Name, Assembly.GetAssembly(typeof(ControllerRoutingActions)).GetName().Name); }
+@{ var gridDataSource = string.Format("{0}DataSource", gridName); }
+@{ var gridActionApiUrl = string.Format("{0}", "/api/EuropeanCommission/TaxationAndCustomsUnion/ViesApi/RouteKendoGrid"); }
+@{ var windowName = string.Format("{0}Window", gridName); }
+@{ ViewData["Title"] = "Komisja Europejska Unia Celna i Podatkowa - VIES"; }
+@{ Layout = "~/Views/Shared/_LayoutAdmin.cshtml"; }
+
+<div class="container-fluid k-content">
+
+    <div class="row">
+
+        @(Html.Kendo().Breadcrumb()
+            .Name("breadcrumb")
+            .Items(items =>
+            {
+                items.Add()
+                    .Type(BreadcrumbItemType.RootItem)
+                    .Href(Url.Action("Index", "DaneSzukajPodmioty"))
+                    .Text("Komisja Europejska Unia Celna i Podatkowa - VIES")
+                    .ShowText(true)
+                    .Icon("home")
+                    .ShowIcon(true);
+                items.Add()
+                    .Type(BreadcrumbItemType.Item)
+                    .Href("javascript:void(0)")
+                    .Text("Dostępne Akcje")
+                    .ShowText(true)
+                    .Icon("link-horizontal")
+                    .ShowIcon(true);
+            }))
+
+    </div>
+
+    <div class="row overflow-auto">
+
+        @(Html.Kendo().DataSource<ControllerRoutingActions>()
+            .Name(gridDataSource)
+            .Ajax(
+                dataSource => dataSource
+                    .Batch(true)
+                    .PageSize(1024)
+                    .AutoSync(false)
+                    .ServerOperation(false)
+                    .Read(read => read.Url(gridActionApiUrl).Type(HttpVerbs.Get)
+                    )))
+        @(Html.Kendo().Grid<ControllerRoutingActions>()
+            .Name(gridName)
+            .Columns(
+                columns =>
+                {
+                    //columns.Bound(c => c.RouteId);
+                    columns.Bound(c => c.RouteController);
+                    columns.Bound(c => c.RouteAction);
+                    columns.Bound(c => c.RouteAttributeInfoTemplate);
+                    columns.Bound(c => c.RouteUrlAction);
+                    columns.Bound(c => c.RouteUrlAbsoluteAction);
+                    //columns.Bound(c => c.RouteParameters);
+                })
+            .Selectable()
+            .Events(e => e.Change("onChangeGridWidget"))
+            .Sortable()
+            .Scrollable()
+            .Filterable()
+            .DataSource(gridDataSource))
+
+    </div>
+</div>
+
+@(Html.Kendo().Window()
+    .Name(windowName)
+    .Title("")
+    .Content(@<text></text>)
+    .Draggable()
+    .Resizable()
+    .Width(1024)
+    .Visible(false)
+    .Actions(actions => actions.Pin().Minimize().Maximize().Close())
+    .Events(e => e.Close("onClose").Open("onOpen")))
+
+@Html.Script(
+    @<script type="text/javascript">
+         function onChangeGridWidget(e) {
+             $("#@windowName").data("kendoWindow").close();
+             var currentDataItem = e.sender.dataItem(this.select());
+             $("#@windowName").data("kendoWindow")
+                 .open()
+                 .content("<div class='p-3'><pre id='json-renderer'></pre></div>")
+                 .refresh()
+                 .title("Sczegóły " + currentDataItem.RouteId)
+                 .center()
+                 .setOptions({ width: $(document).width() * 0.62, height: $(document).height() * 0.62, position: { left: ($(document).width() * 0.38) / 2, top: ($(document).height() * 0.38) / 2 } });
+             $('#json-renderer').jsonViewer(JSON.parse(JSON.stringify(currentDataItem)));
+         }
+
+         function onClose() {
+         }
+
+         function onOpen() {
+         }
+
+         $(function() {
+             try {
+                 var grid = $("#@gridName");
+                 var gridDataSource = @gridDataSource;
+                 var gridWidget = grid.data("kendoGrid");
+                 gridWidget.wrapper.height($(".page-wrapper").first().height() * 0.9);
+                 gridWidget.resize();
+                 gridWidget.resize(true);
+             } catch (e) {
+                 console.log(e);
+             }
+         });
+     </script>)

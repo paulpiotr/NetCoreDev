@@ -1,3 +1,5 @@
+#region using
+
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -7,13 +9,17 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Xml;
+using log4net;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
+using NetAppCommon;
 using NetAppCommon.Models;
 using WebconIntegrationSystem.Data.BPSMainAttDbContext;
 using WebconIntegrationSystem.Models.BPSMainAtt;
 using WebconIntegrationSystem.Repositories.BPSMainAtt;
+
+#endregion
 
 namespace WebApplicationNetCoreDev.Controllers.WebconIntegrationSystemController.BPSMainAtt
 {
@@ -22,20 +28,25 @@ namespace WebApplicationNetCoreDev.Controllers.WebconIntegrationSystemController
     [ApiController]
     public class BPSMainAttApiController : ControllerBase
     {
-        #region private readonly log4net.ILog log4net
-        /// <summary>
-        /// log4net
-        /// </summary>
-        private readonly log4net.ILog _log4Net = Log4netLogger.Log4netLogger.GetLog4netInstance(MethodBase.GetCurrentMethod()?.DeclaringType);
-        #endregion
-
         private readonly BPSMainAttDbContext _context;
 
-        #region private readonly IActionDescriptorCollectionProvider _provider
+        #region private readonly log4net.ILog log4net
+
         /// <summary>
-        /// Action Descriptor Collection Provider
+        ///     log4net
+        /// </summary>
+        private readonly ILog _log4Net =
+            Log4netLogger.Log4netLogger.GetLog4netInstance(MethodBase.GetCurrentMethod()?.DeclaringType);
+
+        #endregion
+
+        #region private readonly IActionDescriptorCollectionProvider _provider
+
+        /// <summary>
+        ///     Action Descriptor Collection Provider
         /// </summary>
         private readonly IActionDescriptorCollectionProvider _provider;
+
         #endregion
 
         public BPSMainAttApiController(BPSMainAttDbContext context, IActionDescriptorCollectionProvider provider)
@@ -45,8 +56,8 @@ namespace WebApplicationNetCoreDev.Controllers.WebconIntegrationSystemController
         }
 
         #region public async Task<ActionResult<List<ControllerRoutingActions>>> GetRouteAsync()
+
         /// <summary>
-        /// 
         /// </summary>
         /// <returns></returns>
         [Authorize(AuthenticationSchemes = "Bearer")]
@@ -55,7 +66,9 @@ namespace WebApplicationNetCoreDev.Controllers.WebconIntegrationSystemController
         {
             try
             {
-                List<ControllerRoutingActions> controllerRoutingActionsList = await NetAppCommon.ControllerRoute.GetRouteActionAsync(_provider, ControllerContext.ActionDescriptor.ControllerName.ToString(), Url, this);
+                List<ControllerRoutingActions> controllerRoutingActionsList =
+                    await ControllerRoute.GetRouteActionAsync(_provider,
+                        ControllerContext.ActionDescriptor.ControllerName, Url, this);
                 if (null != controllerRoutingActionsList && controllerRoutingActionsList.Count > 0)
                 {
                     return controllerRoutingActionsList;
@@ -65,13 +78,15 @@ namespace WebApplicationNetCoreDev.Controllers.WebconIntegrationSystemController
             {
                 await Task.Run(() => _log4Net.Error(string.Format("{0}, {1}.", e.Message, e.StackTrace), e));
             }
+
             return NotFound();
         }
+
         #endregion
 
         #region public async Task<ActionResult<KendoGrid<List<ControllerRoutingActions>>>> GetRouteKendoGridAsync()
+
         /// <summary>
-        /// 
         /// </summary>
         /// <returns></returns>
         [Authorize(AuthenticationSchemes = "Cookies")]
@@ -80,7 +95,9 @@ namespace WebApplicationNetCoreDev.Controllers.WebconIntegrationSystemController
         {
             try
             {
-                KendoGrid<List<ControllerRoutingActions>> kendoGrid = await NetAppCommon.ControllerRoute.GetRouteActionForKendoGridAsync(_provider, ControllerContext.ActionDescriptor.ControllerName.ToString(), Url, this);
+                KendoGrid<List<ControllerRoutingActions>> kendoGrid =
+                    await ControllerRoute.GetRouteActionForKendoGridAsync(_provider,
+                        ControllerContext.ActionDescriptor.ControllerName, Url, this);
                 if (null != kendoGrid && kendoGrid.Data.Count > 0)
                 {
                     return kendoGrid;
@@ -90,13 +107,16 @@ namespace WebApplicationNetCoreDev.Controllers.WebconIntegrationSystemController
             {
                 await Task.Run(() => _log4Net.Error(string.Format("{0}, {1}.", e.Message, e.StackTrace), e));
             }
+
             return NotFound();
         }
+
         #endregion
 
         #region public async Task<ActionResult<object>> GetAsync(int atfId)
+
         /// <summary>
-        /// example: /api/BPSMainAttApi/XMLPZCObject/1/WartoscTowaru.SzczegolyWartosci
+        ///     example: /api/BPSMainAttApi/XMLPZCObject/1/WartoscTowaru.SzczegolyWartosci
         /// </summary>
         /// <param name="atfId"></param>
         /// <param name="tagName"></param>
@@ -107,7 +127,8 @@ namespace WebApplicationNetCoreDev.Controllers.WebconIntegrationSystemController
         {
             try
             {
-                WfattachmentFiles wfattachmentFiles = await WfattachmentFilesRepository.GetInstance(_context).FindByAtfIdAsync(atfId);
+                WfattachmentFiles wfattachmentFiles =
+                    await WfattachmentFilesRepository.GetInstance(_context).FindByAtfIdAsync(atfId);
                 if (null != wfattachmentFiles)
                 {
                     var xmlDocument = new XmlDocument();
@@ -115,6 +136,7 @@ namespace WebApplicationNetCoreDev.Controllers.WebconIntegrationSystemController
                     {
                         xmlDocument.Load(memoryStream);
                     }
+
                     using (var stringWriter = new StringWriter())
                     {
                         using (var xmlWriter = XmlWriter.Create(stringWriter))
@@ -123,15 +145,18 @@ namespace WebApplicationNetCoreDev.Controllers.WebconIntegrationSystemController
                             xmlDocument.WriteTo(xmlWriter);
                             xmlWriter.Flush();
                             var pattern = @"ns[0-9]+\:";
-                            var stringReplace = Regex.Replace(stringWriter.GetStringBuilder().ToString(), pattern, string.Empty);
+                            var stringReplace = Regex.Replace(stringWriter.GetStringBuilder().ToString(), pattern,
+                                string.Empty);
                             using (var memoryStream = new MemoryStream(Encoding.UTF8.GetBytes(stringReplace)))
                             {
                                 xmlDocument.Load(memoryStream);
                             }
+
                             if (null != tagName && !string.IsNullOrWhiteSpace(tagName))
                             {
-                                char[] delimiterChars = { '.' };
-                                var listOfAttributes = new List<string>(tagName.Split(delimiterChars)).Select(x => x.Trim()).ToList();
+                                char[] delimiterChars = {'.'};
+                                var listOfAttributes = new List<string>(tagName.Split(delimiterChars))
+                                    .Select(x => x.Trim()).ToList();
                                 if (null != listOfAttributes)
                                 {
                                     listOfAttributes.ForEach(tagName =>
@@ -140,6 +165,7 @@ namespace WebApplicationNetCoreDev.Controllers.WebconIntegrationSystemController
                                     });
                                 }
                             }
+
                             return null != tagName && !string.IsNullOrWhiteSpace(tagName) ? xmlNodeList : xmlDocument;
                         }
                     }
@@ -149,8 +175,10 @@ namespace WebApplicationNetCoreDev.Controllers.WebconIntegrationSystemController
             {
                 await Task.Run(() => _log4Net.Error(string.Format("{0}, {1}.", e.Message, e.StackTrace), e));
             }
+
             return NotFound();
         }
+
         #endregion
     }
 }

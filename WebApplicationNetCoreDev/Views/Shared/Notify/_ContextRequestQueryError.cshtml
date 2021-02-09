@@ -1,4 +1,5 @@
-﻿@using WebApplicationNetCoreDev.Helpers
+﻿@using System.Web
+@using WebApplicationNetCoreDev.Helpers
 @if (Context.Request.Query.ContainsKey("Message") && Context.Request.Query.ContainsKey("StackTrace"))
 {
     <div class="alert alert-danger" role="alert">
@@ -8,18 +9,18 @@
         </p>
     </div>
     @Html.Script(
-            @<script type="text/javascript">
-            $(function () {
-                $.toast({
-                    heading: '@System.Web.HttpUtility.JavaScriptStringEncode(Context.Request.Query.Where(w => w.Key == "Message").FirstOrDefault().Value).Trim()',
-                    text: '@System.Web.HttpUtility.JavaScriptStringEncode(Context.Request.Query.Where(w => w.Key == "StackTrace").FirstOrDefault().Value).Trim()',
-                    position: 'top-right',
-                    loaderBg: '#ff6849',
-                    icon: 'error',
-                    hideAfter: 7000,
-                    stack: 7
-                });
-            });
-            </script>
-   )
+        @<script type="text/javascript">
+             $(function() {
+                 $.toast({
+                     heading: '@HttpUtility.JavaScriptStringEncode(Context.Request.Query.Where(w => w.Key == "Message").FirstOrDefault().Value).Trim()',
+                     text: '@HttpUtility.JavaScriptStringEncode(Context.Request.Query.Where(w => w.Key == "StackTrace").FirstOrDefault().Value).Trim()',
+                     position: 'top-right',
+                     loaderBg: '#ff6849',
+                     icon: 'error',
+                     hideAfter: 7000,
+                     stack: 7
+                 });
+             });
+         </script>
+        )
 }

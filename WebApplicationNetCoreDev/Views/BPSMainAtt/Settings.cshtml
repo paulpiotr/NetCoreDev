@@ -1,5 +1,4 @@
-﻿@using WebApplicationNetCoreDev.Helpers;
-
+﻿@using NetAppCommon
 @model WebconIntegrationSystem.Models.BPSMainAtt.AppSettings
 
 @{ ViewData["Title"] = "Ustawienia aplikacja " + Model.GetType().FullName; }
@@ -15,20 +14,20 @@
                 <div class="col-sm-12 mt-2">
                     @if (null != Model && null != Model.ConnectionString && !string.IsNullOrWhiteSpace(Model.ConnectionString))
                     {
-                        @Html.LabelFor(m => m.ConnectionString, new { Class = "control-label text-success" })
+                        @Html.LabelFor(m => m.ConnectionString, new {Class = "control-label text-success"})
                     }
-                    @Html.TextAreaFor(m => m.ConnectionString, new { Class = "form-control", Style = "height: 3rem" })
+                    @Html.TextAreaFor(m => m.ConnectionString, new {Class = "form-control", Style = "height: 3rem"})
                     @if (null != Model && null != Model.ConnectionString && !string.IsNullOrWhiteSpace(Model.ConnectionString))
                     {
                         <div class="text-black-50 font-italic m-t-10 m-b-10">
-                            <small>Wartość połączenia po tłumaczeniu zmiennych: @NetAppCommon.DatabaseMssql.ParseConnectionString(Model.ConnectionString)</small>
+                            <small>Wartość połączenia po tłumaczeniu zmiennych: @DatabaseMssql.ParseConnectionString(Model.ConnectionString)</small>
                         </div>
                     }
                     <div class="form-control-feedback mt-2">
                         @Html.ValidationMessageFor(m => m.ConnectionString)
                     </div>
                     <div class="checkbox text-success mt-2">
-                        <label>@Html.CheckBoxFor(m => m.CheckForConnection, new { Class = "checkbox checkbox-success" }) @Html.DisplayNameFor(m => m.CheckForConnection)</label>
+                        <label>@Html.CheckBoxFor(m => m.CheckForConnection, new {Class = "checkbox checkbox-success"}) @Html.DisplayNameFor(m => m.CheckForConnection)</label>
                     </div>
                 </div>
                 <div class="col-sm-12 mt-2">

@@ -10,47 +10,59 @@
                     <ul class="navbar-nav ml-auto">
                         <li class="nav-item">
                             <a class="nav-link waves-effect waves-dark" href="@Url.Action("Index", "DaneSzukajPodmioty")">
-                                <span class="p-1"><i class="ti-layout-grid2"></i></span>
+                                <span class="p-1">
+                                    <i class="ti-layout-grid2"></i>
+                                </span>
                                 <span class="p-1">Portal API GUS</span>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link waves-effect waves-dark" href="@Url.Action("Index", "WykazPodatnikowVat")">
-                                <span class="p-1"><i class="ti-layout-grid2"></i></span>
+                                <span class="p-1">
+                                    <i class="ti-layout-grid2"></i>
+                                </span>
                                 <span class="p-1">API Wykazu podatników VAT</span>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link waves-effect waves-dark" href="@Url.Action("Settings", "BPSMainAtt")">
-                                <span class="p-1"><i class="ti-layout-grid2"></i></span>
+                                <span class="p-1">
+                                    <i class="ti-layout-grid2"></i>
+                                </span>
                                 <span class="p-1">Webcon (BPSMainAtt)</span>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link waves-effect waves-dark" href="@Url.Action("Index", "Vies")">
-                                <span class="p-1"><i class="ti-layout-grid2"></i></span>
+                                <span class="p-1">
+                                    <i class="ti-layout-grid2"></i>
+                                </span>
                                 <span class="p-1">VIES</span>
                             </a>
                         </li>
 
                         @if (!User.Identity.IsAuthenticated)
                         {
-
-            <li class="nav-item">
-                <a class="nav-link" href="@Url.Action("Index", "Authentication")">
-                    <span class="p-1"><i class="fa fa-users"></i></span>
-                    <span class="p-1">Zaloguj się</span>
-                </a>
-            </li> }
+                            <li class="nav-item">
+                                <a class="nav-link" href="@Url.Action("Index", "Authentication")">
+                                    <span class="p-1">
+                                        <i class="fa fa-users"></i>
+                                    </span>
+                                    <span class="p-1">Zaloguj się</span>
+                                </a>
+                            </li>
+                        }
                         else if (User.Identity.IsAuthenticated)
                         {
-            <li class="nav-item">
-                <a class="nav-link" href="@Url.Action("Logout", "Authentication")">
-                    <span class="p-1"><i class="fa fa-power-off"></i></span>
-                    <span class="p-1">Wyluguj się</span>
-                </a>
-            </li>
-}
+                            <li class="nav-item">
+                                <a class="nav-link" href="@Url.Action("Logout", "Authentication")">
+                                    <span class="p-1">
+                                        <i class="fa fa-power-off"></i>
+                                    </span>
+                                    <span class="p-1">Wyluguj się</span>
+                                </a>
+                            </li>
+                        }
                     </ul>
                 </div>
             </nav>

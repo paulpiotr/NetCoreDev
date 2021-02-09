@@ -1,0 +1,37 @@
+﻿@using System.Reflection
+@using NetAppCommon
+@using WebApplicationNetCoreDev.Helpers
+@{ ViewData["Title"] = "Czekaj, serwer HTTP jest restartowany"; }
+
+<div class="jumbotron bg-transparent">
+    <div class="text-center">
+        <h1 class="display-4 text-uppercase text-info">Welcome @Assembly.GetEntryAssembly()?.GetName().Name</h1>
+        <h2 class="display-4 text-uppercase text-warning">@ViewData["Title"]</h2>
+        <p>Learn Building Web apps with ASP.NET Core.</p>
+        <p>
+            @HttpContextAccessor.AppContext.GetCurrentUserIdentityName()
+        </p>
+    </div>
+</div>
+
+@Html.Script(
+    @<script type="text/javascript">
+         $(function() {
+             try {
+                 $("body").on("click.myDisable", "a", function(e) { e.preventDefault(); });
+                 $.ajax({
+                     url: $(location).attr("href"),
+                     success: function() {
+                         $(location).attr("href", $(location).attr("href"));
+                         $(".navbar-fixed").show();
+                     },
+                     error: function() {
+                         $.ajax(this);
+                         return;
+                     }
+                 }).delay(@Convert.ToInt32(Math.Round(TimeSpan.FromSeconds(1).TotalMinutes, 0)));
+             } catch (e) {
+                 console.log(e);
+             }
+         });
+     </script>)

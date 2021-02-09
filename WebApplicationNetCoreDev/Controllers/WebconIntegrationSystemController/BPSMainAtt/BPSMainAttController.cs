@@ -1,10 +1,15 @@
+#region using
+
 using System;
 using System.Reflection;
 using System.Threading.Tasks;
+using log4net;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WebconIntegrationSystem.Models.BPSMainAtt;
 using WebconIntegrationSystem.Repositories.BPSMainAtt;
+
+#endregion
 
 namespace WebApplicationNetCoreDev.Controllers.WebconIntegrationSystemController.BPSMainAtt
 {
@@ -13,23 +18,25 @@ namespace WebApplicationNetCoreDev.Controllers.WebconIntegrationSystemController
     public class BPSMainAttController : Controller
     {
         #region private readonly log4net.ILog log4net
+
         /// <summary>
-        /// Log4 Net Logger
+        ///     Log4 Net Logger
         /// </summary>
-        private readonly log4net.ILog log4net = Log4netLogger.Log4netLogger.GetLog4netInstance(MethodBase.GetCurrentMethod()?.DeclaringType);
+        private readonly ILog log4net =
+            Log4netLogger.Log4netLogger.GetLog4netInstance(MethodBase.GetCurrentMethod()?.DeclaringType);
+
         #endregion
 
         #region public IActionResult Index()
+
         [HttpGet]
-        public IActionResult Index()
-        {
-            return View();
-        }
+        public IActionResult Index() => View();
+
         #endregion
 
         #region public IActionResult Settings()
+
         /// <summary>
-        /// 
         /// </summary>
         /// <returns></returns>
         [HttpGet]
@@ -43,20 +50,23 @@ namespace WebApplicationNetCoreDev.Controllers.WebconIntegrationSystemController
             {
                 log4net.Error($"\n{e.GetType()}\n{e.InnerException?.GetType()}\n{e.Message}\n{e.StackTrace}\n", e);
             }
+
             return NotFound();
         }
+
         #endregion
 
         #region public async Task<IActionResult> SettingsAsync
+
         /// <summary>
-        /// 
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(AuthenticationSchemes = "Cookies")]
-        public async Task<IActionResult> SettingsAsync([Bind("ConnectionString", "CheckForConnection")] AppSettings model)
+        public async Task<IActionResult> SettingsAsync([Bind("ConnectionString", "CheckForConnection")]
+            AppSettings model)
         {
             try
             {
@@ -71,13 +81,15 @@ namespace WebApplicationNetCoreDev.Controllers.WebconIntegrationSystemController
                 log4net.Error($"\n{e.GetType()}\n{e.InnerException?.GetType()}\n{e.Message}\n{e.StackTrace}\n", e);
                 return NotFound(e);
             }
+
             return View(model);
         }
+
         #endregion
 
         #region public IActionResult Route()
+
         /// <summary>
-        /// 
         /// </summary>
         /// <returns></returns>
         public IActionResult Route()
@@ -90,8 +102,10 @@ namespace WebApplicationNetCoreDev.Controllers.WebconIntegrationSystemController
             {
                 log4net.Error($"\n{e.GetType()}\n{e.InnerException?.GetType()}\n{e.Message}\n{e.StackTrace}\n", e);
             }
+
             return NotFound();
         }
+
         #endregion
     }
 }

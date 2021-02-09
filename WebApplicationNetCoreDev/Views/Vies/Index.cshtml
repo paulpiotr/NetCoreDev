@@ -1,0 +1,220 @@
+﻿@using System.Reflection
+@using Kendo.Mvc.UI
+@using PortalApiGusApiRegonData.Models.DaneSzukajPodmioty
+@using Vies.Core.Models
+@using WebApplicationNetCoreDev.Helpers
+@model IEnumerable<Vies.Core.Models.CheckVat>
+
+@{ var gridName = string.Format("{0}{1}", Assembly.GetEntryAssembly().GetName().Name, Assembly.GetAssembly(typeof(DaneSzukajPodmioty)).GetName().Name); }
+@{ var gridActions = string.Format("{0}Actions", gridName); }
+@{ var gridDataSource = string.Format("{0}DataSource", gridName); }
+@{ var gridToolbarTemplate = string.Format("{0}GridToolbarTemplate", gridName); }
+@{ var gridActionApiUrl = string.Format("{0}", "/api/EuropeanCommission/TaxationAndCustomsUnion/ViesApi/CheckVatKendoGrid/"); }
+@{ var windowName = string.Format("{0}Window", gridName); }
+
+@{ ViewData["Title"] = "Komisja Europejska Unia Celna i Podatkowa - VIES wyszukiwanie podmiotów"; }
+@{ Layout = "~/Views/Shared/_LayoutAdmin.cshtml"; }
+
+<div class="container-fluid k-content m-0">
+
+    <div class="row">
+
+        @(Html.Kendo().Breadcrumb()
+            .Name("breadcrumb")
+            .Items(items =>
+            {
+                items.Add()
+                    .Type(BreadcrumbItemType.RootItem)
+                    .Href("javascript:void(0)")
+                    .Text("Komisja Europejska Unia Celna i Podatkowa - VIES")
+                    .ShowText(true)
+                    .Icon("home")
+                    .ShowIcon(true);
+                items.Add()
+                    .Type(BreadcrumbItemType.Item)
+                    .Href("javascript:void(0)")
+                    .Text("Wyszukiwanie podmiotów")
+                    .ShowText(true)
+                    .Icon("search")
+                    .ShowIcon(true);
+            }))
+
+    </div>
+
+    <div class="row overflow-auto">
+
+        @(Html.Kendo().DataSource<CheckVat>()
+            .Name(gridDataSource)
+            .Ajax(
+                dataSource => dataSource
+                    .Batch(true)
+                    .PageSize(100)
+                    .AutoSync(true)
+                    .ServerOperation(true)
+                    .Read(read => read.Url(gridActionApiUrl).Type(HttpVerbs.Get)
+                    )))
+        @(Html.Kendo().Grid<CheckVat>()
+            .Name(gridName)
+            .Columns(
+                columns =>
+                {
+                    columns.Bound(c => c.RequestDate).Filterable(false);
+                    columns.Bound(c => c.CountryCode).Filterable(false);
+                    columns.Bound(c => c.Name).Filterable(false);
+                    columns.Bound(c => c.VatNumber).Filterable(false);
+                    columns.Bound(c => c.Valid).Filterable(false);
+                    columns.Bound(c => c.Address).Filterable(false);
+                    columns.Bound(c => c.Id).Filterable(false);
+                    columns.Bound(c => c.DateOfCreate).Title("Data utworzenia").Format("{0:MM-dd-yyyy HH:mm:ss}").Filterable(false);
+                    columns.Bound(c => c.DateOfModification).Title("Data modyfikacji").Format("{0:MM-dd-yyyy HH:mm:ss}").Filterable(false);
+                    columns.Bound(c => c.UniqueIdentifierOfTheLoggedInUser).Filterable(false);
+                })
+            .ToolBar(toolbar => { toolbar.ClientTemplateId(gridToolbarTemplate); })
+            .Selectable()
+            .Events(e => e.Change("onChangeGridWidget"))
+            .Sortable()
+            .Scrollable()
+            .Filterable(filterable => filterable.Extra(false).Operators(operators => operators.ForString(str => str.Clear().IsEqualTo("Jest równy").Contains("Zawiera"))))
+            .DataSource(gridDataSource))
+
+    </div>
+    @if (User.Identity.IsAuthenticated && User.IsInRole("Administrator"))
+    {
+        <div class="row text-black-50 font-italic m-t-10 m-b-10">
+            <small>Bieżąca baza danych: @ViewData["ConnectionString"]</small>
+        </div>
+    }
+</div>
+
+@(Html.Kendo().Window()
+    .Name(windowName)
+    .Title("")
+    .Content(@<text></text>)
+    .Draggable()
+    .Resizable()
+    .Width(1024)
+    .Visible(false)
+    .Actions(actions => actions.Pin().Minimize().Maximize().Close())
+    .Events(e => e.Close("onClose").Open("onOpen")))
+
+@Html.Script(
+    @<script id="@gridToolbarTemplate" type="text/x-kendo-template">
+    <div class="toolbar">
+        <div class="row h-100 w-75 p-t-15 align-items-center align-self-center">
+            <div class="col-sm-12 col-md-6 col-lg-4 col-xl-2">
+                @(Html.Kendo().ComboBox()
+                    .Name("countryCode")
+                    .Placeholder("Wybierz kraj")
+                    .BindTo(new List<string>
+                    {
+                        "AT - Austria",
+                        "BE - Belgia",
+                        "BG - Bułgaria",
+                        "CY - Cypr",
+                        "CZ - Czechy",
+                        "DE – Niemcy",
+                        "DK - Dania",
+                        "EE - Estonia",
+                        "EL - Grecja",
+                        "ES - Hiszpania",
+                        "FI - Finlandia",
+                        "FR - Francja",
+                        "GB - Wielka Brytania",
+                        "HR - Chorwacja",
+                        "HU - Węgry",
+                        "IE - Irlandia",
+                        "IT - Włochy",
+                        "LT - Litwa",
+                        "LU - Luksemburg",
+                        "LV - Łotwa",
+                        "MT - Malta",
+                        "NL - Holandia",
+                        "PL - Polska",
+                        "PT - Portugalia",
+                        "RO - Rumunia",
+                        "SE - Szwecja",
+                        "SI - Słowenia",
+                        "SK - Słowacja"
+                    })
+                    .SelectedIndex(22)
+                    .Suggest(true)
+                    .Filter(FilterType.Contains)
+                    .AutoBind(true)
+                    .MinLength(2)
+                    .HtmlAttributes(new {style = "width:100%;"}).ToClientTemplate())
+            </div>
+            <div class="col-sm-12 col-md-6 col-lg-4 col-xl-2 mt-n4">
+                @(Html.Kendo().MaskedTextBox().Name("vatNumber").Mask("000000000000000000000000").Label(l => l.Content("NIP (max 24 znaki)").Floating(true)).ToClientTemplate())
+            </div>
+            <div class="col-sm-12 col-md-12 col-lg-4 col-xl-2 p-sm-15 p-md-15">
+                <a href="javascript:void(0)" class="k-search k-link k-button k-button-search" title="Wyszukaj"><span class="k-icon k-i-search"></span>Wyszukaj</a>
+                <a href="javascript:void(0)" class="k-pager-refresh k-link k-button k-button-icon" title="Odśwież widok"><span class="k-icon k-i-reload"></span></a>
+            </div>
+        </div>
+    </div>
+</script>)
+
+@Html.Script(
+    @<script type="text/javascript">
+         function onChangeGridWidget(e) {
+             $("#@windowName").data("kendoWindow").close();
+             var currentDataItem = e.sender.dataItem(this.select());
+             $("#@windowName").data("kendoWindow")
+                 .open()
+                 .content("<div class='p-3'><pre id='json-renderer'></pre></div>")
+                 .refresh()
+                 .title("Sczegóły " + currentDataItem.Id)
+                 .center()
+                 .setOptions({ width: $(document).width() * 0.62, height: $(document).height() * 0.62, position: { left: ($(document).width() * 0.38) / 2, top: ($(document).height() * 0.38) / 2 } });
+             $('#json-renderer').jsonViewer(JSON.parse(JSON.stringify(currentDataItem)));
+         }
+
+         function onClose() {
+         }
+
+         function onOpen() {
+         }
+
+         $(function() {
+             try {
+                 var grid = $("#@gridName");
+                 var gridDataSource = @gridDataSource;
+                 var gridWidget = grid.data("kendoGrid");
+                 gridWidget.wrapper.height($(".page-wrapper").first().height() * 0.9);
+                 gridWidget.resize();
+                 gridWidget.resize(true);
+                 grid.find(".k-grid-toolbar").on("click",
+                     ".k-pager-refresh",
+                     function(e) {
+                         e.preventDefault();
+                         gridDataSource.read();
+                     }).on("click",
+                     ".k-search",
+                     function(e) {
+                         if ($("#vatNumber").val() && $("#countryCode").val()) {
+                             e.preventDefault();
+                             var url = gridDataSource.transport.options.read.url;
+                             if (parseInt($("#vatNumber").val(), 10) > 0) {
+                                 gridDataSource.transport.options.read.url = "/api/EuropeanCommission/TaxationAndCustomsUnion/ViesApi/CheckVatKendoGrid/" + $("#countryCode").val().substring(0, 2) + "/" + $("#vatNumber").val();
+                             }
+                             gridDataSource.read();
+                             gridDataSource.transport.options.read.url = url;
+                         } else {
+                             $(function() {
+                                 $.toast({
+                                     heading: 'Popraw dane!',
+                                     text: 'Wybierz kraj, wpisz poprawny numer NIP!',
+                                     position: 'top-center',
+                                     loaderBg: '#ff6849',
+                                     icon: 'error',
+                                     hideAfter: 7000,
+                                     stack: 7
+                                 });
+                             });
+                         }
+                     });
+             } catch (e) {
+                 console.log(e);
+             }
+         });
+     </script>)

@@ -1,16 +1,20 @@
 ﻿<!-- Left Sidebar - style you can find in sidebar.scss _LeftSidebar.cshtml  -->
 <aside class="left-sidebar">
-    <div class="d-flex no-block nav-text-box align-items-center">
-        @*<span><img src="../assets/images/logo-icon.png" alt="elegant admin template"></span>*@
-        <a class="nav-lock waves-effect waves-dark ml-auto hidden-md-down" href="javascript:void(0)"><i class="mdi mdi-toggle-switch"></i></a>
-        <a class="nav-toggler waves-effect waves-dark ml-auto hidden-sm-up" href="javascript:void(0)"><i class="ti-menu ti-close"></i></a>
-    </div>
-    <!-- Sidebar scroll-->
-    <div class="scroll-sidebar">
-        <!-- Sidebar navigation-->
-        <nav class="sidebar-nav">
-            <ul id="sidebarnav">
-                @*
+<div class="d-flex no-block nav-text-box align-items-center">
+    @*<span><img src="../assets/images/logo-icon.png" alt="elegant admin template"></span>*@
+    <a class="nav-lock waves-effect waves-dark ml-auto hidden-md-down" href="javascript:void(0)">
+        <i class="mdi mdi-toggle-switch"></i>
+    </a>
+    <a class="nav-toggler waves-effect waves-dark ml-auto hidden-sm-up" href="javascript:void(0)">
+        <i class="ti-menu ti-close"></i>
+    </a>
+</div>
+<!-- Sidebar scroll-->
+<div class="scroll-sidebar">
+<!-- Sidebar navigation-->
+<nav class="sidebar-nav">
+<ul id="sidebarnav">
+@*
         <li>
             <a class="has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="icon-speedometer"></i><span class="hide-menu">Dashboard <span class="badge badge-pill badge-cyan">4</span></span></a>
             <ul aria-expanded="false" class="collapse">
@@ -22,38 +26,38 @@
             </ul>
         </li>
                 *@
-                <li>
-                    <a class="waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false" title="Portal Api Gus">
-                        <i class="has-arrow ti-layout-grid2"></i>
-                        <span class="hide-menu">
-                            <small>Portal Api Gus</small><br />
-                            <small>Wyszukiwanie podmiotów</small>
-                        </span>
-                    </a>
-                    <ul aria-expanded="false" class="collapse">
-                        <li>
-                            <a asp-area="" asp-controller="DaneSzukajPodmioty" asp-action="Index" title="Portal Api Gus - Wyszukiwanie podmiotów gospodarczych">
-                                <small class="hide-menu">Wyszukiwanie podmiotów</small><i class="ti-search p-t-5"></i>
-                            </a>
-                        </li>
-                        <li>
-                            <a asp-area="" asp-controller="DaneSzukajPodmioty" asp-action="Settings" title="Portal Api Gus - Wyszukiwanie podmiotów gospodarczych - ustawienia">
-                                <small class="hide-menu">Ustawienia</small><i class="ti-settings p-t-5"></i>
-                            </a>
-                        </li>
-                        <li>
-                            <a asp-area="" asp-controller="DaneSzukajPodmioty" asp-action="Route" title="Portal Api Gus - Wyszukiwanie podmiotów gospodarczych - dostępne akcje">
-                                <small class="hide-menu">Dostępne akcje</small><i class="ti-link p-t-5"></i>
-                            </a>
-                        </li>
-                        <li>
-                            <a asp-area="" asp-controller="Authentication" asp-action="GenerateJwtToken" title="Pobierz klucz (token) API">
-                                <small class="hide-menu">Pobierz klucz (token) API</small><i class="ti-key p-t-5"></i>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-                @*<li>
+<li>
+    <a class="waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false" title="Portal Api Gus">
+        <i class="has-arrow ti-layout-grid2"></i>
+        <span class="hide-menu">
+            <small>Portal Api Gus</small><br/>
+            <small>Wyszukiwanie podmiotów</small>
+        </span>
+    </a>
+    <ul aria-expanded="false" class="collapse">
+        <li>
+            <a asp-area="" asp-controller="DaneSzukajPodmioty" asp-action="Index" title="Portal Api Gus - Wyszukiwanie podmiotów gospodarczych">
+                <small class="hide-menu">Wyszukiwanie podmiotów</small><i class="ti-search p-t-5"></i>
+            </a>
+        </li>
+        <li>
+            <a asp-area="" asp-controller="DaneSzukajPodmioty" asp-action="Settings" title="Portal Api Gus - Wyszukiwanie podmiotów gospodarczych - ustawienia">
+                <small class="hide-menu">Ustawienia</small><i class="ti-settings p-t-5"></i>
+            </a>
+        </li>
+        <li>
+            <a asp-area="" asp-controller="DaneSzukajPodmioty" asp-action="Route" title="Portal Api Gus - Wyszukiwanie podmiotów gospodarczych - dostępne akcje">
+                <small class="hide-menu">Dostępne akcje</small><i class="ti-link p-t-5"></i>
+            </a>
+        </li>
+        <li>
+            <a asp-area="" asp-controller="Authentication" asp-action="GenerateJwtToken" title="Pobierz klucz (token) API">
+                <small class="hide-menu">Pobierz klucz (token) API</small><i class="ti-key p-t-5"></i>
+            </a>
+        </li>
+    </ul>
+</li>
+@*<li>
             <a class="has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false" title="System integracji Icasa Unimot">
                 <i class="ti-layout-grid2"></i>
                 <span class="hide-menu">SI Icasa Unimot</span>
@@ -66,108 +70,108 @@
                 </li>
             </ul>
         </li>*@
-                <li>
-                    <a class="waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false" title="Serwis Rzeczypospolitej Polskiej / Ministerstwo Finansów / Krajowa Administracja Skarbowa / Api Wykazu Podatników Vat">
-                        <i class="has-arrow ti-layout-grid2"></i>
-                        <span class="hide-menu">
-                            <small>Ministerstwo Finansów</small><br />
-                            <small>Wykaz podatników VAT</small>
-                        </span>
-                    </a>
-                    <ul aria-expanded="false" class="collapse">
-                        <li>
-                            <a asp-area="" asp-controller="WykazPodatnikowVat" asp-action="Search" title="Api Wykazu Podatników Vat - Wyszukiwanie podmiotów">
-                                <small class="hide-menu">Wyszukiwanie podmiotów</small><i class="ti-search p-t-5"></i>
-                            </a>
-                        </li>
-                        <li>
-                            <a asp-area="" asp-controller="WykazPodatnikowVat" asp-action="Check" title="Api Wykazu Podatników Vat - Sprawdzanie podmiotów">
-                                <small class="hide-menu">Sprawdzanie podmiotów</small><i class="ti-check p-t-5"></i>
-                            </a>
-                        </li>
-                        <li>
-                            <a asp-area="" asp-controller="WykazPodatnikowVat" asp-action="RequestAndResponseHistory" title="Api Wykazu Podatników Vat - historia wyszukiwania">
-                                <small class="hide-menu">Historia wyszukiwania</small><i class="ti-time p-t-5"></i>
-                            </a>
-                        </li>
-                        <li>
-                            <a asp-area="" asp-controller="WykazPodatnikowVat" asp-action="Settings" title="Api Wykazu Podatników Vat - Wyszukiwanie podmiotów ustawienia">
-                                <small class="hide-menu">Ustawienia</small><i class="ti-settings p-t-5"></i>
-                            </a>
-                        </li>
-                        <li>
-                            <a asp-area="" asp-controller="WykazPodatnikowVat" asp-action="Route" title="Api Wykazu Podatników Vat - Dostępne akcje">
-                                <small class="hide-menu">Dostępne akcje</small><i class="ti-link p-t-5"></i>
-                            </a>
-                        </li>
-                        <li>
-                            <a asp-area="" asp-controller="Authentication" asp-action="GenerateJwtToken" title="Api Wykazu Podatników Vat - Pobierz klucz (token) API">
-                                <small class="hide-menu">Pobierz klucz (token) API</small><i class="ti-key p-t-5"></i>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
+<li>
+    <a class="waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false" title="Serwis Rzeczypospolitej Polskiej / Ministerstwo Finansów / Krajowa Administracja Skarbowa / Api Wykazu Podatników Vat">
+        <i class="has-arrow ti-layout-grid2"></i>
+        <span class="hide-menu">
+            <small>Ministerstwo Finansów</small><br/>
+            <small>Wykaz podatników VAT</small>
+        </span>
+    </a>
+    <ul aria-expanded="false" class="collapse">
+        <li>
+            <a asp-area="" asp-controller="WykazPodatnikowVat" asp-action="Search" title="Api Wykazu Podatników Vat - Wyszukiwanie podmiotów">
+                <small class="hide-menu">Wyszukiwanie podmiotów</small><i class="ti-search p-t-5"></i>
+            </a>
+        </li>
+        <li>
+            <a asp-area="" asp-controller="WykazPodatnikowVat" asp-action="Check" title="Api Wykazu Podatników Vat - Sprawdzanie podmiotów">
+                <small class="hide-menu">Sprawdzanie podmiotów</small><i class="ti-check p-t-5"></i>
+            </a>
+        </li>
+        <li>
+            <a asp-area="" asp-controller="WykazPodatnikowVat" asp-action="RequestAndResponseHistory" title="Api Wykazu Podatników Vat - historia wyszukiwania">
+                <small class="hide-menu">Historia wyszukiwania</small><i class="ti-time p-t-5"></i>
+            </a>
+        </li>
+        <li>
+            <a asp-area="" asp-controller="WykazPodatnikowVat" asp-action="Settings" title="Api Wykazu Podatników Vat - Wyszukiwanie podmiotów ustawienia">
+                <small class="hide-menu">Ustawienia</small><i class="ti-settings p-t-5"></i>
+            </a>
+        </li>
+        <li>
+            <a asp-area="" asp-controller="WykazPodatnikowVat" asp-action="Route" title="Api Wykazu Podatników Vat - Dostępne akcje">
+                <small class="hide-menu">Dostępne akcje</small><i class="ti-link p-t-5"></i>
+            </a>
+        </li>
+        <li>
+            <a asp-area="" asp-controller="Authentication" asp-action="GenerateJwtToken" title="Api Wykazu Podatników Vat - Pobierz klucz (token) API">
+                <small class="hide-menu">Pobierz klucz (token) API</small><i class="ti-key p-t-5"></i>
+            </a>
+        </li>
+    </ul>
+</li>
 
-                <li>
-                    <a class="waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false" title="System integracji Webcon BPS (BPSMainAtt)">
-                        <i class="has-arrow ti-layout-grid2"></i>
-                        <span class="hide-menu">
-                            <small>System integracji</small><br />
-                            <small>Webcon BPS (BPSMainAtt)</small>
-                        </span>
-                    </a>
-                    <ul aria-expanded="false" class="collapse">
-                        @*<li>
+<li>
+    <a class="waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false" title="System integracji Webcon BPS (BPSMainAtt)">
+        <i class="has-arrow ti-layout-grid2"></i>
+        <span class="hide-menu">
+            <small>System integracji</small><br/>
+            <small>Webcon BPS (BPSMainAtt)</small>
+        </span>
+    </a>
+    <ul aria-expanded="false" class="collapse">
+        @*<li>
                     <a asp-area="" asp-controller="BPSMainAtt" asp-action="Index" title="System integracji Webcon BPS (BPSMainAtt)">
                         <small class="hide-menu">Webcon BPS (BPSMainAtt)</small><i class="ti-search p-t-5"></i>
                     </a>
                 </li>*@
-                        <li>
-                            <a asp-area="" asp-controller="BPSMainAtt" asp-action="Settings" title="System integracji Webcon BPS (BPSMainAtt) - ustawienia">
-                                <small class="hide-menu">Ustawienia</small><i class="ti-settings p-t-5"></i>
-                            </a>
-                        </li>
-                        <li>
-                            <a asp-area="" asp-controller="BPSMainAtt" asp-action="Route" title="System integracji Webcon BPS (BPSMainAtt) - dostępne akcje">
-                                <small class="hide-menu">Dostępne akcje</small><i class="ti-link p-t-5"></i>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
+        <li>
+            <a asp-area="" asp-controller="BPSMainAtt" asp-action="Settings" title="System integracji Webcon BPS (BPSMainAtt) - ustawienia">
+                <small class="hide-menu">Ustawienia</small><i class="ti-settings p-t-5"></i>
+            </a>
+        </li>
+        <li>
+            <a asp-area="" asp-controller="BPSMainAtt" asp-action="Route" title="System integracji Webcon BPS (BPSMainAtt) - dostępne akcje">
+                <small class="hide-menu">Dostępne akcje</small><i class="ti-link p-t-5"></i>
+            </a>
+        </li>
+    </ul>
+</li>
 
-                <li>
-                    <a class="waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false" title="Komisja Europejska - Unia Celna i Podatkowa - VIES">
-                        <i class="has-arrow ti-layout-grid2"></i>
-                        <span class="hide-menu">
-                            <small>Komisja Europejska</small><br />
-                            <small>Unia Celna i Podatkowa - VIES</small>
-                        </span>
-                    </a>
-                    <ul aria-expanded="false" class="collapse">
-                        <li>
-                            <a asp-area="" asp-controller="Vies" asp-action="Index" title="Komisja Europejska - Unia Celna i Podatkowa - VIES - wyszukiwanie podmiotów (podstawowe)">
-                                <small class="hide-menu">Wyszukiwanie podmiotów (podstawowe)</small><i class="ti-search p-t-5"></i>
-                            </a>
-                        </li>
-                        <li>
-                            <a asp-area="" asp-controller="Vies" asp-action="CheckVatApprox" title="Komisja Europejska - Unia Celna i Podatkowa - VIES - wyszukiwanie podmiotów (rozszerzone)">
-                                <small class="hide-menu">Wyszukiwanie podmiotów (rozszerzone)</small><i class="ti-search p-t-5"></i>
-                            </a>
-                        </li>
-                        <li>
-                            <a asp-area="" asp-controller="Vies" asp-action="Settings" title="Komisja Europejska - Unia Celna i Podatkowa - VIES - ustawienia">
-                                <small class="hide-menu">Ustawienia</small><i class="ti-settings p-t-5"></i>
-                            </a>
-                        </li>
-                        <li>
-                            <a asp-area="" asp-controller="Vies" asp-action="Route" title="Komisja Europejska - Unia Celna i Podatkowa - VIES - dostępne akcje">
-                                <small class="hide-menu">Dostępne akcje</small><i class="ti-link p-t-5"></i>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
+<li>
+    <a class="waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false" title="Komisja Europejska - Unia Celna i Podatkowa - VIES">
+        <i class="has-arrow ti-layout-grid2"></i>
+        <span class="hide-menu">
+            <small>Komisja Europejska</small><br/>
+            <small>Unia Celna i Podatkowa - VIES</small>
+        </span>
+    </a>
+    <ul aria-expanded="false" class="collapse">
+        <li>
+            <a asp-area="" asp-controller="Vies" asp-action="Index" title="Komisja Europejska - Unia Celna i Podatkowa - VIES - wyszukiwanie podmiotów (podstawowe)">
+                <small class="hide-menu">Wyszukiwanie podmiotów (podstawowe)</small><i class="ti-search p-t-5"></i>
+            </a>
+        </li>
+        <li>
+            <a asp-area="" asp-controller="Vies" asp-action="CheckVatApprox" title="Komisja Europejska - Unia Celna i Podatkowa - VIES - wyszukiwanie podmiotów (rozszerzone)">
+                <small class="hide-menu">Wyszukiwanie podmiotów (rozszerzone)</small><i class="ti-search p-t-5"></i>
+            </a>
+        </li>
+        <li>
+            <a asp-area="" asp-controller="Vies" asp-action="Settings" title="Komisja Europejska - Unia Celna i Podatkowa - VIES - ustawienia">
+                <small class="hide-menu">Ustawienia</small><i class="ti-settings p-t-5"></i>
+            </a>
+        </li>
+        <li>
+            <a asp-area="" asp-controller="Vies" asp-action="Route" title="Komisja Europejska - Unia Celna i Podatkowa - VIES - dostępne akcje">
+                <small class="hide-menu">Dostępne akcje</small><i class="ti-link p-t-5"></i>
+            </a>
+        </li>
+    </ul>
+</li>
 
-                @*<li>
+@*<li>
             <a class="has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false" title="System integracji ICASA UNIMOT">
                 <i class="ti-layout-grid2"></i>
                 <span class="hide-menu">
@@ -184,7 +188,7 @@
             </ul>
         </li>*@
 
-                @*<li>
+@*<li>
             <a class="has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="ti-email"></i><span class="hide-menu">Inbox</span></a>
             <ul aria-expanded="false" class="collapse">
                 <li><a href="app-email.html">Mailbox <i class="icon-envelope-open"></i></a></li>
@@ -379,10 +383,10 @@
         <li> <a class="waves-effect waves-dark" href="../documentation/documentation.html" aria-expanded="false"><i class="far fa-circle text-danger"></i><span class="hide-menu">Documentation</span></a></li>
         <li> <a class="waves-effect waves-dark" href="pages-login.html" aria-expanded="false"><i class="far fa-circle text-success"></i><span class="hide-menu">Log Out</span></a></li>
         <li> <a class="waves-effect waves-dark" href="pages-faq.html" aria-expanded="false"><i class="far fa-circle text-info"></i><span class="hide-menu">FAQs</span></a></li>*@
-            </ul>
-        </nav>
-        <!-- End Sidebar navigation -->
-    </div>
-    <!-- End Sidebar scroll-->
+</ul>
+</nav>
+<!-- End Sidebar navigation -->
+</div>
+<!-- End Sidebar scroll-->
 </aside>
 <!-- End Left Sidebar  _LeftSidebar.cshtml  -->

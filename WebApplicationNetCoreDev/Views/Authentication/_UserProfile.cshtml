@@ -1,4 +1,5 @@
-﻿@{ ViewData["Title"] = string.Format("{0} {1}", "Profil użytkownika", @Context.User.Identity.Name); }
+﻿@using NetAppCommon.AppSettings.Models
+@{ ViewData["Title"] = $"Profil użytkownika {Context.User.Identity.Name}"; }
 <div class="container-fluid">
     <div class="row page-titles">
         <div class="col-md-5 align-self-center">
@@ -7,7 +8,9 @@
         <div class="col-md-7 align-self-center text-right">
             <div class="d-flex justify-content-end align-items-center">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
+                    <li class="breadcrumb-item">
+                        <a href="javascript:void(0)">Home</a>
+                    </li>
                     <li class="breadcrumb-item active">@Context.User.Identity.Name</li>
                 </ol>
             </div>
@@ -18,36 +21,39 @@
         <!-- Column -->
         <div class="col-lg-4 col-xlg-3 col-md-5">
             <div class="card">
-                <div class="card-body">
-                    <center class="m-t-30">
-                        @*<img src="../assets/images/users/5.jpg" class="img-circle" width="150" />*@
-                        <h4 class="card-title m-t-10">@Context.User.Identity.Name</h4>
-                        <h6 class="card-subtitle">@Context.User.Identity.AuthenticationType</h6>
-                        @*<div class="row text-center justify-content-md-center">
-                                <div class="col-4"><a href="javascript:void(0)" class="link"><i class="icon-people"></i> <font class="font-medium">254</font></a></div>
-                                <div class="col-4"><a href="javascript:void(0)" class="link"><i class="icon-picture"></i> <font class="font-medium">54</font></a></div>
-                            </div>*@
-                    </center>
+                <div class="card-body text-center p-t-30">
+                    @*<img src="../assets/images/users/5.jpg" class="img-circle" width="150" />*@
+                    <h4 class="card-title m-t-10">@Context.User.Identity.Name</h4>
+                    <h6 class="card-subtitle">@Context.User.Identity.AuthenticationType</h6>
+                    @*<div class="row text-center justify-content-md-center">
+                            <div class="col-4"><a href="javascript:void(0)" class="link"><i class="icon-people"></i> <font class="font-medium">254</font></a></div>
+                            <div class="col-4"><a href="javascript:void(0)" class="link"><i class="icon-picture"></i> <font class="font-medium">54</font></a></div>
+                        </div>*@
                 </div>
-                <div>
-                    <hr />
-                </div>
-                <div class="card-body">
-                    <small class="text-muted">Email address</small>
-                    <h6>@*hannagover@gmail.com*@</h6>
-                    <small class="text-muted p-t-30 db">Phone</small>
-                    <h6>@*+91 654 784 547*@</h6>
-                    <small class="text-muted p-t-30 db">Address</small>
-                    <h6>@*71 Pilgrim Avenue Chevy Chase, MD 20815*@</h6>
-                    @*<div class="map-box">
+                @*<div>
+                        <hr />
+                    </div>
+                    <div class="card-body">
+                        <!--<small class="text-muted">Email address</small>
+                        <h6>-->
+                        hannagover@gmail.com
+                        <!--</h6>
+                        <small class="text-muted p-t-30 db">Phone</small>
+                        <h6>-->
+                        +91 654 784 547
+                        <!--</h6>
+                        <small class="text-muted p-t-30 db">Address</small>
+                        <h6>-->
+                        71 Pilgrim Avenue Chevy Chase, MD 20815<!--</h6>-->
+                        <div class="map-box">
                             <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d470029.1604841957!2d72.29955005258641!3d23.019996818380896!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x395e848aba5bd449%3A0x4fcedd11614f6516!2sAhmedabad%2C+Gujarat!5e0!3m2!1sen!2sin!4v1493204785508" width="100%" height="150" frameborder="0" style="border:0" allowfullscreen></iframe>
                         </div>
                         <small class="text-muted p-t-30 db">Social Profile</small>
                         <br />
                         <button class="btn btn-circle btn-secondary"><i class="fab fa-facebook"></i></button>
                         <button class="btn btn-circle btn-secondary"><i class="fab fa-twitter"></i></button>
-                        <button class="btn btn-circle btn-secondary"><i class="fab fa-youtube"></i></button>*@
-                </div>
+                        <button class="btn btn-circle btn-secondary"><i class="fab fa-youtube"></i></button>
+                    </div>*@
             </div>
         </div>
         <!-- End Column -->
@@ -77,32 +83,61 @@
                     <div class="tab-pane active" id="home" role="tabpanel">
                         <div class="card-body">
                             <dl>
-                                @foreach (var claim in Context.User.Claims)
+                                @foreach (var claim in Context.User.Claims.OrderBy(x => x.Value.ToString()).ToList())
                                 {
-                    <dt class="col-sm-12"><small>@claim.Type</small></dt>
-                                    <dd class="col-sm-12">@claim.Value.ToString()</dd>}
+                                    <dt class="col-sm-12">
+                                        <small>@claim.Type</small>
+                                    </dt>
+                                    <dd class="col-sm-12">@claim.Value</dd>
+                                }
                             </dl>
                         </div>
                     </div>
                     <div class="tab-pane" id="profile" role="tabpanel">
                         <div class="card-body">
                             <dl>
-                                @foreach (var item in Enum.GetValues(typeof(Environment.SpecialFolder)))
+                                @foreach (var item in Enum.GetValues(typeof(Environment.SpecialFolder)).Cast<Environment.SpecialFolder>().OrderBy(x => x.ToString()).ToList())
                                 {
-                                    var value = (Environment.SpecialFolder)item;
-                    <dt class="col-sm-12"><small>@Html.Raw(value)</small></dt>
-                                    <dd class="col-sm-12">@Html.Raw(Environment.GetFolderPath(value))</dd>}
+                                    var value = item;
+                                    if (!string.IsNullOrWhiteSpace(Environment.GetFolderPath(value)))
+                                    {
+                                        <dt class="col-sm-12">
+                                            <small>@Html.Raw(value)</small>
+                                        </dt>
+                                        <dd class="col-sm-12">@Html.Raw(Environment.GetFolderPath(value))</dd>
+                                    }
+                                }
                             </dl>
                         </div>
                     </div>
                     <div class="tab-pane" id="settings" role="tabpanel">
                         <div class="card-body">
                             <dl>
-                                @{NetAppCommon.AppSettings.Models.AppSettingsModel appSettingsModel = NetAppCommon.AppSettings.Models.AppSettingsModel.GetInstance(); }
-                                <dt class="col-sm-12"><small>BaseDirectory</small></dt>
+                                @{ var appSettingsModel = AppSettingsModel.GetInstance(); }
+                                <dt class="col-sm-12">
+                                    <small>BaseDirectory</small>
+                                </dt>
                                 <dd class="col-sm-12">@Html.Raw(appSettingsModel.BaseDirectory)</dd>
-                                <dt class="col-sm-12"><small>UserProfileDirectory</small></dt>
+                                <dt class="col-sm-12">
+                                    <small>UserProfileDirectory</small>
+                                </dt>
                                 <dd class="col-sm-12">@Html.Raw(appSettingsModel.UserProfileDirectory)</dd>
+                                <dt class="col-sm-12">
+                                    <small>LastInstallDate</small>
+                                </dt>
+                                <dd class="col-sm-12">@Html.Raw(appSettingsModel.LastInstallDate)</dd>
+                                <dt class="col-sm-12">
+                                    <small>ProductCode</small>
+                                </dt>
+                                <dd class="col-sm-12">@Html.Raw(appSettingsModel.ProductCode)</dd>
+                                <dt class="col-sm-12">
+                                    <small>ProductVersion</small>
+                                </dt>
+                                <dd class="col-sm-12">@Html.Raw(appSettingsModel.ProductVersion)</dd>
+                                <dt class="col-sm-12">
+                                    <small>UpgradeCode</small>
+                                </dt>
+                                <dd class="col-sm-12">@Html.Raw(appSettingsModel.UpgradeCode)</dd>
                             </dl>
                             @*<form class="form-horizontal form-material">
                                     <div class="form-group">

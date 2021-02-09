@@ -40,12 +40,6 @@
 [submodule "FileSystemWatcherCommon"]
 	path = FileSystemWatcherCommon
 	url = http://tfs:8080/tfs/ISK/_git/FileSystemWatcherCommon
-[submodule ".publish/WebApplicationNetCoreDev/WebApplicationNetCoreDevDebug"]
-	path = .publish/WebApplicationNetCoreDev/WebApplicationNetCoreDevDebug
-	url = http://tfs:8080/tfs/Unimot/_git/WebApplicationNetCoreDevDebug
-[submodule "WebApplicationNetCoreDev/WebApplicationNetCoreDevRelease"]
-	path = WebApplicationNetCoreDev/WebApplicationNetCoreDevRelease
-	url = http://tfs:8080/tfs/Unimot/_git/WebApplicationNetCoreDevRelease
 [submodule "WebconIntegrationSystem"]
 	path = WebconIntegrationSystem
 	url = http://tfs:8080/tfs/ISK/_git/WebconIntegrationSystem
@@ -55,3 +49,9 @@
 [submodule "AutoMapper"]
 	path = AutoMapper
 	url = https://github.com/AutoMapper/AutoMapper.git
+[submodule ".publish/WebApplicationNetCoreDev/WebApplicationNetCoreDevRelease"]
+	path = .publish/WebApplicationNetCoreDev/WebApplicationNetCoreDevRelease
+	url = http://tfs:8080/tfs/Unimot/_git/WebApplicationNetCoreDevRelease
+[submodule ".publish/WebApplicationNetCoreDev/WebApplicationNetCoreDevDebug"]
+	path = .publish/WebApplicationNetCoreDev/WebApplicationNetCoreDevDebug
+	url = http://tfs:8080/tfs/Unimot/_git/WebApplicationNetCoreDevDebug

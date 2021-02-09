@@ -1,27 +1,31 @@
-﻿using System;
+﻿#region using
+
+using System;
 using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
+#endregion
+
 namespace WebApplicationNetCoreDev.Helpers
 {
     /// <summary>
-    /// Helper Display script in end of body
+    ///     Helper Display script in end of body
     /// </summary>
     public static class ScriptsTagHelpers
     {
         /// <summary>
-        /// Add script to HttpContext
-        /// 
-        /// Add in top on .cshtml:
-        /// @using WebApplicationNetCoreDev.Helpers
-        /// 
-        /// Add script as:
-        /// @Html.Script(
-        /// @<script type = "text/javascript" >
-        /// $(function () {
-        /// });
-        /// </script>)
+        ///     Add script to HttpContext
+        ///     Add in top on .cshtml:
+        ///     @using WebApplicationNetCoreDev.Helpers
+        ///     Add script as:
+        ///     @Html.Script(
+        ///     @
+        ///     <script type="text/javascript">
+        ///         $(function () {
+        ///         });
+        ///     </script>
+        ///     )
         /// </summary>
         /// <param name="htmlHelper">IHtmlHelper htmlHelper</param>
         /// <param name="template">HtmlString.Empty</param>
@@ -31,19 +35,19 @@ namespace WebApplicationNetCoreDev.Helpers
             htmlHelper.ViewContext.HttpContext.Items["_script_" + Guid.NewGuid()] = template;
             return HtmlString.Empty;
         }
+
         /// <summary>
-        /// Display script in bootom main page or other template
-        /// Add in top on .cshtml:
-        /// @using WebApplicationNetCoreDev.Helpers
-        /// 
-        /// And add in bootom section example:
-        /// @Html.RenderScripts()
+        ///     Display script in bootom main page or other template
+        ///     Add in top on .cshtml:
+        ///     @using WebApplicationNetCoreDev.Helpers
+        ///     And add in bootom section example:
+        ///     @Html.RenderScripts()
         /// </summary>
         /// <param name="htmlHelper"></param>
         /// <returns></returns>
         public static HtmlString RenderScripts(this IHtmlHelper htmlHelper)
         {
-            foreach (var key in htmlHelper.ViewContext.HttpContext.Items.Keys)
+            foreach (object key in htmlHelper.ViewContext.HttpContext.Items.Keys)
             {
                 if (key.ToString().StartsWith("_script_"))
                 {
@@ -54,6 +58,7 @@ namespace WebApplicationNetCoreDev.Helpers
                     }
                 }
             }
+
             return HtmlString.Empty;
         }
     }

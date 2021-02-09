@@ -1,11 +1,17 @@
+#region using
+
 using System;
+using System.Net;
 using System.Reflection;
 using System.Threading.Tasks;
+using log4net;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using PortalApiGusApiRegonData.Models;
+using NetAppCommon.AppSettings.Models;
 using PortalApiGusApiRegonData.Data;
-using System.Net;
+using PortalApiGusApiRegonData.Models;
+
+#endregion
 
 namespace WebApplicationNetCoreDev.Controllers.PortalApiGusApiRegonDataControler
 {
@@ -13,15 +19,17 @@ namespace WebApplicationNetCoreDev.Controllers.PortalApiGusApiRegonDataControler
     [Route("PortalApiGus/[controller]/[action]")]
     public class DaneSzukajPodmiotyController : Controller
     {
+        private readonly PortalApiGusApiRegonDataDbContext _context;
 
         #region private readonly log4net.ILog log4net
-        /// <summary>
-        /// Log4 Net Logger
-        /// </summary>
-        private readonly log4net.ILog _log4Net = Log4netLogger.Log4netLogger.GetLog4netInstance(MethodBase.GetCurrentMethod()?.DeclaringType);
-        #endregion
 
-        private readonly PortalApiGusApiRegonDataDbContext _context;
+        /// <summary>
+        ///     Log4 Net Logger
+        /// </summary>
+        private readonly ILog _log4Net =
+            Log4netLogger.Log4netLogger.GetLog4netInstance(MethodBase.GetCurrentMethod()?.DeclaringType);
+
+        #endregion
 
         public DaneSzukajPodmiotyController(PortalApiGusApiRegonDataDbContext context)
         {
@@ -43,15 +51,16 @@ namespace WebApplicationNetCoreDev.Controllers.PortalApiGusApiRegonDataControler
         }
 
         #region public IActionResult Settings()
+
         // GET: SerwisRzeczypospolitejPolskiej/MinisterstwoFinansow/KrajowaAdministracjaSkarbowa/WykazPodatnikowVat/Settings
         /// <summary>
-        /// GET: SerwisRzeczypospolitejPolskiej/MinisterstwoFinansow/KrajowaAdministracjaSkarbowa/WykazPodatnikowVat/Settings
-        /// Pokaż lub edytuj ustawienia aplikacji WykazPodatnikowVat
-        /// View or edit the settings of the WykazPodatnikowVat
+        ///     GET: SerwisRzeczypospolitejPolskiej/MinisterstwoFinansow/KrajowaAdministracjaSkarbowa/WykazPodatnikowVat/Settings
+        ///     Pokaż lub edytuj ustawienia aplikacji WykazPodatnikowVat
+        ///     View or edit the settings of the WykazPodatnikowVat
         /// </summary>
         /// <returns>
-        /// IActionResult
-        /// IActionResult
+        ///     IActionResult
+        ///     IActionResult
         /// </returns>
         [HttpGet]
         public IActionResult Settings()
@@ -64,28 +73,34 @@ namespace WebApplicationNetCoreDev.Controllers.PortalApiGusApiRegonDataControler
             {
                 _log4Net.Error($"\n{e.GetType()}\n{e.InnerException?.GetType()}\n{e.Message}\n{e.StackTrace}\n", e);
             }
+
             return NotFound();
         }
+
         #endregion
 
         #region public IActionResult Settings...
+
         /// <summary>
-        /// POST: SerwisRzeczypospolitejPolskiej/MinisterstwoFinansow/KrajowaAdministracjaSkarbowa/WykazPodatnikowVat/Settings
-        /// Zapisz ustawienia aplikacji WykazPodatnikowVat
-        /// Save the settings of the WykazPodatnikowVat
+        ///     POST: SerwisRzeczypospolitejPolskiej/MinisterstwoFinansow/KrajowaAdministracjaSkarbowa/WykazPodatnikowVat/Settings
+        ///     Zapisz ustawienia aplikacji WykazPodatnikowVat
+        ///     Save the settings of the WykazPodatnikowVat
         /// </summary>
         /// <param name="model">
-        /// Model danych jako ApiWykazuPodatnikowVatData.Models.AppSettings
-        /// Data model as ApiWykazuPodatnikowVatData.Models.AppSettings
+        ///     Model danych jako ApiWykazuPodatnikowVatData.Models.AppSettings
+        ///     Data model as ApiWykazuPodatnikowVatData.Models.AppSettings
         /// </param>
         /// <returns>
-        /// IActionResult
-        /// IActionResult
+        ///     IActionResult
+        ///     IActionResult
         /// </returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(AuthenticationSchemes = "Cookies")]
-        public async Task<IActionResult> SettingsAsync([Bind("PortalApiGusKey", "CacheLifeTime", "ConnectionString", "CheckForConnection", "CheckAndMigrate", "UseGlobalDatabaseConnectionSettings")] AppSettings model)
+        public async Task<IActionResult> SettingsAsync(
+            [Bind("PortalApiGusKey", "CacheLifeTime", "ConnectionString", "CheckForConnection", "CheckAndMigrate",
+                "UseGlobalDatabaseConnectionSettings")]
+            AppSettings model)
         {
             try
             {
@@ -95,12 +110,15 @@ namespace WebApplicationNetCoreDev.Controllers.PortalApiGusApiRegonDataControler
                     {
                         model.LastMigrateDateTime = DateTime.MinValue;
                     }
+
                     if (model.UseGlobalDatabaseConnectionSettings)
                     {
-                        model.ConnectionString = NetAppCommon.AppSettings.Models.AppSettingsModel.GetInstance().GetConnectionString();
+                        model.ConnectionString = AppSettingsModel.GetInstance().GetConnectionString();
                     }
+
                     await model.AppSettingsRepository.MergeAndSaveAsync(model);
-                    var url = string.Format("{0}://{1}{2}", HttpContext.Request.Scheme, HttpContext.Request.Host, Url.Action("RedirectAfterStatus", "Home"));
+                    var url = string.Format("{0}://{1}{2}", HttpContext.Request.Scheme, HttpContext.Request.Host,
+                        Url.Action("RedirectAfterStatus", "Home"));
                     var content = new WebClient().DownloadString(url);
                     await Task.Run(() =>
                     {
@@ -108,9 +126,7 @@ namespace WebApplicationNetCoreDev.Controllers.PortalApiGusApiRegonDataControler
                     });
                     return new ContentResult
                     {
-                        ContentType = "text/html",
-                        StatusCode = (int)HttpStatusCode.OK,
-                        Content = content
+                        ContentType = "text/html", StatusCode = (int)HttpStatusCode.OK, Content = content
                     };
                 }
             }
@@ -119,8 +135,10 @@ namespace WebApplicationNetCoreDev.Controllers.PortalApiGusApiRegonDataControler
                 _log4Net.Error($"\n{e.GetType()}\n{e.InnerException?.GetType()}\n{e.Message}\n{e.StackTrace}\n", e);
                 return NotFound(e);
             }
+
             return View(model);
         }
+
         #endregion
 
         // GET: DaneSzukajPodmioty/Route

@@ -1,13 +1,14 @@
-﻿@using Kendo.Mvc.UI;
-@using WebApplicationNetCoreDev.Helpers;
-
+﻿@using System.Reflection
+@using Kendo.Mvc.UI
+@using PortalApiGusApiRegonData.Models.DaneSzukajPodmioty
+@using WebApplicationNetCoreDev.Helpers
 @model IEnumerable<PortalApiGusApiRegonData.Models.DaneSzukajPodmioty.DaneSzukajPodmioty>
 
-@{ string gridName = string.Format("{0}{1}", @System.Reflection.Assembly.GetEntryAssembly().GetName().Name, @System.Reflection.Assembly.GetAssembly(typeof(PortalApiGusApiRegonData.Models.DaneSzukajPodmioty.DaneSzukajPodmioty)).GetName().Name); }
-@{ string gridActions = string.Format("{0}Actions", gridName); }
-@{ string gridDataSource = string.Format("{0}DataSource", gridName); }
-@{ string gridToolbarTemplate = string.Format("{0}GridToolbarTemplate", gridName); }
-@{ string gridActionApiUrl = string.Format("{0}", "/api/PortalApiGus/DaneSzukajPodmiotyApi/KendoGrid"); }
+@{ var gridName = string.Format("{0}{1}", Assembly.GetEntryAssembly().GetName().Name, Assembly.GetAssembly(typeof(DaneSzukajPodmioty)).GetName().Name); }
+@{ var gridActions = string.Format("{0}Actions", gridName); }
+@{ var gridDataSource = string.Format("{0}DataSource", gridName); }
+@{ var gridToolbarTemplate = string.Format("{0}GridToolbarTemplate", gridName); }
+@{ var gridActionApiUrl = string.Format("{0}", "/api/PortalApiGus/DaneSzukajPodmiotyApi/KendoGrid"); }
 
 @{ ViewData["Title"] = "Portal Api Gus - Dane Szukaj Podmioty"; }
 @{ Layout = "~/Views/Shared/_LayoutAdmin.cshtml"; }
@@ -21,64 +22,61 @@
             .Items(items =>
             {
                 items.Add()
-                .Type(BreadcrumbItemType.RootItem)
-                .Href("javascript:void(0)")
-                .Text("Portal Api Gus - Dane Szukaj Podmioty")
-                .ShowText(true)
-                .Icon("home")
-                .ShowIcon(true);
+                    .Type(BreadcrumbItemType.RootItem)
+                    .Href("javascript:void(0)")
+                    .Text("Portal Api Gus - Dane Szukaj Podmioty")
+                    .ShowText(true)
+                    .Icon("home")
+                    .ShowIcon(true);
             }))
 
     </div>
 
     <div class="row overflow-auto">
 
-        @(Html.Kendo().DataSource<PortalApiGusApiRegonData.Models.DaneSzukajPodmioty.DaneSzukajPodmioty>()
+        @(Html.Kendo().DataSource<DaneSzukajPodmioty>()
             .Name(gridDataSource)
             .Ajax(
                 dataSource => dataSource
-                .Batch(true)
-                .PageSize(100)
-                .AutoSync(true)
-                .ServerOperation(true)
-                .Read(read => read.Url(gridActionApiUrl).Type(HttpVerbs.Get)
-            )))
-        @(Html.Kendo().Grid<PortalApiGusApiRegonData.Models.DaneSzukajPodmioty.DaneSzukajPodmioty>()
+                    .Batch(true)
+                    .PageSize(100)
+                    .AutoSync(true)
+                    .ServerOperation(true)
+                    .Read(read => read.Url(gridActionApiUrl).Type(HttpVerbs.Get)
+                    )))
+        @(Html.Kendo().Grid<DaneSzukajPodmioty>()
             .Name(gridName)
             .Columns(
-            columns =>
-            {
-                columns.Bound(c => c.DataUtworzenia).Title("Data utworzenia").Format("{0:MM-dd-yyyy HH:mm:ss}").Filterable(false);
-                columns.Bound(c => c.DataModyfikacji).Title("Data modyfikacji").Format("{0:MM-dd-yyyy HH:mm:ss}").Filterable(false);
-                columns.Bound(c => c.UniqueIdentifierOfTheLoggedInUser).Filterable(false);
-                columns.Bound(c => c.Nazwa).Title("Nazwa").Filterable(false);
-                columns.Bound(c => c.Nip).Title("Nip").Filterable(false);
-                columns.Bound(c => c.Regon).Title("Regon").Filterable(false);
-                columns.Bound(c => c.Wojewodztwo).Title("Województwo").Filterable(false);
-                columns.Bound(c => c.Powiat).Title("Powiat").Filterable(false);
-                columns.Bound(c => c.Gmina).Title("Gmina").Filterable(false);
-                columns.Bound(c => c.KodPocztowy).Title("Kod pocztowy").Filterable(false);
-                columns.Bound(c => c.MiejscowoscPoczty).Title("Miejscowość Poczty").Filterable(false);
-                columns.Bound(c => c.Miejscowosc).Title("Miejscowość").Filterable(false);
-                columns.Bound(c => c.Ulica).Title("Ulica").Filterable(false);
-                columns.Bound(c => c.NrLokalu).Title("Nr lokalu").Filterable(false);
-                columns.Bound(c => c.NrNieruchomosci).Title("Nr nieruchomosci").Filterable(false);
-            })
-            .ToolBar(toolbar =>
-            {
-                toolbar.ClientTemplateId(gridToolbarTemplate);
-            })
+                columns =>
+                {
+                    columns.Bound(c => c.DataUtworzenia).Title("Data utworzenia").Format("{0:MM-dd-yyyy HH:mm:ss}").Filterable(false);
+                    columns.Bound(c => c.DataModyfikacji).Title("Data modyfikacji").Format("{0:MM-dd-yyyy HH:mm:ss}").Filterable(false);
+                    columns.Bound(c => c.UniqueIdentifierOfTheLoggedInUser).Filterable(false);
+                    columns.Bound(c => c.Nazwa).Title("Nazwa").Filterable(false);
+                    columns.Bound(c => c.Nip).Title("Nip").Filterable(false);
+                    columns.Bound(c => c.Regon).Title("Regon").Filterable(false);
+                    columns.Bound(c => c.Wojewodztwo).Title("Województwo").Filterable(false);
+                    columns.Bound(c => c.Powiat).Title("Powiat").Filterable(false);
+                    columns.Bound(c => c.Gmina).Title("Gmina").Filterable(false);
+                    columns.Bound(c => c.KodPocztowy).Title("Kod pocztowy").Filterable(false);
+                    columns.Bound(c => c.MiejscowoscPoczty).Title("Miejscowość Poczty").Filterable(false);
+                    columns.Bound(c => c.Miejscowosc).Title("Miejscowość").Filterable(false);
+                    columns.Bound(c => c.Ulica).Title("Ulica").Filterable(false);
+                    columns.Bound(c => c.NrLokalu).Title("Nr lokalu").Filterable(false);
+                    columns.Bound(c => c.NrNieruchomosci).Title("Nr nieruchomosci").Filterable(false);
+                })
+            .ToolBar(toolbar => { toolbar.ClientTemplateId(gridToolbarTemplate); })
             .Sortable()
             .Scrollable()
             .Filterable(filterable => filterable.Extra(false).Operators(operators => operators.ForString(str => str.Clear().IsEqualTo("Jest równy").Contains("Zawiera"))))
             .DataSource(gridDataSource))
 
         @Html.Script(
-        @<script id="@gridToolbarTemplate" type="text/x-kendo-template">
+            @<script id="@gridToolbarTemplate" type="text/x-kendo-template">
             <div class="toolbar">
                 <div class="row h-100 w-75 p-t-15 align-items-center align-self-center">
                     <div class="col-sm-12 col-md-6 col-lg-3 col-xl-2 mt-n4">
-                        @(Html.Kendo().MaskedTextBox().Name("regon").Mask("00000000000000").Label(l => l.Content("REGON (9 lub 14 znaków)").Floating(true)).HtmlAttributes(new { width = "500px" }).ToClientTemplate())
+                        @(Html.Kendo().MaskedTextBox().Name("regon").Mask("00000000000000").Label(l => l.Content("REGON (9 lub 14 znaków)").Floating(true)).HtmlAttributes(new {width = "500px"}).ToClientTemplate())
                     </div>
                     <div class="col-sm-12 col-md-6 col-lg-3 col-xl-2 mt-n4">
                         @(Html.Kendo().MaskedTextBox().Name("nip").Mask("0000000000").Label(l => l.Content("NIP (10 znaków)").Floating(true)).ToClientTemplate())
@@ -92,38 +90,41 @@
         </script>)
 
         @Html.Script(
-        @<script type="text/javascript">
-        $(function () {
-            try {
-                var grid = $("#@gridName");
-                var gridDataSource = @gridDataSource;
-                var gridWidget = grid.data("kendoGrid");
-                gridWidget.wrapper.height($(".page-wrapper").first().height() * 0.9);
-                gridWidget.resize();
-                gridWidget.resize(true);
-                grid.find(".k-grid-toolbar").on("click", ".k-pager-refresh", function (e) {
-                    e.preventDefault();
-                    gridDataSource.read();
-                }).on("click", ".k-search", function (e) {
-                    if (parseInt($("#regon").val(), 10) > 0 || parseInt($("#nip").val(), 10) > 0) {
-                        e.preventDefault();
-                        var url = gridDataSource.transport.options.read.url;
-                        if (parseInt($("#nip").val(), 10) > 0) {
-                            gridDataSource.transport.options.read.url = "/api/PortalApiGus/DaneSzukajPodmiotyApi/KendoGridNip/" + $("#nip").val();
-                        }
-                        if (parseInt($("#regon").val(), 10) > 0) {
-                            gridDataSource.transport.options.read.url = "/api/PortalApiGus/DaneSzukajPodmiotyApi/KendoGridRegon/" + $("#regon").val();
-                        }
-                        gridDataSource.read();
-                        gridDataSource.transport.options.read.url = url;
-                    }
-                });
-            }
-            catch (e) {
-                console.log(e);
-            }
-        });
-        </script>)
+            @<script type="text/javascript">
+                 $(function() {
+                     try {
+                         var grid = $("#@gridName");
+                         var gridDataSource = @gridDataSource;
+                         var gridWidget = grid.data("kendoGrid");
+                         gridWidget.wrapper.height($(".page-wrapper").first().height() * 0.9);
+                         gridWidget.resize();
+                         gridWidget.resize(true);
+                         grid.find(".k-grid-toolbar").on("click",
+                             ".k-pager-refresh",
+                             function(e) {
+                                 e.preventDefault();
+                                 gridDataSource.read();
+                             }).on("click",
+                             ".k-search",
+                             function(e) {
+                                 if (parseInt($("#regon").val(), 10) > 0 || parseInt($("#nip").val(), 10) > 0) {
+                                     e.preventDefault();
+                                     var url = gridDataSource.transport.options.read.url;
+                                     if (parseInt($("#nip").val(), 10) > 0) {
+                                         gridDataSource.transport.options.read.url = "/api/PortalApiGus/DaneSzukajPodmiotyApi/KendoGridNip/" + $("#nip").val();
+                                     }
+                                     if (parseInt($("#regon").val(), 10) > 0) {
+                                         gridDataSource.transport.options.read.url = "/api/PortalApiGus/DaneSzukajPodmiotyApi/KendoGridRegon/" + $("#regon").val();
+                                     }
+                                     gridDataSource.read();
+                                     gridDataSource.transport.options.read.url = url;
+                                 }
+                             });
+                     } catch (e) {
+                         console.log(e);
+                     }
+                 });
+             </script>)
 
     </div>
 </div>

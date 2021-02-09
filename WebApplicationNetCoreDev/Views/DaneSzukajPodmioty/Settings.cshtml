@@ -1,5 +1,4 @@
-﻿@using WebApplicationNetCoreDev.Helpers;
-
+﻿@using WebApplicationNetCoreDev.Helpers
 @model PortalApiGusApiRegonData.Models.AppSettings
 
 @{ ViewData["Title"] = "Ustawienia aplikacja " + Model.GetType().FullName; }
@@ -25,9 +24,9 @@
                 <div class="col-sm-12 mt-2">
                     @if (null != Model)
                     {
-                        @Html.LabelFor(m => m.LastMigrateDateTime, new { Class = "control-label text-success" })
+                        @Html.LabelFor(m => m.LastMigrateDateTime, new {Class = "control-label text-success"})
                     }
-                    @Html.TextBoxFor(m => m.LastMigrateDateTime, new { Class = "form-control", Readonly = "readonly" })
+                    @Html.TextBoxFor(m => m.LastMigrateDateTime, new {Class = "form-control", Readonly = "readonly"})
                     <div class="form-control-feedback mt-2">
                         @Html.ValidationMessageFor(m => m.LastMigrateDateTime)
                     </div>
@@ -35,9 +34,9 @@
                 <div class="col-sm-12 mt-2">
                     @if (null != Model && null != Model.PortalApiGusKey && !string.IsNullOrWhiteSpace(Model.PortalApiGusKey))
                     {
-                        @Html.LabelFor(m => m.PortalApiGusKey, new { Class = "control-label text-success" })
+                        @Html.LabelFor(m => m.PortalApiGusKey, new {Class = "control-label text-success"})
                     }
-                    @Html.TextBoxFor(m => m.PortalApiGusKey, new { Class = "form-control" })
+                    @Html.TextBoxFor(m => m.PortalApiGusKey, new {Class = "form-control"})
                     <div class="form-control-feedback mt-2">
                         @Html.ValidationMessageFor(m => m.PortalApiGusKey)
                     </div>
@@ -45,9 +44,9 @@
                 <div class="col-sm-12 mt-2">
                     @if (null != Model && Model.CacheLifeTime >= 0)
                     {
-                        @Html.LabelFor(m => m.CacheLifeTime, new { Class = "control-label text-success" })
+                        @Html.LabelFor(m => m.CacheLifeTime, new {Class = "control-label text-success"})
                     }
-                    @Html.TextBoxFor(m => m.CacheLifeTime, new { Class = "form-control" })
+                    @Html.TextBoxFor(m => m.CacheLifeTime, new {Class = "form-control"})
                     <div class="form-control-feedback mt-2">
                         @Html.ValidationMessageFor(m => m.CacheLifeTime)
                     </div>
@@ -55,9 +54,10 @@
                 <div class="col-sm-12 mt-2">
                     @if (null != Model && null != Model.ConnectionString && !string.IsNullOrWhiteSpace(Model.ConnectionString))
                     {
-                        @Html.LabelFor(m => m.ConnectionString, new { Class = "control-label text-success" });
+                        @Html.LabelFor(m => m.ConnectionString, new {Class = "control-label text-success"})
+                        ;
                     }
-                    @Html.TextAreaFor(m => m.ConnectionString, new { Class = "form-control m-1", Style = "min-height: 4rem" })
+                    @Html.TextAreaFor(m => m.ConnectionString, new {Class = "form-control m-1", Style = "min-height: 4rem"})
                     @if (null != Model && null != Model.ConnectionString && !string.IsNullOrWhiteSpace(Model.ConnectionString))
                     {
                         <div class="text-black-50 font-italic m-t-0 m-b-5 accordion">
@@ -88,17 +88,17 @@
                 </div>
                 <div class="col-sm-12 mt-2">
                     <div class="checkbox text-success mt-2">
-                        <label>@Html.CheckBoxFor(m => m.CheckForConnection, new { Class = "checkbox checkbox-success" }) @Html.DisplayNameFor(m => m.CheckForConnection)</label>
+                        <label>@Html.CheckBoxFor(m => m.CheckForConnection, new {Class = "checkbox checkbox-success"}) @Html.DisplayNameFor(m => m.CheckForConnection)</label>
                     </div>
                 </div>
                 <div class="col-sm-12 mt-2">
                     <div class="checkbox text-success mt-2">
-                        <label>@Html.CheckBoxFor(m => m.CheckAndMigrate, new { Class = "checkbox checkbox-success" }) @Html.DisplayNameFor(m => m.CheckAndMigrate)</label>
+                        <label>@Html.CheckBoxFor(m => m.CheckAndMigrate, new {Class = "checkbox checkbox-success"}) @Html.DisplayNameFor(m => m.CheckAndMigrate)</label>
                     </div>
                 </div>
                 <div class="col-sm-12 mt-2">
                     <div class="checkbox text-success mt-2">
-                        <label>@Html.CheckBoxFor(m => m.UseGlobalDatabaseConnectionSettings, new { Class = "checkbox checkbox-success" }) @Html.DisplayNameFor(m => m.UseGlobalDatabaseConnectionSettings)</label>
+                        <label>@Html.CheckBoxFor(m => m.UseGlobalDatabaseConnectionSettings, new {Class = "checkbox checkbox-success"}) @Html.DisplayNameFor(m => m.UseGlobalDatabaseConnectionSettings)</label>
                     </div>
                 </div>
                 <div class="col-sm-12 mt-2">
@@ -127,20 +127,19 @@
 </div>
 
 @Html.Script(
-@<script type="text/javascript">
-    $(function () {
-        try {
-            var useGlobalDatabaseConnectionSettings = @((null != Model && Model.UseGlobalDatabaseConnectionSettings) ? 1 : 0);
-            var displayNameForUseGlobalDatabaseConnectionSettings = "@Html.DisplayNameFor(m => m.UseGlobalDatabaseConnectionSettings)";
-            $("#ConnectionString").val(String.raw`@Html.Raw(Model.RsaProviderService.DecryptWithPublicKey(@Model.AesIVProviderService.Decpypt(Model.ConnectionString, Model.RsaProviderService.AsymmetricPublicKeyAsString)))`);
-            if (useGlobalDatabaseConnectionSettings == 1) {
-                $("#ConnectionString").prop("readonly", true);
-                $("label[for='ConnectionString']").append($("<span> obecna konfiguracja nie udostępnia edycji połączenia do bazy danych, odznacz \"" + displayNameForUseGlobalDatabaseConnectionSettings + "\" i zapisz aby edytować wartość!</span>").addClass("control-label text-warning font-italic"));
-            }
-        }
-        catch (e) {
-            console.log(e);
-        }
-    });
-</script>
-)
+    @<script type="text/javascript">
+         $(function() {
+             try {
+                 var useGlobalDatabaseConnectionSettings = @(null != Model && Model.UseGlobalDatabaseConnectionSettings ? 1 : 0);
+                 var displayNameForUseGlobalDatabaseConnectionSettings = "@Html.DisplayNameFor(m => m.UseGlobalDatabaseConnectionSettings)";
+                 $("#ConnectionString").val(String.raw`@Html.Raw(Model.RsaProviderService.DecryptWithPublicKey(Model.AesIVProviderService.Decpypt(Model.ConnectionString, Model.RsaProviderService.AsymmetricPublicKeyAsString)))`);
+                 if (useGlobalDatabaseConnectionSettings == 1) {
+                     $("#ConnectionString").prop("readonly", true);
+                     $("label[for='ConnectionString']").append($("<span> obecna konfiguracja nie udostępnia edycji połączenia do bazy danych, odznacz \"" + displayNameForUseGlobalDatabaseConnectionSettings + "\" i zapisz aby edytować wartość!</span>").addClass("control-label text-warning font-italic"));
+                 }
+             } catch (e) {
+                 console.log(e);
+             }
+         });
+     </script>
+    )

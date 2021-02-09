@@ -1,42 +1,46 @@
-﻿@using WebApplicationNetCoreDev.Helpers
+﻿@using System.IO
+@using System.Reflection
+@using WebApplicationNetCoreDev.Helpers
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>@ViewData["Title"] - WebApplicationNetCoreDev</title>
-    @if (System.IO.File.Exists("wwwroot/vendor/dist/default-styles.html"))
+    @if (File.Exists("wwwroot/vendor/dist/default-styles.html"))
     {
-@Html.Raw(System.IO.File.ReadAllText("wwwroot/vendor/dist/default-styles.html").Replace(@"auto/", string.Empty));
-}
-    @RenderSection("css", required: false)
-    @RenderSection("jstop", required: false)
+        @Html.Raw(File.ReadAllText("wwwroot/vendor/dist/default-styles.html").Replace(@"auto/", string.Empty))
+        ;
+    }
+    @RenderSection("css", false)
+    @RenderSection("jstop", false)
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
-    @if (System.IO.File.Exists("wwwroot/vendor/dist/default-scripts.html"))
+    @if (File.Exists("wwwroot/vendor/dist/default-scripts.html"))
     {
-        @Html.Raw(System.IO.File.ReadAllText("wwwroot/vendor/dist/default-scripts.html").Replace(@"auto/", string.Empty));
+        @Html.Raw(File.ReadAllText("wwwroot/vendor/dist/default-scripts.html").Replace(@"auto/", string.Empty))
+        ;
     }
 </head>
 <body class="m-0 p-0 min-vh-100">
-    <div class="preloader">
-        <div class="loader">
-            <div class="loader__figure"></div>
-            <p class="loader__label">@System.Reflection.Assembly.GetEntryAssembly().GetName().Name</p>
-        </div>
+<div class="preloader">
+    <div class="loader">
+        <div class="loader__figure"></div>
+        <p class="loader__label">@Assembly.GetEntryAssembly().GetName().Name</p>
     </div>
-    @await Html.PartialAsync("Elegant/LandingPage/_TopNavbarFixed.cshtml")
-    <div class="container-fluid m-0 p-0 min-vh-100">
-        @RenderBody()
-    </div>
-    @*@await Html.PartialAsync("Elegant/LandingPage/_BeforeFooter.cshtml")*@
-    @await Html.PartialAsync("Elegant/LandingPage/_Footer.cshtml")
-    @RenderSection("jsbottom", required: false)
-    <script type="text/javascript" src="/js/site.js"></script>
-    @Html.RenderScripts()
+</div>
+@await Html.PartialAsync("Elegant/LandingPage/_TopNavbarFixed.cshtml")
+<div class="container-fluid m-0 p-0 min-vh-100">
+    @RenderBody()
+</div>
+@*@await Html.PartialAsync("Elegant/LandingPage/_BeforeFooter.cshtml")*@
+@await Html.PartialAsync("Elegant/LandingPage/_Footer.cshtml")
+@RenderSection("jsbottom", false)
+<script type="text/javascript" src="/js/site.js"></script>
+@Html.RenderScripts()
 </body>
 </html>
