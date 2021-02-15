@@ -97,7 +97,7 @@ namespace WebApplicationNetCoreDev.Models
                     Text = "Operatorzy systemu zarządzają określonym komputerem.",
                     Value = "SystemOperator"
                 },
-                new WindowsBuiltInRoles()
+                new WindowsBuiltInRoles
                 {
                     WindowsBuiltInRole = WindowsBuiltInRole.User,
                     RoleId = 545,

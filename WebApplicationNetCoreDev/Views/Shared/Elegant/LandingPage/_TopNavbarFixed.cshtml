@@ -40,8 +40,7 @@
                                 <span class="p-1">VIES</span>
                             </a>
                         </li>
-
-                        @if (!User.Identity.IsAuthenticated)
+                        @if (null != User?.Identity && !User.Identity.IsAuthenticated)
                         {
                             <li class="nav-item">
                                 <a class="nav-link" href="@Url.Action("Index", "Authentication")">
@@ -52,8 +51,16 @@
                                 </a>
                             </li>
                         }
-                        else if (User.Identity.IsAuthenticated)
+                        else if (null != User?.Identity && User.Identity.IsAuthenticated)
                         {
+                            <li class="nav-item">
+                                <a class="nav-link" href="@Url.Action("UserProfile", "Authentication")">
+                                    <span class="p-1">
+                                        <i class="fa fa-user"></i>
+                                    </span>
+                                    <span class="p-1">Mój Profil</span>
+                                </a>
+                            </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="@Url.Action("Logout", "Authentication")">
                                     <span class="p-1">

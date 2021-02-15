@@ -1,4 +1,5 @@
-﻿
+﻿#!/bin/bash
+
 echo "$PWD Run dotnet build"
 
 if [[ ! -z $(tasklist | grep w3wp.exe | awk '{ print $2 }') ]]; then
@@ -10,8 +11,21 @@ if [[ ! -z $(tasklist | grep w3wp.exe | awk '{ print $2 }') ]]; then
 fi
 
 echo "Stop WebApplicationUnimotWork"
+
 /C/Windows/System32/inetsrv/appcmd.exe stop site /site.name:WebApplicationUnimotWork
+
 cd /d/Praca/NetCoreDev/WebApplicationNetCoreDev
-dotnet run -p WebApplicationNetCoreDev.csproj -c Release -f net5.0
+
+echo "Remove old files"
+
+rm -rf bin/Debug/net5.0/
+
+echo "dotnet build"
+dotnet build "WebApplicationNetCoreDev.csproj" -c Debug -o bin/Debug/net5.0/
+
+echo "dotnet run"
+dotnet run -p WebApplicationNetCoreDev.csproj -c Debug -f net5.0
+
 echo "Start WebApplicationUnimotWork"
+
 /C/Windows/System32/inetsrv/appcmd.exe start site /site.name:WebApplicationUnimotWork

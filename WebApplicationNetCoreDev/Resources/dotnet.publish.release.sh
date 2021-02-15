@@ -1,8 +1,10 @@
 ﻿#!/bin/bash
 
-PATH=$PATH:"/c/Program Files (x86)/IObit/IObit Unlocker/":"/C/Windows/System32/inetsrv/":"/D/Praca/NetCoreDev/ProgramVersionConsoleApp/bin/Debug/netcoreapp3.1/"
+PATH=$PATH:"/c/Program Files (x86)/IObit/IObit Unlocker/":"/C/Windows/System32/inetsrv/":"/D/Praca/NetCoreDev/ProgramVersionConsoleApp/bin/Debug/net5.0/"
 
-echo "$PWD Run dotnet publish"
+ProgramVersionConsoleApp.exe "/d/Praca/NetCoreDev/WebApplicationNetCoreDev/WebApplicationNetCoreDev.csproj" "D:\Praca\NetCoreDev\.publish\WebApplicationNetCoreDev\WebApplicationNetCoreDevRelease\Installer\Web.Application.Unimot.Integration.System.aip" "D:\Praca\NetCoreDev\.publish\WebApplicationNetCoreDev\WebApplicationNetCoreDevRelease\Installer\Web.Application.Unimot.Integration.System.Full.Version.aip"
+
+echo "$PWD run dotnet publish"
 
 if [[ ! -z $(tasklist | grep w3wp.exe | awk '{ print $2 }') ]]; then
     for pid in $(tasklist | grep w3wp.exe | awk '{ print $2 }')
@@ -20,12 +22,10 @@ rm -rf "/D/Praca/NetCoreDev/.publish/WebApplicationNetCoreDev/WebApplicationNetC
 
 cd /d/Praca/NetCoreDev/WebApplicationNetCoreDev
 
-dotnet clean WebApplicationNetCoreDev.sln
+dotnet clean WebApplicationNetCoreDev.sln -c Release
 
 dotnet publish --no-self-contained -c Release -f net5.0 -o "/D/Praca/NetCoreDev/.publish/WebApplicationNetCoreDev/WebApplicationNetCoreDevRelease/wwwroot" WebApplicationNetCoreDev.csproj
 
 echo "Start WebApplicationUnimotWork"
 
 appcmd.exe start site /site.name:WebApplicationUnimotWork
-
-ProgramVersionConsoleApp.exe

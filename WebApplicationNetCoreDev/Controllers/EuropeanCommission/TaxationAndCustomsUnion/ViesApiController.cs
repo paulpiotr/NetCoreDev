@@ -21,6 +21,8 @@ using Vies.Core.Services;
 
 namespace WebApplicationNetCoreDev.Controllers.EuropeanCommission.TaxationAndCustomsUnion
 {
+    #region public class ViesApiController : ControllerBase
+
     [Authorize(AuthenticationSchemes = "Bearer")]
     [Route("api/EuropeanCommission/TaxationAndCustomsUnion/[controller]")]
     [ApiController]
@@ -151,6 +153,8 @@ namespace WebApplicationNetCoreDev.Controllers.EuropeanCommission.TaxationAndCus
 
         #endregion
 
+        #region public async Task<ActionResult<CheckVat>> GetCheckVatAsync
+
         [Authorize(AuthenticationSchemes = "Bearer")]
         [HttpGet("CheckVat/{countryCode}/{vatNumber}")]
         public async Task<ActionResult<CheckVat>> GetCheckVatAsync(string countryCode, string vatNumber)
@@ -179,6 +183,10 @@ namespace WebApplicationNetCoreDev.Controllers.EuropeanCommission.TaxationAndCus
 
             return NotFound(new {countryCode, vatNumber});
         }
+
+        #endregion
+
+        #region public async Task<ActionResult<KendoGrid<List<CheckVat>>>> GetCheckVatKendoGridAsync
 
         [Authorize(AuthenticationSchemes = "Cookies")]
         [HttpGet("CheckVatKendoGrid/{countryCode}/{vatNumber}")]
@@ -209,6 +217,10 @@ namespace WebApplicationNetCoreDev.Controllers.EuropeanCommission.TaxationAndCus
 
             return NotFound(new {countryCode, vatNumber});
         }
+
+        #endregion
+
+        #region MyRegion public async Task<ActionResult<CheckVatApprox>> GetCheckVatApproxAsync
 
         [Authorize(AuthenticationSchemes = "Bearer")]
         [HttpGet("CheckVatApprox/{countryCode}/{vatNumber}/{requesterCountryCode?}/{requesterVatNumber?}")]
@@ -242,6 +254,10 @@ namespace WebApplicationNetCoreDev.Controllers.EuropeanCommission.TaxationAndCus
 
             return NotFound(new {countryCode, vatNumber, requesterCountryCode, requesterVatNumber});
         }
+
+        #endregion
+
+        #region public async Task<ActionResult<KendoGrid<List<CheckVatApprox>>>> GetCheckVatApproxKendoGridAsync
 
         [Authorize(AuthenticationSchemes = "Cookies")]
         [HttpGet("CheckVatApproxKendoGrid/{countryCode}/{vatNumber}/{requesterCountryCode?}/{requesterVatNumber?}")]
@@ -278,5 +294,9 @@ namespace WebApplicationNetCoreDev.Controllers.EuropeanCommission.TaxationAndCus
 
             return NotFound(new {countryCode, vatNumber, requesterCountryCode, requesterVatNumber});
         }
+
+        #endregion
     }
+
+    #endregion
 }

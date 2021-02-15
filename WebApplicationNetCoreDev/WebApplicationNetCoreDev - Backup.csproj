@@ -8,9 +8,9 @@
     <DockerComposeProjectPath>..\docker-compose.dcproj</DockerComposeProjectPath>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <DockerfileContext>.</DockerfileContext>
-    <Version>5.38.12</Version>
-    <AssemblyVersion>5.38.12</AssemblyVersion>
-    <FileVersion>5.38.12</FileVersion>
+    <Version>5.108.3182</Version>
+    <AssemblyVersion>5.108.3182</AssemblyVersion>
+    <FileVersion>5.108.3182</FileVersion>
     <NeutralLanguage>pl-PL</NeutralLanguage>
     <UserSecretsId>3980f927-6963-47ff-b7f5-1f807a305905</UserSecretsId>
     <RepositoryUrl>http://tfs:8080/tfs/ISK/_git/NetCoreDev</RepositoryUrl>
@@ -120,9 +120,6 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Resources\.version">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Resources\appcmd.bat">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
