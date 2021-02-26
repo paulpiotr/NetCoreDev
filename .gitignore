@@ -365,3 +365,4 @@ WebApplicationTestDocker/
 .WebApplicationNetCoreDevInstaller/
 WebApplicationAngular/
 WebApplicationReact/
+.publish/IUIntegrationSystem.Server.WorkerService.Publish.lnk
