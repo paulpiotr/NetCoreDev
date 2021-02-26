@@ -8,9 +8,9 @@
     <DockerComposeProjectPath>..\docker-compose.dcproj</DockerComposeProjectPath>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <DockerfileContext>.</DockerfileContext>
-    <Version>5.46.938</Version>
-    <AssemblyVersion>5.46.938</AssemblyVersion>
-    <FileVersion>5.46.938</FileVersion>
+    <Version>5.49.634</Version>
+    <AssemblyVersion>5.49.634</AssemblyVersion>
+    <FileVersion>5.49.634</FileVersion>
     <NeutralLanguage>pl-PL</NeutralLanguage>
     <UserSecretsId>3980f927-6963-47ff-b7f5-1f807a305905</UserSecretsId>
     <RepositoryUrl>https://tfs.isk.com.pl/tfs/Unimot/WebApplicationNetCoreDevRelease</RepositoryUrl>
