@@ -37,6 +37,7 @@
 <div class="container-fluid m-0 p-0 min-vh-100">
     @RenderBody()
 </div>
+<mini-profiler />
 @*@await Html.PartialAsync("Elegant/LandingPage/_BeforeFooter.cshtml")*@
 @await Html.PartialAsync("Elegant/LandingPage/_Footer.cshtml")
 @RenderSection("jsbottom", false)

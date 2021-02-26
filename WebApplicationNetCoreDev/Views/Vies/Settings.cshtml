@@ -67,13 +67,12 @@
                     </div>
                 </div>
                 <div class="col-sm-12 mt-2">
-                    @if (null != Model && null != Model.ConnectionString && !string.IsNullOrWhiteSpace(Model.ConnectionString))
+                    @if (Model?.ConnectionString != null && !string.IsNullOrWhiteSpace(Model.ConnectionString))
                     {
                         @Html.LabelFor(m => m.ConnectionString, new {Class = "control-label text-success"})
-                        ;
                     }
                     @Html.TextAreaFor(m => m.ConnectionString, new {Class = "form-control m-1", Style = "min-height: 4rem"})
-                    @if (null != Model && null != Model.ConnectionString && !string.IsNullOrWhiteSpace(Model.ConnectionString))
+                    @if (Model?.ConnectionString != null && !string.IsNullOrWhiteSpace(Model.ConnectionString))
                     {
                         <div class="text-black-50 font-italic m-t-0 m-b-5 accordion">
                             @if (Model.ConnectionString.Length > 512)

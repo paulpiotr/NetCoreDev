@@ -1,4 +1,4 @@
-﻿#!/bin/bash
+#!/bin/bash
 
 echo "$PWD Run dotnet build"
 
@@ -18,9 +18,9 @@ cd /d/Praca/NetCoreDev/WebApplicationNetCoreDev
 
 echo "Remove old files"
 
-rm -rf bin/Debug/net5.0/
+rm -rf bin/Release/net5.0/
 
-dotnet build "WebApplicationNetCoreDev.csproj" -c Debug -o bin/Debug/net5.0/
+dotnet build "WebApplicationNetCoreDev.csproj" -c Release -o bin/Release/net5.0/
 
 echo "Start WebApplicationUnimotWork"
 

@@ -1,4 +1,4 @@
-﻿#!/bin/bash
+#!/bin/bash
 
 PATH=$PATH:"/c/Program Files (x86)/IObit/IObit Unlocker/":"/C/Windows/System32/inetsrv/":"/D/Praca/NetCoreDev/ProgramVersionConsoleApp/bin/Debug/net5.0/"
 

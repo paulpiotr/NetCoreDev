@@ -1,6 +1,6 @@
-﻿#!/bin/bash
+#!/bin/bash
 
-echo "$PWD Run dotnet run"
+echo "$PWD Run dotnet build"
 
 if [[ ! -z $(tasklist | grep w3wp.exe | awk '{ print $2 }') ]]; then
     for pid in $(tasklist | grep w3wp.exe | awk '{ print $2 }')
@@ -15,9 +15,13 @@ echo "Stop WebApplicationUnimotWork"
 
 cd /d/Praca/NetCoreDev/WebApplicationNetCoreDev
 
+echo "dotnet clean WebApplicationNetCoreDev.sln -c Debug"
+dotnet clean WebApplicationNetCoreDev.sln -c Debug
+
+echo "dotnet dev-certs https --trust"
 dotnet dev-certs https --trust
 
-echo "dotnet run"
+echo "dotnet run -p WebApplicationNetCoreDev.csproj -c Debug -f net5.0"
 dotnet run -p WebApplicationNetCoreDev.csproj -c Debug -f net5.0
 
 echo "Start WebApplicationUnimotWork"

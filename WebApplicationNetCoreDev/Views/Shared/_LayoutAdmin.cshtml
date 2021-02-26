@@ -23,8 +23,7 @@
     <![endif]-->
     @if (File.Exists("wwwroot/vendor/dist/default-scripts.html"))
     {
-        @Html.Raw(File.ReadAllText("wwwroot/vendor/dist/default-scripts.html").Replace(@"auto/", string.Empty))
-        ;
+        @Html.Raw(File.ReadAllText("wwwroot/vendor/dist/default-scripts.html").Replace(@"auto/", string.Empty));
     }
 </head>
 <body class="skin-blue fixed-layout lock-nav">
@@ -71,6 +70,7 @@ else
         @await Html.PartialAsync("Elegant/Admin/_Footer.cshtml")
         <!--End Footer-->
     </div>
+    <mini-profiler />
 }
 @RenderSection("Scripts", false)
 <script type="text/javascript" src="/js/site.js"></script>

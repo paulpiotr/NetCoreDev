@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using log4net;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.Extensions.Logging;
 using WebApplicationNetCoreDev.Models;
 
@@ -22,19 +23,29 @@ namespace WebApplicationNetCoreDev.Controllers
         #region private log4net.ILog _log4Net
 
         /// <summary>
-        ///     Log4 Net Logger
-        ///     Log4 Net Logger
+        ///     private readonly ILog _log4Net
+        ///     private readonly ILog _log4Net
         /// </summary>
         private readonly ILog _log4Net =
             Log4netLogger.Log4netLogger.GetLog4netInstance(MethodBase.GetCurrentMethod()?.DeclaringType);
 
         #endregion
 
+        #region private readonly IActionDescriptorCollectionProvider _provider
+
+        /// <summary>
+        ///     Action Descriptor Collection Provider
+        /// </summary>
+        private readonly IActionDescriptorCollectionProvider _provider;
+
+        #endregion
+
         private readonly ILogger<HomeController> _logger;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, IActionDescriptorCollectionProvider provider)
         {
             _logger = logger;
+            _provider = provider;
         }
 
         [AllowAnonymous]
@@ -73,6 +84,21 @@ namespace WebApplicationNetCoreDev.Controllers
 
         [AllowAnonymous]
         public IActionResult Index( /*[FromQuery] string userName, [FromQuery] string returnUrl*/) => View();
+
+        [Authorize(AuthenticationSchemes = "Cookies", Policy = null, Roles = "User")]
+        public IActionResult ControllerActionList()
+        {
+            try
+            {
+                NetAppCommon.ControllerRoute.GetA(Assembly.GetExecutingAssembly(), _provider, Url);
+                return View();
+            }
+            catch (Exception e)
+            {
+                return NotFound(e);
+            }
+            
+        }
 
         //[Authorize(Roles = "Administrator")]
         //[Authorize(Policy = "Administrator")]

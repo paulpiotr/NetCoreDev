@@ -19,15 +19,7 @@ namespace WebApplicationNetCoreDev
         {
             return Host.CreateDefaultBuilder(args).ConfigureWebHostDefaults(webBuilder =>
             {
-                //Console.WriteLine(RuntimeInformation.RuntimeIdentifier);
-                if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-                {
-                    webBuilder.UseStartup<Startup>();
-                }
-                else
-                {
-                    webBuilder.UseStartup<Startup>();
-                }
+                webBuilder.UseStartup<Startup>();
             });
         }
 

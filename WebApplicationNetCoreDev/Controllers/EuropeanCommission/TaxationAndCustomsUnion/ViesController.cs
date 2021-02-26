@@ -34,8 +34,8 @@ namespace WebApplicationNetCoreDev.Controllers.EuropeanCommission.TaxationAndCus
         #region private log4net.ILog _log4Net
 
         /// <summary>
-        ///     Log4 Net Logger
-        ///     Log4 Net Logger
+        ///     private readonly ILog _log4Net
+        ///     private readonly ILog _log4Net
         /// </summary>
         private readonly ILog _log4Net =
             Log4netLogger.Log4netLogger.GetLog4netInstance(MethodBase.GetCurrentMethod()?.DeclaringType);
