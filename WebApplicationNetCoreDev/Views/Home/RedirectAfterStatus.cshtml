@@ -5,8 +5,7 @@
 
 <div class="jumbotron bg-transparent">
     <div class="text-center">
-        <h1 class="display-4 text-uppercase text-info">Welcome @Assembly.GetEntryAssembly()?.GetName().Name</h1>
-        <h2 class="display-4 text-uppercase text-warning">@ViewData["Title"]</h2>
+        <h1 class="display-4 text-uppercase text-warning">@ViewData["Title"]</h1>
         <p>Learn Building Web apps with ASP.NET Core.</p>
         <p>
             @HttpContextAccessor.AppContext.GetCurrentUserIdentityName()
@@ -18,11 +17,15 @@
     @<script type="text/javascript">
          $(function() {
              try {
+                 var url = "@Context.Request.Query["ReturnUrl"]";
+                 if (url.length <= 0) {
+                     url = $(location).attr("href");
+                 }
                  $("body").on("click.myDisable", "a", function(e) { e.preventDefault(); });
                  $.ajax({
-                     url: $(location).attr("href"),
+                     url: url,
                      success: function() {
-                         $(location).attr("href", $(location).attr("href"));
+                         $(location).attr("href", url);
                          $(".navbar-fixed").show();
                      },
                      error: function() {

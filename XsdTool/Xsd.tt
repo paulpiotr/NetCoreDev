@@ -1,0 +1,72 @@
+﻿<#@ template language="C#" #>
+<#@ parameter name="_Namespace_" type="System.String" #>
+<#@ parameter name="_ClassName_" type="System.String" #>
+<#@ parameter name="_DatabaseSchema_" type="System.String" #>
+<#@ parameter name="xsdModelList" type="System.Collections.Generic.List<XsdModel>" #>
+<#@ import namespace="XsdTool.Models" #>
+#region using
+using System;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
+using System.Xml.Serialization;
+using NetAppCommon.Models;
+#endregion
+
+#nullable enable annotations
+
+#region namespace
+namespace <#= _Namespace_ #>
+{
+    #region public class <#= _ClassName_ #> : BaseEntity
+    /// <summary>
+    ///     Model danych <#= _Namespace_ #> <#= _ClassName_ #>
+    ///     Data model of entities found in the basic report
+    /// </summary>
+    [Table(nameof(<#= _ClassName_ #>), Schema = "<#= _DatabaseSchema_ #>")]
+    [JsonObject(nameof(<#= _ClassName_ #>))]
+    [Display(Name = "<#= _ClassName_ #>", Description = "<#= _ClassName_ #>")]
+    [Serializable]
+    [XmlRoot("dane")]
+    <# foreach (XsdModel xsdModel in xsdModelList) { #>
+    [Index(nameof(<#= xsdModel.PublicName #>))]
+    <# } #>
+    public class <#= _ClassName_ #> : BaseEntity
+    {
+        <# foreach (XsdModel xsdModel in xsdModelList) { #>
+        #region private <#= xsdModel.DataType #> <#= xsdModel.PrivateName #>; public <#= xsdModel.DataType #> <#= xsdModel.PublicName #>
+
+            private <#= xsdModel.DataType #> <#=  xsdModel.PrivateName #>;
+            
+            /// <#= xsdModel.Title #>
+            /// <#= xsdModel.Title #>
+            [Column(Order = 2)]
+            [XmlElement("<#=  xsdModel.XmlName #>")]
+            [JsonProperty(nameof(<#= xsdModel.PublicName #>), Order = 2)]
+            [Display(Name = "<#= xsdModel.Title #>", Prompt = "Wpisz <#= xsdModel.Title #>", Description = "<#= xsdModel.Title #>")]
+            <# if (xsdModel.DataType == "string") { #>[StringLength(<#= xsdModel.MaxLength > 0 ? xsdModel.MaxLength : 2147483647 #>)]<# } #>
+
+            <# if (xsdModel.DataType == "string") { #>[MaxLength(<#= xsdModel.MaxLength > 0 ? xsdModel.MaxLength : 2147483647 #>)]<# } #>
+
+            <# if (xsdModel.DataType == "int") { #>[Range(int.MinValue, int.MaxValue)]<# } #>
+
+            public <#= xsdModel.DataType #> <#=  xsdModel.PublicName #>
+            {
+                get => <#= xsdModel.PrivateName #>;
+                set
+                {
+                    if (value != <#= xsdModel.PrivateName #>)
+                    {
+                        <#= xsdModel.PrivateName #> = value;
+                        OnPropertyChanged(nameof(<#=  xsdModel.PublicName #>));
+                    }
+                }
+            }
+        
+        #endregion
+        <# } #>
+    }
+    #endregion
+}
+#endregion

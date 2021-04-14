@@ -16,8 +16,8 @@ module.exports = {
         default: "./src/default.all.min.js",
     },
     output: {
-        filename: '[name].bundle.js',
-        chunkFilename: '[id].bundle.js',
+        filename: '[contenthash].bundle.js',
+        chunkFilename: '[contenthash].bundle.js',
         path: path.resolve(__dirname, 'dist'),
     },
     optimization: {
@@ -81,12 +81,12 @@ module.exports = {
     },
     plugins: [
         new ExtractCssChunks({
-            filename: '[name].css',
-            chunkFilename: '[id].css',
+            filename: '[contenthash].css',
+            chunkFilename: '[contenthash].css',
         }),
         new MiniCssExtractPlugin({
-            filename: '[name].css',
-            chunkFilename: '[id].css',
+            filename: '[contenthash].css',
+            chunkFilename: '[contenthash].css',
         }),
         new ChunksWebpackPlugin({
             generateChunksManifest: true,

@@ -1,8 +1,10 @@
-using System;
-using System.Runtime.InteropServices;
+#region using
+
 using System.Threading;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
+
+#endregion
 
 namespace WebApplicationNetCoreDev
 {
@@ -10,22 +12,15 @@ namespace WebApplicationNetCoreDev
     {
         private static readonly CancellationTokenSource CancelTokenSource = new();
 
-        public static void Main(string[] args)
-        {
-            CreateHostBuilder(args).Build().RunAsync(CancelTokenSource.Token).GetAwaiter().GetResult();
-        }
+        public static void Main(string[] args) => CreateHostBuilder(args).Build().RunAsync(CancelTokenSource.Token)
+            .GetAwaiter().GetResult();
 
-        public static IHostBuilder CreateHostBuilder(string[] args)
-        {
-            return Host.CreateDefaultBuilder(args).ConfigureWebHostDefaults(webBuilder =>
+        public static IHostBuilder CreateHostBuilder(string[] args) =>
+            Host.CreateDefaultBuilder(args).ConfigureWebHostDefaults(webBuilder =>
             {
                 webBuilder.UseStartup<Startup>();
             });
-        }
 
-        public static void Shutdown()
-        {
-            CancelTokenSource.Cancel();
-        }
+        public static void Shutdown() => CancelTokenSource.Cancel();
     }
 }

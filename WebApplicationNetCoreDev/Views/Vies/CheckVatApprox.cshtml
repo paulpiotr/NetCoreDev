@@ -1,16 +1,14 @@
 ﻿@using System.Reflection
 @using Kendo.Mvc.UI
-@using PortalApiGusApiRegonData.Models.DaneSzukajPodmioty
 @using Vies.Core.Models
 @using WebApplicationNetCoreDev.Helpers
 @model IEnumerable<Vies.Core.Models.CheckVatApprox>
 
-@{ var gridName = string.Format("{0}{1}", Assembly.GetEntryAssembly().GetName().Name, Assembly.GetAssembly(typeof(DaneSzukajPodmioty)).GetName().Name); }
-@{ var gridActions = string.Format("{0}Actions", gridName); }
-@{ var gridDataSource = string.Format("{0}DataSource", gridName); }
-@{ var gridToolbarTemplate = string.Format("{0}GridToolbarTemplate", gridName); }
-@{ var gridActionApiUrl = string.Format("{0}", "/api/EuropeanCommission/TaxationAndCustomsUnion/ViesApi/CheckVatApproxKendoGrid/"); }
-@{ var windowName = string.Format("{0}Window", gridName); }
+@{ var gridName = $"Kendo{(null != Model ? Assembly.GetAssembly(Model.GetType())?.GetHashCode().ToString() : GetHashCode().ToString())}"; }
+@{ var gridDataSource = $"{gridName}DataSource"; }
+@{ var gridToolbarTemplate = $"{gridName}GridToolbarTemplate"; }
+@{ var gridActionApiUrl = $"{"/api/EuropeanCommission/TaxationAndCustomsUnion/ViesApi/CheckVatApproxKendoGrid/"}"; }
+@{ var windowName = $"{gridName}Window"; }
 
 @{ ViewData["Title"] = "Komisja Europejska Unia Celna i Podatkowa - VIES wyszukiwanie podmiotów"; }
 @{ Layout = "~/Views/Shared/_LayoutAdmin.cshtml"; }
@@ -154,7 +152,7 @@
             </div>
         </div>
     </div>
-</script>)
+    </script>)
 
 @Html.Script(
     @<script type="text/javascript">
@@ -219,4 +217,4 @@
                  console.log(e);
              }
          });
-     </script>)
+    </script>)

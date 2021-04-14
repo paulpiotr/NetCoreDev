@@ -46,9 +46,6 @@
 [submodule "EuropeanCommission"]
 	path = EuropeanCommission
 	url = https://github.com/paulpiotr/EuropeanCommission.git
-[submodule "AutoMapper"]
-	path = AutoMapper
-	url = https://github.com/AutoMapper/AutoMapper.git
 [submodule ".publish/WebApplicationNetCoreDev/WebApplicationNetCoreDevRelease"]
 	path = .publish/WebApplicationNetCoreDev/WebApplicationNetCoreDevRelease
 	url = http://tfs:8080/tfs/Unimot/_git/WebApplicationNetCoreDevRelease

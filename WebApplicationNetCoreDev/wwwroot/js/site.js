@@ -13,3 +13,13 @@ $.validator.methods.date = function(value, element) {
   var date = value.split("/");
   return this.optional(element) || !/Invalid|NaN/.test(new Date(date[2], date[1], date[0]).toString());
 };
+
+$(function () {
+  try {
+    if (kendo != null) {
+      kendo.culture("pl-PL");
+    }
+  } catch (e) {
+    console.log(e);
+  }
+});

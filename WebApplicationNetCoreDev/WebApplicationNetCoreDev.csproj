@@ -8,9 +8,9 @@
     <DockerComposeProjectPath>..\docker-compose.dcproj</DockerComposeProjectPath>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <DockerfileContext>.</DockerfileContext>
-    <Version>5.49.644</Version>
-    <AssemblyVersion>5.49.644</AssemblyVersion>
-    <FileVersion>5.49.644</FileVersion>
+    <Version>5.102.1019</Version>
+    <AssemblyVersion>5.102.1019</AssemblyVersion>
+    <FileVersion>5.102.1019</FileVersion>
     <NeutralLanguage>pl-PL</NeutralLanguage>
     <UserSecretsId>3980f927-6963-47ff-b7f5-1f807a305905</UserSecretsId>
     <RepositoryUrl>https://tfs.isk.com.pl/tfs/Unimot/WebApplicationNetCoreDevRelease</RepositoryUrl>
@@ -50,33 +50,30 @@
     <Folder Include="wwwroot\lib\" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Dapper" Version="2.0.78" />
     <PackageReference Include="IdentityModel" Version="5.0.1" />
-    <PackageReference Include="IdentityServer4" Version="4.1.1" />
+    <PackageReference Include="IdentityServer4" Version="4.1.2" />
     <PackageReference Include="log4net" Version="2.0.12" />
     <PackageReference Include="log4net-loggly" Version="9.0.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="5.0.3" />
-    <PackageReference Include="Microsoft.AspNetCore.Authentication.Negotiate" Version="5.0.3" />
+    <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.17.0" />
+    <PackageReference Include="Microsoft.ApplicationInsights.Log4NetAppender" Version="2.17.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="5.0.4" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.Negotiate" Version="5.0.4" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.2.5" />
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="5.0.3" />
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="5.0.3" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.3" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.3">
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="5.0.4" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="5.0.4" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.4" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.4">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="5.0.3" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.3" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="5.0.3">
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="5.0.4" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.4" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="5.0.4">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.10.9" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="5.0.2" />
-    <PackageReference Include="MiniProfiler.AspNetCore" Version="4.2.22" />
-    <PackageReference Include="MiniProfiler.AspNetCore.Mvc" Version="4.2.22" />
-    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.0.7" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\EncryptDecrypt\EncryptDecrypt\EncryptDecrypt.csproj" />
@@ -85,7 +82,8 @@
     <ProjectReference Include="..\IUIntegrationSystem\src\IUIntegrationSystem.Server.RazorClassLibrary\IUIntegrationSystem.Server.RazorClassLibrary.csproj" />
     <ProjectReference Include="..\Log4netLogger\Log4netLogger.csproj" />
     <ProjectReference Include="..\NetAppCommon\NetAppCommon\NetAppCommon.csproj" />
-    <ProjectReference Include="..\PortalApiGus\ApiRegon\PortalApiGusApiRegonData\PortalApiGusApiRegonData.csproj" />
+    <ProjectReference Include="..\PortalApiGus\ApiRegon\src\PortalApiGus.ApiRegon.DataBaseContext\PortalApiGus.ApiRegon.DataBase.csproj" />
+    <ProjectReference Include="..\PortalApiGus\ApiRegon\src\PortalApiGus.ApiRegon.WebAppRazor\PortalApiGus.ApiRegon.WebAppRazor.csproj" />
     <ProjectReference Include="..\SerwisRzeczypospolitejPolskiej\MinisterstwoFinansow\KrajowaAdministracjaSkarbowa\ApiWykazuPodatnikowVatData\ApiWykazuPodatnikowVatData.csproj" />
     <ProjectReference Include="..\SimpleImpersonation\src\SimpleImpersonation.csproj" />
     <ProjectReference Include="..\WebconIntegrationSystem\WebconIntegrationSystem\WebconIntegrationSystem.csproj" />
@@ -102,14 +100,6 @@
     </Content>
     <Content Update="log4net.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Update="Views\DaneSzukajPodmioty\Index.cshtml">
-      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-    </Content>
-    <Content Update="Views\DaneSzukajPodmioty\Settings.cshtml">
-      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
   </ItemGroup>
   <ItemGroup>

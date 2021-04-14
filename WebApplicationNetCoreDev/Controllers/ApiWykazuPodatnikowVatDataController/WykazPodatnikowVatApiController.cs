@@ -520,14 +520,14 @@ namespace WebApplicationNetCoreDev.Controllers.ApiWykazuPodatnikowVatDataControl
         /// </returns>
         // GET: api/SerwisRzeczypospolitejPolskiej/MinisterstwoFinansow/KrajowaAdministracjaSkarbowa/WykazPodatnikowVatApi/FindByRegon/{regon}
         [Authorize(AuthenticationSchemes = "Bearer")]
-        [HttpGet("FindByRegon/{regon}/{dateOfChecking?}")]
+        [HttpGet("GetFindByRegon/{regon}/{dateOfChecking?}")]
         public async Task<ActionResult<Entity>> GetFindByRegonAsync(string regon, DateTime? dateOfChecking)
         {
             try
             {
                 var digitsOnly = new Regex(@"[^\d]");
                 regon = digitsOnly.Replace(regon, string.Empty);
-                if (null != regon && !string.IsNullOrWhiteSpace(regon) && (regon.Length == 9 || regon.Length == 14))
+                if (!string.IsNullOrWhiteSpace(regon) && (regon.Length == 9 || regon.Length == 14))
                 {
                     Entity entity =
                         await apiWykazuPodatnikowVatData.ApiFindByRegonAsync(regon, dateOfChecking ?? DateTime.Now);
@@ -539,7 +539,7 @@ namespace WebApplicationNetCoreDev.Controllers.ApiWykazuPodatnikowVatDataControl
             }
             catch (Exception e)
             {
-                await Task.Run(() => log4net.Error(string.Format("{0}, {1}.", e.Message, e.StackTrace), e));
+                await Task.Run(() => log4net.Error($"{e.Message}, {e.StackTrace}.", e));
             }
 
             return NotFound();

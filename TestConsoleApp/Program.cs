@@ -6,9 +6,9 @@ namespace TestConsoleApp
     {
         private static void Main(string[] args)
         {
+            //var test = new NetAppCommon.AppSettings.Repositories.Base.AppSettingsRepositoryBase<NetAppCommon.AppSettings.Models.AppSettings>().MssqlCheckConnectionString(@"Server=(local)\SQLEXPRESS; Database=NowaBazaWWW; Uid=sa; Pwd=NIEznaszhasla111; Max Pool Size=65536; Pooling=True; MultipleActiveResultSets=true;");
+            //Console.WriteLine(test);
 
-            var test = new NetAppCommon.AppSettings.Repositories.Base.AppSettingsRepositoryBase<NetAppCommon.AppSettings.Models.AppSettingsModel>().MssqlCheckConnectionString(@"Server=(local)\SQLEXPRESS; Database=NowaBazaWWW; Uid=sa; Pwd=NIEznaszhasla111; Max Pool Size=65536; Pooling=True; MultipleActiveResultSets=true;");
-            Console.WriteLine(test);
             return;
 
             //var appSettings = new PortalApiGusApiRegonData.Models.AppSettings();

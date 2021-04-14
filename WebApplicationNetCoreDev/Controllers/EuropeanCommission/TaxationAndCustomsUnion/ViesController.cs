@@ -117,7 +117,7 @@ namespace WebApplicationNetCoreDev.Controllers.EuropeanCommission.TaxationAndCus
         {
             try
             {
-                return View(new AppSettings());
+                return base.View(new Vies.Core.Database.Models.AppSettings());
             }
             catch (Exception e)
             {
@@ -149,7 +149,7 @@ namespace WebApplicationNetCoreDev.Controllers.EuropeanCommission.TaxationAndCus
         public async Task<IActionResult> SettingsAsync(
             [Bind("CacheLifeTime", "ConnectionString", "CheckForConnection", "CheckAndMigrate",
                 "UseGlobalDatabaseConnectionSettings" /*, "RequesterCountryCode", "RequesterVatNumber"*/)]
-            AppSettings model)
+            Vies.Core.Database.Models.AppSettings model)
         {
             try
             {
@@ -162,7 +162,7 @@ namespace WebApplicationNetCoreDev.Controllers.EuropeanCommission.TaxationAndCus
 
                     if (model.UseGlobalDatabaseConnectionSettings)
                     {
-                        model.ConnectionString = AppSettingsModel.GetInstance().GetConnectionString();
+                        model.ConnectionString = NetAppCommon.AppSettings.Models.AppSettings.GetAppSettingsModel().GetConnectionString();
                     }
 
                     await model.AppSettingsRepository.MergeAndSaveAsync(model);

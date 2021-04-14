@@ -1,6 +1,7 @@
 #region using
 
 using System;
+using System.Globalization;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,23 +13,20 @@ using Microsoft.AspNetCore.Authentication.Negotiate;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc.ApplicationParts;
-using Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation;
+using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Server.HttpSys;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
-using Microsoft.OpenApi.Models;
+using NetAppCommon.Extensions.DependencyInjection;
 using NetAppCommon.Helpers;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
-using PortalApiGusApiRegonData.Data;
-using PortalApiGusApiRegonData.Models;
-using StackExchange.Profiling.Storage;
+using PortalApiGus.ApiRegon.DataBase.Data;
+using PortalApiGus.ApiRegon.DataBase.Models;
 using Vies.Core.Database.Data;
 using WebconIntegrationSystem.Data.BPSMainAttDbContext;
 
@@ -59,14 +57,39 @@ namespace WebApplicationNetCoreDev
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            //#region Insights
+            //// https://docs.microsoft.com/pl-pl/azure/azure-monitor/app/asp-net-core AddApplication Insights
+            //services.AddApplicationInsightsTelemetry();
+            //#endregion
+
+            //#region DistributedMemoryCache
+            //services.AddNetAppCommonDistributedMemoryCache();
+            //#endregion
+
+            #region Localization
+
+            //services.Configure<RequestLocalizationOptions>(options =>
+            //{
+            //    options.SetDefaultCulture("pl-PL");
+            //    options.AddSupportedUICultures("pl-PL");
+            //    options.FallBackToParentUICultures = true;
+            //    options
+            //        .RequestCultureProviders
+            //        .Remove((IRequestCultureProvider)typeof(AcceptLanguageHeaderRequestCultureProvider));
+            //});
+
+            #endregion
+
             #region Konfiguracja baz danych
 
             try
             {
                 // Kontekst bazy danych PortalApiGusApiRegonData.Data.PortalApiGusApiRegonDataDbContext
                 var portalApiGusApiRegonDataAppSettings = AppSettings.GetInstance();
-                services.AddDbContext<PortalApiGusApiRegonDataDbContext>(options =>
-                    options.UseSqlServer(portalApiGusApiRegonDataAppSettings.GetConnectionString()));
+                services.AddDbContextPool<DataBaseContext>(options => options.UseSqlServer(
+                    portalApiGusApiRegonDataAppSettings.GetConnectionString(),
+                    element => element.EnableRetryOnFailure()
+                        .MigrationsHistoryTable("__EFMigrationsHistory", "pagard")));
             }
             catch (Exception e)
             {
@@ -77,8 +100,11 @@ namespace WebApplicationNetCoreDev
             {
                 // Kontekst bazy danych ApiWykazuPodatnikowVatData.Data.ApiWykazuPodatnikowVatDataDbContext
                 var apiWykazuPodatnikowVatDataAppSettings = ApiWykazuPodatnikowVatData.Models.AppSettings.GetInstance();
-                services.AddDbContext<ApiWykazuPodatnikowVatDataDbContext>(options =>
-                    options.UseSqlServer(apiWykazuPodatnikowVatDataAppSettings.GetConnectionString()));
+                //services.AddDbContext<ApiWykazuPodatnikowVatDataDbContext>(options =>
+                //    options.UseSqlServer(apiWykazuPodatnikowVatDataAppSettings.GetConnectionString()));
+                services.AddDbContextPool<ApiWykazuPodatnikowVatDataDbContext>(options => options.UseSqlServer(
+                    apiWykazuPodatnikowVatDataAppSettings.GetConnectionString(),
+                    element => element.EnableRetryOnFailure().MigrationsHistoryTable("__EFMigrationsHistory", "awpv")));
             }
             catch (Exception e)
             {
@@ -168,14 +194,15 @@ namespace WebApplicationNetCoreDev
 
             #endregion
 
+            #region Add Controllers With Views
+
+            // System sprawdzania poprawności w programie .NET Core 3,0 lub nowszy traktuje parametry niedopuszczające wartości null lub właściwości powiązane tak, jakby miały [Required] atrybut. - Wyłączenie
             services.AddControllersWithViews(options =>
-                // System sprawdzania poprawności w programie .NET Core 3,0 lub nowszy traktuje parametry niedopuszczające wartości null lub właściwości powiązane tak, jakby miały [Required] atrybut. - Wyłączenie
                 options.SuppressImplicitRequiredAttributeForNonNullableReferenceTypes = true);
 
-            // Ważne Konfiguracja Kestrel !!!
-            services.Configure<KestrelServerOptions>(Configuration.GetSection("Kestrel"));
+            #endregion
 
-            services.AddKendo();
+            #region Add Controllers
 
             services.AddControllers().AddNewtonsoftJson(options =>
                 {
@@ -188,121 +215,60 @@ namespace WebApplicationNetCoreDev
                 }
             );
 
-            services.AddControllersWithViews().AddJsonOptions(options =>
-                {
-                    options.JsonSerializerOptions.PropertyNamingPolicy = null;
-                }
-            );
+            #endregion
+
+            #region KestrelServerOptions
+
+            // Ważne Konfiguracja Kestrel Server Options !!!
+            services.Configure<KestrelServerOptions>(Configuration.GetSection("Kestrel"));
+
+            #endregion
+
+            #region IISServerOption
+
+            // Ważne Konfiguracja IIS Server Options !!!
+            services.Configure<IISServerOptions>(Configuration.GetSection("IIS"));
+
+            #endregion
+
+            #region Add Kendo
+
+            services.AddKendo();
+
+            #endregion
+
+            #region HttpContextAccessor
 
             services.AddHttpContextAccessor();
-
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
+            #endregion
+
+            #region Add Mvc Core
 
             services.AddMvcCore();
 
-            ////typeof(IUIntegrationSystem.Server.RazorClassLibrary.Areas.WorkerService)
-            //Assembly assembly = typeof(IUIntegrationSystem.Server.RazorClassLibrary.Areas.WorkerService.Controllers.WorkerServiceController).Assembly;
-            ////Assembly assembly = typeof(IUIntegrationSystem.Server.RazorClassLibrary.Areas).Assembly;
-            //services.AddControllersWithViews().AddApplicationPart(assembly).AddRazorRuntimeCompilation();
-
-            //services.Configure<MvcRazorRuntimeCompilationOptions>(options =>
-            //    { options.FileProviders.Add(new EmbeddedFileProvider(assembly)); });
-
-            //var part = new AssemblyPart(assembly);
-            //services.AddControllersWithViews()
-            //    .ConfigureApplicationPartManager(apm => apm.ApplicationParts.Add(part));
-
-            //// Note .AddMiniProfiler() returns a IMiniProfilerBuilder for easy intellisense
-            //services.AddMiniProfiler(options =>
-            //{
-            //    // All of this is optional. You can simply call .AddMiniProfiler() for all defaults
-
-            //    // (Optional) Path to use for profiler URLs, default is /mini-profiler-resources
-            //    options.RouteBasePath = "/profiler";
-
-            //    // (Optional) Control storage
-            //    // (default is 30 minutes in MemoryCacheStorage)
-            //    // Note: MiniProfiler will not work if a SizeLimit is set on MemoryCache!
-            //    //   See: https://github.com/MiniProfiler/dotnet/issues/501 for details
-            //    ((MemoryCacheStorage) options.Storage).CacheDuration = TimeSpan.FromMinutes(60);
-
-            //    // (Optional) Control which SQL formatter to use, InlineFormatter is the default
-            //    options.SqlFormatter = new StackExchange.Profiling.SqlFormatters.InlineFormatter();
-
-            //    //// (Optional) To control authorization, you can use the Func<HttpRequest, bool> options:
-            //    //// (default is everyone can access profilers)
-            //    //options.ResultsAuthorize = request => MyGetUserFunction(request).CanSeeMiniProfiler;
-            //    //options.ResultsListAuthorize = request => MyGetUserFunction(request).CanSeeMiniProfiler;
-            //    //// Or, there are async versions available:
-            //    //options.ResultsAuthorizeAsync = async request => (await MyGetUserFunctionAsync(request)).CanSeeMiniProfiler;
-            //    //options.ResultsAuthorizeListAsync = async request => (await MyGetUserFunctionAsync(request)).CanSeeMiniProfilerLists;
-
-            //    //// (Optional)  To control which requests are profiled, use the Func<HttpRequest, bool> option:
-            //    //// (default is everything should be profiled)
-            //    //options.ShouldProfile = request => MyShouldThisBeProfiledFunction(request);
-
-            //    //// (Optional) Profiles are stored under a user ID, function to get it:
-            //    //// (default is null, since above methods don't use it by default)
-            //    //options.UserIdProvider = request => MyGetUserIdFunction(request);
-
-            //    //// (Optional) Swap out the entire profiler provider, if you want
-            //    //// (default handles async and works fine for almost all applications)
-            //    //options.ProfilerProvider = new MyProfilerProvider();
-
-            //    // (Optional) You can disable "Connection Open()", "Connection Close()" (and async variant) tracking.
-            //    // (defaults to true, and connection opening/closing is tracked)
-            //    options.TrackConnectionOpenClose = true;
-
-            //    // (Optional) Use something other than the "light" color scheme.
-            //    // (defaults to "light")
-            //    options.ColorScheme = StackExchange.Profiling.ColorScheme.Auto;
-
-            //    // The below are newer options, available in .NET Core 3.0 and above:
-
-            //    // (Optional) You can disable MVC filter profiling
-            //    // (defaults to true, and filters are profiled)
-            //    options.EnableMvcFilterProfiling = true;
-            //    // ...or only save filters that take over a certain millisecond duration (including their children)
-            //    // (defaults to null, and all filters are profiled)
-            //    // options.MvcFilterMinimumSaveMs = 1.0m;
-
-            //    // (Optional) You can disable MVC view profiling
-            //    // (defaults to true, and views are profiled)
-            //    options.EnableMvcViewProfiling = true;
-            //    // ...or only save views that take over a certain millisecond duration (including their children)
-            //    // (defaults to null, and all views are profiled)
-            //    // options.MvcViewMinimumSaveMs = 1.0m;
-
-            //    // (Optional) listen to any errors that occur within MiniProfiler itself
-            //    // options.OnInternalError = e => MyExceptionLogger(e);
-
-            //    // (Optional - not recommended) You can enable a heavy debug mode with stacks and tooltips when using memory storage
-            //    // It has a lot of overhead vs. normal profiling and should only be used with that in mind
-            //    // (defaults to false, debug/heavy mode is off)
-            //    //options.EnableDebugMode = true;
-            //});
-
-            //services.AddSwaggerGen(c =>
-            //{
-            //    c.DocumentFilter<SwaggerHideInDocsFilter>();
-            //    c.SwaggerDoc("v1", new OpenApiInfo { Title = Assembly.GetExecutingAssembly().GetName().Name, Version = "v1" });
-            //});
-
+            #endregion
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            //app.UseMiniProfiler();
+            #region CultureInfo
+
+            CultureInfo[] supportedCultures = {new("pl-PL")};
+            app.UseRequestLocalization(new RequestLocalizationOptions
+            {
+                DefaultRequestCulture = new RequestCulture("pl-PL"),
+                SupportedCultures = supportedCultures,
+                SupportedUICultures = supportedCultures
+            });
+
+            #endregion
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                //app.UseSwagger();
-                //app.UseSwaggerUI(c =>
-                //{
-                //    c.SwaggerEndpoint("/swagger/v1/swagger.json",
-                //        $"{Assembly.GetExecutingAssembly().GetName().Name} v1");
-                //});
             }
             else
             {
@@ -335,11 +301,13 @@ namespace WebApplicationNetCoreDev
                 endpoints.MapControllers();
             });
 
-            //app.UseMiddleware<StackifyMiddleware.RequestTracerMiddleware>();
+            #region HttpContextAccessor
 
             // Important Add HttpContextAccessor
             NetAppCommon.HttpContextAccessor.AppContext.Configure(app.ApplicationServices
                 .GetRequiredService<IHttpContextAccessor>());
+
+            #endregion
 
             #region Migracja bazy danych
 
@@ -348,7 +316,7 @@ namespace WebApplicationNetCoreDev
                 try
                 {
                     // Migracja bazy danych PortalApiGusApiRegonData.Data.PortalApiGusApiRegonDataDbContext
-                    EntityContextHelper.RunMigrationAsync<PortalApiGusApiRegonDataDbContext>(app.ApplicationServices)
+                    EntityContextHelper.RunMigrationAsync<DataBaseContext>(app.ApplicationServices)
                         .Wait();
                 }
                 catch (Exception e)

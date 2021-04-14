@@ -1,6 +1,7 @@
 #region using
 
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Net;
 using System.Reflection;
@@ -11,9 +12,12 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.Extensions.Logging;
+using NetAppCommon.Models;
 using WebApplicationNetCoreDev.Models;
 
 #endregion
+
+#region namespace
 
 namespace WebApplicationNetCoreDev.Controllers
 {
@@ -40,7 +44,13 @@ namespace WebApplicationNetCoreDev.Controllers
 
         #endregion
 
+        #region private readonly ILogger<HomeController> _logger
+
         private readonly ILogger<HomeController> _logger;
+
+        #endregion
+
+        #region public HomeController...
 
         public HomeController(ILogger<HomeController> logger, IActionDescriptorCollectionProvider provider)
         {
@@ -48,13 +58,18 @@ namespace WebApplicationNetCoreDev.Controllers
             _provider = provider;
         }
 
-        [AllowAnonymous]
+        #endregion
+
+        #region public async Task<IActionResult> RedirectAndRestartAsync...
+
+        [Authorize(AuthenticationSchemes = "Cookies", Policy = null, Roles = "Administrator")]
+        [ActionName(nameof(RedirectAndRestartAsync))]
         public async Task<IActionResult> RedirectAndRestartAsync()
         {
             try
             {
                 var url =
-                    $"{HttpContext.Request.Scheme}://{HttpContext.Request.Host}{Url.Action("RedirectAfterStatus", "Home")}";
+                    $"{HttpContext.Request.Scheme}://{HttpContext.Request.Host}{Url.Action("RedirectAfterStatus", "Home", new { ReturnUrl = HttpContext.Request.Query["ReturnUrl"] })}";
                 var content = new WebClient().DownloadString(url);
                 await Task.Run(async () =>
                 {
@@ -74,41 +89,60 @@ namespace WebApplicationNetCoreDev.Controllers
             }
             catch (Exception e)
             {
-                _log4Net.Error($"\n{e.GetType()}\n{e.InnerException?.GetType()}\n{e.Message}\n{e.StackTrace}\n", e);
-                return NotFound(e);
+                _log4Net.Error(e);
+                if (null != e.InnerException)
+                {
+                    _log4Net.Error(e.InnerException);
+                }
+
+                return StatusCode(500, e);
             }
         }
 
-        [AllowAnonymous]
-        public IActionResult RedirectAfterStatus() => View();
+        #endregion
+
+        #region public IActionResult RedirectAndRestartAsync...
 
         [AllowAnonymous]
-        public IActionResult Index( /*[FromQuery] string userName, [FromQuery] string returnUrl*/) => View();
+        public IActionResult
+            RedirectAfterStatus() => View();
 
-        [Authorize(AuthenticationSchemes = "Cookies", Policy = null, Roles = "User")]
-        public IActionResult ControllerActionList()
+        #endregion
+
+        #region public IActionResult Index...
+
+        [AllowAnonymous]
+        public IActionResult Index() => View();
+
+        #endregion
+
+        #region public async Task<IActionResult> RouteAsync
+
+        [Authorize(AuthenticationSchemes = "Cookies", Policy = null, Roles = "Administrator")]
+        public async Task<IActionResult> RouteAsync()
         {
             try
             {
-                NetAppCommon.ControllerRoute.GetA(Assembly.GetExecutingAssembly(), _provider, Url);
-                return View();
+                KendoGrid<List<ControllerRoutingActions>> controllerRoutingActionsList =
+                    await NetAppCommon.ControllerRoute.GetRouteActionForKendoGridAsync(_provider, Url);
+                return View(controllerRoutingActionsList as IEnumerable<KendoGrid<ControllerRoutingActions>>);
             }
             catch (Exception e)
             {
                 return NotFound(e);
             }
-            
         }
 
-        //[Authorize(Roles = "Administrator")]
-        //[Authorize(Policy = "Administrator")]
-        [Authorize(AuthenticationSchemes = "Cookies", Policy = null, Roles = "User")]
-        public IActionResult Privacy() => View();
+        #endregion
 
-        //[Authorize(Roles = "Administrator")]
-        //[Authorize(Policy = "Administrator")]
+        #region public IActionResult Error()
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error() =>
             View(new ErrorViewModel {RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier});
+
+        #endregion
     }
 }
+
+#endregion

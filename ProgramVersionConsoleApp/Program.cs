@@ -17,10 +17,16 @@ namespace ProgramVersionConsoleApp
 
         private static void Main(string[] args)
         {
+            var dateTimeNowYear = new DateTime(DateTime.Now.Year, 1, 1,
+                0, 0, 0);
             var dateTimeNowCurrent = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day,
                 0, 0, 0);
             DateTime dateTimeNow = DateTime.Now;
-            var yearMonthDay = Convert.ToInt32(dateTimeNow.Year.ToString().Substring(2, 2)) + dateTimeNow.Month + dateTimeNow.Day;
+
+            var yearMonthDay = (dateTimeNowCurrent - dateTimeNowYear).TotalDays;
+
+                //Convert.ToInt32(dateTimeNow.Year.ToString().Substring(2, 2)) + dateTimeNow.Month + dateTimeNow.Day;
+
             var totalMinutes = Math.Round((dateTimeNow - dateTimeNowCurrent).TotalMinutes, 0);
             var version = $"5.{yearMonthDay}.{totalMinutes}";
             var assemblyVersion = version;
@@ -92,27 +98,27 @@ namespace ProgramVersionConsoleApp
                         foreach (XmlElement xmlElementRow in xmlDocument.GetElementsByTagName("DOCUMENT")?.Item(0)
                             ?.ChildNodes?.Item(0)!)
                         {
-                            var value = string.Empty;
                             if (xmlElementRow.HasAttribute(Property) && xmlElementRow.HasAttribute(Value))
                             {
-                                switch (xmlElementRow.Attributes[Property].Value)
+                                string value;
+                                switch (xmlElementRow.Attributes[Property]?.Value)
                                 {
                                     case "ProductCode":
                                         value = "1045:{" + versionGuid.ToUpper() + "}";
                                         Console.WriteLine(
-                                            $"Change property {xmlElementRow.Attributes[Property].Value} value {xmlElementRow.Attributes[Value].Value} to {value}");
+                                            $"Change property {xmlElementRow.Attributes[Property].Value} value {xmlElementRow.Attributes[Value]?.Value} to {value}");
                                         xmlElementRow.Attributes["Value"].Value = value;
                                         break;
                                     case "UpgradeCode":
                                             value = "{" + upgradeVersionGuid.ToUpper() + "}";
                                             Console.WriteLine(
-                                                $"Change property {xmlElementRow.Attributes[Property].Value} value {xmlElementRow.Attributes[Value].Value} to {value}");
+                                                $"Change property {xmlElementRow.Attributes[Property].Value} value {xmlElementRow.Attributes[Value]?.Value} to {value}");
                                             xmlElementRow.Attributes["Value"].Value = value;
                                             break;
                                     case "ProductVersion":
                                         value = version;
                                         Console.WriteLine(
-                                            $"Change property {xmlElementRow.Attributes[Property].Value} value {xmlElementRow.Attributes[Value].Value} to {value}");
+                                            $"Change property {xmlElementRow.Attributes[Property].Value} value {xmlElementRow.Attributes[Value]?.Value} to {value}");
                                         xmlElementRow.Attributes["Value"].Value = value;
                                         break;
                                 }

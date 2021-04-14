@@ -366,3 +366,4 @@ WebApplicationTestDocker/
 WebApplicationAngular/
 WebApplicationReact/
 .publish/IUIntegrationSystem.Server.WorkerService.Publish.lnk
+.backup/

@@ -1,5 +1,5 @@
-﻿@using System.IO
-@using WebApplicationNetCoreDev.Helpers
+﻿@using WebApplicationNetCoreDev.Helpers
+@using System.IO
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,11 +9,17 @@
 
     @if (File.Exists("wwwroot/vendor/dist/default-styles.html"))
     {
-        @Html.Raw(File.ReadAllText("wwwroot/vendor/dist/default-styles.html").Replace(@"auto/", string.Empty))
+        @Html.Raw((await File.ReadAllTextAsync("wwwroot/vendor/dist/default-styles.html")).Replace(@"auto/", string.Empty))
+        ;
+    }
+    
+    @if (File.Exists("wwwroot/vendor/dist/default-scripts.html"))
+    {
+        @Html.Raw((await File.ReadAllTextAsync("wwwroot/vendor/dist/default-scripts.html")).Replace(@"auto/", string.Empty))
         ;
     }
 
-    @RenderSection("Css", false)
+    @await RenderSectionAsync("Css", false)
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -21,13 +27,10 @@
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
-    @if (File.Exists("wwwroot/vendor/dist/default-scripts.html"))
-    {
-        @Html.Raw(File.ReadAllText("wwwroot/vendor/dist/default-scripts.html").Replace(@"auto/", string.Empty));
-    }
+
 </head>
 <body class="skin-blue fixed-layout lock-nav">
-@if (!User.Identity.IsAuthenticated)
+@if (null != User.Identity && !User.Identity.IsAuthenticated)
 {
     IgnoreBody();
     @await Html.PartialAsync("~/Views/Authentication/_Index.cshtml")
@@ -70,10 +73,12 @@ else
         @await Html.PartialAsync("Elegant/Admin/_Footer.cshtml")
         <!--End Footer-->
     </div>
-    <mini-profiler />
+    @*Enable mini mini-profiler: <mini-profiler />*@
 }
-@RenderSection("Scripts", false)
+
+@await RenderSectionAsync("Scripts", false)
 <script type="text/javascript" src="/js/site.js"></script>
 @Html.RenderScripts()
+
 </body>
 </html>

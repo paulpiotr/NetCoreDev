@@ -169,7 +169,7 @@ namespace WebApplicationNetCoreDev.Controllers.ApiWykazuPodatnikowVatDataControl
         {
             try
             {
-                return View(new AppSettings());
+                return base.View(new ApiWykazuPodatnikowVatData.Models.AppSettings());
             }
             catch (Exception e)
             {
@@ -202,7 +202,7 @@ namespace WebApplicationNetCoreDev.Controllers.ApiWykazuPodatnikowVatDataControl
         public async Task<IActionResult> SettingsAsync(
             [Bind("RestClientUrl", "CacheLifeTime", "ConnectionString", "CheckForConnection", "CheckAndMigrate",
                 "UseGlobalDatabaseConnectionSettings")]
-            AppSettings model)
+            ApiWykazuPodatnikowVatData.Models.AppSettings model)
         {
             try
             {
@@ -215,7 +215,7 @@ namespace WebApplicationNetCoreDev.Controllers.ApiWykazuPodatnikowVatDataControl
 
                     if (model.UseGlobalDatabaseConnectionSettings)
                     {
-                        model.ConnectionString = AppSettingsModel.GetInstance().GetConnectionString();
+                        model.ConnectionString = NetAppCommon.AppSettings.Models.AppSettings.GetAppSettingsModel().GetConnectionString();
                     }
 
                     await model.AppSettingsRepository.MergeAndSaveAsync(model);

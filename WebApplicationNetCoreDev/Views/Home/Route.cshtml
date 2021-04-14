@@ -1,0 +1,117 @@
+﻿@using System.Reflection
+@using IUIntegrationSystem.Server.RazorClassLibrary.Helpers
+@using Kendo.Mvc.UI
+@using NetAppCommon.Models
+@model IEnumerable<NetAppCommon.Models.KendoGrid<NetAppCommon.Models.ControllerRoutingActions>>
+
+@{ var gridName = $"Grid{Assembly.GetEntryAssembly()?.GetName().GetHashCode().ToString()}"; }
+@{ var gridDataSource = $"{gridName}DataSource"; }
+@{ var gridActionApiUrl = $"{Url.Action("GetRouteKendoGrid", "HomeApi")}"; }
+@{ var windowName = $"{gridName}Window"; }
+@{ ViewData["Title"] = "Aplikacja, dostępne akcje kontrolerów"; }
+@{ Layout = "~/Views/Shared/_LayoutAdmin.cshtml"; }
+
+<div class="container-fluid k-content">
+
+    <div class="row">
+
+        @(Html.Kendo().Breadcrumb()
+            .Name("breadcrumb")
+            .Items(items =>
+            {
+                items.Add()
+                    .Type(BreadcrumbItemType.RootItem)
+                    .Href(Url.Action("GetRouteKendoGrid", "HomeApi"))
+                    .Text("Aplikacja")
+                    .ShowText(true)
+                    .Icon("home")
+                    .ShowIcon(true);
+                items.Add()
+                    .Type(BreadcrumbItemType.Item)
+                    .Href("javascript:void(0)")
+                    .Text("Dostępne akcje kontrolerów")
+                    .ShowText(true)
+                    .Icon("link-horizontal")
+                    .ShowIcon(true);
+            }))
+
+    </div>
+
+    <div class="row overflow-auto">
+
+        @(Html.Kendo().DataSource<ControllerRoutingActions>()
+            .Name(gridDataSource)
+            .Ajax(
+                dataSource => dataSource
+                    .Batch(true)
+                    .PageSize(1024)
+                    .AutoSync(false)
+                    .ServerOperation(false)
+                    .Read(read => read.Url(gridActionApiUrl).Type(HttpVerbs.Get)
+                    )))
+        @(Html.Kendo().Grid<ControllerRoutingActions>()
+            .Name(gridName)
+            .Columns(
+                columns =>
+                {
+                    columns.Bound(c => c.RouteController);
+                    columns.Bound(c => c.RouteAction);
+                    columns.Bound(c => c.RouteAttributeInfoTemplate);
+                    columns.Bound(c => c.RouteUrlAction);
+                    columns.Bound(c => c.RouteUrlAbsoluteAction);
+                })
+            .Selectable()
+            .Events(e => e.Change("onChangeGridWidget"))
+            .Sortable()
+            .Scrollable()
+            .Filterable()
+            .DataSource(gridDataSource))
+
+    </div>
+</div>
+
+@(Html.Kendo().Window()
+    .Name(windowName)
+    .Title("")
+    .Content(@<text></text>)
+    .Draggable()
+    .Resizable()
+    .Width(1024)
+    .Visible(false)
+    .Actions(actions => actions.Pin().Minimize().Maximize().Close())
+    .Events(e => e.Close("onClose").Open("onOpen")))
+
+@Html.Script(
+    @<script type="text/javascript">
+         function onChangeGridWidget(e) {
+             $("#@windowName").data("kendoWindow").close();
+             const currentDataItem = e.sender.dataItem(this.select());
+             $("#@windowName").data("kendoWindow")
+                 .open()
+                 .content("<div class='p-3'><pre id='json-renderer'></pre></div>")
+                 .refresh()
+                 .title(`Sczegóły ${currentDataItem.RouteId}`)
+                 .center()
+                 .setOptions({ width: $(document).width() * 0.62, height: $(document).height() * 0.62, position: { left: ($(document).width() * 0.38) / 2, top: ($(document).height() * 0.38) / 2 } });
+             $('#json-renderer').jsonViewer(JSON.parse(JSON.stringify(currentDataItem)));
+         }
+
+         function onClose() {
+         }
+
+         function onOpen() {
+         }
+
+         $(function() {
+             try {
+                 const grid = $("#@gridName");
+                 const gridDataSource = @gridDataSource;
+                 const gridWidget = grid.data("kendoGrid");
+                 gridWidget.wrapper.height($(".page-wrapper").first().height() * 0.9);
+                 gridWidget.resize();
+                 gridWidget.resize(true);
+             } catch (e) {
+                 console.log(e);
+             }
+         });
+    </script>)
