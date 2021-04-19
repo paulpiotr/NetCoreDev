@@ -28,7 +28,10 @@ using Newtonsoft.Json.Serialization;
 using PortalApiGus.ApiRegon.DataBase.Data;
 using PortalApiGus.ApiRegon.DataBase.Models;
 using Vies.Core.Database.Data;
+using Knf.DataBase.Models;
+using Knf.DataBase.Data;
 using WebconIntegrationSystem.Data.BPSMainAttDbContext;
+using AppSettings = PortalApiGus.ApiRegon.DataBase.Models.AppSettings;
 
 #endregion
 
@@ -86,29 +89,35 @@ namespace WebApplicationNetCoreDev
             {
                 // Kontekst bazy danych PortalApiGusApiRegonData.Data.PortalApiGusApiRegonDataDbContext
                 var portalApiGusApiRegonDataAppSettings = AppSettings.GetInstance();
-                services.AddDbContextPool<DataBaseContext>(options => options.UseSqlServer(
+                services.AddDbContextPool<PortalApiGus.ApiRegon.DataBase.Data.DataBaseContext>(options => options.UseSqlServer(
                     portalApiGusApiRegonDataAppSettings.GetConnectionString(),
                     element => element.EnableRetryOnFailure()
                         .MigrationsHistoryTable("__EFMigrationsHistory", "pagard")));
             }
             catch (Exception e)
             {
-                _log4Net.Error($"\n{e.GetType()}\n{e.InnerException?.GetType()}\n{e.Message}\n{e.StackTrace}\n", e);
+                _log4Net.Error(e);
+                if (null != e.InnerException)
+                {
+                    _log4Net.Error(e.InnerException);
+                }
             }
 
             try
             {
                 // Kontekst bazy danych ApiWykazuPodatnikowVatData.Data.ApiWykazuPodatnikowVatDataDbContext
                 var apiWykazuPodatnikowVatDataAppSettings = ApiWykazuPodatnikowVatData.Models.AppSettings.GetInstance();
-                //services.AddDbContext<ApiWykazuPodatnikowVatDataDbContext>(options =>
-                //    options.UseSqlServer(apiWykazuPodatnikowVatDataAppSettings.GetConnectionString()));
                 services.AddDbContextPool<ApiWykazuPodatnikowVatDataDbContext>(options => options.UseSqlServer(
                     apiWykazuPodatnikowVatDataAppSettings.GetConnectionString(),
                     element => element.EnableRetryOnFailure().MigrationsHistoryTable("__EFMigrationsHistory", "awpv")));
             }
             catch (Exception e)
             {
-                _log4Net.Error($"\n{e.GetType()}\n{e.InnerException?.GetType()}\n{e.Message}\n{e.StackTrace}\n", e);
+                _log4Net.Error(e);
+                if (null != e.InnerException)
+                {
+                    _log4Net.Error(e.InnerException);
+                }
             }
 
             try
@@ -121,7 +130,11 @@ namespace WebApplicationNetCoreDev
             }
             catch (Exception e)
             {
-                _log4Net.Error($"\n{e.GetType()}\n{e.InnerException?.GetType()}\n{e.Message}\n{e.StackTrace}\n", e);
+                _log4Net.Error(e);
+                if (null != e.InnerException)
+                {
+                    _log4Net.Error(e.InnerException);
+                }
             }
 
             try
@@ -134,7 +147,28 @@ namespace WebApplicationNetCoreDev
             }
             catch (Exception e)
             {
-                _log4Net.Error($"\n{e.GetType()}\n{e.InnerException?.GetType()}\n{e.Message}\n{e.StackTrace}\n", e);
+                _log4Net.Error(e);
+                if (null != e.InnerException)
+                {
+                    _log4Net.Error(e.InnerException);
+                }
+            }
+
+            try
+            {
+                // Kontekst bazy danych Vies.Core.Database.Data.ViesCoreDatabaseContext
+                var knfDataBaseModelsAppSettings = new Knf.DataBase.Models.AppSettings();
+                services.AddDbContextPool<Knf.DataBase.Data.DataBaseContext>(options => options.UseSqlServer(
+                    knfDataBaseModelsAppSettings.GetConnectionString(),
+                    element => element.EnableRetryOnFailure().MigrationsHistoryTable("__EFMigrationsHistory", "knf")));
+            }
+            catch (Exception e)
+            {
+                _log4Net.Error(e);
+                if (null != e.InnerException)
+                {
+                    _log4Net.Error(e.InnerException);
+                }
             }
 
             #endregion
@@ -315,13 +349,36 @@ namespace WebApplicationNetCoreDev
             {
                 try
                 {
-                    // Migracja bazy danych PortalApiGusApiRegonData.Data.PortalApiGusApiRegonDataDbContext
-                    EntityContextHelper.RunMigrationAsync<DataBaseContext>(app.ApplicationServices)
+                    // Migracja bazy danych Knf.DataBase.Data.DataBaseContext
+                    EntityContextHelper.RunMigrationAsync<Knf.DataBase.Data.DataBaseContext>(app.ApplicationServices)
                         .Wait();
                 }
                 catch (Exception e)
                 {
-                    _log4Net.Error($"\n{e.GetType()}\n{e.InnerException?.GetType()}\n{e.Message}\n{e.StackTrace}\n", e);
+                    _log4Net.Error(e);
+                    if (null != e.InnerException)
+                    {
+                        _log4Net.Error(e.InnerException);
+                    }
+                }
+            }).Wait();
+
+
+            Task.Run(() =>
+            {
+                try
+                {
+                    // Migracja bazy danych PortalApiGus.ApiRegon.DataBase.Data.DataBaseContext
+                    EntityContextHelper.RunMigrationAsync<PortalApiGus.ApiRegon.DataBase.Data.DataBaseContext>(app.ApplicationServices)
+                        .Wait();
+                }
+                catch (Exception e)
+                {
+                    _log4Net.Error(e);
+                    if (null != e.InnerException)
+                    {
+                        _log4Net.Error(e.InnerException);
+                    }
                 }
             }).Wait();
 
@@ -335,7 +392,11 @@ namespace WebApplicationNetCoreDev
                 }
                 catch (Exception e)
                 {
-                    _log4Net.Error($"\n{e.GetType()}\n{e.InnerException?.GetType()}\n{e.Message}\n{e.StackTrace}\n", e);
+                    _log4Net.Error(e);
+                    if (null != e.InnerException)
+                    {
+                        _log4Net.Error(e.InnerException);
+                    }
                 }
             }).Wait();
 
@@ -348,7 +409,11 @@ namespace WebApplicationNetCoreDev
                 }
                 catch (Exception e)
                 {
-                    _log4Net.Error($"\n{e.GetType()}\n{e.InnerException?.GetType()}\n{e.Message}\n{e.StackTrace}\n", e);
+                    _log4Net.Error(e);
+                    if (null != e.InnerException)
+                    {
+                        _log4Net.Error(e.InnerException);
+                    }
                 }
             }).Wait();
 

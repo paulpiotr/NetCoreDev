@@ -54,7 +54,9 @@ namespace WebApplicationNetCoreDev.Controllers.DaneSzukajPodmiotyApiController
 
         #region private readonly ICommonDistributedCache _cache
 
+#pragma warning disable 169
         private readonly ICommonDistributedCache _cache;
+#pragma warning restore 169
 
         #endregion
 
