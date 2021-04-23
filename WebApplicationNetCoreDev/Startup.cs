@@ -156,11 +156,28 @@ namespace WebApplicationNetCoreDev
 
             try
             {
-                // Kontekst bazy danych Vies.Core.Database.Data.ViesCoreDatabaseContext
+                // Kontekst bazy danych Knf.DataBase.Data.DataBaseContext
                 var knfDataBaseModelsAppSettings = new Knf.DataBase.Models.AppSettings();
                 services.AddDbContextPool<Knf.DataBase.Data.DataBaseContext>(options => options.UseSqlServer(
                     knfDataBaseModelsAppSettings.GetConnectionString(),
                     element => element.EnableRetryOnFailure().MigrationsHistoryTable("__EFMigrationsHistory", "knf")));
+            }
+            catch (Exception e)
+            {
+                _log4Net.Error(e);
+                if (null != e.InnerException)
+                {
+                    _log4Net.Error(e.InnerException);
+                }
+            }
+
+            try
+            {
+                // Kontekst bazy danych EulerHermes.DataBase.Data.DataBaseContext
+                var eulerHermesDataBaseModelsAppSettings = new EulerHermes.DataBase.Models.AppSettings();
+                services.AddDbContextPool<EulerHermes.DataBase.Data.DataBaseContext>(options => options.UseSqlServer(
+                    eulerHermesDataBaseModelsAppSettings.GetConnectionString(),
+                    element => element.EnableRetryOnFailure().MigrationsHistoryTable("__EFMigrationsHistory", "eh")));
             }
             catch (Exception e)
             {
@@ -406,6 +423,40 @@ namespace WebApplicationNetCoreDev
                 {
                     // Migracja bazy danych Vies.Core.Database.Data.ViesCoreDatabaseContext
                     EntityContextHelper.RunMigrationAsync<ViesCoreDatabaseContext>(app.ApplicationServices).Wait();
+                }
+                catch (Exception e)
+                {
+                    _log4Net.Error(e);
+                    if (null != e.InnerException)
+                    {
+                        _log4Net.Error(e.InnerException);
+                    }
+                }
+            }).Wait();
+
+            Task.Run(() =>
+            {
+                try
+                {
+                    // Migracja bazy danych Knf.DataBase.Data.DataBaseContext
+                    EntityContextHelper.RunMigrationAsync<Knf.DataBase.Data.DataBaseContext>(app.ApplicationServices).Wait();
+                }
+                catch (Exception e)
+                {
+                    _log4Net.Error(e);
+                    if (null != e.InnerException)
+                    {
+                        _log4Net.Error(e.InnerException);
+                    }
+                }
+            }).Wait();
+
+            Task.Run(() =>
+            {
+                try
+                {
+                    // Migracja bazy danych EulerHermes.DataBase.Data.DataBaseContext
+                    EntityContextHelper.RunMigrationAsync<EulerHermes.DataBase.Data.DataBaseContext>(app.ApplicationServices).Wait();
                 }
                 catch (Exception e)
                 {

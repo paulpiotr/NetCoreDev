@@ -8,9 +8,9 @@
     <DockerComposeProjectPath>..\docker-compose.dcproj</DockerComposeProjectPath>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <DockerfileContext>.</DockerfileContext>
-    <Version>5.108.1278</Version>
-    <AssemblyVersion>5.108.1278</AssemblyVersion>
-    <FileVersion>5.108.1278</FileVersion>
+    <Version>5.112.815</Version>
+    <AssemblyVersion>5.112.815</AssemblyVersion>
+    <FileVersion>5.112.815</FileVersion>
     <NeutralLanguage>pl-PL</NeutralLanguage>
     <UserSecretsId>3980f927-6963-47ff-b7f5-1f807a305905</UserSecretsId>
     <RepositoryUrl>https://tfs.isk.com.pl/tfs/Unimot/WebApplicationNetCoreDevRelease</RepositoryUrl>
@@ -77,6 +77,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\EncryptDecrypt\EncryptDecrypt\EncryptDecrypt.csproj" />
+    <ProjectReference Include="..\EulerHermes\EulerHermes\src\EulerHermes.WebAppRazor\EulerHermes.WebAppRazor.csproj" />
     <ProjectReference Include="..\EuropeanCommission\src\TaxationAndCustomsUnion\Vies.Core.Database\Vies.Core.Database.csproj" />
     <ProjectReference Include="..\EuropeanCommission\src\TaxationAndCustomsUnion\Vies.Core\Vies.Core.csproj" />
     <ProjectReference Include="..\IUIntegrationSystem\src\IUIntegrationSystem.Server.RazorClassLibrary\IUIntegrationSystem.Server.RazorClassLibrary.csproj" />
