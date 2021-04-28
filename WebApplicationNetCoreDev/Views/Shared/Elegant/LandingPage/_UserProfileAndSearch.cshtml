@@ -1,0 +1,26 @@
+﻿<!-- User Profile And Search -->
+<li class="nav-item dropdown">
+    <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <i class="fa fa-2x fa-users text-white"></i>
+    </a>
+    <div class="dropdown-menu dropdown-menu-right user-dd animated flipInY">
+        <span class="with-arrow">
+            <span class="bg-primary"></span>
+        </span>
+        <div class="d-flex no-block align-items-center p-15 bg-primary text-white m-b-10">
+            <div class="m-l-10">
+                <i class="fa fa-3x fa-users text-white"></i>
+            </div>
+            <div class="m-l-10">
+                <h4 class="m-b-0">@User.Identity?.Name</h4>
+                <p class=" m-b-0">@User.Identity?.AuthenticationType</p>
+            </div>
+        </div>
+        <div class="dropdown-divider"></div>
+        <a class="dropdown-item" asp-controller="Authentication" asp-action="GenerateJwtToken" title="Pobierz lub generuj klucz (token) API"><i class="fa fa-key m-r-5 m-l-5"></i> Pobierz lub generuj klucz, token API</a>
+        <div class="dropdown-divider"></div>
+        <a class="dropdown-item" asp-controller="Authentication" asp-action="UserProfile"><i class="fa fa-user m-r-5 m-l-5"></i> Profil użytkownika</a>
+        <a class="dropdown-item" asp-controller="Authentication" asp-action="Logout"><i class="fa fa-power-off m-r-5 m-l-5"></i> Wyloguj</a>
+    </div>
+</li>
+<!-- End User Profile And Search -->

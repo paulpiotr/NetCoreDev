@@ -2,18 +2,12 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
-using IUIntegrationSystem.Server.Core.Data;
-using IUIntegrationSystem.Server.Core.Models;
-using IUIntegrationSystem.Server.Core.ViewModels;
 using log4net;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
 using NetAppCommon;
 using NetAppCommon.Logging;
 using NetAppCommon.Models;
@@ -43,7 +37,7 @@ namespace WebApplicationNetCoreDev.Controllers
         ///     Constructor
         /// </summary>
         /// <param name="provider">
-        /// IActionDescriptorCollectionProvider provider
+        ///     IActionDescriptorCollectionProvider provider
         /// </param>
         public HomeApiController(IActionDescriptorCollectionProvider provider)
         {

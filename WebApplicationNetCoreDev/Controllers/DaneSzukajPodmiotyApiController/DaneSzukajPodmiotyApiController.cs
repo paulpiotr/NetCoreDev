@@ -9,12 +9,11 @@ using log4net;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
-using NetAppCommon;
 using NetAppCommon.Extensions.Caching.Distributed;
 using NetAppCommon.Logging;
-using NetAppCommon.Models;
 using PortalApiGus.ApiRegon.Core.Models.DaneSzukajPodmioty;
 using PortalApiGus.ApiRegon.DataBase.Data;
+
 #endregion
 
 namespace WebApplicationNetCoreDev.Controllers.DaneSzukajPodmiotyApiController
@@ -22,8 +21,17 @@ namespace WebApplicationNetCoreDev.Controllers.DaneSzukajPodmiotyApiController
     [Authorize(AuthenticationSchemes = "Bearer")]
     [Route("api/PortalApiGus/[controller]")]
     [ApiController]
-    public class DaneSzukajPodmiotyApiController : PortalApiGus.ApiRegon.WebApiRazor.Areas.PortalApiGusApi.Controllers.DaneSzukajPodmiotyApiController
+    public class DaneSzukajPodmiotyApiController : PortalApiGus.ApiRegon.WebApiRazor.Areas.PortalApiGusApi.Controllers.
+        DaneSzukajPodmiotyApiController
     {
+        #region private readonly ICommonDistributedCache _cache
+
+#pragma warning disable 169
+        private readonly ICommonDistributedCache _cache;
+#pragma warning restore 169
+
+        #endregion
+
         #region private readonly DataBaseContext _context
 
         /// <summary>
@@ -52,14 +60,6 @@ namespace WebApplicationNetCoreDev.Controllers.DaneSzukajPodmiotyApiController
 
         #endregion
 
-        #region private readonly ICommonDistributedCache _cache
-
-#pragma warning disable 169
-        private readonly ICommonDistributedCache _cache;
-#pragma warning restore 169
-
-        #endregion
-
         #region public DaneSzukajPodmiotyApiController...
 
         /// <summary>
@@ -79,7 +79,7 @@ namespace WebApplicationNetCoreDev.Controllers.DaneSzukajPodmiotyApiController
         ///     Common Distributed Cache as ICommonDistributedCache
         /// </param>
         public DaneSzukajPodmiotyApiController(DataBaseContext context,
-            IActionDescriptorCollectionProvider provider/*, ICommonDistributedCache cache*/) : base(context,
+            IActionDescriptorCollectionProvider provider /*, ICommonDistributedCache cache*/) : base(context,
             provider)
         {
             _context = context;
@@ -102,7 +102,8 @@ namespace WebApplicationNetCoreDev.Controllers.DaneSzukajPodmiotyApiController
                 {
                     var digitsOnly = new Regex(@"[^\d]");
                     nip = digitsOnly.Replace(nip, string.Empty);
-                    ActionResult<DaneSzukajPodmiotyResult> daneSzukajPodmiotyResult = await FindByNipAsResultAsync(nip, false, 0, pKluczUzytkownika);
+                    ActionResult<DaneSzukajPodmiotyResult> daneSzukajPodmiotyResult =
+                        await FindByNipAsResultAsync(nip, false, 0, pKluczUzytkownika);
                     return daneSzukajPodmiotyResult?.Value.Data;
                 }
             }
@@ -113,6 +114,7 @@ namespace WebApplicationNetCoreDev.Controllers.DaneSzukajPodmiotyApiController
                 {
                     _log4Net.Error(e.InnerException);
                 }
+
                 return StatusCode(500, e);
             }
 
@@ -134,7 +136,8 @@ namespace WebApplicationNetCoreDev.Controllers.DaneSzukajPodmiotyApiController
                 {
                     var digitsOnly = new Regex(@"[^\d]");
                     regon = digitsOnly.Replace(regon, string.Empty);
-                    ActionResult<DaneSzukajPodmiotyResult> daneSzukajPodmiotyResult = await FindByRegonAsResultAsync(regon, false, 0, pKluczUzytkownika);
+                    ActionResult<DaneSzukajPodmiotyResult> daneSzukajPodmiotyResult =
+                        await FindByRegonAsResultAsync(regon, false, 0, pKluczUzytkownika);
                     return daneSzukajPodmiotyResult?.Value.Data;
                 }
             }
@@ -145,6 +148,7 @@ namespace WebApplicationNetCoreDev.Controllers.DaneSzukajPodmiotyApiController
                 {
                     _log4Net.Error(e.InnerException);
                 }
+
                 return StatusCode(500, e);
             }
 

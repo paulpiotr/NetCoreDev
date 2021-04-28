@@ -1,27 +1,24 @@
 #region using
 
 using System;
-using System.IO;
 using System.Linq;
-using System.Text;
-using System.Text.Encodings.Web;
-using System.Text.RegularExpressions;
 using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Yahoo.Yui.Compressor;
 
 #endregion
 
 namespace WebApplicationNetCoreDev.Helpers
 {
     #region public static class ScriptsTagHelpers
+
     /// <summary>
     ///     Helper Display script in end of body
     /// </summary>
     public static class ScriptsTagHelpers
     {
         #region public static HtmlString Script(this IHtmlHelper htmlHelper, Func<object, HelperResult> template)
+
         /// <summary>
         ///     Add script to HttpContext
         ///     Add in top on .cshtml:
@@ -48,11 +45,14 @@ namespace WebApplicationNetCoreDev.Helpers
             {
                 Console.WriteLine(e);
             }
+
             return HtmlString.Empty;
         }
+
         #endregion
 
         #region public static HtmlString RenderScripts(this IHtmlHelper htmlHelper)
+
         /// <summary>
         ///     Display script in bootom main page or other template
         ///     Add in top on .cshtml:
@@ -71,9 +71,9 @@ namespace WebApplicationNetCoreDev.Helpers
             try
             {
                 foreach (var @object in from object key in htmlHelper.ViewContext.HttpContext.Items.Keys
-                                        let keyString = key.ToString()
-                                        where null != keyString && keyString.StartsWith("_script_")
-                                        select new { key })
+                    let keyString = key.ToString()
+                    where null != keyString && keyString.StartsWith("_script_")
+                    select new {key})
                 {
                     if (htmlHelper.ViewContext.HttpContext.Items[@object.key] is Func<object, HelperResult> template)
                     {
@@ -88,52 +88,9 @@ namespace WebApplicationNetCoreDev.Helpers
 
             return HtmlString.Empty;
         }
+
         #endregion
-
-        private static string GetTemplateString(Func<object, HelperResult> template)
-        {
-            try
-            {
-                //c# obfuscator js
-                var stringBuilder = new StringBuilder();
-                using TextWriter textWriter = new StringWriter(stringBuilder);
-                template.Invoke(null).WriteTo(textWriter, HtmlEncoder.Default);
-                return stringBuilder.ToString();
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-            }
-
-            return string.Empty;
-        }
-
-        private static string JavaScriptCompressor(string text)
-        {
-            try
-            {
-                //c# obfuscator js
-                var js = new JavaScriptCompressor
-                {
-                    Encoding = Encoding.UTF8,
-                    DisableOptimizations = false,
-                    ObfuscateJavascript = true,
-                    PreserveAllSemicolons = true,
-                    IgnoreEval = true,
-                    ThreadCulture = System.Globalization.CultureInfo.InvariantCulture
-                };
-                Console.WriteLine(text);
-                Console.WriteLine(js.Compress(text));
-                return js.Compress(text);
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-            }
-
-            return string.Empty;
-        }
-
     }
+
     #endregion
 }

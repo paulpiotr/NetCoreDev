@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.Extensions.Logging;
+using NetAppCommon;
 using NetAppCommon.Models;
 using WebApplicationNetCoreDev.Models;
 
@@ -35,18 +36,18 @@ namespace WebApplicationNetCoreDev.Controllers
 
         #endregion
 
+        #region private readonly ILogger<HomeController> _logger
+
+        private readonly ILogger<HomeController> _logger;
+
+        #endregion
+
         #region private readonly IActionDescriptorCollectionProvider _provider
 
         /// <summary>
         ///     Action Descriptor Collection Provider
         /// </summary>
         private readonly IActionDescriptorCollectionProvider _provider;
-
-        #endregion
-
-        #region private readonly ILogger<HomeController> _logger
-
-        private readonly ILogger<HomeController> _logger;
 
         #endregion
 
@@ -69,7 +70,7 @@ namespace WebApplicationNetCoreDev.Controllers
             try
             {
                 var url =
-                    $"{HttpContext.Request.Scheme}://{HttpContext.Request.Host}{Url.Action("RedirectAfterStatus", "Home", new { ReturnUrl = HttpContext.Request.Query["ReturnUrl"] })}";
+                    $"{HttpContext.Request.Scheme}://{HttpContext.Request.Host}{Url.Action("RedirectAfterStatus", "Home", new {ReturnUrl = HttpContext.Request.Query["ReturnUrl"]})}";
                 var content = new WebClient().DownloadString(url);
                 await Task.Run(async () =>
                 {
@@ -124,7 +125,7 @@ namespace WebApplicationNetCoreDev.Controllers
             try
             {
                 KendoGrid<List<ControllerRoutingActions>> controllerRoutingActionsList =
-                    await NetAppCommon.ControllerRoute.GetRouteActionForKendoGridAsync(_provider, Url);
+                    await ControllerRoute.GetRouteActionForKendoGridAsync(_provider, Url);
                 return View(controllerRoutingActionsList as IEnumerable<KendoGrid<ControllerRoutingActions>>);
             }
             catch (Exception e)

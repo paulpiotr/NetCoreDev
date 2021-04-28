@@ -9,7 +9,6 @@ using ApiWykazuPodatnikowVatData.Models;
 using log4net;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using NetAppCommon.AppSettings.Models;
 
 #endregion
 
@@ -169,7 +168,7 @@ namespace WebApplicationNetCoreDev.Controllers.ApiWykazuPodatnikowVatDataControl
         {
             try
             {
-                return base.View(new ApiWykazuPodatnikowVatData.Models.AppSettings());
+                return base.View(new AppSettings());
             }
             catch (Exception e)
             {
@@ -202,7 +201,7 @@ namespace WebApplicationNetCoreDev.Controllers.ApiWykazuPodatnikowVatDataControl
         public async Task<IActionResult> SettingsAsync(
             [Bind("RestClientUrl", "CacheLifeTime", "ConnectionString", "CheckForConnection", "CheckAndMigrate",
                 "UseGlobalDatabaseConnectionSettings")]
-            ApiWykazuPodatnikowVatData.Models.AppSettings model)
+            AppSettings model)
         {
             try
             {
@@ -215,7 +214,8 @@ namespace WebApplicationNetCoreDev.Controllers.ApiWykazuPodatnikowVatDataControl
 
                     if (model.UseGlobalDatabaseConnectionSettings)
                     {
-                        model.ConnectionString = NetAppCommon.AppSettings.Models.AppSettings.GetAppSettingsModel().GetConnectionString();
+                        model.ConnectionString = NetAppCommon.AppSettings.Models.AppSettings.GetAppSettingsModel()
+                            .GetConnectionString();
                     }
 
                     await model.AppSettingsRepository.MergeAndSaveAsync(model);

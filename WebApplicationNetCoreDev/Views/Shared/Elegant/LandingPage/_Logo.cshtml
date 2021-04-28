@@ -1,5 +1,5 @@
 ﻿@using System.Reflection
-<div class="d-inline-flex h-100 align-content-center align-middle" title="@Assembly.GetEntryAssembly().GetName().Name">
+<div class="d-inline-flex h-100 align-content-center align-middle" title="@Assembly.GetEntryAssembly()?.GetName().Name">
     <div class="row">
         <div class="col-12">
             <h1 class="d-inline-block align-middle font-16">
@@ -7,11 +7,6 @@
                     <i class="fa fa-2x fa-home"></i>
                 </a>
             </h1>
-            <div class="d-none d-lg-inline-block align-middle font-16">
-                <a href="@Url.Action("Index", "Home")" class="text-decoration-none text-active">
-                    @Assembly.GetEntryAssembly().GetName().Name
-                </a>
-            </div>
         </div>
     </div>
 </div>

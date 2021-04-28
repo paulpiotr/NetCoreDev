@@ -9,7 +9,6 @@ using log4net;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
-using NetAppCommon.AppSettings.Models;
 using Vies.Core.Database.Data;
 using Vies.Core.Database.Models;
 
@@ -117,7 +116,7 @@ namespace WebApplicationNetCoreDev.Controllers.EuropeanCommission.TaxationAndCus
         {
             try
             {
-                return base.View(new Vies.Core.Database.Models.AppSettings());
+                return base.View(new AppSettings());
             }
             catch (Exception e)
             {
@@ -149,7 +148,7 @@ namespace WebApplicationNetCoreDev.Controllers.EuropeanCommission.TaxationAndCus
         public async Task<IActionResult> SettingsAsync(
             [Bind("CacheLifeTime", "ConnectionString", "CheckForConnection", "CheckAndMigrate",
                 "UseGlobalDatabaseConnectionSettings" /*, "RequesterCountryCode", "RequesterVatNumber"*/)]
-            Vies.Core.Database.Models.AppSettings model)
+            AppSettings model)
         {
             try
             {
@@ -162,7 +161,8 @@ namespace WebApplicationNetCoreDev.Controllers.EuropeanCommission.TaxationAndCus
 
                     if (model.UseGlobalDatabaseConnectionSettings)
                     {
-                        model.ConnectionString = NetAppCommon.AppSettings.Models.AppSettings.GetAppSettingsModel().GetConnectionString();
+                        model.ConnectionString = NetAppCommon.AppSettings.Models.AppSettings.GetAppSettingsModel()
+                            .GetConnectionString();
                     }
 
                     await model.AppSettingsRepository.MergeAndSaveAsync(model);

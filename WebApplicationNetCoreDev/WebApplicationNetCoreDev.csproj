@@ -74,13 +74,14 @@
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="5.0.2" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <!--<PackageReference Include="Telerik.UI.for.AspNet.Core" Version="2020.2.617" />-->
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\EncryptDecrypt\EncryptDecrypt\EncryptDecrypt.csproj" />
     <ProjectReference Include="..\EulerHermes\EulerHermes\src\EulerHermes.WebAppRazor\EulerHermes.WebAppRazor.csproj" />
     <ProjectReference Include="..\EuropeanCommission\src\TaxationAndCustomsUnion\Vies.Core.Database\Vies.Core.Database.csproj" />
     <ProjectReference Include="..\EuropeanCommission\src\TaxationAndCustomsUnion\Vies.Core\Vies.Core.csproj" />
-    <ProjectReference Include="..\IUIntegrationSystem\src\IUIntegrationSystem.Server.RazorClassLibrary\IUIntegrationSystem.Server.RazorClassLibrary.csproj" />
+    <ProjectReference Include="..\IUIntegrationSystem\src\IUIntegrationSystem.Server.WebAppRazor\IUIntegrationSystem.Server.WebAppRazor.csproj" />
     <ProjectReference Include="..\Knf\Knf\src\Knf.WebAppRazor\Knf.WebAppRazor.csproj" />
     <ProjectReference Include="..\Log4netLogger\Log4netLogger.csproj" />
     <ProjectReference Include="..\NetAppCommon\NetAppCommon\NetAppCommon.csproj" />

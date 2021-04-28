@@ -1,1 +1,0 @@
-(window.webpackJsonp=window.webpackJsonp||[]).push([["default~._elegant_assets_icons_m"],[]]);

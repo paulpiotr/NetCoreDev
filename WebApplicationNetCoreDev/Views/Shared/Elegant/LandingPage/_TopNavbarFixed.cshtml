@@ -1,94 +1,14 @@
-﻿<div class="navbar-fixed">
-    <div class="fix-width">
-        <div class="header">
-            <nav class="navbar navbar-expand-md navbar-light">
-                @await Html.PartialAsync("_Logo.cshtml")
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#NavbarMain" aria-controls="NavbarMain" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="NavbarMain">
-                    <ul class="navbar-nav ml-auto">
-                        <li class="nav-item">
-                            <a class="nav-link waves-effect waves-dark" href="@Url.Action("Index", "CreditCheckDecisionApp", new {Area = "EulerHermesApp"})">
-                                <span class="p-1">
-                                    <i class="ti-layout-grid2"></i>
-                                </span>
-                                <span class="p-1 text-truncate">Euler Hermes</span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link waves-effect waves-dark" href="@Url.Action("Index", "ListaOstrzezenPublicznychApp", new {Area = "ListaOstrzezenPublicznychApp"})">
-                                <span class="p-1">
-                                    <i class="ti-layout-grid2"></i>
-                                </span>
-                                <span class="p-1 text-truncate">KNF</span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link waves-effect waves-dark" href="@Url.Action("Index", "DaneSzukajPodmioty", new {Area = "PortalApiGusApp"})">
-                                <span class="p-1">
-                                    <i class="ti-layout-grid2"></i>
-                                </span>
-                                <span class="p-1 text-truncate">Portal API GUS</span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link waves-effect waves-dark" href="@Url.Action("Index", "WykazPodatnikowVat")">
-                                <span class="p-1">
-                                    <i class="ti-layout-grid2"></i>
-                                </span>
-                                <span class="p-1 text-truncate">API Wykazu podatników VAT</span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link waves-effect waves-dark" href="@Url.Action("Settings", "BPSMainAtt")">
-                                <span class="p-1">
-                                    <i class="ti-layout-grid2"></i>
-                                </span>
-                                <span class="p-1 text-truncate">Webcon (BPSMainAtt)</span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link waves-effect waves-dark" href="@Url.Action("Index", "Vies")">
-                                <span class="p-1">
-                                    <i class="ti-layout-grid2"></i>
-                                </span>
-                                <span class="p-1 text-truncate">VIES</span>
-                            </a>
-                        </li>
-                        @if (null != User?.Identity && !User.Identity.IsAuthenticated)
-                        {
-                            <li class="nav-item">
-                                <a class="nav-link" href="@Url.Action("Index", "Authentication")">
-                                    <span class="p-1">
-                                        <i class="fa fa-users"></i>
-                                    </span>
-                                    <span class="p-1">Zaloguj się</span>
-                                </a>
-                            </li>
-                        }
-                        else if (null != User?.Identity && User.Identity.IsAuthenticated)
-                        {
-                            <li class="nav-item">
-                                <a class="nav-link" href="@Url.Action("UserProfile", "Authentication")">
-                                    <span class="p-1">
-                                        <i class="fa fa-user"></i>
-                                    </span>
-                                    <span class="p-1">Mój Profil</span>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="@Url.Action("Logout", "Authentication")">
-                                    <span class="p-1">
-                                        <i class="fa fa-power-off"></i>
-                                    </span>
-                                    <span class="p-1">Wyloguj się</span>
-                                </a>
-                            </li>
-                        }
-                    </ul>
-                </div>
-            </nav>
-        </div>
+﻿<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    @await Html.PartialAsync("_Logo.cshtml")
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarMain" aria-controls="navbarMain" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarMain">
+        <ul class="nav navbar-nav ml-auto">
+            @await Html.PartialAsync("~/Areas/EulerHermesApp/Views/Shared/Elegant/Admin/_TopNavbarFixed.cshtml")
+            @await Html.PartialAsync("~/Areas/KnfApp/Views/Shared/Elegant/Admin/_TopNavbarFixed.cshtml")
+            @await Html.PartialAsync("~/Areas/IUIntegrationSystemApp/Views/Shared/Elegant/Admin/_TopNavbarFixed.cshtml")
+            @await Html.PartialAsync("../Admin/_UserProfileAndSearch.cshtml")
+        </ul>
     </div>
-</div>
+</nav>

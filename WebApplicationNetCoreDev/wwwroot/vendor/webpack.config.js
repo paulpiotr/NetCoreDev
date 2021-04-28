@@ -11,9 +11,17 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const ExtractCssChunks = require('extract-css-chunks-webpack-plugin');
 
 module.exports = {
-    mode: 'development',
+    mode: 'production',
+    resolve: {
+        /**
+        * Importent !!!
+        */
+        alias: {
+            jquery: '@progress/kendo-ui/node_modules/jquery/dist/jquery'
+        }
+    },
     entry: {
-        default: "./src/default.all.min.js",
+        default: './src/default.all.min.js',
     },
     output: {
         filename: '[contenthash].bundle.js',
@@ -30,7 +38,6 @@ module.exports = {
             maxAsyncRequests: 6,
             maxInitialRequests: 4,
             automaticNameDelimiter: '~',
-            automaticNameMaxLength: 32,
             name: false,
             cacheGroups: {
                 defaultVendors: {
@@ -61,7 +68,7 @@ module.exports = {
                         loader: MiniCssExtractPlugin.loader,
                     },
                     {
-                        loader: "css-loader",
+                        loader: 'css-loader',
                     },
                 ],
             },
@@ -90,8 +97,8 @@ module.exports = {
         }),
         new ChunksWebpackPlugin({
             generateChunksManifest: true,
-            templateStyle: `<link rel="stylesheet" href="/vendor/dist/{{chunk}}" />`,
-            templateScript: `<script type="text/javascript" src="/vendor/dist/{{chunk}}"></script>`,
+            templateStyle: `<link rel='stylesheet' href='/vendor{{chunk}}' />`,
+            templateScript: `<script type='text/javascript' src='/vendor{{chunk}}'></script>`,
         }),
         new webpack.ProvidePlugin({
             $: 'jquery',

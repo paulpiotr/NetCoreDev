@@ -8,7 +8,7 @@
 @{ var gridDataSource = string.Format("{0}DataSource", gridName); }
 @{ var gridActionApiUrl = string.Format("{0}", "/api/SerwisRzeczypospolitejPolskiej/MinisterstwoFinansow/KrajowaAdministracjaSkarbowa/WykazPodatnikowVatApi/RouteKendoGrid"); }
 @{ var windowName = string.Format("{0}Window", gridName); }
-@{ ViewData["Title"] = "Dostępne akcje w Ministerstwo Finansów - Wykaz podatników VAT"; }
+@{ ViewData["Title"] = "Lista dostępnych tras w Ministerstwo Finansów - Wykaz podatników VAT"; }
 @{ Layout = "~/Views/Shared/_LayoutAdmin.cshtml"; }
 
 <div class="container-fluid k-content">
@@ -29,7 +29,7 @@
                 items.Add()
                     .Type(BreadcrumbItemType.Item)
                     .Href("javascript:void(0)")
-                    .Text("Dostępne akcje")
+                    .Text("Lista dostępnych tras")
                     .ShowText(true)
                     .Icon("link-horizontal")
                     .ShowIcon(true);

@@ -1,38 +1,52 @@
-﻿<!-- User Profile And Search -->
-<li class="nav-item dropdown">
-    <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        <i class="fa fa-2x fa-users text-white"></i>
-    </a>
-    <div class="dropdown-menu dropdown-menu-right user-dd animated flipInY">
-        <span class="with-arrow">
-            <span class="bg-primary"></span>
-        </span>
-        <div class="d-flex no-block align-items-center p-15 bg-primary text-white m-b-10">
-            <div class="m-l-10">
-                <i class="fa fa-3x fa-users text-white"></i>
+﻿@{ var hashCode = GetHashCode().ToString(); }
+<!-- User Profile And Search -->
+@if (null != User.Identity && User.Identity.IsAuthenticated)
+{
+    <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <i class="fa fa-2x fa-users text-white"></i>
+        </a>
+        <div class="dropdown-menu dropdown-menu-right user-dd animated flipInY">
+            <span class="with-arrow">
+                <span class="bg-primary"></span>
+            </span>
+            <div class="d-flex no-block align-items-center p-15 bg-primary text-white m-b-10">
+                <div class="m-l-10">
+                    <i class="fa fa-3x fa-users text-white"></i>
+                </div>
+                <div class="m-l-10">
+                    <h5 class="m-b-0">@User.Identity?.Name</h5>
+                    <p class=" m-b-0">@User.Identity?.AuthenticationType</p>
+                </div>
             </div>
-            <div class="m-l-10">
-                <h4 class="m-b-0">@User.Identity.Name</h4>
-                <p class=" m-b-0">@User.Identity.AuthenticationType</p>
-            </div>
+            <div class="dropdown-divider"></div>
+
+            <a class="dropdown-item" asp-controller="Authentication" asp-action="GenerateJwtToken" title="Pobierz lub generuj klucz (token) API">
+                <i class="fa fa-key m-r-5 m-l-5"></i> Pobierz lub generuj klucz, token API
+            </a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" asp-controller="Authentication" asp-action="UserProfile">
+                <i class="fa fa-user m-r-5 m-l-5"></i> Profil użytkownika
+            </a>
+            <a class="dropdown-item" asp-controller="Authentication" asp-action="Logout">
+                <i class="fa fa-power-off m-r-5 m-l-5"></i> Wyloguj
+            </a>
         </div>
-        @*
-        <a class="dropdown-item" asp-controller="WindowsAuthentication" asp-action="Index"><i class="ti-user m-r-5 m-l-5"></i> @Html.Raw("Mój profil")</a>
-        <a class="btn btn-success float-right" asp-action="Start" asp-route-ServiceName="@item.ServiceName">@Html.Raw("Uruchom")</a>
-        <a class="dropdown-item" href="javascript:void(0)"><i class="ti-wallet m-r-5 m-l-5"></i> My Balance</a>
-        <a class="dropdown-item" href="javascript:void(0)"><i class="ti-email m-r-5 m-l-5"></i> Inbox</a>
-        <div class="dropdown-divider"></div>
-        <a class="dropdown-item" href="javascript:void(0)"><i class="ti-settings m-r-5 m-l-5"></i> Ustawienia konta</a>
-        *@
-        <div class="dropdown-divider"></div>
-        <a class="dropdown-item" asp-controller="Authentication" asp-action="GenerateJwtToken" title="Pobierz lub generuj klucz (token) API"><i class="fa fa-key m-r-5 m-l-5"></i> Klucz (token) API</a>
-        <div class="dropdown-divider"></div>
-        <a class="dropdown-item" asp-controller="Authentication" asp-action="UserProfile"><i class="fa fa-user m-r-5 m-l-5"></i> Profil użytkownika</a>
-        <a class="dropdown-item" asp-controller="Authentication" asp-action="Logout"><i class="fa fa-power-off m-r-5 m-l-5"></i> Wyloguj</a>
-        @*
-        <div class="dropdown-divider"></div>
-        <div class="p-l-30 p-10"><a href="javascript:void(0)" class="btn btn-sm btn-success btn-rounded">View Profile</a></div>
-        *@
-    </div>
-</li>
+    </li>
+}
+else
+{
+    <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="javascript:void(0);" id="navbarDropdown{ @hashCode }" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <i class="has-arrow ti-layout-grid2"></i>
+            Użytkownik
+        </a>
+        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown{ @hashCode }">
+            <a class="dropdown-item" href="@Url.Action("Index", "Authentication")" title="Zaloguj się">
+                <i class="ti-user p-t-5"></i>
+                <small>Zaloguj się</small>
+            </a>
+        </div>
+    </li>
+}
 <!-- End User Profile And Search -->

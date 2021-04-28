@@ -1,7 +1,7 @@
 ﻿@using System.Reflection
-@using IUIntegrationSystem.Server.RazorClassLibrary.Helpers
 @using Kendo.Mvc.UI
 @using NetAppCommon.Models
+@using WebApplicationNetCoreDev.Helpers
 @model IEnumerable<NetAppCommon.Models.KendoGrid<NetAppCommon.Models.ControllerRoutingActions>>
 
 @{ var gridName = $"Grid{Assembly.GetEntryAssembly()?.GetName().GetHashCode().ToString()}"; }
@@ -29,7 +29,7 @@
                 items.Add()
                     .Type(BreadcrumbItemType.Item)
                     .Href("javascript:void(0)")
-                    .Text("Dostępne akcje kontrolerów")
+                    .Text("Lista dostępnych tras kontrolerów")
                     .ShowText(true)
                     .Icon("link-horizontal")
                     .ShowIcon(true);
