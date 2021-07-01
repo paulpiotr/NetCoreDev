@@ -1,55 +1,42 @@
 [submodule "SimpleImpersonation"]
 	path = SimpleImpersonation
 	url = https://github.com/mj1856/SimpleImpersonation
-
 [submodule "EncryptDecrypt"]
 	path = EncryptDecrypt
 	url = https://tfs.isk.com.pl/tfs/ISK/_git/EncryptDecrypt
-
 [submodule "Log4netLogger"]
 	path = Log4netLogger
 	url = https://github.com/paulpiotr/Log4netLogger.git
-
 [submodule "PortalApiGus"]
 	path = PortalApiGus
 	url = https://tfs.isk.com.pl/tfs/ISK/_git/PortalApiGus
-
 [submodule "Icasa"]
 	path = Icasa
 	url = https://tfs.isk.com.pl/tfs/ISK/_git/Icasa
-
 [submodule "IUIntegrationSystem"]
 	path = IUIntegrationSystem
 	url = https://tfs.isk.com.pl/tfs/ISK/_git/IUIntegrationSystem
-
 [submodule "NetAppCommon"]
 	path = NetAppCommon
 	url = https://github.com/paulpiotr/NetAppCommon.git
-
 [submodule "SerwisRzeczypospolitejPolskiej"]
 	path = SerwisRzeczypospolitejPolskiej
 	url = https://tfs.isk.com.pl/tfs/ISK/_git/SerwisRzeczypospolitejPolskiej
-
 [submodule "FileSystemWatcherCommon"]
 	path = FileSystemWatcherCommon
 	url = https://tfs.isk.com.pl/tfs/ISK/_git/FileSystemWatcherCommon
-
 [submodule "WebconIntegrationSystem"]
 	path = WebconIntegrationSystem
 	url = https://tfs.isk.com.pl/tfs/ISK/_git/WebconIntegrationSystem
-
 [submodule "EuropeanCommission"]
 	path = EuropeanCommission
 	url = https://github.com/paulpiotr/EuropeanCommission.git
-
 [submodule ".publish/WebApplicationNetCoreDev/WebApplicationNetCoreDevRelease"]
 	path = .publish/WebApplicationNetCoreDev/WebApplicationNetCoreDevRelease
 	url = https://tfs.isk.com.pl/tfs/Unimot/_git/WebApplicationNetCoreDevRelease
-
 [submodule "EulerHermes"]
 	path = EulerHermes
 	url = https://tfs.isk.com.pl/tfs/ISK/_git/EulerHermes
-
 [submodule "Knf"]
 	path = Knf
 	url = https://tfs.isk.com.pl/tfs/ISK/_git/Knf

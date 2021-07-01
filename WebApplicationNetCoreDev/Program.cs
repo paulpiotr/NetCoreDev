@@ -20,6 +20,10 @@ namespace WebApplicationNetCoreDev
             {
                 webBuilder.UseStartup<Startup>();
             });
+        //    .ConfigureServices(services =>
+        //{
+        //    services.AddHostedService<FileSystemWatcherInvoicesWorker>();
+        //});
 
         public static void Shutdown() => CancelTokenSource.Cancel();
     }

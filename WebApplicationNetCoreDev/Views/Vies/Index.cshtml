@@ -76,7 +76,8 @@
             .DataSource(gridDataSource))
 
     </div>
-    @if (User.Identity.IsAuthenticated && User.IsInRole("Administrator"))
+
+    @if (null != User.Identity && User.Identity.IsAuthenticated && User.IsInRole("Administrator"))
     {
         <div class="row text-black-50 font-italic m-t-10 m-b-10">
             <small>Bieżąca baza danych: @ViewData["ConnectionString"]</small>
@@ -98,8 +99,8 @@
 @Html.Script(
     @<script id="@gridToolbarTemplate" type="text/x-kendo-template">
     <div class="toolbar">
-        <div class="row h-100 w-75 p-t-15 align-items-center align-self-center">
-            <div class="col-sm-12 col-md-6 col-lg-4 col-xl-2">
+        <div class="row h-100 w-100 p-t-15 ml-1 align-items-center align-self-center">
+            <div class="col-sm-12 col-md-6 col-lg-4 col-xl-4">
                 @(Html.Kendo().ComboBox()
                     .Name("countryCode")
                     .Placeholder("Wybierz kraj")
@@ -141,10 +142,10 @@
                     .MinLength(2)
                     .HtmlAttributes(new {style = "width:100%;"}).ToClientTemplate())
             </div>
-            <div class="col-sm-12 col-md-6 col-lg-4 col-xl-2 mt-n4">
-                @(Html.Kendo().MaskedTextBox().Name("vatNumber").Mask("000000000000000000000000").Label(l => l.Content("NIP (max 24 znaki)").Floating(true)).ToClientTemplate())
+            <div class="col-sm-12 col-md-6 col-lg-4 col-xl-4 mt-n4">
+                @(Html.Kendo().TextBox().Name("vatNumber").Label(l => l.Content("NIP (max 24 znaki)").Floating(true)).ToClientTemplate())
             </div>
-            <div class="col-sm-12 col-md-12 col-lg-4 col-xl-2 p-sm-15 p-md-15">
+            <div class="col-sm-12 col-md-12 col-lg-4 col-xl-4 p-sm-15 p-md-15">
                 <a href="javascript:void(0)" class="k-search k-link k-button k-button-search" title="Wyszukaj"><span class="k-icon k-i-search"></span>Wyszukaj</a>
                 <a href="javascript:void(0)" class="k-pager-refresh k-link k-button k-button-icon" title="Odśwież widok"><span class="k-icon k-i-reload"></span></a>
             </div>
@@ -192,9 +193,7 @@
                          if ($("#vatNumber").val() && $("#countryCode").val()) {
                              e.preventDefault();
                              var url = gridDataSource.transport.options.read.url;
-                             if (parseInt($("#vatNumber").val(), 10) > 0) {
-                                 gridDataSource.transport.options.read.url = "/api/EuropeanCommission/TaxationAndCustomsUnion/ViesApi/CheckVatKendoGrid/" + $("#countryCode").val().substring(0, 2) + "/" + $("#vatNumber").val();
-                             }
+                             gridDataSource.transport.options.read.url = "/api/EuropeanCommission/TaxationAndCustomsUnion/ViesApi/CheckVatKendoGrid/" + $("#countryCode").val().substring(0, 2) + "/" + $("#vatNumber").val();
                              gridDataSource.read();
                              gridDataSource.transport.options.read.url = url;
                          } else {

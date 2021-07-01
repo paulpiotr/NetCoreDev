@@ -37,11 +37,11 @@
 else
 {
     <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="javascript:void(0);" id="navbarDropdown{ @hashCode }" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <a class="nav-link dropdown-toggle" href="javascript:void(0);" id="@Html.Raw($"navbarDropdown{ hashCode }")" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <i class="has-arrow ti-layout-grid2"></i>
             Użytkownik
         </a>
-        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown{ @hashCode }">
+        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="@Html.Raw($"navbarDropdown{ hashCode }")">
             <a class="dropdown-item" href="@Url.Action("Index", "Authentication")" title="Zaloguj się">
                 <i class="ti-user p-t-5"></i>
                 <small>Zaloguj się</small>

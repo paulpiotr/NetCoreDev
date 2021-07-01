@@ -120,7 +120,11 @@ namespace WebApplicationNetCoreDev.Controllers.EuropeanCommission.TaxationAndCus
             }
             catch (Exception e)
             {
-                _log4Net.Error($"\n{e.GetType()}\n{e.InnerException?.GetType()}\n{e.Message}\n{e.StackTrace}\n", e);
+                _log4Net.Error(e);
+                if (null != e.InnerException)
+                {
+                    _log4Net.Error(e.InnerException);
+                }
             }
 
             return NotFound();
@@ -188,7 +192,12 @@ namespace WebApplicationNetCoreDev.Controllers.EuropeanCommission.TaxationAndCus
             }
             catch (Exception e)
             {
-                _log4Net.Error($"\n{e.GetType()}\n{e.InnerException?.GetType()}\n{e.Message}\n{e.StackTrace}\n", e);
+                _log4Net.Error(e);
+                if (null != e.InnerException)
+                {
+                    _log4Net.Error(e.InnerException);
+                }
+
                 return NotFound(e);
             }
 
@@ -215,7 +224,11 @@ namespace WebApplicationNetCoreDev.Controllers.EuropeanCommission.TaxationAndCus
             }
             catch (Exception e)
             {
-                _log4Net.Error($"\n{e.GetType()}\n{e.InnerException?.GetType()}\n{e.Message}\n{e.StackTrace}\n", e);
+                _log4Net.Error(e);
+                if (null != e.InnerException)
+                {
+                    _log4Net.Error(e.InnerException);
+                }
             }
 
             return NotFound();

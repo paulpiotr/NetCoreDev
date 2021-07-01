@@ -21,17 +21,13 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
-using NetAppCommon.Extensions.DependencyInjection;
 using NetAppCommon.Helpers;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using PortalApiGus.ApiRegon.DataBase.Data;
 using PortalApiGus.ApiRegon.DataBase.Models;
 using Vies.Core.Database.Data;
-using Knf.DataBase.Models;
-using Knf.DataBase.Data;
 using WebconIntegrationSystem.Data.BPSMainAttDbContext;
-using AppSettings = PortalApiGus.ApiRegon.DataBase.Models.AppSettings;
 
 #endregion
 
@@ -89,7 +85,7 @@ namespace WebApplicationNetCoreDev
             {
                 // Kontekst bazy danych PortalApiGusApiRegonData.Data.PortalApiGusApiRegonDataDbContext
                 var portalApiGusApiRegonDataAppSettings = AppSettings.GetInstance();
-                services.AddDbContextPool<PortalApiGus.ApiRegon.DataBase.Data.DataBaseContext>(options => options.UseSqlServer(
+                services.AddDbContextPool<DataBaseContext>(options => options.UseSqlServer(
                     portalApiGusApiRegonDataAppSettings.GetConnectionString(),
                     element => element.EnableRetryOnFailure()
                         .MigrationsHistoryTable("__EFMigrationsHistory", "pagard")));
@@ -386,7 +382,7 @@ namespace WebApplicationNetCoreDev
                 try
                 {
                     // Migracja bazy danych PortalApiGus.ApiRegon.DataBase.Data.DataBaseContext
-                    EntityContextHelper.RunMigrationAsync<PortalApiGus.ApiRegon.DataBase.Data.DataBaseContext>(app.ApplicationServices)
+                    EntityContextHelper.RunMigrationAsync<DataBaseContext>(app.ApplicationServices)
                         .Wait();
                 }
                 catch (Exception e)
@@ -439,7 +435,8 @@ namespace WebApplicationNetCoreDev
                 try
                 {
                     // Migracja bazy danych Knf.DataBase.Data.DataBaseContext
-                    EntityContextHelper.RunMigrationAsync<Knf.DataBase.Data.DataBaseContext>(app.ApplicationServices).Wait();
+                    EntityContextHelper.RunMigrationAsync<Knf.DataBase.Data.DataBaseContext>(app.ApplicationServices)
+                        .Wait();
                 }
                 catch (Exception e)
                 {
@@ -456,7 +453,8 @@ namespace WebApplicationNetCoreDev
                 try
                 {
                     // Migracja bazy danych EulerHermes.DataBase.Data.DataBaseContext
-                    EntityContextHelper.RunMigrationAsync<EulerHermes.DataBase.Data.DataBaseContext>(app.ApplicationServices).Wait();
+                    EntityContextHelper
+                        .RunMigrationAsync<EulerHermes.DataBase.Data.DataBaseContext>(app.ApplicationServices).Wait();
                 }
                 catch (Exception e)
                 {

@@ -3,7 +3,6 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using log4net;
 using Microsoft.AspNetCore.Authorization;
@@ -111,7 +110,13 @@ namespace WebApplicationNetCoreDev.Controllers.EuropeanCommission.TaxationAndCus
             }
             catch (Exception e)
             {
-                await Task.Run(() => _log4Net.Error($"{e.Message}, {e.StackTrace}.", e));
+                _log4Net.Error(e);
+                if (null != e.InnerException)
+                {
+                    _log4Net.Error(e.InnerException);
+                }
+
+                return StatusCode(500, e);
             }
 
             return NotFound();
@@ -130,7 +135,7 @@ namespace WebApplicationNetCoreDev.Controllers.EuropeanCommission.TaxationAndCus
         ///     List of available routes
         /// </returns>
         [Authorize(AuthenticationSchemes = "Cookies")]
-        [HttpGet("RouteKendoGrid")]
+        [Authorize(AuthenticationSchemes = "Bearer")]
         public async Task<ActionResult<KendoGrid<List<ControllerRoutingActions>>>> GetRouteKendoGridAsync()
         {
             try
@@ -145,7 +150,13 @@ namespace WebApplicationNetCoreDev.Controllers.EuropeanCommission.TaxationAndCus
             }
             catch (Exception e)
             {
-                await Task.Run(() => _log4Net.Error($"{e.Message}, {e.StackTrace}.", e));
+                _log4Net.Error(e);
+                if (null != e.InnerException)
+                {
+                    _log4Net.Error(e.InnerException);
+                }
+
+                return StatusCode(500, e);
             }
 
             return NotFound();
@@ -155,6 +166,7 @@ namespace WebApplicationNetCoreDev.Controllers.EuropeanCommission.TaxationAndCus
 
         #region public async Task<ActionResult<CheckVat>> GetCheckVatAsync
 
+        [Authorize(AuthenticationSchemes = "Cookies")]
         [Authorize(AuthenticationSchemes = "Bearer")]
         [HttpGet("CheckVat/{countryCode}/{vatNumber}")]
         public async Task<ActionResult<CheckVat>> GetCheckVatAsync(string countryCode, string vatNumber)
@@ -163,8 +175,6 @@ namespace WebApplicationNetCoreDev.Controllers.EuropeanCommission.TaxationAndCus
             {
                 if (!string.IsNullOrWhiteSpace(countryCode) && !string.IsNullOrWhiteSpace(vatNumber))
                 {
-                    var digitsOnly = new Regex(@"[^\d]");
-                    vatNumber = digitsOnly.Replace(vatNumber, string.Empty);
                     CheckVat checkVat = _appSettings.CacheLifeTime > 0
                         ? await CheckVatRepository.GetInstance(_serviceScopeFactory)
                             .FindByCountryCodeAndVatNumberAsync(countryCode, vatNumber,
@@ -178,7 +188,13 @@ namespace WebApplicationNetCoreDev.Controllers.EuropeanCommission.TaxationAndCus
             }
             catch (Exception e)
             {
-                await Task.Run(() => _log4Net.Error($"{e.Message}, {e.StackTrace}.", e));
+                _log4Net.Error(e);
+                if (null != e.InnerException)
+                {
+                    _log4Net.Error(e.InnerException);
+                }
+
+                return StatusCode(500, e);
             }
 
             return NotFound(new {countryCode, vatNumber});
@@ -189,6 +205,7 @@ namespace WebApplicationNetCoreDev.Controllers.EuropeanCommission.TaxationAndCus
         #region public async Task<ActionResult<KendoGrid<List<CheckVat>>>> GetCheckVatKendoGridAsync
 
         [Authorize(AuthenticationSchemes = "Cookies")]
+        [Authorize(AuthenticationSchemes = "Bearer")]
         [HttpGet("CheckVatKendoGrid/{countryCode}/{vatNumber}")]
         public async Task<ActionResult<KendoGrid<List<CheckVat>>>> GetCheckVatKendoGridAsync(string countryCode,
             string vatNumber)
@@ -197,8 +214,6 @@ namespace WebApplicationNetCoreDev.Controllers.EuropeanCommission.TaxationAndCus
             {
                 if (!string.IsNullOrWhiteSpace(countryCode) && !string.IsNullOrWhiteSpace(vatNumber))
                 {
-                    var digitsOnly = new Regex(@"[^\d]");
-                    vatNumber = digitsOnly.Replace(vatNumber, string.Empty);
                     CheckVat checkVat = _appSettings.CacheLifeTime > 0
                         ? await CheckVatRepository.GetInstance(_serviceScopeFactory)
                             .FindByCountryCodeAndVatNumberAsync(countryCode, vatNumber,
@@ -212,7 +227,13 @@ namespace WebApplicationNetCoreDev.Controllers.EuropeanCommission.TaxationAndCus
             }
             catch (Exception e)
             {
-                await Task.Run(() => _log4Net.Error($"{e.Message}, {e.StackTrace}.", e));
+                _log4Net.Error(e);
+                if (null != e.InnerException)
+                {
+                    _log4Net.Error(e.InnerException);
+                }
+
+                return StatusCode(500, e);
             }
 
             return NotFound(new {countryCode, vatNumber});
@@ -222,6 +243,7 @@ namespace WebApplicationNetCoreDev.Controllers.EuropeanCommission.TaxationAndCus
 
         #region MyRegion public async Task<ActionResult<CheckVatApprox>> GetCheckVatApproxAsync
 
+        [Authorize(AuthenticationSchemes = "Cookies")]
         [Authorize(AuthenticationSchemes = "Bearer")]
         [HttpGet("CheckVatApprox/{countryCode}/{vatNumber}/{requesterCountryCode?}/{requesterVatNumber?}")]
         public async Task<ActionResult<CheckVatApprox>> GetCheckVatApproxAsync(string countryCode, string vatNumber,
@@ -231,8 +253,6 @@ namespace WebApplicationNetCoreDev.Controllers.EuropeanCommission.TaxationAndCus
             {
                 if (!string.IsNullOrWhiteSpace(countryCode) && !string.IsNullOrWhiteSpace(vatNumber))
                 {
-                    var digitsOnly = new Regex(@"[^\d]");
-                    vatNumber = digitsOnly.Replace(vatNumber, string.Empty);
                     requesterCountryCode ??= countryCode;
                     requesterVatNumber ??= vatNumber;
                     CheckVatApprox checkVatApprox = _appSettings.CacheLifeTime > 0
@@ -249,7 +269,13 @@ namespace WebApplicationNetCoreDev.Controllers.EuropeanCommission.TaxationAndCus
             }
             catch (Exception e)
             {
-                await Task.Run(() => _log4Net.Error($"{e.Message}, {e.StackTrace}.", e));
+                _log4Net.Error(e);
+                if (null != e.InnerException)
+                {
+                    _log4Net.Error(e.InnerException);
+                }
+
+                return StatusCode(500, e);
             }
 
             return NotFound(new {countryCode, vatNumber, requesterCountryCode, requesterVatNumber});
@@ -260,6 +286,7 @@ namespace WebApplicationNetCoreDev.Controllers.EuropeanCommission.TaxationAndCus
         #region public async Task<ActionResult<KendoGrid<List<CheckVatApprox>>>> GetCheckVatApproxKendoGridAsync
 
         [Authorize(AuthenticationSchemes = "Cookies")]
+        [Authorize(AuthenticationSchemes = "Bearer")]
         [HttpGet("CheckVatApproxKendoGrid/{countryCode}/{vatNumber}/{requesterCountryCode?}/{requesterVatNumber?}")]
         public async Task<ActionResult<KendoGrid<List<CheckVatApprox>>>> GetCheckVatApproxKendoGridAsync(
             string countryCode, string vatNumber, string requesterCountryCode = null, string requesterVatNumber = null)
@@ -268,8 +295,6 @@ namespace WebApplicationNetCoreDev.Controllers.EuropeanCommission.TaxationAndCus
             {
                 if (!string.IsNullOrWhiteSpace(countryCode) && !string.IsNullOrWhiteSpace(vatNumber))
                 {
-                    var digitsOnly = new Regex(@"[^\d]");
-                    vatNumber = digitsOnly.Replace(vatNumber, string.Empty);
                     requesterCountryCode ??= countryCode;
                     requesterVatNumber ??= vatNumber;
                     CheckVatApprox checkVatApprox = _appSettings.CacheLifeTime > 0
@@ -289,7 +314,13 @@ namespace WebApplicationNetCoreDev.Controllers.EuropeanCommission.TaxationAndCus
             }
             catch (Exception e)
             {
-                await Task.Run(() => _log4Net.Error($"{e.Message}, {e.StackTrace}.", e));
+                _log4Net.Error(e);
+                if (null != e.InnerException)
+                {
+                    _log4Net.Error(e.InnerException);
+                }
+
+                return StatusCode(500, e);
             }
 
             return NotFound(new {countryCode, vatNumber, requesterCountryCode, requesterVatNumber});
