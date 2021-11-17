@@ -12,8 +12,10 @@ using System.Threading.Tasks;
 using log4net;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.Negotiate;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Server.HttpSys;
 using NetAppCommon;
 using SimpleImpersonation;
 using WebApplicationNetCoreDev.Models;
@@ -270,11 +272,18 @@ namespace WebApplicationNetCoreDev.Controllers
                                   windowsPrincipal.IsInRole(windowsBuiltInRoles.WindowsBuiltInRole)
                             select new Claim(ClaimTypes.Role, windowsBuiltInRoles.RoleNeme));
 
-                        claims.AddRange((windowsIdentity.Groups ?? throw new InvalidOperationException()).Select(
+                        try
+                        {
+                            claims.AddRange((windowsIdentity.Groups ?? throw new InvalidOperationException()).Select(
                             group => new Claim(ClaimTypes.Role, group.Translate(typeof(NTAccount)).ToString())));
+                        }
+                        catch(Exception ex) {
+                            Console.WriteLine(ex);
+                        }
 
                         var claimsIdentity =
                             new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+
                         var authenticationProperties = new AuthenticationProperties
                         {
                             AllowRefresh = true,
@@ -325,7 +334,8 @@ namespace WebApplicationNetCoreDev.Controllers
         {
             try
             {
-                AuthenticateResult result = await HttpContext.AuthenticateAsync("Windows");
+                AuthenticateResult result = await HttpContext.AuthenticateAsync(HttpSysDefaults.AuthenticationScheme);
+
                 if (result?.Principal is WindowsPrincipal windowsPrincipal)
                 {
                     //// we will issue the external cookie and then redirect the

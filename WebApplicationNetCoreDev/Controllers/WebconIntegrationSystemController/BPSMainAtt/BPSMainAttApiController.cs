@@ -76,7 +76,7 @@ namespace WebApplicationNetCoreDev.Controllers.WebconIntegrationSystemController
             }
             catch (Exception e)
             {
-                await Task.Run(() => _log4Net.Error(string.Format("{0}, {1}.", e.Message, e.StackTrace), e));
+                _log4Net.Error($"{e.Message}, {e.StackTrace}.", e);
             }
 
             return NotFound();
@@ -105,7 +105,7 @@ namespace WebApplicationNetCoreDev.Controllers.WebconIntegrationSystemController
             }
             catch (Exception e)
             {
-                await Task.Run(() => _log4Net.Error(string.Format("{0}, {1}.", e.Message, e.StackTrace), e));
+                _log4Net.Error($"{e.Message}, {e.StackTrace}.", e);
             }
 
             return NotFound();
@@ -173,7 +173,7 @@ namespace WebApplicationNetCoreDev.Controllers.WebconIntegrationSystemController
             }
             catch (Exception e)
             {
-                await Task.Run(() => _log4Net.Error(string.Format("{0}, {1}.", e.Message, e.StackTrace), e));
+                _log4Net.Error($"{e.Message}, {e.StackTrace}.", e);
             }
 
             return NotFound();

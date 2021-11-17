@@ -59,7 +59,7 @@ namespace WebApplicationNetCoreDev.Controllers
             {
                 List<ControllerRoutingActions> controllerRoutingActionsList =
                     await ControllerRoute.GetRouteActionAsync(_provider, Url);
-                if (null != controllerRoutingActionsList && controllerRoutingActionsList.Count > 0)
+                if (controllerRoutingActionsList is { Count: > 0 })
                 {
                     return controllerRoutingActionsList;
                 }

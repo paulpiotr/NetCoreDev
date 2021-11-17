@@ -14,9 +14,9 @@ if [[ ! -z $(tasklist | grep w3wp.exe | awk '{ print $2 }') ]]; then
     done
 fi
 
-echo "Stop WebApplicationUnimotWork"
+# echo "Stop WebApplicationUnimotWork"
 
-appcmd.exe stop site /site.name:WebApplicationUnimotWork
+# appcmd.exe stop site /site.name:WebApplicationUnimotWork
 
 rm -rf "/D/Praca/NetCoreDev/.publish/WebApplicationNetCoreDev/WebApplicationNetCoreDevRelease/wwwroot"
 
@@ -26,6 +26,6 @@ dotnet clean WebApplicationNetCoreDev.sln -c Release
 
 dotnet publish --no-self-contained -c Release -f net5.0 -o "/D/Praca/NetCoreDev/.publish/WebApplicationNetCoreDev/WebApplicationNetCoreDevRelease/wwwroot" WebApplicationNetCoreDev.csproj
 
-echo "Start WebApplicationUnimotWork"
+# echo "Start WebApplicationUnimotWork"
 
-appcmd.exe start site /site.name:WebApplicationUnimotWork
+# appcmd.exe start site /site.name:WebApplicationUnimotWork

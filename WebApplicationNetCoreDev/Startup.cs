@@ -15,6 +15,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Server.HttpSys;
+using Microsoft.AspNetCore.Server.IISIntegration;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -56,29 +57,6 @@ namespace WebApplicationNetCoreDev
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            //#region Insights
-            //// https://docs.microsoft.com/pl-pl/azure/azure-monitor/app/asp-net-core AddApplication Insights
-            //services.AddApplicationInsightsTelemetry();
-            //#endregion
-
-            //#region DistributedMemoryCache
-            //services.AddNetAppCommonDistributedMemoryCache();
-            //#endregion
-
-            #region Localization
-
-            //services.Configure<RequestLocalizationOptions>(options =>
-            //{
-            //    options.SetDefaultCulture("pl-PL");
-            //    options.AddSupportedUICultures("pl-PL");
-            //    options.FallBackToParentUICultures = true;
-            //    options
-            //        .RequestCultureProviders
-            //        .Remove((IRequestCultureProvider)typeof(AcceptLanguageHeaderRequestCultureProvider));
-            //});
-
-            #endregion
-
             #region Konfiguracja baz danych
 
             try
@@ -92,10 +70,10 @@ namespace WebApplicationNetCoreDev
             }
             catch (Exception e)
             {
-                _log4Net.Error(e);
+                _log4Net.Error(e.Message, e);
                 if (null != e.InnerException)
                 {
-                    _log4Net.Error(e.InnerException);
+                    _log4Net.Error(e.InnerException.Message, e.InnerException);
                 }
             }
 
@@ -109,10 +87,10 @@ namespace WebApplicationNetCoreDev
             }
             catch (Exception e)
             {
-                _log4Net.Error(e);
+                _log4Net.Error(e.Message, e);
                 if (null != e.InnerException)
                 {
-                    _log4Net.Error(e.InnerException);
+                    _log4Net.Error(e.InnerException.Message, e.InnerException);
                 }
             }
 
@@ -126,10 +104,10 @@ namespace WebApplicationNetCoreDev
             }
             catch (Exception e)
             {
-                _log4Net.Error(e);
+                _log4Net.Error(e.Message, e);
                 if (null != e.InnerException)
                 {
-                    _log4Net.Error(e.InnerException);
+                    _log4Net.Error(e.InnerException.Message, e.InnerException);
                 }
             }
 
@@ -143,10 +121,10 @@ namespace WebApplicationNetCoreDev
             }
             catch (Exception e)
             {
-                _log4Net.Error(e);
+                _log4Net.Error(e.Message, e);
                 if (null != e.InnerException)
                 {
-                    _log4Net.Error(e.InnerException);
+                    _log4Net.Error(e.InnerException.Message, e.InnerException);
                 }
             }
 
@@ -160,10 +138,10 @@ namespace WebApplicationNetCoreDev
             }
             catch (Exception e)
             {
-                _log4Net.Error(e);
+                _log4Net.Error(e.Message, e);
                 if (null != e.InnerException)
                 {
-                    _log4Net.Error(e.InnerException);
+                    _log4Net.Error(e.InnerException.Message, e.InnerException);
                 }
             }
 
@@ -177,10 +155,10 @@ namespace WebApplicationNetCoreDev
             }
             catch (Exception e)
             {
-                _log4Net.Error(e);
+                _log4Net.Error(e.Message, e);
                 if (null != e.InnerException)
                 {
-                    _log4Net.Error(e.InnerException);
+                    _log4Net.Error(e.InnerException.Message, e.InnerException);
                 }
             }
 
@@ -233,11 +211,16 @@ namespace WebApplicationNetCoreDev
                             return Task.CompletedTask;
                         }
                     };
-                })
-                ;
-            services.AddAuthentication(HttpSysDefaults.AuthenticationScheme);
-            services.AddAuthentication(NegotiateDefaults.AuthenticationScheme).AddNegotiate();
-            services.AddAuthorization();
+                });
+            services
+                .AddAuthentication(HttpSysDefaults.AuthenticationScheme);
+
+            services
+                .AddAuthentication(NegotiateDefaults.AuthenticationScheme)
+                .AddNegotiate();
+
+            services
+                .AddAuthorization();
 
             #endregion
 
@@ -261,20 +244,6 @@ namespace WebApplicationNetCoreDev
                     options.SerializerSettings.Formatting = Formatting.Indented;
                 }
             );
-
-            #endregion
-
-            #region KestrelServerOptions
-
-            // Ważne Konfiguracja Kestrel Server Options !!!
-            services.Configure<KestrelServerOptions>(Configuration.GetSection("Kestrel"));
-
-            #endregion
-
-            #region IISServerOption
-
-            // Ważne Konfiguracja IIS Server Options !!!
-            services.Configure<IISServerOptions>(Configuration.GetSection("IIS"));
 
             #endregion
 
@@ -316,6 +285,7 @@ namespace WebApplicationNetCoreDev
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                app.UseHsts();
             }
             else
             {
@@ -323,7 +293,7 @@ namespace WebApplicationNetCoreDev
                 app.UseHsts();
             }
 
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
 
             app.UseStaticFiles();
 
@@ -356,117 +326,117 @@ namespace WebApplicationNetCoreDev
 
             #endregion
 
-            #region Migracja bazy danych
+            //#region Migracja bazy danych
 
-            Task.Run(() =>
-            {
-                try
-                {
-                    // Migracja bazy danych Knf.DataBase.Data.DataBaseContext
-                    EntityContextHelper.RunMigrationAsync<Knf.DataBase.Data.DataBaseContext>(app.ApplicationServices)
-                        .Wait();
-                }
-                catch (Exception e)
-                {
-                    _log4Net.Error(e);
-                    if (null != e.InnerException)
-                    {
-                        _log4Net.Error(e.InnerException);
-                    }
-                }
-            }).Wait();
+            //Task.Run(() =>
+            //{
+            //    try
+            //    {
+            //        // Migracja bazy danych Knf.DataBase.Data.DataBaseContext
+            //        EntityContextHelper.RunMigrationAsync<Knf.DataBase.Data.DataBaseContext>(app.ApplicationServices)
+            //            .Wait();
+            //    }
+            //    catch (Exception e)
+            //    {
+            //        _log4Net.Error(e.Message, e);
+            //        if (null != e.InnerException)
+            //        {
+            //            _log4Net.Error(e.InnerException.Message, e.InnerException);
+            //        }
+            //    }
+            //}).Wait();
 
 
-            Task.Run(() =>
-            {
-                try
-                {
-                    // Migracja bazy danych PortalApiGus.ApiRegon.DataBase.Data.DataBaseContext
-                    EntityContextHelper.RunMigrationAsync<DataBaseContext>(app.ApplicationServices)
-                        .Wait();
-                }
-                catch (Exception e)
-                {
-                    _log4Net.Error(e);
-                    if (null != e.InnerException)
-                    {
-                        _log4Net.Error(e.InnerException);
-                    }
-                }
-            }).Wait();
+            //Task.Run(() =>
+            //{
+            //    try
+            //    {
+            //        // Migracja bazy danych PortalApiGus.ApiRegon.DataBase.Data.DataBaseContext
+            //        EntityContextHelper.RunMigrationAsync<DataBaseContext>(app.ApplicationServices)
+            //            .Wait();
+            //    }
+            //    catch (Exception e)
+            //    {
+            //        _log4Net.Error(e.Message, e);
+            //        if (null != e.InnerException)
+            //        {
+            //            _log4Net.Error(e.InnerException.Message, e.InnerException);
+            //        }
+            //    }
+            //}).Wait();
 
-            Task.Run(() =>
-            {
-                try
-                {
-                    // Migracja bazy danych ApiWykazuPodatnikowVatData.Data.ApiWykazuPodatnikowVatDataDbContext
-                    EntityContextHelper.RunMigrationAsync<ApiWykazuPodatnikowVatDataDbContext>(app.ApplicationServices)
-                        .Wait();
-                }
-                catch (Exception e)
-                {
-                    _log4Net.Error(e);
-                    if (null != e.InnerException)
-                    {
-                        _log4Net.Error(e.InnerException);
-                    }
-                }
-            }).Wait();
+            //Task.Run(() =>
+            //{
+            //    try
+            //    {
+            //        // Migracja bazy danych ApiWykazuPodatnikowVatData.Data.ApiWykazuPodatnikowVatDataDbContext
+            //        EntityContextHelper.RunMigrationAsync<ApiWykazuPodatnikowVatDataDbContext>(app.ApplicationServices)
+            //            .Wait();
+            //    }
+            //    catch (Exception e)
+            //    {
+            //        _log4Net.Error(e.Message, e);
+            //        if (null != e.InnerException)
+            //        {
+            //            _log4Net.Error(e.InnerException.Message, e.InnerException);
+            //        }
+            //    }
+            //}).Wait();
 
-            Task.Run(() =>
-            {
-                try
-                {
-                    // Migracja bazy danych Vies.Core.Database.Data.ViesCoreDatabaseContext
-                    EntityContextHelper.RunMigrationAsync<ViesCoreDatabaseContext>(app.ApplicationServices).Wait();
-                }
-                catch (Exception e)
-                {
-                    _log4Net.Error(e);
-                    if (null != e.InnerException)
-                    {
-                        _log4Net.Error(e.InnerException);
-                    }
-                }
-            }).Wait();
+            //Task.Run(() =>
+            //{
+            //    try
+            //    {
+            //        // Migracja bazy danych Vies.Core.Database.Data.ViesCoreDatabaseContext
+            //        EntityContextHelper.RunMigrationAsync<ViesCoreDatabaseContext>(app.ApplicationServices).Wait();
+            //    }
+            //    catch (Exception e)
+            //    {
+            //        _log4Net.Error(e.Message, e);
+            //        if (null != e.InnerException)
+            //        {
+            //            _log4Net.Error(e.InnerException.Message, e.InnerException);
+            //        }
+            //    }
+            //}).Wait();
 
-            Task.Run(() =>
-            {
-                try
-                {
-                    // Migracja bazy danych Knf.DataBase.Data.DataBaseContext
-                    EntityContextHelper.RunMigrationAsync<Knf.DataBase.Data.DataBaseContext>(app.ApplicationServices)
-                        .Wait();
-                }
-                catch (Exception e)
-                {
-                    _log4Net.Error(e);
-                    if (null != e.InnerException)
-                    {
-                        _log4Net.Error(e.InnerException);
-                    }
-                }
-            }).Wait();
+            //Task.Run(() =>
+            //{
+            //    try
+            //    {
+            //        // Migracja bazy danych Knf.DataBase.Data.DataBaseContext
+            //        EntityContextHelper.RunMigrationAsync<Knf.DataBase.Data.DataBaseContext>(app.ApplicationServices)
+            //            .Wait();
+            //    }
+            //    catch (Exception e)
+            //    {
+            //        _log4Net.Error(e.Message, e);
+            //        if (null != e.InnerException)
+            //        {
+            //            _log4Net.Error(e.InnerException.Message, e.InnerException);
+            //        }
+            //    }
+            //}).Wait();
 
-            Task.Run(() =>
-            {
-                try
-                {
-                    // Migracja bazy danych EulerHermes.DataBase.Data.DataBaseContext
-                    EntityContextHelper
-                        .RunMigrationAsync<EulerHermes.DataBase.Data.DataBaseContext>(app.ApplicationServices).Wait();
-                }
-                catch (Exception e)
-                {
-                    _log4Net.Error(e);
-                    if (null != e.InnerException)
-                    {
-                        _log4Net.Error(e.InnerException);
-                    }
-                }
-            }).Wait();
+            //Task.Run(() =>
+            //{
+            //    try
+            //    {
+            //        // Migracja bazy danych EulerHermes.DataBase.Data.DataBaseContext
+            //        EntityContextHelper
+            //            .RunMigrationAsync<EulerHermes.DataBase.Data.DataBaseContext>(app.ApplicationServices).Wait();
+            //    }
+            //    catch (Exception e)
+            //    {
+            //        _log4Net.Error(e.Message, e);
+            //        if (null != e.InnerException)
+            //        {
+            //            _log4Net.Error(e.InnerException.Message, e.InnerException);
+            //        }
+            //    }
+            //}).Wait();
 
-            #endregion
+            //#endregion
         }
     }
 }

@@ -8,6 +8,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".env", ".env", "{0835D623-A671-4B99-9FBA-8114B73D1EEE}"
 	ProjectSection(SolutionItems) = preProject
 		.env\docker-compose.sh = .env\docker-compose.sh
+		.env\dotnet.migrations.replace.sh = .env\dotnet.migrations.replace.sh
 		.env\dotnet.publish.release.sh = .env\dotnet.publish.release.sh
 		.env\git.submodules.push.all.sh = .env\git.submodules.push.all.sh
 		.env\git.submodules.rename.sh = .env\git.submodules.rename.sh
@@ -144,6 +145,11 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{616D7B10-79D3-4DD3-808E-3AA07CF00187}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EulerHermes.WebApi", "EulerHermes\EulerHermes\src\EulerHermes.WebApi\EulerHermes.WebApi.csproj", "{5AA410B5-DD9A-4140-A367-471378455BA9}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "sql", "sql", "{E5B592D3-DADD-4752-849D-ED408DD4CA73}"
+	ProjectSection(SolutionItems) = preProject
+		IUIntegrationSystem\sql\transakcje.z.szczegolami.niezgodne.sumy.sql = IUIntegrationSystem\sql\transakcje.z.szczegolami.niezgodne.sumy.sql
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -3761,6 +3767,7 @@ Global
 		{050AE8D3-4BE2-46CD-9D55-9BD6D245299F} = {5A36FBAD-BB2E-4B13-B289-DD651CA2FE7E}
 		{616D7B10-79D3-4DD3-808E-3AA07CF00187} = {BD8B4D05-48FF-45BE-AE50-0D77146C00D2}
 		{5AA410B5-DD9A-4140-A367-471378455BA9} = {61BD7520-51F9-41A4-BD19-B24EC30C012B}
+		{E5B592D3-DADD-4752-849D-ED408DD4CA73} = {383B27D1-2E8E-4526-B7D0-6F7BA652A28E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {76F1B00C-2A40-4B88-82DC-8A1D00A17DBD}

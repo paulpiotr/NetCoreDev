@@ -9,14 +9,12 @@
 
     @if (File.Exists("wwwroot/vendor/dist/default-styles.html"))
     {
-        @Html.Raw((await File.ReadAllTextAsync("wwwroot/vendor/dist/default-styles.html")).Replace(@"auto/", string.Empty))
-        ;
+        @Html.Raw((await File.ReadAllTextAsync("wwwroot/vendor/dist/default-styles.html")).Replace(@"auto/", string.Empty));
     }
 
     @if (File.Exists("wwwroot/vendor/dist/default-scripts.html"))
     {
-        @Html.Raw((await File.ReadAllTextAsync("wwwroot/vendor/dist/default-scripts.html")).Replace(@"auto/", string.Empty))
-        ;
+        @Html.Raw((await File.ReadAllTextAsync("wwwroot/vendor/dist/default-scripts.html")).Replace(@"auto/", string.Empty));
     }
 
     @await RenderSectionAsync("Css", false)
