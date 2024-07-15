@@ -6,7 +6,7 @@
 	url = https://tfs.isk.com.pl/tfs/ISK/_git/EncryptDecrypt
 [submodule "Log4netLogger"]
 	path = Log4netLogger
-	url = https://github.com/paulpiotr/Log4netLogger.git
+	url = https://tfs.isk.com.pl/tfs/ISK/_git/Log4netLogger
 [submodule "PortalApiGus"]
 	path = PortalApiGus
 	url = https://tfs.isk.com.pl/tfs/ISK/_git/PortalApiGus
@@ -18,7 +18,7 @@
 	url = https://tfs.isk.com.pl/tfs/ISK/_git/IUIntegrationSystem
 [submodule "NetAppCommon"]
 	path = NetAppCommon
-	url = https://github.com/paulpiotr/NetAppCommon.git
+	url = https://tfs.isk.com.pl/tfs/ISK/_git/NetAppCommon
 [submodule "SerwisRzeczypospolitejPolskiej"]
 	path = SerwisRzeczypospolitejPolskiej
 	url = https://tfs.isk.com.pl/tfs/ISK/_git/SerwisRzeczypospolitejPolskiej
@@ -30,7 +30,7 @@
 	url = https://tfs.isk.com.pl/tfs/ISK/_git/WebconIntegrationSystem
 [submodule "EuropeanCommission"]
 	path = EuropeanCommission
-	url = https://github.com/paulpiotr/EuropeanCommission.git
+	url = https://tfs.isk.com.pl/tfs/ISK/_git/EuropeanCommission
 [submodule ".publish/WebApplicationNetCoreDev/WebApplicationNetCoreDevRelease"]
 	path = .publish/WebApplicationNetCoreDev/WebApplicationNetCoreDevRelease
 	url = https://tfs.isk.com.pl/tfs/Unimot/_git/WebApplicationNetCoreDevRelease
