@@ -10,9 +10,6 @@
 [submodule "PortalApiGus"]
 	path = PortalApiGus
 	url = https://tfs.isk.com.pl/tfs/ISK/_git/PortalApiGus
-[submodule "Icasa"]
-	path = Icasa
-	url = https://tfs.isk.com.pl/tfs/ISK/_git/Icasa
 [submodule "IUIntegrationSystem"]
 	path = IUIntegrationSystem
 	url = https://tfs.isk.com.pl/tfs/ISK/_git/IUIntegrationSystem
