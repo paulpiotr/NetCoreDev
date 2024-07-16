@@ -28,9 +28,6 @@
 [submodule "EuropeanCommission"]
 	path = EuropeanCommission
 	url = https://tfs.isk.com.pl/tfs/ISK/_git/EuropeanCommission
-[submodule ".publish/WebApplicationNetCoreDev/WebApplicationNetCoreDevRelease"]
-	path = .publish/WebApplicationNetCoreDev/WebApplicationNetCoreDevRelease
-	url = https://tfs.isk.com.pl/tfs/Unimot/_git/WebApplicationNetCoreDevRelease
 [submodule "EulerHermes"]
 	path = EulerHermes
 	url = https://tfs.isk.com.pl/tfs/ISK/_git/EulerHermes
